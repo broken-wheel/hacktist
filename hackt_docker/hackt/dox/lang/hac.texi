@@ -1,0 +1,128 @@
+\input texinfo	@c -*-texinfo-*-
+@c %**start of header
+@setfilename hac.info
+@settitle The HAC Language
+@c `on' is the default
+@setchapternewpage odd
+@c for two-sided book-style printing
+@c %**end of header
+
+@c "hac.texi"
+@c $Id: hac.texi,v 1.6 2008/11/28 22:07:05 fang Exp $
+
+@dircategory Hierarchical Asynchronous Circuit Kompiler Toolkit (HACKT)
+@direntry
+* Hierarchical Asynchronous Circuits: (hac).  The HAC Language Reference.
+@end direntry
+
+@include hacmacros.texi
+
+@copying
+This manual describes the HAC language specification.
+
+This document can also be found online at @homepagesubref{hac}.
+
+The main project home page is @homepageref{}.
+
+Source code for this document can be found at @sourcerepo{dox/lang}.
+
+@copyrightnotice{2007}
+
+@quotation
+Published by ...
+ 
+Permission is hereby granted to distribute this document.
+@end quotation
+@end copying
+
+@c Title page and Copyright
+@titlepage
+@title The HAC Languge
+@subtitle A boring technical document
+@author David Fang
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c ****************************** contents ************************************
+@shortcontents
+@contents
+
+@ignore
+@iftex
+@node List of Figures
+@unnumbered List of Figures
+@listoffloats Figure
+@end iftex
+@end ignore
+
+@c ****************************** Top *****************************************
+@ifnottex
+@node Top
+@top The HAC Language
+@insertcopying
+@end ifnottex
+
+@c @copying is recommended here as well
+@menu
+* Preface::
+* Goals::
+* Introduction:: Introduction to HAC.
+* Types::
+* Expressions::
+* Arrays::
+* Processes::
+* Channels::
+* Datatypes::
+* Namespaces::
+* Templates::
+* Connections::
+* Attributes::
+* Typedefs::
+* Linkage::
+* CHP::
+* PRS::
+* SPEC Directives::
+* Run-time atomic expressions::
+* Keywords::
+* Grammar::
+* Function Index::
+* Concept Index::
+@end menu
+
+@c ****************************** chapter *************************************
+@include chapters/preface.texi
+@include chapters/goals.texi
+@include chapters/intro.texi
+@include chapters/types.texi
+@include chapters/expressions.texi
+@include chapters/arrays.texi
+@include chapters/processes.texi
+@include chapters/channels.texi
+@include chapters/datatypes.texi
+@include chapters/namespaces.texi
+@include chapters/templates.texi
+@include chapters/connections.texi
+@include chapters/attributes.texi
+@include chapters/typedefs.texi
+@include chapters/linkage.texi
+@include chapters/CHP.texi
+@include chapters/PRS.texi
+@include chapters/SPEC.texi
+@include chapters/RTE.texi
+@include grammar/keywords.texi
+@include grammar/grammar.texi
+
+@c ****************************** index ***************************************
+@node Function Index
+@unnumbered Function Index
+@printindex fn
+
+@node Concept Index
+@unnumbered Concept Index
+@printindex cp
+
+@c ****************************** finis ***************************************
+@bye
+

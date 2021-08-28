@@ -1,0 +1,23 @@
+"ChangeLog"
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-merged-rename-00-06:
+	  Merge from rename-00 branch.  
+
+
+2005-05-08	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-33 (main trunk):
+	  Outline of instance references, value collections, 
+	  value references.  
+
+
+2005-05-05	David Fang		<fangism@users.sourceforge.net>
+
+	* Started ChangeLog here.
+	  Still fleshing out the outline of this object file reference
+		document.  During a meeting we touched upon many
+		controversial issues.  We hope to address some of them
+		in the upcoming days.  
+

@@ -1,0 +1,112 @@
+\input texinfo	@c -*-texinfo-*-
+@c %**start of header
+@setfilename hacprsim.info
+@settitle HACKT PRSIM Manual
+@c `on' is the default
+@setchapternewpage odd
+@c for two-sided book-style printing
+@c %**end of header
+
+@c "prsim.texi"
+@c $Id: hacprsim.texi,v 1.6 2008/11/28 22:07:06 fang Exp $
+
+@dircategory Hierarchical Asynchronous Circuit Kompiler Toolkit (HACKT)
+@direntry
+* HAC PRSIM: (hacprsim).    HAC PRS Simulator.
+@end direntry
+
+@include hacmacros.texi
+
+@copying
+This manual describes the usage and operation of HACKT's @command{prsim} 
+simulator, @hacprsim{}.  
+
+This document can also be found online at @homepagesubref{hacprsim}.
+
+The main project home page is @homepageref{}.
+
+Source code for this document can be found at @sourcerepo{dox/prsim}.
+
+@copyrightnotice{2004}
+
+@quotation
+Published by ...
+ 
+Permission is hereby granted to distribute this document.
+@end quotation
+@end copying
+
+@c Title page and Copyright
+@titlepage
+@title HACKT PRSIM
+@subtitle A simulator manual
+@author David Fang
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c ****************************** contents ************************************
+@shortcontents
+@contents
+
+@ignore
+@iftex
+@node List of Figures
+@unnumbered List of Figures
+@listoffloats Figure
+@end iftex
+@end ignore
+
+@c ****************************** Top *****************************************
+@ifnottex
+@node Top
+@top PRSIM Manual Outline
+@insertcopying
+@end ifnottex
+
+@c @copying is recommended here as well
+@menu
+* Introduction:: Introduction to PRSIM.
+* Usage:: Command-line summary.
+* Execution:: How execution works.
+* Commands:: Interpreter commands.
+* Diagnostics:: Diagnostic message from the simulator.
+* Timing Back-Annotation:: Customized timing.
+* Co-simulation:: Mixing with foreign simulators.
+* Tips:: Tips
+* Applications:: Applications and Examples.
+* Command Index:: Interpreter commands and interface functions.
+@c * Variable Index:: Variables.
+* Concept Index:: Concepts and terms.
+@end menu
+
+@c ****************************** chapter *************************************
+@include intro.texi
+@include usage.texi
+@include execution.texi
+@include commands.texi
+@include diagnostics.texi
+@include timing.texi
+@include cosim.texi
+@include tips.texi
+@include applications.texi
+
+@c ****************************** index ***************************************
+@node Command Index
+@unnumbered Command Index
+@printindex fn
+
+@ignore
+@node Variable Index
+@unnumbered Variable Index
+@printindex vr
+@end ignore
+
+@node Concept Index
+@unnumbered Concept Index
+@printindex cp
+
+@c ****************************** finis ***************************************
+@bye
+

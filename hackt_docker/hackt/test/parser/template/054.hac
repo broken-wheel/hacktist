@@ -1,0 +1,11 @@
+// "054.hac" 
+// no longer fails, definition-local types may now depend on relaxed params
+// copy-modified from "052.hac"
+
+template <><pint W>
+defproc foo() {
+	int<W> my_int;
+}
+
+// foo<><16> hello;
+

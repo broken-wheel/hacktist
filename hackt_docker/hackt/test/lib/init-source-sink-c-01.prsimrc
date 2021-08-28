@@ -1,0 +1,15 @@
+# "init-source-sink-c-01.prsimrc"
+#	$Id: init-source-sink-c-01.prsimrc,v 1.2 2010/04/06 00:03:32 fang Exp $
+# @haco@ init-source-sink-c.haco-c
+# testing value sequence
+
+# not random timing
+source initial-reset.prsimrc
+set Reset 0
+set _Reset 1
+watch R.d[0]
+watch R.d[1]
+watch R.e
+echo expect to see on channel R: 0 1 [1 1 0]*
+step 150
+

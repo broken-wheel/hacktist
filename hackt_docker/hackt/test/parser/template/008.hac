@@ -1,0 +1,7 @@
+// "008.hac" should pass: appropriate use of template type
+
+template <pint N>
+defproc foo() { }
+
+foo<13> bar;
+

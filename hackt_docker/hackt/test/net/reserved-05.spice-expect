@@ -1,0 +1,4 @@
+Error: Post-mangled node name `!GND' collides with a reserved node name.
+Instantiated from type: inv<>
+Instantiated from -TOP-: 
+Caught exception during netlist generation.

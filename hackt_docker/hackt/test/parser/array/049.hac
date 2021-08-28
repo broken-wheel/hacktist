@@ -1,0 +1,10 @@
+// "049.hac"
+// copy-modified from "048.hac"
+// should parse fail: cannot construct array and connect in one statement
+// see also "057.hac"
+
+bool x[2];
+bool y[2];
+
+bool z[2][2] = {x, y};
+

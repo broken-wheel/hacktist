@@ -1,0 +1,220 @@
+"TODO"
+	$Id: TODO,v 1.17 2009/02/18 00:22:52 fang Exp $
+
+Nothing really *needs* to be done in here.
+This is more of a wish-list for the util/ directory.  
+
+===============================================================================
+quickie:
+	remove references to util/obsolete from util/Makefile.inc
+
+===============================================================================
+functional:
+	phase out _Select1st and _Select2nd patches in STL/functional.h
+		in favor of using util::member_select on ::first and ::second.
+		Rationale: standardizing ways of doing things for ease 
+			of maintainence. 
+
+-------------------------------------------------------------------------------
+Tired of gargantuan object files and executables with 
+grossly-replicated inlined template code?  
+Your compiler doesn't support *gasp* export template?
+
+Make set of headers to split STL headers into:
+	1) a forward declarations header (_fwd.h)
+	2) a class definition header (.h)
+	3) a template method definition (.tcc)
+These files should go in a subdirectory, perhaps "STL"?
+
+Issues: may have to copy-fudge standard headers
+	and hack the #define's to check for inclusion.
+
+Possible convention:
+#define inclusions to intentionally interfere with STL headers.  
+	Very hackish and not portable across compilers / versions.  
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+hash_qmap, qmap: replace inheritance from hash_map and map
+	and wrap-adapt instead (containership).  
+	Will be some hassle of replicating/wrapping every public method...
+	But I feel it's worth it.  
+
+Do this with hash_qmap, qmap, multikey_qmap, etc. first to see benefit.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+use std::bitset where possible (or at least util::bitset wrapper)
+
+-------------------------------------------------------------------------------
+persistent_object_manager:
+	upon exception thrown during load_objects, 
+		properly delete all transients and rethrow, 
+		to prevent bogus memory leak on exception. 
+
+	Alternative to deriving everything from class persistent:
+	write a proxy class to manage the object lifetime
+		saving and reconstruction.  
+	virtualize these proxy classes instead of the classes themselves.
+	reduces invasiveness by not requiring direct inheritance
+		from class persistent, but uses template polymorphism
+		to implement a certain interface.  
+		(reference: see how AST::node was removed from hierarchy)
+
+	(20060319)
+	persistence is really slow and memory hogging because:
+	1) pointer collection traversal touches many pages
+	2) all objects binaries are stored in reconstruction buffers
+		before being written out to memory, doubling mem. footprint.
+	Proposal:
+	a) write binary objects to temporary buffers only and
+		stream binary out to temporary file, then concatenate
+		with header.
+	b) consider writing/collecting objects in one single pass?
+		construct separate header on the fly?
+	Consider dictionary support for common small object values
+		such as strings and integers, to avoid replication.  
+		(classification: enhancement)
+
+-------------------------------------------------------------------------------
+preprocessor macros:
+	* NEVER_HEAP_ALLOCATE:
+		overload operator new/delete as private and undefined
+		paste this puppy in classes that should never 
+			be heap-allocated.  
+		This does not apply to placement new/delete, which don't alloc.
+
+-------------------------------------------------------------------------------
+Data structures:
+	* finite_vector wrapper interface to use a fixed size array
+		with a limited vector-like interface.
+		Rationale: one less indirection in array access, 
+			uses same address-space as the wrapping object
+			without heap-allocating.  
+
+-------------------------------------------------------------------------------
+
+Regarding memory pools:
+
+	* Type-agnostic versions of pools that allocate pure blocks of memory, 
+	  based on requested size (sizeof()).  
+	  Set of explicit template instantiations to "cover" the needed sizes.
+	  Goal: reduces unnecessary template code replication.  
+	  Safe use of reinterpret_cast, just as with std::allocator.  
+
+	* Reclamable memory pools, reclaim contiguous blocks of memory.  
+	  Like list_vector_pool, but with ability to release empty blocks.  
+	  List_vector_pool is only good for recycling, but not reclaiming.  
+
+	* Reclamable pools with FIFO or LIFO replacement deallocation.  
+
+
+In "list_vector.*":
+
+	Implement insertion and deletion with vector fragmentation, 
+		and map management.  
+
+	Possibly track bit-map of free-indices?
+	May need bit-manip adaptation or library...
+
+-------------------------------------------------------------------------------
+
+Regarding pointer-classes:
+	Files: excl_ptr.h, count_ptr.h
+	Migrate into the memory/ subdirectory. (DONE)
+		-- renamed "pointer_classes.h"
+	Overhaul to eliminate inheritance from abstract_ptr. (DONE)
+		(That was just an experiment.)
+	Implement pointer_traits concept, just like iterator_traits.
+		(partially done)
+	Combine pointer classes with const- counterparts to unify, 
+		eliminate replication.  (DONE)
+	sticky_pointer: can acquire ownership, but never transfer it, 
+		useful for containers, replacement for some_ptr.  
+		(partially done)
+	unique_pointer: transferrable ownership, but not replicable, 
+		not even by never_ptr.  
+		(barely started)
+	(Migrating from old-style to new will be painful...
+		better get it over with AQAP.)
+		(DONE)
+
+	allocate size_t reference counts with fast allocator, 
+		like list_vector_pool.
+
+	what about allocator_traits?
+
+write a series of tests exhausting ALL combinations of copy, transfer, 
+	assignment for ALL pointer-classes!
+	Use STL containers.
+	Expect invariants everywhere.
+
+util: use new ptrs_functional_proposed.h with const_traits.h
+	status: somewhat tested, ready to use
+
+-------------------------------------------------------------------------------
+
+vectorization:
+	See what valarray does already...
+	File: aligned_vector.h
+	Create it!
+	Guarantees that memory access are aligned to specified boundary, 
+		by padding the head of the vector.  
+	Useful for vector arithmetic.  
+
+
+	(not important)
+	File: reserved_vector.h
+	Constant capacity container, can be full.
+
+-------------------------------------------------------------------------------
+
+algorithms:
+	File: optimized_algorithm.h
+	Implement unrolling algorithms.
+
+-------------------------------------------------------------------------------
+pesudo containers:
+	finite history buffer, cyclic array
+		write as an adapter to implementation
+		application: event history tracing, fixed memory
+		need a wrapped iterator construct
+
+-------------------------------------------------------------------------------
+
+integer types:
+	defined one_indexed_size_t and zero_indexed_size_t
+	with automatic implicit conversions between them.  
+	rationale: keep from having to remember or lookup documentation
+		on what the f--- is 1-indexed and 0-indexed.  
+		Self-documenting code!
+
+-------------------------------------------------------------------------------
+numeric:
+	for fun:
+	primality...
+	compile-time taylor expansion and evaluation of constants...
+	doh, can't pass floats as template arguements... yet
+
+random:
+	rand48 family may not suffice for ILP64 longs, so we need an
+		adequate substitute for higher precision integers.  
+
+-------------------------------------------------------------------------------
+debug utils:
+	File: stacktrace.h
+		add STACKTRACE_VERY_VERBOSE to include __FILE__ and __LINE__
+	status: easy-to-do
+
+===============================================================================
+===============================================================================
+===============================================================================
+DONE
+	(so we have some sense of accomplishment)
+
+regarding pointer-classes:
+	persistent_object_manager to take advantage of 
+		pointer_traits and pointer_classes.  (done)
+	Make it a friend class to pointer_manipulator.  (done)
+
+
+-------------------------------------------------------------------------------

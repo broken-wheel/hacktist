@@ -1,0 +1,7 @@
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+@ "foo.x.a" iscomb
+connect "!GND" "foo.!GND"
+connect "!GND" "foo.x.!GND"
+connect "!Vdd" "foo.!Vdd"
+connect "!Vdd" "foo.x.!Vdd"

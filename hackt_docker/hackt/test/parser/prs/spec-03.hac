@@ -1,0 +1,12 @@
+// "spec-03.hac"
+// should fail looking up nonexistent node
+
+defproc testing () {
+bool p, q, r;
+
+spec {
+	mk_exclhi(p, q, s)
+}
+
+}
+

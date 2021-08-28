@@ -1,0 +1,72 @@
+// "bool-sink.hac"
+//	$Id: bool-sink.hac,v 1.6 2010/04/08 23:04:21 fang Exp $
+// bool buckets
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Plain infinite sink.  
+ */
+defproc bool_sink(chan?(bool) B) {
+bool b;
+chp {
+*[ B?(b) ]
+}
+}
+
+defproc bool_sink_echo(chan?(bool) B) {
+bool b;
+chp {
+*[ B?(b); print("bool-sink: ", b) ]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Plain infinite sink, with configurable delay.  
+ */
+template <preal D>
+defproc bool_sink_delay(chan?(bool) B) {
+bool b;
+chp {
+*[ $(after=D) B?(b) ]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	sinks a limited number of times
+ */
+template <pint N>
+defproc bool_sink_once(chan?(bool) B) {
+bool b;
+chp {
+{;i:N: B?(b) }
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+template <pint N, pbool V[N]>
+defproc bool_assert_sink (chan?(bool) B) {
+... $[x == V[i]]
+}
+***/
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+template <pint N, pbool V[N]>
+defproc bool_assert_sink_once (chan?(bool) B) {
+...
+}
+***/
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Token-controlled sink, suitable for shared channel.  
+ */
+defproc bool_sink_shared(chan?() Cin; chan!() Cout; chan??(bool) B) {
+chp {
+*[ Cin?; B?; Cout! ]
+}
+}
+

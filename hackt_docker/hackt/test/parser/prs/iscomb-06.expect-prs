@@ -1,0 +1,6 @@
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+@ "a" iscomb
+@ "c" iscomb
+= "a" "b"
+= "c" "d"

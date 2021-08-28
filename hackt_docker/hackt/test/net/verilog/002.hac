@@ -1,0 +1,12 @@
+// "002.hac"
+// copy-modified from "001.hac"
+// @hacknet-flags@ -T buffer
+
+import "channel.hac";
+
+defproc buffer(e1of2? I; e1of2! O) {
+e1of2 M;		// unused local -- dropped
+}
+
+buffer b;
+

@@ -1,0 +1,245 @@
+WARNING: channel Z.A lacks connection to a producer.
+WARNING: channel Z.B lacks connection to a producer.
+WARNING: channel Z.G lacks connection to a producer.
+WARNING: channel Z.Z lacks connection to a consumer.
+Warnings found (4) while creating complete type <top-level>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	procdefn	0	#HEAD#	#TAIL#	172
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	10	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	11	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	13	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	14	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	15	##ADDR##	portscop	0	#HEAD#	#TAIL#	36
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	18	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	19	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	20	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	21	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	22	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	23	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	24	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	25	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	26	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	27	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	28	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	29	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	32	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	33	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	35	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	36	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	37	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	38	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	39	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	41	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	42	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	24
+	45	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	46	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	47	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	48	##ADDR##	CHPdetsl	0	#HEAD#	#TAIL#	24
+	49	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	50	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	51	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	52	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	53	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	54	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	55	##ADDR##	nbnotex_	0	#HEAD#	#TAIL#	12
+	56	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	57	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	58	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	60	##ADDR##	CHPsend_	0	#HEAD#	#TAIL#	24
+	61	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	62	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	63	##ADDR##	footprnt	0	#HEAD#	#TAIL#	578
+	64	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	65	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	66	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	67	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	68	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	69	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	70	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	24
+	71	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	72	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	73	##ADDR##	CHPdetsl	0	#HEAD#	#TAIL#	24
+	74	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	75	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	76	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	77	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	78	##ADDR##	CHPsend_	0	#HEAD#	#TAIL#	24
+	79	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	80	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	81	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	82	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	83	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	84	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	85	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	86	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	87	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	88	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	89	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	90	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	91	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	92	##ADDR##	footprnt	0	#HEAD#	#TAIL#	507
+	93	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    split_bool_soup = process-definition (defined) split_bool_soup(
+        bool<> !GND
+        bool<> !Vdd
+        chan?(bool<>) A
+        chan?(bool<>) B
+        chan?(bool<>) G
+        chan!(bool<>) Z
+      )
+      In definition "split_bool_soup", we have: {
+      Instances:
+        !GND = bool<> split_bool_soup::!GND
+        !Vdd = bool<> split_bool_soup::!Vdd
+        A = chan?(bool<>) split_bool_soup::A
+        B = chan?(bool<>) split_bool_soup::B
+        G = chan?(bool<>) split_bool_soup::G
+        Z = chan!(bool<>) split_bool_soup::Z
+        g = bool<> split_bool_soup::g
+        x = bool<> split_bool_soup::x
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan?(bool<>) A
+          chan?(bool<>) B
+          chan?(bool<>) G
+          chan!(bool<>) Z
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        bool<> g
+        bool<> x
+      chp:
+        concurrent: {
+          *[
+            sequential: {
+              G#(g)
+              concurrent: {
+                G?
+                sequential: {
+                  deterministic: {
+                    g -> A?(x)
+                    ~g -> B?(x)
+                  }
+                  Z!(x)
+                }
+              }
+            }
+          ]
+        }
+      footprint: {
+        !GND = bool^0 = split_bool_soup<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = split_bool_soup<>::!Vdd (2) @[ supply_high port-alias ] 
+        A = channel chan?(bool<>)^0 = split_bool_soup<>::A (1) @[ port! chp? meta? ] 
+        B = channel chan?(bool<>)^0 = split_bool_soup<>::B (2) @[ port! chp? meta? ] 
+        G = channel chan?(bool<>)^0 = split_bool_soup<>::G (3) @[ port! chp? meta? ] 
+        Z = channel chan!(bool<>)^0 = split_bool_soup<>::Z (4) @[ chp! meta! port? ] 
+        g = bool^0 = split_bool_soup<>::g (3) 
+        x = bool^0 = split_bool_soup<>::x (4) 
+        Created state:
+        channel instance pool: (4 ports, 0 local, 0 mapped)
+        1	split_bool_soup<>::A @[ port! chp? meta? ]	
+        2	split_bool_soup<>::B @[ port! chp? meta? ]	
+        3	split_bool_soup<>::G @[ port! chp? meta? ]	
+        4	split_bool_soup<>::Z @[ chp! meta! port? ]	
+        bool instance pool: (2 ports, 2 local, 0 mapped)
+        1	split_bool_soup<>::!GND @[ supply_low port-alias ]	
+        2	split_bool_soup<>::!Vdd @[ supply_high port-alias ]	
+        3	split_bool_soup<>::g	
+        4	split_bool_soup<>::x	
+        resolved concurrent actions:
+          *[
+            sequential: {
+              G#(g)
+              concurrent: {
+                G?
+                sequential: {
+                  deterministic: {
+                    g -> A?(x)
+                    ~g -> B?(x)
+                  }
+                  Z!(x)
+                }
+              }
+            }
+          ]
+        chp events: {
+          event[0]: peek: G#(g), #pred: 1, succ: 8 
+          event[1]: join: , #pred: 2, succ: 0 
+          event[2]: receive: G?, #pred: 1, succ: 1 
+          event[3]: send: Z!(x), #pred: 1, succ: 1 
+          event[4]: null: null, #pred: 1, succ: 3 
+          event[5]: receive: A?(x), #pred: 1, succ: 4 
+          event[6]: receive: B?(x), #pred: 1, succ: 4 
+          event[7]: select: [ g -> ... [] ~g -> ... ], #pred: 1, succ: 5 6 
+          event[8]: fork: , #pred: 1, succ: 2 7 
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    Z = split_bool_soup<> Z
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  Z = process split_bool_soup<>^0 = Z (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    A = channel chan?(bool<>)^0 = Z.A (1) @[ sub? chp? meta? ] 
+    B = channel chan?(bool<>)^0 = Z.B (2) @[ sub? chp? meta? ] 
+    G = channel chan?(bool<>)^0 = Z.G (3) @[ sub? chp? meta? ] 
+    Z = channel chan!(bool<>)^0 = Z.Z (4) @[ sub! chp! meta! ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	Z	split_bool_soup<>
+    channel: 1,2,3,4
+    bool: 1,2
+  channel instance pool: (0 ports, 4 local, 0 mapped)
+  1	Z.A @[ sub? chp? meta? ]	
+  2	Z.B @[ sub? chp? meta? ]	
+  3	Z.G @[ sub? chp? meta? ]	
+  4	Z.Z @[ sub! chp! meta! ]	
+  bool instance pool: (0 ports, 2 local, 2 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  private sub-bool index map:
+    (1 -> 0)
+    (2 -> 2)
+}

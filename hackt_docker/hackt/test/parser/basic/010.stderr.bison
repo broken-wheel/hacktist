@@ -1,0 +1,19 @@
+At: "010.hac":7:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	list<(root_item)>: (instance-decl) ... [3:1..16]
+#STATE#	keyword: namespace [5:1..9]
+#STATE#	identifier: more_arrays [5:11..21]
+#STATE#	{ [5:23]
+#STATE#	(type-ref) [7:1..3]
+#STATE#	identifier: fancy_array [7:5..15]
+#STATE#	(null) 
+#STATE#	[ [7:16]
+#STATE#	(range) [7:17]
+#STATE#	, [7:18]
+in state #STATE#, possible rules are:
+	bracketed_sparse_range: '[' range . ']'  (#RULE#)
+acceptable tokens are: 
+	']' (shift)

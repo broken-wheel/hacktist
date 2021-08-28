@@ -1,0 +1,226 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	26
+	6	##ADDR##	procplch	0	#HEAD#	#TAIL#	27
+	7	##ADDR##	procdefn	0	#HEAD#	#TAIL#	121
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	10	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	26
+	11	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	12	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	13	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	14	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	15	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	18	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	36
+	19	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	20	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	22	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	23	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	24	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	27	##ADDR##	footprnt	0	#HEAD#	#TAIL#	696
+	28	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	29	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	30	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	31	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	32	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	35	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	36	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	37	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	39	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	40	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	41	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	42	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	43	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	36
+	44	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	46	##ADDR##	mdbolref	0	#HEAD#	#TAIL#	20
+	47	##ADDR##	sprcmref	0	#HEAD#	#TAIL#	16
+	48	##ADDR##	footprnt	0	#HEAD#	#TAIL#	1422
+	49	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  4 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    top_type = process-definition (defined) top_type(
+        bool<> !GND
+        bool<> !Vdd
+        bool<> co[0..0][0..6][0..2]
+      )
+      In definition "top_type", we have: {
+      Instances:
+        !GND = bool<> top_type::!GND
+        !Vdd = bool<> top_type::!Vdd
+        co = bool<> top_type::co^3
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          bool<> co[0..0][0..6][0..2]
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      footprint: {
+        !GND = bool^0 = top_type<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = top_type<>::!Vdd (2) @[ supply_high port-alias ] 
+        co = bool^3
+          {
+            [0][0][0] = top_type<>::co[0][0][0] (3) @[ port-alias ] 
+            [0][0][1] = top_type<>::co[0][0][1] (4) @[ port-alias ] 
+            [0][0][2] = top_type<>::co[0][0][2] (5) @[ port-alias ] 
+            [0][1][0] = top_type<>::co[0][1][0] (6) @[ port-alias ] 
+            [0][1][1] = top_type<>::co[0][1][1] (7) @[ port-alias ] 
+            [0][1][2] = top_type<>::co[0][1][2] (8) @[ port-alias ] 
+            [0][2][0] = top_type<>::co[0][2][0] (9) @[ port-alias ] 
+            [0][2][1] = top_type<>::co[0][2][1] (10) @[ port-alias ] 
+            [0][2][2] = top_type<>::co[0][2][2] (11) @[ port-alias ] 
+            [0][3][0] = top_type<>::co[0][3][0] (12) @[ port-alias ] 
+            [0][3][1] = top_type<>::co[0][3][1] (13) @[ port-alias ] 
+            [0][3][2] = top_type<>::co[0][3][2] (14) @[ port-alias ] 
+            [0][4][0] = top_type<>::co[0][4][0] (15) @[ port-alias ] 
+            [0][4][1] = top_type<>::co[0][4][1] (16) @[ port-alias ] 
+            [0][4][2] = top_type<>::co[0][4][2] (17) @[ port-alias ] 
+            [0][5][0] = top_type<>::co[0][5][0] (18) @[ port-alias ] 
+            [0][5][1] = top_type<>::co[0][5][1] (19) @[ port-alias ] 
+            [0][5][2] = top_type<>::co[0][5][2] (20) @[ port-alias ] 
+            [0][6][0] = top_type<>::co[0][6][0] (21) @[ port-alias ] 
+            [0][6][1] = top_type<>::co[0][6][1] (22) @[ port-alias ] 
+            [0][6][2] = top_type<>::co[0][6][2] (23) @[ port-alias ] 
+          }
+        Created state:
+        bool instance pool: (23 ports, 0 local, 0 mapped)
+        1	top_type<>::!GND @[ supply_low port-alias ]	
+        2	top_type<>::!Vdd @[ supply_high port-alias ]	
+        3	top_type<>::co[0][0][0] @[ port-alias ]	
+        4	top_type<>::co[0][0][1] @[ port-alias ]	
+        5	top_type<>::co[0][0][2] @[ port-alias ]	
+        6	top_type<>::co[0][1][0] @[ port-alias ]	
+        7	top_type<>::co[0][1][1] @[ port-alias ]	
+        8	top_type<>::co[0][1][2] @[ port-alias ]	
+        9	top_type<>::co[0][2][0] @[ port-alias ]	
+        10	top_type<>::co[0][2][1] @[ port-alias ]	
+        11	top_type<>::co[0][2][2] @[ port-alias ]	
+        12	top_type<>::co[0][3][0] @[ port-alias ]	
+        13	top_type<>::co[0][3][1] @[ port-alias ]	
+        14	top_type<>::co[0][3][2] @[ port-alias ]	
+        15	top_type<>::co[0][4][0] @[ port-alias ]	
+        16	top_type<>::co[0][4][1] @[ port-alias ]	
+        17	top_type<>::co[0][4][2] @[ port-alias ]	
+        18	top_type<>::co[0][5][0] @[ port-alias ]	
+        19	top_type<>::co[0][5][1] @[ port-alias ]	
+        20	top_type<>::co[0][5][2] @[ port-alias ]	
+        21	top_type<>::co[0][6][0] @[ port-alias ]	
+        22	top_type<>::co[0][6][1] @[ port-alias ]	
+        23	top_type<>::co[0][6][2] @[ port-alias ]	
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    co = bool<> co^3
+    top = top_type<> top
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  co = bool^3
+    {
+      [0][0][0] = co[0][0][0] (3) 
+      [0][0][1] = co[0][0][1] (4) 
+      [0][0][2] = co[0][0][2] (5) 
+      [0][1][0] = co[0][1][0] (6) 
+      [0][1][1] = co[0][1][1] (7) 
+      [0][1][2] = co[0][1][2] (8) 
+      [0][2][0] = co[0][2][0] (9) 
+      [0][2][1] = co[0][2][1] (10) 
+      [0][2][2] = co[0][2][2] (11) 
+      [0][3][0] = co[0][3][0] (12) 
+      [0][3][1] = co[0][3][1] (13) 
+      [0][3][2] = co[0][3][2] (14) 
+      [0][4][0] = co[0][4][0] (15) 
+      [0][4][1] = co[0][4][1] (16) 
+      [0][4][2] = co[0][4][2] (17) 
+      [0][5][0] = co[0][5][0] (18) 
+      [0][5][1] = co[0][5][1] (19) 
+      [0][5][2] = co[0][5][2] (20) 
+      [0][6][0] = co[0][6][0] (21) 
+      [0][6][1] = co[0][6][1] (22) 
+      [0][6][2] = co[0][6][2] (23) 
+    }
+  top = process top_type<>^0 = top (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    co = bool^3
+      {
+        [0][0][0] = co[0][0][0] (3) 
+        [0][0][1] = co[0][0][1] (4) 
+        [0][0][2] = co[0][0][2] (5) 
+        [0][1][0] = co[0][1][0] (6) 
+        [0][1][1] = co[0][1][1] (7) 
+        [0][1][2] = co[0][1][2] (8) 
+        [0][2][0] = co[0][2][0] (9) 
+        [0][2][1] = co[0][2][1] (10) 
+        [0][2][2] = co[0][2][2] (11) 
+        [0][3][0] = co[0][3][0] (12) 
+        [0][3][1] = co[0][3][1] (13) 
+        [0][3][2] = co[0][3][2] (14) 
+        [0][4][0] = co[0][4][0] (15) 
+        [0][4][1] = co[0][4][1] (16) 
+        [0][4][2] = co[0][4][2] (17) 
+        [0][5][0] = co[0][5][0] (18) 
+        [0][5][1] = co[0][5][1] (19) 
+        [0][5][2] = co[0][5][2] (20) 
+        [0][6][0] = co[0][6][0] (21) 
+        [0][6][1] = co[0][6][1] (22) 
+        [0][6][2] = co[0][6][2] (23) 
+      }
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	top	top_type<>
+    bool: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+  bool instance pool: (0 ports, 23 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	co[0][0][0]	
+  4	co[0][0][1]	
+  5	co[0][0][2]	
+  6	co[0][1][0]	
+  7	co[0][1][1]	
+  8	co[0][1][2]	
+  9	co[0][2][0]	
+  10	co[0][2][1]	
+  11	co[0][2][2]	
+  12	co[0][3][0]	
+  13	co[0][3][1]	
+  14	co[0][3][2]	
+  15	co[0][4][0]	
+  16	co[0][4][1]	
+  17	co[0][4][2]	
+  18	co[0][5][0]	
+  19	co[0][5][1]	
+  20	co[0][5][2]	
+  21	co[0][6][0]	
+  22	co[0][6][1]	
+  23	co[0][6][2]	
+}

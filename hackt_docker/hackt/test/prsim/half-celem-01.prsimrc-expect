@@ -1,0 +1,33 @@
+Fanins of node `c':
+(from X):
+[after 10]	~a & ~b -> c+
+[after 10]	a -> c-
+	0	b : 1
+	0	a : 1
+	10	c : 0	[by a:=1]
+time: 10
+	10	a : 0
+b- should enqueue c+ 
+	10	b : 0
+event queue:
+	20	c : 1	[from b:=0]
+time: 15
+introduce high-glitch on b, should cause instability 
+WARNING: unstable `c'+
+rule: [after 10]	~a:0 & ~b:1<0><0> -> c+:0
+>> cause: `b' (val: 1)
+	15	b : 1
+event queue:
+	20	c : X	[from b:=1]
+end queue 
+	16	b : 0
+	26	c : 1	[by b:=0]
+X nodes:
+
+0 nodes:
+!GND a b 
+1 nodes:
+!Vdd c 
+event queue:
+in a state where c should be 1, but remains X while pull-up guard true! 
+this is now fixed by the branch: prsim-engine-rewrite 

@@ -1,0 +1,214 @@
+WARNING: channel A lacks connection to a producer.
+WARNING: channel B lacks connection to a consumer.
+Warnings found (2) while creating complete type <top-level>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	procdefn	0	#HEAD#	#TAIL#	166
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	10	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	11	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	13	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	14	##ADDR##	dintplch	0	#HEAD#	#TAIL#	25
+	15	##ADDR##	dintplch	0	#HEAD#	#TAIL#	25
+	16	##ADDR##	portscop	0	#HEAD#	#TAIL#	28
+	17	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	18	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	19	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	20	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	21	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	22	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	23	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	24	##ADDR##	datadefn	0	#HEAD#	#TAIL#	68
+	25	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	28	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	29	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	30	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	32	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	33	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	35	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	36	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	37	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	40	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	41	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	42	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	28
+	46	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	47	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	48	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	50	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	51	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	52	##ADDR##	CHPsend_	0	#HEAD#	#TAIL#	24
+	53	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	54	##ADDR##	narithex	0	#HEAD#	#TAIL#	17
+	55	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	56	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	57	##ADDR##	footprnt	0	#HEAD#	#TAIL#	440
+	58	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	59	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	60	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	16
+	61	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	62	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	63	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	28
+	64	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	65	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	66	##ADDR##	CHPsend_	0	#HEAD#	#TAIL#	24
+	67	##ADDR##	procplch	0	#HEAD#	#TAIL#	30
+	68	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	69	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	70	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	71	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	72	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	73	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	74	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	75	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	76	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	77	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	78	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	79	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	80	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	81	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	82	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	83	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	84	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	85	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	86	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	87	##ADDR##	prcprtcn	0	#HEAD#	#TAIL#	32
+	88	##ADDR##	sprcmref	0	#HEAD#	#TAIL#	16
+	89	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	90	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	91	##ADDR##	footprnt	0	#HEAD#	#TAIL#	495
+	92	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	16
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  5 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    adjacent_diff = process-definition (defined) adjacent_diff<
+      pint<> W
+      >(
+        bool<> !GND
+        bool<> !Vdd
+        chan?(int<adjacent_diff::W>) L
+        chan!(int<adjacent_diff::W>) R
+      )
+      In definition "adjacent_diff", we have: {
+      Parameters:
+        W = pint<> adjacent_diff::W
+      Instances:
+        !GND = bool<> adjacent_diff::!GND
+        !Vdd = bool<> adjacent_diff::!Vdd
+        L = chan?(int<adjacent_diff::W>) adjacent_diff::L
+        R = chan!(int<adjacent_diff::W>) adjacent_diff::R
+        x = int<adjacent_diff::W> adjacent_diff::x
+        z = int<adjacent_diff::W> adjacent_diff::z
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan?(int<adjacent_diff::W>) L
+          chan!(int<adjacent_diff::W>) R
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        int<adjacent_diff::W> x
+        int<adjacent_diff::W> z
+      chp:
+        concurrent: {
+          sequential: {
+            L?(x)
+            L?(z)
+            R!(x-z)
+          }
+        }
+      footprint collection: {
+        <12> {
+          !GND = bool^0 = adjacent_diff<12>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = adjacent_diff<12>::!Vdd (2) @[ supply_high port-alias ] 
+          L = channel chan?(int<12>)^0 = adjacent_diff<12>::L (1) @[ port! chp? meta? ] 
+          R = channel chan!(int<12>)^0 = adjacent_diff<12>::R (2) @[ chp! meta! port? ] 
+          W = pint^0 value: 12
+          x = int<12>^0 = adjacent_diff<12>::x (1) 
+          z = int<12>^0 = adjacent_diff<12>::z (2) 
+          Created state:
+          channel instance pool: (2 ports, 0 local, 0 mapped)
+          1	adjacent_diff<12>::L @[ port! chp? meta? ]	
+          2	adjacent_diff<12>::R @[ chp! meta! port? ]	
+          int instance pool: (0 ports, 2 local, 0 mapped)
+          1	adjacent_diff<12>::x	
+          2	adjacent_diff<12>::z	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	adjacent_diff<12>::!GND @[ supply_low port-alias ]	
+          2	adjacent_diff<12>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            sequential: {
+              L?(x)
+              L?(z)
+              R!(x-z)
+            }
+          chp events: {
+            event[0]: receive: L?(x), #pred: 1, succ: 1 
+            event[1]: receive: L?(z), #pred: 1, succ: 2 
+            event[2]: send: R!(x-z), #pred: 1, succ: 
+          }
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    A = chan(int<12>) A
+    B = chan(int<12>) B
+    differ = adjacent_diff<12> differ
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  A = channel chan(int<12>)^0 = A (1) @[ sub? chp? meta? ] 
+  B = channel chan(int<12>)^0 = B (2) @[ sub! chp! meta! ] 
+  differ = process adjacent_diff<12>^0 = differ (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    L = channel chan?(int<12>)^0 = A (1) @[ sub? chp? meta? ] 
+    R = channel chan!(int<12>)^0 = B (2) @[ sub! chp! meta! ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	differ	adjacent_diff<12>
+    channel: 1,2
+    bool: 1,2
+  channel instance pool: (0 ports, 2 local, 0 mapped)
+  1	A @[ sub? chp? meta? ]	
+  2	B @[ sub! chp! meta! ]	
+  private sub-int index map:
+    (1 -> 0)
+    (2 -> 2)
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

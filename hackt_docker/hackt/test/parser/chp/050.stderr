@@ -1,0 +1,9 @@
+Type mismatch in reference 1 of receive list.  
+	got: milk<>
+	expected: beer<>
+At least one type error in expr-list in [9:7..9]
+Type mismatch in expression 1 of send expression list.  
+	got: milk<>
+	expected: beer<>
+At least one type error in expr-list in [9:14..16]
+ERROR in CHP statement(s) at [9:2..18]

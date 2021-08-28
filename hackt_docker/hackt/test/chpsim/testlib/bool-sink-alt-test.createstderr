@@ -1,0 +1,343 @@
+WARNING: channel A.B lacks connection to a producer.
+WARNING: channel B.B lacks connection to a producer.
+WARNING: channel C.B lacks connection to a producer.
+Warnings found (3) while creating complete type <top-level>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	8	##ADDR##	procdefn	0	#HEAD#	#TAIL#	130
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	10	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	11	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	13	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	14	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	15	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	18	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	19	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	20	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	21	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	22	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	24	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	25	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	28	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	30	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	footprnt	0	#HEAD#	#TAIL#	337
+	32	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	33	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	34	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	35	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	36	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	37	##ADDR##	procdefn	0	#HEAD#	#TAIL#	148
+	38	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	39	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	40	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	41	##ADDR##	prealplh	0	#HEAD#	#TAIL#	29
+	42	##ADDR##	prealins	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	44	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	46	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	47	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	48	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	49	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	50	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	51	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	52	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	53	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	54	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	55	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	56	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	57	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	58	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	60	##ADDR##	sprmvref	0	#HEAD#	#TAIL#	16
+	61	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	62	##ADDR##	footprnt	0	#HEAD#	#TAIL#	350
+	63	##ADDR##	cnstpr__	0	#HEAD#	#TAIL#	12
+	64	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	65	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	66	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	67	##ADDR##	cnstpr__	0	#HEAD#	#TAIL#	12
+	68	##ADDR##	procdefn	0	#HEAD#	#TAIL#	147
+	69	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	70	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	71	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	72	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	73	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	74	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	75	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	76	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	77	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	78	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	79	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	80	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	81	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	82	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	83	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	84	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	85	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	86	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	87	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	88	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	89	##ADDR##	CHPlopac	0	#HEAD#	#TAIL#	25
+	90	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	91	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	92	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	93	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	94	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	95	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	96	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	97	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	98	##ADDR##	footprnt	0	#HEAD#	#TAIL#	397
+	99	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	100	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	101	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	32
+	102	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	103	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	104	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	105	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	106	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	107	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	108	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	109	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	110	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	111	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	112	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	113	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	114	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	115	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	116	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	117	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	118	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	119	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	120	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	121	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	122	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	123	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	124	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	125	##ADDR##	footprnt	0	#HEAD#	#TAIL#	664
+	126	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	127	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	16
+	128	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	16
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  5 instantiation-collections
+  0 sub-namespaces
+  3 definitions
+  0 typedefs
+  Definitions:
+    bool_sink_alt = process-definition (defined) bool_sink_alt(
+        bool<> !GND
+        bool<> !Vdd
+        chan?(bool<>) B
+      )
+      In definition "bool_sink_alt", we have: {
+      Instances:
+        !GND = bool<> bool_sink_alt::!GND
+        !Vdd = bool<> bool_sink_alt::!Vdd
+        B = chan?(bool<>) bool_sink_alt::B
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan?(bool<>) B
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      chp:
+        concurrent: {
+          *[
+            B?
+          ]
+        }
+      footprint: {
+        !GND = bool^0 = bool_sink_alt<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = bool_sink_alt<>::!Vdd (2) @[ supply_high port-alias ] 
+        B = channel chan?(bool<>)^0 = bool_sink_alt<>::B (1) @[ port! chp? meta? ] 
+        Created state:
+        channel instance pool: (1 ports, 0 local, 0 mapped)
+        1	bool_sink_alt<>::B @[ port! chp? meta? ]	
+        bool instance pool: (2 ports, 0 local, 0 mapped)
+        1	bool_sink_alt<>::!GND @[ supply_low port-alias ]	
+        2	bool_sink_alt<>::!Vdd @[ supply_high port-alias ]	
+        resolved concurrent actions:
+          *[
+            B?
+          ]
+        chp events: {
+          event[0]: receive: B?, #pred: 1, succ: 0 
+        }
+      }
+      }
+
+    bool_sink_alt_delay = process-definition (defined) bool_sink_alt_delay<
+      preal<> D
+      >(
+        bool<> !GND
+        bool<> !Vdd
+        chan?(bool<>) B
+      )
+      In definition "bool_sink_alt_delay", we have: {
+      Parameters:
+        D = preal<> bool_sink_alt_delay::D
+      Instances:
+        !GND = bool<> bool_sink_alt_delay::!GND
+        !Vdd = bool<> bool_sink_alt_delay::!Vdd
+        B = chan?(bool<>) bool_sink_alt_delay::B
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan?(bool<>) B
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      chp:
+        concurrent: {
+          *[
+            [after=D] B?
+          ]
+        }
+      footprint collection: {
+        <5> {
+          !GND = bool^0 = bool_sink_alt_delay<5>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = bool_sink_alt_delay<5>::!Vdd (2) @[ supply_high port-alias ] 
+          B = channel chan?(bool<>)^0 = bool_sink_alt_delay<5>::B (1) @[ port! chp? meta? ] 
+          D = preal^0 value: 5
+          Created state:
+          channel instance pool: (1 ports, 0 local, 0 mapped)
+          1	bool_sink_alt_delay<5>::B @[ port! chp? meta? ]	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	bool_sink_alt_delay<5>::!GND @[ supply_low port-alias ]	
+          2	bool_sink_alt_delay<5>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              [after=5] B?
+            ]
+          chp events: {
+            event[0]: receive: [after=5] B?, #pred: 1, succ: 0 
+          }
+        }
+      }
+      }
+
+    bool_sink_alt_once = process-definition (defined) bool_sink_alt_once<
+      pint<> N
+      >(
+        bool<> !GND
+        bool<> !Vdd
+        chan?(bool<>) B
+      )
+      In definition "bool_sink_alt_once", we have: {
+      Parameters:
+        N = pint<> bool_sink_alt_once::N
+      Instances:
+        !GND = bool<> bool_sink_alt_once::!GND
+        !Vdd = bool<> bool_sink_alt_once::!Vdd
+        B = chan?(bool<>) bool_sink_alt_once::B
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan?(bool<>) B
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      chp:
+        concurrent: {
+          concurrent i:[0..N-1]: {
+            B?
+          }
+        }
+      footprint collection: {
+        <4> {
+          !GND = bool^0 = bool_sink_alt_once<4>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = bool_sink_alt_once<4>::!Vdd (2) @[ supply_high port-alias ] 
+          B = channel chan?(bool<>)^0 = bool_sink_alt_once<4>::B (1) @[ port! chp? meta? ] 
+          N = pint^0 value: 4
+          Created state:
+          channel instance pool: (1 ports, 0 local, 0 mapped)
+          1	bool_sink_alt_once<4>::B @[ port! chp? meta? ]	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	bool_sink_alt_once<4>::!GND @[ supply_low port-alias ]	
+          2	bool_sink_alt_once<4>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            sequential: {
+              B?
+              B?
+              B?
+              B?
+            }
+          chp events: {
+            event[0]: receive: B?, #pred: 1, succ: 2 
+            event[1]: receive: B?, #pred: 1, succ: 3 
+            event[2]: receive: B?, #pred: 1, succ: 1 
+            event[3]: receive: B?, #pred: 1, succ: 
+          }
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    A = bool_sink_alt<> A
+    B = bool_sink_alt_delay<5> B
+    C = bool_sink_alt_once<4> C
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  A = process bool_sink_alt<>^0 = A (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    B = channel chan?(bool<>)^0 = A.B (1) @[ sub? chp? meta? ] 
+  )
+  B = process bool_sink_alt_delay<5>^0 = B (2) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    B = channel chan?(bool<>)^0 = B.B (2) @[ sub? chp? meta? ] 
+  )
+  C = process bool_sink_alt_once<4>^0 = C (3) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    B = channel chan?(bool<>)^0 = C.B (3) @[ sub? chp? meta? ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 3 local, 0 mapped)
+  1	A	bool_sink_alt<>
+    channel: 1
+    bool: 1,2
+  2	B	bool_sink_alt_delay<5>
+    channel: 2
+    bool: 1,2
+  3	C	bool_sink_alt_once<4>
+    channel: 3
+    bool: 1,2
+  channel instance pool: (0 ports, 3 local, 0 mapped)
+  1	A.B @[ sub? chp? meta? ]	
+  2	B.B @[ sub? chp? meta? ]	
+  3	C.B @[ sub? chp? meta? ]	
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

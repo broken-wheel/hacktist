@@ -1,0 +1,9 @@
+just make sure hacprsim launches 
+doodoo (type: deep<>) has members: 
+Instances:
+  !GND = bool
+  !Vdd = bool
+  m = bool
+  now = process test_me<>^1
+  x = bool
+  y = bool

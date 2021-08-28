@@ -1,0 +1,16 @@
+// "dataless-03.hac"
+//	$Id: dataless-03.hac,v 1.3 2007/09/11 06:55:51 fang Exp $
+// should compile fail
+// but we work around argument-list ambiguity: null vs. empty
+
+template <pint N>
+defproc void_source_once(chan!() S) {
+chp {
+{;i:N: S!() }
+	// error: S!() sends one null argument, when 0 are required
+	// correction: S!
+}
+}
+
+void_source_once<3> Z;
+

@@ -1,0 +1,7 @@
+# "wait-basic-a-02.chpsimrc"
+#	$Id: wait-basic-a-02.chpsimrc,v 1.3 2010/04/06 00:01:54 fang Exp $
+# @haco@ wait-basic-a.haco-c
+
+null-event-delay 0
+source wait-basic-a-01.chpsimrc
+

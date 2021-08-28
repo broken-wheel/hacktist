@@ -1,0 +1,12 @@
+# "channel-sync-desync-a-03-trace.chpsimrc"
+#	$Id: channel-sync-desync-a-03.chpsimrc,v 1.3 2010/04/06 00:00:35 fang Exp $
+# @haco@ channel-sync-desync-a.haco-c
+
+echo testing empty trace
+# already auto tracing
+# trace channel-sync-desync-a-03.chpsimtrace
+trace-close
+trace-dump channel-sync-desync-a-03.chpsimtrace
+# !rm channel-sync-desync-a-03.chpsimtrace
+echo Not very exciting.
+

@@ -1,0 +1,85 @@
+% "objfmt.tex"
+%	$Id: objfmt.tex,v 1.9 2006/11/26 21:16:30 fang Exp $
+
+\documentclass[12pt]{book}
+
+\usepackage{ifpdf}
+\usepackage{verbatim}
+\usepackage{makeidx}
+
+% COMPILE OPTIONS
+\ifpdf
+  \relax
+\else
+  \let\pdfoutput=\PDFoutput
+\fi
+
+
+\ifpdf
+\usepackage[
+	draft=false,
+	pdftitle={The HACKT Object Format}, 
+	pdfauthor={David Fang}, 
+	hyperfigures, 
+	hyperindex, 
+	bookmarks, 
+	colorlinks
+	]{hyperref}
+\fi
+
+\bibliographystyle{plain}
+
+\makeindex
+
+% PAGE FORMATTING
+\setlength{\oddsidemargin}{.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{0in}
+% \setlength{\topskip}{0in}
+% \setlength{\footskip}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\textheight}{8.5in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input hacdef
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{The HACKT Object File Format}
+\author{David Fang}
+
+\ifpdf\pdfbookmark[0]{Title Page}{title}\fi
+\maketitle
+
+\ifpdf\pdfbookmark[0]{Table of Contents}{toc}\fi
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input chapters/intro
+\input chapters/skeleton
+\input chapters/root
+\input chapters/namespace
+\input chapters/definition
+\input chapters/instance
+\input chapters/value
+\input chapters/sequential
+
+\appendix
+\input chapters/common
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \ifpdf\pdfbookmark[0]{Bibliography}{bibliography}\fi
+% \bibliography{objfmt}
+
+\clearpage
+\ifpdf\pdfbookmark[0]{Index}{index}\fi
+\printindex
+
+\end{document}
+
+

@@ -1,0 +1,10 @@
+Variables: 
+bool[1]: "!GND" 
+bool[2]: "!Vdd" 
+chan[1]: "work.in" 
+chan[2]: "work.out" 
+chan[3]: "work.peek" 
+
+Event graph: 
+event[0]: fork: null, #pred: 0, succ: 
+

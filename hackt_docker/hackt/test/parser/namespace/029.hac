@@ -1,0 +1,17 @@
+// "029.hac"
+// reduced bug test-case
+
+namespace std {
+export
+defproc bar() { }
+}
+
+open std;
+open std;			// bombs
+
+defproc foo() {
+	// std::bar x;		// works
+	bar x;			// bombs
+}
+
+

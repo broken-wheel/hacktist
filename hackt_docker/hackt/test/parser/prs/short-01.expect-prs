@@ -1,0 +1,10 @@
+"A.a" -> "z"-
+~"A.a" -> "z"+
+"B.a" -> "z"-
+~"B.a" -> "z"+
+= "!GND" "A.!GND"
+= "!GND" "B.!GND"
+= "!Vdd" "A.!Vdd"
+= "!Vdd" "B.!Vdd"
+= "z" "A.b"
+= "z" "B.b"

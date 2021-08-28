@@ -1,0 +1,18 @@
+// "028.hac"
+// copy-modified from "027.hac"
+// expected to fail on ambiguous candidates
+
+namespace foo {
+defproc bar() { }
+}
+
+namespace ick {
+defproc bar() { }
+}
+
+open foo;
+open ick;
+
+bar BQ;		// ambiguous type
+
+// error message could be improved though...

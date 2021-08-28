@@ -1,0 +1,3 @@
+My:dn:0 !GND x y !GND nch W=1.6u L=0.4u
+My:up:0 !Vdd x y !Vdd pch W=1.2u L=0.4u
+

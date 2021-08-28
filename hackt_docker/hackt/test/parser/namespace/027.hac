@@ -1,0 +1,12 @@
+// "027.hac"
+// testing lookup of definition in namespace
+
+namespace foo {
+export
+defproc bar() { }
+}
+
+open foo;
+
+bar BQ;
+

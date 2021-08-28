@@ -1,0 +1,64 @@
+event queue:
+check queue:
+	time	eid	pid	event
+	0	0	1	null
+a : bool a = 0
+b : bool b = 0
+event queue:
+check queue:
+	time	eid	pid	event
+	10	1	0	a := false
+a : bool a = 0
+b : bool b = 0
+executing selection 
+event queue:
+check queue:
+	time	eid	pid	event
+	30	3	0	null
+a : bool a = 0
+b : bool b = 0
+event queue:
+check queue:
+	time	eid	pid	event
+	40	2	0	a := true
+a : bool a = 0
+b : bool b = 0
+executing selection 
+event queue:
+check queue:
+	time	eid	pid	event
+	60	4	0	b := true
+a : bool a = 1
+b : bool b = 0
+event queue:
+check queue:
+	time	eid	pid	event
+	70	3	0	null
+a : bool a = 1
+b : bool b = 1
+event queue:
+check queue:
+	time	eid	pid	event
+	80	2	0	a := true
+a : bool a = 1
+b : bool b = 1
+executing selection 
+event queue:
+check queue:
+	time	eid	pid	event
+	100	4	0	b := true
+a : bool a = 1
+b : bool b = 1
+event queue:
+check queue:
+	time	eid	pid	event
+	110	3	0	null
+a : bool a = 1
+b : bool b = 1
+event queue:
+check queue:
+	time	eid	pid	event
+	120	2	0	a := true
+a : bool a = 1
+b : bool b = 1
+time: 110

@@ -1,0 +1,9 @@
+# "channel-sync-desync-a-01.chpsimrc"
+#	$Id: channel-sync-desync-a-01.chpsimrc,v 1.3 2010/04/06 00:00:33 fang Exp $
+# @haco@ channel-sync-desync-a.haco-c
+
+watchall-events
+step 60
+time
+assert-queue
+

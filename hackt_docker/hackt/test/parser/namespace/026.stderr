@@ -1,0 +1,49 @@
+At: "026.hac":6:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	keyword: namespace [3:1..9]
+#STATE#	identifier: close_me [3:11..18]
+#STATE#	{ [3:20]
+#STATE#	end-of-file
+in state #STATE#, possible rules are:
+	namespace_management : NAMESPACE ID '{' . top_root '}'  (#RULE#)
+	top_root : .  (#RULE#)
+	optional_export : .  (#RULE#)
+acceptable tokens are: 
+	'!' (shift)
+	'(' (shift)
+	'-' (shift)
+	'[' (shift)
+	'{' (shift)
+	'}' (reduce)
+	'~' (shift)
+	ID (shift)
+	FLOAT (shift)
+	INT (shift)
+	STRING (shift)
+	SCOPE (shift)
+	NAMESPACE (shift)
+	OPEN (shift)
+	CHP_LANG (shift)
+	HSE_LANG (shift)
+	PRS_LANG (shift)
+	SPEC_LANG (shift)
+	DEFINE (reduce)
+	DEFPROC (reduce)
+	DEFCHAN (reduce)
+	DEFTYPE (reduce)
+	TYPEDEF (reduce)
+	CHANNEL (shift)
+	TEMPLATE (reduce)
+	ENUM (shift)
+	EXPORT (shift)
+	BOOL_TRUE (shift)
+	BOOL_FALSE (shift)
+	INT_TYPE (shift)
+	BOOL_TYPE (shift)
+	PINT_TYPE (shift)
+	PBOOL_TYPE (shift)
+	PREAL_TYPE (shift)
+	PSTRING_TYPE (shift)

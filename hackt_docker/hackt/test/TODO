@@ -1,0 +1,12 @@
+"test/TODO"
+	$Id: TODO,v 1.5 2007/08/16 06:11:06 fang Exp $
+
+re-organize Make.test-* contents so variables and targets associated
+	with each test are grouped together
+
+Detected whether or not we are VPATH building, for the cases
+	where we copy or link tests (.stderr) from srcdir to builddir, 
+	we'd prefer to distinguish when we'd need to clean certain files.
+	e.g. if !VPATH, don't remove the stderr files, else remove them
+	upon cleaning!  see why in artc-expect.sh.in.
+

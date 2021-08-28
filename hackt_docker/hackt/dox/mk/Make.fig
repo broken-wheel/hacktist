@@ -1,0 +1,130 @@
+# "mk/Make.fig"
+#	$Id: Make.fig,v 1.7 2009/02/24 03:18:21 fang Exp $
+#	vi: ft=automake
+# This makefile includes rules for converting to and from xfig figures.
+
+SUFFIXES += .dot .fig .figtex .ps .eps .pdf \
+	.pstex .pstex_t .pdftex .pdftex_t .png
+
+# other option is to skip fig and go directly to pdf or ps
+
+ECHO_NO_DOT = $(ECHO) "Sorry, no dot found in path during configure."
+ECHO_NO_FIG2DEV = $(ECHO) "Sorry, no fig2dev found in path during configure."
+
+# for xfig stream editing
+include $(top_srcdir)/dox/mk/updatefig.mk
+
+# includes closed shapes
+# filter to prevent filled shapes from smothering text at same depth
+POLYLINES_TO_DEPTH_100 = $(UPDATEFIG) $(MATCH_POLYLINE) -v update_depth=100 | \
+	$(UPDATEFIG) $(MATCH_ELLIPSE) -v update_depth=100
+
+DOTFIG_FILTER = $(POLYLINES_TO_DEPTH_100)
+
+.dot.fig:
+if HAVE_DOT
+#	$(DOT) -Tfig $< | $(DOTFIG_FILTER) > $@
+	$(DOT) -Tfig $< -o $@.orig && \
+	$(CAT) $@.orig | $(DOTFIG_FILTER) > $@
+else
+	@$(ECHO_NO_DOT)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-dot.fig $@
+endif
+
+# TODO: make a placeholder dummy box for missing figures.  
+# don't use .tex extension, else make will chain suffix, using wrong rules
+.fig.figtex:
+	@$(ECHO) "Generating $@ from $<" ; \
+	pdf=`$(ECHO) $@ | $(SED) 's|figtex$$|pdftex_t|'` ; \
+	ps=`$(ECHO) $@ | $(SED) 's|figtex$$|pstex_t|'` ; \
+	$(PRINTF) "\\\\ifpdf\\\\input{$$pdf}\\\\else\\\\input{$$ps}\\\\fi\\n" > $@
+
+if FIG2DEV_PDFTEX
+PDFTEX_LANG = pdftex
+PDFTEX_T_LANG = pdftex_t
+else
+PDFTEX_LANG = pdf
+PDFTEX_T_LANG = pstex_t
+endif
+
+.fig.pdf:
+if HAVE_FIG2DEV
+	$(FIG2DEV) -L$(PDFTEX_LANG) $< $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-pdf.pdf $@
+endif
+
+.fig.pdftex:
+if HAVE_FIG2DEV
+	$(FIG2DEV) -L$(PDFTEX_LANG) $< $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-pdf.pdf $@
+endif
+
+.fig.pdftex_t:
+if HAVE_FIG2DEV
+	@$(ECHO) "$(FIG2DEV) -L$(PDFTEX_T_LANG) $< > $@ ..." ; \
+	pdf=`$(ECHO) $@ | $(SED) 's|\.pdftex_t$$||'` ; \
+	{ $(PRINTF) "\\\\begin{picture}(0,0)%%\\n" ; \
+	$(PRINTF) "\\\\includegraphics{$$pdf}%%\\n" ; \
+	$(PRINTF) "\\\\end{picture}%%\\n" ; \
+	$(FIG2DEV) -L$(PDFTEX_T_LANG) $< ;} > $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	@pdf=`$(ECHO) $@ | $(SED) 's|\.pdftex_t$$||'` ; \
+	{ $(PRINTF) "\\\\begin{picture}(0,0)%%\\n" ; \
+	$(PRINTF) "\\\\includegraphics{$$pdf}%%\\n" ; \
+	$(PRINTF) "\\\\end{picture}%%\\n" ;} $@
+endif
+
+.fig.ps:
+if HAVE_FIG2DEV
+	$(FIG2DEV) -Lpstex $< $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-ps.ps $@
+endif
+
+.fig.eps:
+if HAVE_FIG2DEV
+	$(FIG2DEV) -Leps $< $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-ps.eps $@
+endif
+
+.fig.pstex:
+if HAVE_FIG2DEV
+	$(FIG2DEV) -Lpstex $< $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-ps.ps $@
+endif
+
+.fig.pstex_t:
+if HAVE_FIG2DEV
+	@$(ECHO) "$(FIG2DEV) -Lpstex_t $< > $@ ..." ; \
+	ps=`$(ECHO) $@ | $(SED) 's|\.pstex_t$$||'` ; \
+	{ $(PRINTF) "\\\\begin{picture}(0,0)%%\\n" ; \
+	$(PRINTF) "\\\\includegraphics{$$ps}%%\\n" ; \
+	$(PRINTF) "\\\\end{picture}%%\\n" ; \
+	$(FIG2DEV) -Lpstex_t $< ;} > $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	@ps=`$(ECHO) $@ | $(SED) 's|\.pstex_t$$||'` ; \
+	{ $(PRINTF) "\\\\begin{picture}(0,0)%%\\n" ; \
+	$(PRINTF) "\\\\includegraphics{$$ps}%%\\n" ; \
+	$(PRINTF) "\\\\end{picture}%%\\n" ;} > $@
+endif
+
+.fig.png:
+if HAVE_FIG2DEV
+	$(FIG2DEV) -Lpng $< $@
+else
+	@$(ECHO_NO_FIG2DEV)
+	$(LN_S) -f $(top_srcdir)/dox/common/missing-png.png $@
+endif
+
+

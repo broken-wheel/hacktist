@@ -1,0 +1,88 @@
+#!@SH_PATH@
+# "test-series.sh.in"
+# convenience script for running a sequence of tests on one input file.
+#	$Id: test-series.sh.in,v 1.11 2006/11/15 21:56:59 fang Exp $
+# This file originally came from "test-series.sh" in revision prehistory.  
+
+# usage: pass in the root names of the test cases (without the .hac extension)
+
+# TODO: this script is become obsolete after parallelizing tests
+# and with explicit dependence chaining.  
+# Either update this or remove it.  (2006-11-14)
+
+for t in $@
+do
+	if test ! -f $t.hacktcmpltest
+	then
+		@CALLMAKE@ $t.hacktcmpltest
+	fi
+	@ECHO@ $t.hacktcmpltest
+	./$t.hacktcmpltest
+	@GREP@ -v "^WARNING" $t.test > $t.test.nowarn
+	if test ! -s $t.test.nowarn
+	then
+		if test ! -f $t.hacktobjtest
+		then
+			@CALLMAKE@ $t.hacktobjtest
+		fi
+		@ECHO@ $t.hacktobjtest
+		./$t.hacktobjtest
+		if test -s $t.haco
+		then
+			if test ! -f $t.hacktunrolltest
+			then
+				@CALLMAKE@ $t.hacktunrolltest
+			fi
+			@ECHO@ $t.hacktunrolltest
+			./$t.hacktunrolltest
+		fi
+		if test -s $t.haco-u
+		then
+			if test ! -f $t.hacktcreatetest
+			then
+				@CALLMAKE@ $t.hacktcreatetest
+			fi
+			if test ! -f $t.hacktcreatefromhacotest
+			then
+				@CALLMAKE@ $t.hacktcreatefromhacotest
+			fi
+			@ECHO@ $t.hacktcreatetest
+			./$t.hacktcreatetest
+			@ECHO@ $t.hacktcreatefromhacotest
+			./$t.hacktcreatefromhacotest
+		fi
+		if test -s $t.haco-c
+		then
+			if test ! -f $t.hacktalloctest
+			then
+				@CALLMAKE@ $t.hacktalloctest
+			fi
+			if test ! -f $t.hacktallocfromhacotest
+			then
+				@CALLMAKE@ $t.hacktallocfromhacotest
+			fi
+			@ECHO@ $t.hacktalloctest
+			./$t.hacktalloctest
+			@ECHO@ $t.hacktallocfromhacotest
+			./$t.hacktallocfromhacotest
+		fi
+		if test -s $t.haco-a
+		then
+			if test ! -f $t.hacktcflattest
+			then
+				@CALLMAKE@ $t.hacktcflattest
+			fi
+			if test ! -f $t.hacktprsdottest
+			then
+				@CALLMAKE@ $t.hacktprsdottest
+			fi
+			@ECHO@ $t.hacktcflattest
+			./$t.hacktcflattest
+			@ECHO@ $t.hacktprsdottest
+			./$t.hacktprsdottest
+		fi
+	fi
+	rm -f $t.test.nowarn
+done
+
+

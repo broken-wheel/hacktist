@@ -1,0 +1,14 @@
+Fanins of node `b':
+(from [top-level]):
+[after 10]	~a -> b+
+[after 10]	a -> b-
+Fanins of node `a':
+(from [top-level]):
+[after 0, weak]	~b -> a+
+[after 0, weak]	b -> a-
+event queue:
+	10	b : 1	[from a:=0]
+event queue:
+	20	b : 0	[from a:=1]
+event queue:
+time: 20

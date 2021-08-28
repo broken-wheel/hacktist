@@ -1,0 +1,14 @@
+"a" -> "b"-
+~"a" -> "b"+
+invariant "a" | "b"
+"b" -> "a"-
+~"b" -> "a"+
+invariant ~("b" & "a")
+= "!GND" "barfu.!GND"
+= "!GND" "fubar.!GND"
+= "!Vdd" "barfu.!Vdd"
+= "!Vdd" "fubar.!Vdd"
+= "a" "barfu.z"
+= "a" "fubar.x"
+= "b" "barfu.w"
+= "b" "fubar.y"

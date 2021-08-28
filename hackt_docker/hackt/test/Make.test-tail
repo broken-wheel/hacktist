@@ -1,0 +1,376 @@
+# "test/Make.test-tail"
+#	vi: ft=automake
+# a template makefile for testing, to be included in recursive invocations
+# Include this Makefile at the end of every subdirectoy's Makefile.am.
+# The counterpart header Makefile is "test/Make.test-head".
+#	$Id: Make.test-tail,v 1.102 2011/05/03 19:21:13 fang Exp $
+
+# for test that depend on pre-install plug-ins
+# don't forget to pass -dlopen to assist searching for pre-install dependencies
+LIBTOOL_EXEC = $(LIBTOOL) --mode=execute
+
+# our collection of test programs/scripts/commands
+HACKT_EXE = $(top_builddir)/src/hackt
+PARSE_TEST_EXE = $(HACKT_EXE) parse_test
+HACKT_COMPILE_EXE = $(top_builddir)/src/haco
+HACKT_FLATTEN_EXE = $(top_builddir)/src/hacpp
+HACKT_OBJDUMP_EXE = $(top_builddir)/src/hacobjdump
+HACKT_CREATE_EXE = $(top_builddir)/src/haccreate
+# deprecated: replace with sym-link
+# HACKT_ALLOC_EXE = $(top_builddir)/src/hacalloc
+HACKT_CFLAT_EXE = $(top_builddir)/src/hflat
+HACKT_CFLAT_PRSIM_EXE = $(HACKT_CFLAT_EXE) prsim
+HACKT_CFLAT_PRSIM_SEU_EXE = $(HACKT_CFLAT_PRSIM_EXE) -f SEU
+HACKT_CFLAT_SPRS_EXE = $(HACKT_CFLAT_PRSIM_EXE) -fsizes
+HACKT_CFLAT_LVS_EXE = $(HACKT_CFLAT_EXE) lvs
+HACKT_CFLAT_VCDH_EXE = $(HACKT_CFLAT_EXE) vcd
+HACKT_PRSIM_EXE = $(top_builddir)/src/hacprsim
+HACKT_CHPSIM_RAW_EXE = $(top_builddir)/src/hacchpsim
+HACKT_CHPSIM_EXE = $(LIBTOOL_EXEC) -dlopen $(top_builddir)/lib/stdchpfn.la $$dlopen_extra $(HACKT_CHPSIM_RAW_EXE)
+# because chpsim loads plug-ins for function libraries
+HACKNET_EXE = $(top_builddir)/src/hacknet
+HACKT_IPPLE_EXE = $(top_builddir)/src/ipple
+
+# guile-based and plug-in tests will need a modified environment, 
+# see Make.test-guile
+# -q flag inhibits loading of user's ~/.guile init file
+SCM_SRCDIR = $(top_srcdir)/src/scm
+# for make check, set the load path to srcdir, see also src/hacguile.in
+GUILE_LOAD_FLAGS = -L $(top_srcdir)/src/scm -L $(srcdir)
+HACKT_GUILE_EXE = $(LIBTOOL_EXEC) -dlopen $(top_builddir)/src/hackt-guile.la $(GUILE) -q $(GUILE_LOAD_FLAGS) -l $(SCM_SRCDIR)/hacguile.scm --
+HACKT_CHPSIM_GUILE_EXE = $(LIBTOOL_EXEC) -dlopen $(top_builddir)/src/hackt-chpsim-guile.la $(GUILE) -q $(GUILE_LOAD_FLAGS) -l $(SCM_SRCDIR)/hacchpsimguile.scm --
+
+# handy script to add extra dlopen arguments based on .la dependencies
+# usually preceded by:
+#	deps=`$(CAT) $< | $(EXTRACT_DEPS_PIPE)`
+EXTRACT_DLOPEN_EXTRA_SCRIPT = \
+	for d in $$deps ; do \
+	  if { $(ECHO) $$d | $(GREP) -q "\.la" ;} ; then \
+	    dlopen_extra="$$dlopen_extra -dlopen $$d" ; \
+	  fi ; \
+	  dlopen_extra=`$(ECHO) "$$dlopen_extra" | $(BUILDDIR_SUBST)` ; \
+	done
+# also substitutes a few $(variables)
+
+# install-time only test scripts and executables
+INSTALLED_HACGUILE = hacguile
+INSTALLED_HACCHPSIMGUILE = hacchpsimguile
+
+# explicitly prepend path to force subshell to find installed executables first
+INSTALL_PATH_OVERRIDE = $(bindir)$(PATH_SEPARATOR)"$$PATH"
+
+# NOTE: these scripts are configure-generated from their .hac files.  
+TEST_SRCDIR = $(top_srcdir)/test
+TEST_BUILDDIR = $(top_builddir)/test
+
+# SPACES_TO_NEWLINE defined as inline awk command in Make.stddef
+POM_HEADER_FILTER = $(AWK) -f $(TEST_BUILDDIR)/POM-header-filter.awk
+POM_INDEX_FILTER = $(AWK) -f $(TEST_SRCDIR)/POM-index-filter.awk
+POM_SIZE_FILTER = $(AWK) -f $(TEST_SRCDIR)/POM-size-filter.awk
+HEX_ADDRESS_FILTER = $(SED) -f $(TEST_SRCDIR)/address_filter.sed
+HACKT_OBJ_DIFF_FILTER = { $(POM_HEADER_FILTER) | $(GREP) -v "finish writing" ;}
+ANALYZE_DIFF_AWK = $(AWK) -f $(TEST_SRCDIR)/analyze-dump-diff.awk
+CHPSIM_TRACE_BINARY_FILTER = $(AWK) -f $(TEST_SRCDIR)/chpsim-binary-size-filter.awk
+# happens to be close enough to be reusable!
+PRSIM_TRACE_BINARY_FILTER = $(CHPSIM_TRACE_BINARY_FILTER)
+
+# objdump should NOT fail under any circumstances
+# reminder: dump goes to stderr
+DEFAULT_OBJDUMP_RULE_ACTION = $(HACKT_OBJDUMP_EXE) $$objdumpflags $< > $@ 2>&1
+OBJDUMP_APPEND = $(HACKT_OBJDUMP_EXE) $$objdumpflags $< >> $@ 2>&1
+
+HACO_FLAGS += -I$(srcdir)
+
+# this dependency generator assumes default target suffix .haco
+# caution: concurrent builds of .haco and .depend may clobber this
+# if executable did not successfully build, then skip.
+
+HAC_DEPEND_FILTER = $(SED) -e '/haco:/s|^$(srcdir)\/||g' \
+	-e 's/haco:/haco $@:/g' -e 's/^:/$@:/' -e 's/\.depend:/.haco:/'
+# the following works for VPATH, but need to test for srcdir = .
+# -e 's|$(srcdir)|$$(srcdir)|g'
+
+NO_OP_SCRIPT = test -f $< && test -f $@
+
+DEFAULT_DIFF_TEST_SCRIPT = \
+	$(ECHO) "Summarizing $@ ..." ; \
+	{ $(ECHO) $(SHELL_INTERPRETER) ; \
+	$(ECHO) "\# \"$@\"" ; \
+	if test -s $< ; then \
+	  $(ECHO) "$(ECHO) $< is non-empty!" ; \
+	  $(ECHO) "exit 1" ; \
+	fi ;} > $@ ; \
+	$(CHMOD) +x $@
+
+HAC_DEPEND_SCRIPT = \
+	if test -x $(HACKT_COMPILE_EXE) ; then \
+		$(ECHO) "Generating automatic dependencies $@ ..." && \
+		$(HACKT_COMPILE_EXE) $(HACO_FLAGS) -M $@-tmp $< && \
+		$(HAC_DEPEND_FILTER) < $@-tmp > $@ && \
+		$(RM) $@-tmp ; \
+	fi
+
+.hac.depend:
+	@$(HAC_DEPEND_SCRIPT)
+
+if VERBOSE_CHECK
+ECHO_FILTERED = $(ECHO) "Filtered $@"
+else
+ECHO_FILTERED = :
+endif
+
+# Each run-commands script should include the command to invoke
+# for loading the object, e.g.: hackt prsim foo.haco-c
+# This rule should deduce the input object from the source script.  
+
+# to apply different compile flags to the same source file
+EXTRACT_HACO_FLAGS_PIPE = { $(GREP) "@haco-flags@" | $(HEAD) -n1 | \
+	$(SED) 's/^.*@haco-flags@[ ]*//g' ;}
+EXTRACT_HACPP_FLAGS_PIPE = { $(GREP) "@hacpp-flags@" | $(HEAD) -n1 | \
+	$(SED) 's/^.*@hacpp-flags@[ ]*//g' ;}
+EXTRACT_HFLAT_FLAGS_PIPE = { $(GREP) "@hflat-flags@" | $(HEAD) -n1 | \
+	$(SED) 's/^.*@hflat-flags@[ ]*//g' ;}
+
+# useful for extracting object file name from a source script
+# EXTRACT_HACO_PIPE = $(GREP) "^\#" ...
+EXTRACT_HACO_PIPE = { $(GREP) "@haco@" | $(HEAD) -n1 | \
+	$(SED) 's/^.*@haco@[ ]*//' ;}
+#	$(AWK) '{ntok=split($$0, toks); print toks[ntok]; }'
+
+# This analogously extracts the name of a tracefile from source.
+EXTRACT_CHPSIMTRACE_PIPE = { $(GREP) "@chpsimtrace@" | $(HEAD) -n1 | \
+	$(AWK) '{ntok=split($$0, toks); print toks[ntok]; }' ;}
+
+# General script for extracting additional dependencies from source files.
+EXTRACT_DEPS_PIPE = { $(GREP) "@deps@" | $(SED) 's/^.*@deps@[ ]*//g' ;}
+
+# General script for extracting additional anti-dependencies from source files.
+# Useful for automatically cleaning side-effect files.
+EXTRACT_ANTIDEPS_PIPE = { $(GREP) "@antideps@" | $(SED) 's/^.*@antideps@[ ]*//g' ;}
+
+
+# This mechanism could be generalized to produce extra dependencies
+# that do not need to be named as arguments to the invoking command.  
+# For example, dependencies known by the user or hard-coded names.  
+
+BOGUS_TESTS =
+BOGUS_TARGETS =
+HAC_COMPILE_OBJECT_TARGETS =
+HAC_CREATE_OBJECT_TARGETS =
+# HAC_ALLOC_OBJECT_TARGETS =
+CHECK_SUMMARIES =
+
+# These included templates contain all the rules
+include $(top_srcdir)/test/Make.test-compile
+include $(top_srcdir)/test/Make.test-flatten
+include $(top_srcdir)/test/Make.test-create
+include $(top_srcdir)/test/Make.test-alloc
+include $(top_srcdir)/test/Make.test-cflat
+include $(top_srcdir)/test/Make.test-graph
+include $(top_srcdir)/test/Make.test-prsim
+include $(top_srcdir)/test/Make.test-vpi
+include $(top_srcdir)/test/Make.test-chpsim
+include $(top_srcdir)/test/Make.test-guile
+include $(top_srcdir)/test/Make.test-net
+include $(top_srcdir)/test/Make.test-ipl
+
+BOGUS_TESTS +=
+
+BOGUS_TARGETS +=
+
+CLEAN_BOGUS_FILES = $(BOGUS_TESTS) $(BOGUS_TARGETS)
+
+CLEANFILES += $(CLEAN_BOGUS_FILES)
+DISTHOOK_CLEANFILES += $(CLEAN_BOGUS_FILES)
+
+CHECK_SUMMARIES +=
+
+check-summaries: check-summaries-recursive
+
+check-summaries-am: $(CHECK_SUMMARIES)
+	-@ls -l $(CHECK_SUMMARIES)
+
+MORE_RECURSIVE_TARGETS += check-summaries-recursive
+
+srcdir_EXTRA_DIST +=
+
+TESTS +=
+
+HAC_OBJECT_TARGETS = \
+	$(HAC_COMPILE_OBJECT_TARGETS) \
+	$(HAC_CREATE_OBJECT_TARGETS)
+#	$(HAC_ALLOC_OBJECT_TARGETS)
+
+# build all tests, but don't run the resulting test scripts
+build-check-local: $(TESTS)
+
+# executable dependence: if executable is more recent, also rebuild
+# if we really cared we could subdivide this by the executable that
+# generated the output, e.g. haco, haccreate, hacalloc...
+# depending on the hackt dispatcher should cover everything
+$(HAC_COMPILE_OBJECT_TARGETS): $(HACKT_COMPILE_EXE)
+$(HAC_CREATE_OBJECT_TARGETS): $(HACKT_CREATE_EXE)
+# $(HAC_ALLOC_OBJECT_TARGETS): $(HACKT_ALLOC_EXE)
+
+HACGUILE_TARGETS = \
+	$(HACKT_GUILE_TEST_SCRIPTS_BASES:=.hacscm-out) \
+	$(HACKT_GUILE_TEST_SCRIPTS_BASES:=.hacscmfail-out)
+
+if HAVE_LIBGUILE
+# depend on the plug-in
+$(HACGUILE_TARGETS): $(top_builddir)/src/hackt-guile.la
+endif
+
+HACCHPSIMGUILE_TARGETS = \
+	$(HACKT_CHPSIM_GUILE_TEST_SCRIPTS_BASES:=.hacchpsimscm-out) \
+	$(HACKT_CHPSIM_GUILE_TEST_SCRIPTS_BASES:=.hacchpsimscmfail-out)
+
+if HAVE_LIBGUILE
+# depend on the plug-in
+$(HACCHPSIMGUILE_TARGETS): $(top_builddir)/src/hackt-chpsim-guile.la
+endif
+
+ALL_OBJECT_TESTS = \
+	$(HACKT_PARSE_TEST_PASSES) \
+	$(HACKT_PARSE_TEST_WARNINGS) \
+	$(HACKT_PRSIMRC_TEST_SUBJECTS) \
+	$(HACKT_CHPSIMRC_TEST_SUBJECTS)
+
+HAC_OBJECT_DEPS = $(ALL_OBJECT_TESTS:=.depend)
+# $(HAC_OBJECT_DEPS): $(HACKT_EXE)
+
+# source dependencies
+test.autodepend: Makefile
+	@$(ECHO) "Generating dependencies $@" ; \
+	$(SET_PIPEFAIL) ; \
+	$(ECHO) "$(ALL_OBJECT_TESTS)" | $(SPACES_TO_NEWLINE) | $(SORT) -u | \
+		$(AWK) '/.+/ {print "-include " $$1 ".depend"; }' > $@ ; \
+	$(TOUCH) $@
+
+-include test.autodepend
+
+AUTO_DEPENDS += test.autodepend
+
+# echo-style Makefile debugging
+echo-tests: force
+	@$(ECHO) $(TESTS)
+
+echo-hackt: force
+	@$(ECHO) $(HACKT_EXE)
+
+# filter-out is GNUMake feature
+#	$($(filter-out $(HACKT_PARSE_TEST_PASSES), $(HACKT_PARSE_TEST_SUBJECTS)):=.stderr)
+
+# must be previously defined
+# CLEANFILES += $(TESTS)
+# removed in favor of using pattern removes, for the sake of shortening
+# shell commands' lengths, as some weaker shells have trouble with long cmds.
+CLEANFILES += $(CHECK_SUMMARIES)
+
+
+DISTCLEANFILES += local.cvsignore
+
+ALL_LOCAL =
+if AUTO_CVSIGNORE
+ALL_LOCAL += $(srcdir)/.cvsignore
+endif
+
+all-local: $(ALL_LOCAL)
+
+DISTHOOK_CLEANFILES += $(EMPTY_CFLAT_PRS)
+
+# consider using CLEANFILES
+AUTO_IGNORE += local.cvsignore \
+	$(CHECK_SUMMARIES)
+
+if AUTO_CVSIGNORE
+# we generate all the local.cvsignore's in the test directories
+local.cvsignore: $(TEST_SRCDIR)/test.cvsignore
+	$(CP) $? $@
+
+# additional dependence
+$(srcdir)/.cvsignore: $(TEST_SRCDIR)/Make.test-tail
+endif
+
+# clean tests only
+clean-tests: clean-tests-recursive clean-tests-local
+
+clean-tests-local:
+	-$(RM) $(TESTS)
+
+MORE_CLEAN_RECURSIVE_TARGETS += clean-tests-recursive
+
+clean-summaries: clean-summaries-recursive clean-summaries-local
+
+clean-summaries-local:
+	$(RM) $(CHECK_SUMMARIES)
+
+MORE_CLEAN_RECURSIVE_TARGETS += clean-summaries-recursive
+
+distclean-depend-local:
+	-$(RM_PATTERN) "*.autodepend"
+	-$(RM_PATTERN) "*.depend-tmp"
+	-$(RM_PATTERN) "*.depend"
+	-$(RM_PATTERN) "*.hacdepend"
+
+GENERAL_CLEAN_IGNORE_PATTERNS = \
+	"*.core" "core.*" \
+	"*.test" "*.diff" \
+	"*.sort" \
+	"*.noindex" \
+	"*-from-haco" \
+	"*.*haco*" \
+	"*.*-from-*-dump" \
+	"*.*-from-*-diff"
+
+AUTO_IGNORE += $(GENERAL_CLEAN_IGNORE_PATTERNS)
+
+# automatically removes $(CLEANFILES)
+clean-local: clean-summaries-local
+	patternlist='$(GENERAL_CLEAN_IGNORE_PATTERNS)' ; \
+	for p in $$patternlist ; do \
+	  pp=`$(ECHO) $$p | $(SED) 's/"//g'` ; \
+	  $(RM_PATTERN) "$$pp" ; \
+	done
+
+cleaner: cleaner-recursive cleaner-am
+
+cleaner-am: cleaner-local clean-am
+
+distclean-local: cleaner-local
+
+MORE_CLEAN_RECURSIVE_TARGETS += cleaner-recursive
+
+.PHONY: cleaner cleaner-am cleaner-local check-summaries check-summaries-am \
+	clean-tests help-test clean-summaries clean-summaries-local
+
+help-local: help-test
+
+help-test:
+	@$(ECHO) "Test make targets:"
+	@$(ECHO) "    cleaner: also cleans *.<ext> files (recursive)"
+	@$(ECHO) "    check-summaries: summaries of test differences (recursive)"
+	@$(ECHO) "	(produces: $(CHECK_SUMMARIES))"
+	@$(ECHO) "    echo-*:"
+	@$(ECHO) "	hackt: path to the built hackt executable"
+	@$(ECHO) "	tests: lists TESTS"
+	@$(ECHO) "	(-tests may be substituted with -passes, -failures)"
+	@$(ECHO) "	parse-tests: lists HACKT_PARSE_TEST_SUBJECTS"
+	@$(ECHO) "	flatten-tests: lists HACKT_FLATTEN_TEST_SUBJECTS"
+	@$(ECHO) "	create-tests: lists HACKT_CREATE_TEST_SUBJECTS"
+	@$(ECHO) "	alloc-tests: lists HACKT_ALLOC_TEST_SUBJECTS"
+	@$(ECHO) "	cflat-tests: lists HACKT_CFLAT_TEST_SUBJECTS"
+	@$(ECHO) "	cflat-lvs-tests: lists HACKT_CFLAT_LVS_TEST_SUBJECTS"
+	@$(ECHO) "	cflat-sprs-tests: lists HACKT_CFLAT_SPRS_TEST_SUBJECTS"
+	@$(ECHO) "	prsimexpr-tests: lists HACKT_PRSIMEXPR_TEST_SUBJECTS"
+	@$(ECHO) "	prsimrc-tests: lists HACKT_PRSIMRC_TEST_SCRIPTS_BASES"
+	@$(ECHO) "	prsimckpt-tests: lists HACKT_PRSIM_CKPT_TEST_SCRIPTS_BASES"
+	@$(ECHO) "	prsimopt-tests: lists HACKT_PRSIM_OPT_TEST_SCRIPTS_BASES"
+	@$(ECHO) "	compile-passes: lists TESTS that pass parsing"
+	@$(ECHO) "	bison-outputs: list TESTS whose output is bison-specific"
+	@$(ECHO) "	empty-cflat-prs: list of tests whose cflat-output is empty"
+	@$(ECHO) "	chpsimalloc-tests: lists HACKT_CHPSIM_ALLOC_TEST_SUBJECTS"
+
+include $(top_srcdir)/Make.global
+# help: help-test
+

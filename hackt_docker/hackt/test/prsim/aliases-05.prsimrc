@@ -1,0 +1,11 @@
+# "aliases-05.prsimrc"
+#	$Id: aliases-05.prsimrc,v 1.2 2010/04/06 00:04:12 fang Exp $
+# @haco@ inv.haco-c
+# testing user-defined alias commands
+
+
+alias foo bar
+aliases
+foo will fail with unknown command 'bar'
+
+

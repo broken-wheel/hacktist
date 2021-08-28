@@ -1,0 +1,43 @@
+mode: 
+	weak rules: off
+	unstable events propagate Xs
+	force-excl caused unstable events are dequeued
+	on unstable: break
+	on weak-unstable: warn
+	on excl-unstable: break
+	on interference: break
+	on weak-interference: warn
+	checking exclusions: on
+	on exclusion-fail: fatal
+	on invariant-fail: break
+	on invariant-unknown: warn
+	on assert-fail: fatal
+	on channel-expect-fail: fatal
+	on keeper-check-fail: ignore
+	on setup-timing-violation: warn
+	on hold-timing-violation: break
+	0	a : 1
+	0	b : 1
+	10	x : 0	[by a:=1]
+	10	y : 0	[by b:=1]
+	10	a : 0
+	10	b : 0
+WARNING: excl-unstable `y'+
+rule: [after 10]	~b:0 -> y+:0
+>> cause: `x' (val: 1)
+	20	x : 1	[by a:=0]
+x and y should be exclusive high 
+x : 1	[by a:=0]
+y : 0	[by b:=0]
+	20	a : 1
+	20	b : 1
+	30	x : 0	[by a:=1]
+	30	b : 0
+	30	a : 0
+WARNING: excl-unstable `x'+
+rule: [after 10]	~a:0 -> x+:0
+>> cause: `y' (val: 1)
+	40	y : 1	[by b:=0]
+x and y should be exclusive high 
+x : 0	[by a:=0]
+y : 1	[by b:=0]

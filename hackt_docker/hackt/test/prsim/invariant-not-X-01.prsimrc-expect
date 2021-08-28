@@ -1,0 +1,20 @@
+This test reveals a fundamental bug in the way expressions 
+are evaluated and firings are propagated. 
+Below we false positive reports of invariant violations 
+due to evaluation ordering. 
+[top-level]
+invariants:
+$(a | ~a)
+$(~b | b)
+$(c | ~c | c | ~c)
+$(~d | d | ~d | d)
+abcd: X -> 0 
+abcd: 0 -> 1 
+abcd: 1 -> X 
+Warning: possible invariant violation in [top-level]: (a:X | ~a:X<X>) by node a:X
+Warning: possible invariant violation in [top-level]: (~b:X | b:X<X>) by node b:X
+abcd: X -> 1 
+abcd: 1 -> 0 
+abcd: 0 -> X 
+Warning: possible invariant violation in [top-level]: (a:X | ~a:X<X>) by node a:X
+Warning: possible invariant violation in [top-level]: (~b:X | b:X<X>) by node b:X

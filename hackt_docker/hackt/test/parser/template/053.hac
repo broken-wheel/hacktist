@@ -1,0 +1,10 @@
+// "053.hac" 
+// internal member sizes can now depend on relaxed param
+// copy-modified from "051.hac"
+
+template <><pint W>
+defproc foo() {
+	int my_int[W];
+}
+
+

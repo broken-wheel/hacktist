@@ -1,0 +1,8 @@
+= "!GND" "goo.!GND"
+= "!GND" "poo.!GND"
+= "!Vdd" "goo.!Vdd"
+= "!Vdd" "poo.!Vdd"
+= "goo.a[0]" "poo.a[0]"
+= "goo.a[1]" "poo.a[1]"
+= "goo.a[2]" "poo.a[2]"
+= "goo.a[3]" "poo.a[3]"

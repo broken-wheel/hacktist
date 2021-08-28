@@ -1,0 +1,32 @@
+* channel or struct globals<> is omitted.
+
+.subckt inv<> !GND !Vdd x y
+My:dn:0 !GND x y !GND nch W=5u L=2u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
+.ends
+
+.subckt foo<> !GND !Vdd g.Vdd_1 g.GND_1 g.Vdd_2 g.GND_2
+xa !GND !Vdd a.x a.y inv<>
+xb !GND !Vdd b.x b.y inv<>
+xc !GND !Vdd c.x c.y inv<>
+xd g.GND_1 !Vdd d.x d.y inv<>
+xd2 g.GND_2 !Vdd d2.x d2.y inv<>
+xe g.GND_1 !Vdd e.x e.y inv<>
+xf !GND g.Vdd_1 f.x f.y inv<>
+xf2 !GND g.Vdd_1 f2.x f2.y inv<>
+xh g.GND_2 g.Vdd_2 h.x h.y inv<>
+.ends
+
+xbar !GND !Vdd bar.g.Vdd_1 bar.g.GND_1 bar.g.Vdd_2 bar.g.GND_2 foo<>
+
+* --- WARNINGS ---
+Warning: node a.x is used but not driven!
+Warning: node b.x is used but not driven!
+Warning: node c.x is used but not driven!
+Warning: node d.x is used but not driven!
+Warning: node d2.x is used but not driven!
+Warning: node e.x is used but not driven!
+Warning: node f.x is used but not driven!
+Warning: node f2.x is used but not driven!
+Warning: node h.x is used but not driven!
+... in subcircuit foo<>

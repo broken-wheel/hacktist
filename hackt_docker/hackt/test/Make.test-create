@@ -1,0 +1,260 @@
+# "Make.test-create"
+#	vi: ft=automake
+#	$Id: Make.test-create,v 1.13 2010/08/12 23:51:45 fang Exp $
+# This is just a portion of the Make.test-tail template included by
+# Makefile.am's in the test/ directory subtree.  
+# This depends on variables defined in Make.test-tail, and thus, 
+# should not be included by itself.  
+
+# CREATE tests
+HACKT_CREATE_SUFFIXES = \
+	.haco-c .createdump .createdump-filter .createstderr .creatediff \
+	.createfaildump .createfaildiff .haco-c-dump .haco-c-err \
+	.haco-c-err-filter \
+	.haco-c-from-haco .haco-c-from-haco-err .create-from-haco-dump \
+	.create-from-haco-dump-filter .create-from-haco-diff
+
+HACKT_CREATE_TEST_SUFFIXES = \
+	.hacktcreatetest .hacktcreatefailtest
+SUFFIXES += $(HACKT_CREATE_SUFFIXES) $(HACKT_CREATE_TEST_SUFFIXES)
+BOGUS_SUFFIX_TARGETS += $(HACKT_CREATE_SUFFIXES)
+
+HACKT_CREATE_CLEAN_IGNORE_PATTERNS = \
+	"*.hacktcreatetest" \
+	"*.hacktcreatefailtest" \
+	"*.hacktcreatefromhacotest" \
+	"*.haco-c" \
+	"*.haco-c-err" \
+	"*.haco-c-err-filter" \
+	"*.createdump" \
+	"*.creatediff" \
+	"*.creatediff-orig" \
+	"*.createfaildump" \
+	"*.createfaildiff" \
+	"*.haco-c-dump" \
+	"*.createdump-filter" \
+	"*.createdump-filter-noindex" \
+	"*.createdump-filter-nosize" \
+	"*.createdump.filter" \
+	"*.createstderr-noindex" \
+	"*.creatediff-noindex" \
+	"*.createstderr-nosize" \
+	"*.creatediff-nosize" \
+	"*.create-from*" \
+	"*.haco-c-from*"
+
+AUTO_IGNORE += $(HACKT_CREATE_CLEAN_IGNORE_PATTERNS)
+
+CREATE_OBJDUMP_SCRIPT = \
+	if test -s $<-err ; then \
+	  $(CP) $<-err $@ ; $(ECHO) "---- END CREATE WARNINGS ---" >> $@ ; \
+	else $(RM) $@ ; fi ; \
+	$(OBJDUMP_APPEND)
+
+.haco-c.createdump:
+	@$(CREATE_OBJDUMP_SCRIPT)
+
+# or link
+.createdump.haco-c-dump:
+	@$(CP) $? $@
+
+# using HEX_ADDRESS_FILTER when debugging
+.createdump.createdump-filter:
+	@$(HACKT_OBJ_DIFF_FILTER) < $< > $@ ; \
+	$(ECHO_FILTERED)
+
+.haco-c-dump.haco-c-dump-filter:
+	@$(HACKT_OBJ_DIFF_FILTER) < $< > $@ ; \
+	$(ECHO_FILTERED)
+
+HACKT_CREATE_TEST_DIFF = $(DIFF) -buw
+
+if VERBOSE_CHECK
+ECHO_CREATEDUMP_DIFF_COMMAND = $(ECHO) "$(HACKT_CREATE_TEST_DIFF) $$""(srcdir)/$$stderr $<"
+else
+ECHO_CREATEDUMP_DIFF_COMMAND = :
+endif
+
+
+# forgive size differences only for non-ILP32 platforms
+if ABI_ILP32
+CREATE_HEADER_DIFF_SCRIPT_PART2 = :
+else
+CREATE_HEADER_DIFF_SCRIPT_PART2 = \
+	filtered2=`$(ECHO) $@ | $(SED) 's/\.creatediff$$/.createstderr-nosize/g'` ; \
+	diffout2=`$(ECHO) $@ | $(SED) 's/\.creatediff$$/.creatediff-nosize/g'` ; \
+	$(POM_SIZE_FILTER) < "$$expect" > "$$filtered2" ; \
+	$(POM_SIZE_FILTER) < $< > $<-nosize ; \
+	$(HACKT_CREATE_TEST_DIFF) "$$filtered2" $<-nosize > "$$diffout2" 2>&1 ; \
+	$(ANALYZE_DIFF_AWK) -v quiet=0 "$$diffout2" ; \
+	$(MV) $@ $@-orig ; \
+	$(CP) "$$diffout2" $@
+endif
+#	$(POM_SIZE_FILTER) < "$$filtered" > "$$filtered2" ; \
+#	$(POM_SIZE_FILTER) < $<-noindex > $<-nosize ;
+
+.createdump-filter.creatediff:
+	@stderr=`$(ECHO) $@ | $(SED) 's/\.creatediff$$/.createstderr/g'` ; \
+	expect=$(srcdir)/$$stderr ; \
+	$(RM) $@ ; \
+	if test -f "$$expect" ; then \
+	  $(ECHO_CREATEDUMP_DIFF_COMMAND) ; \
+	  $(HACKT_CREATE_TEST_DIFF) "$$expect" $< > $@ 2>&1 ; \
+	  if test -s $@ ; then \
+	    $(ECHO) "$@ is non-empty!" ; \
+	    $(ANALYZE_DIFF_AWK) -v quiet=2 $@ > $@-anal ; \
+	    if $(GREP) "OK" $@-anal ; then \
+	      filtered=`$(ECHO) $@ | $(SED) 's/\.creatediff$$/.createstderr-noindex/g'` ; \
+	      diffout=`$(ECHO) $@ | $(SED) 's/\.creatediff$$/.creatediff-noindex/g'` ; \
+	      $(POM_INDEX_FILTER) < "$$expect" > $$filtered ; \
+	      $(POM_INDEX_FILTER) < $< > $<-noindex ; \
+	      $(HACKT_CREATE_TEST_DIFF) "$$filtered" $<-noindex > "$$diffout" 2>&1 ; \
+	      $(ANALYZE_DIFF_AWK) -v quiet=0 "$$diffout" ; \
+	    fi ; \
+	    $(RM) $@-anal ; \
+	    $(CREATE_HEADER_DIFF_SCRIPT_PART2) ; \
+	  fi ; \
+	else $(ECHO) "Missing $$expect." | $(TEE) $@ ; \
+	fi ; \
+	$(TOUCH) $@
+
+.creatediff.hacktcreatetest:
+	@$(DEFAULT_DIFF_TEST_SCRIPT)
+
+createtest.autodepend: Makefile
+	@$(ECHO) "Generating dependencies $@" ; \
+	$(SET_PIPEFAIL) ; \
+	$(ECHO) "$(HACKT_CREATE_TEST_PASSES)" | \
+		$(SPACES_TO_NEWLINE) | $(SORT) -u | \
+		$(AWK) '/.+/ {print $$1 ".creatediff: $$(srcdir)/" $$1 ".createstderr"; print $$1 ".createdump: " $$1 ".haco-c-err" ; }' > $@ ; \
+	$(TOUCH) $@
+
+-include createtest.autodepend
+
+.hacktcreatetest:
+	@$(DUMMY_TEST_SCRIPT)
+
+# unroll and create have been fused together
+.haco.createfaildump:
+	-@failobj=`$(ECHO) $@ | $(SED) 's/\.createfaildump$$/.haco-c-fail/g'` ; \
+	$(ECHO) $(HACKT_CREATE_EXE) $< "$$failobj" ; \
+	$(HACKT_CREATE_EXE) $< "$$failobj" > $@ 2>&1
+
+if VERBOSE_CHECK
+ECHO_CREATEFAIL_DIFF_COMMAND = $(ECHO) "$(DIFF) -bu $$""(srcdir)/$$stderr $<"
+else
+ECHO_CREATEFAIL_DIFF_COMMAND = :
+endif
+
+.createfaildump.createfaildiff:
+	@stderr=`$(ECHO) $@ | $(SED) 's/\.createfaildiff$$/.createstderr/g'` ; \
+	expect=$(srcdir)/$$stderr ; \
+	$(RM) $@ ; \
+	if test -f "$$expect" ; then \
+	  $(ECHO_CREATEFAIL_DIFF_COMMAND) ; \
+	  $(HACKT_CREATE_TEST_DIFF) "$$expect" $< > $@ 2>&1 ; \
+	  if test -s $@ ; then \
+	    $(ECHO) "$@ is non-empty!" ; \
+	  fi ; \
+	else $(ECHO) "Missing $$expect." | $(TEE) $@ ; \
+	fi ; \
+	$(TOUCH) $@
+
+.createfaildiff.hacktcreatefailtest:
+	@$(DEFAULT_DIFF_TEST_SCRIPT)
+
+createfailtest.autodepend: Makefile
+	@$(ECHO) "Generating dependencies $@" ; \
+	$(SET_PIPEFAIL) ; \
+	$(ECHO) "$(HACKT_CREATE_TEST_FAILURES)" | \
+		$(SPACES_TO_NEWLINE) | $(SORT) -u | \
+		$(AWK) '/.+/ {print $$1 ".createfaildiff: $$(srcdir)/" $$1 ".createstderr"; }' > $@ ; \
+	$(TOUCH) $@
+
+-include createfailtest.autodepend
+
+.hacktcreatefailtest:
+	@$(DUMMY_TEST_SCRIPT)
+
+
+# unroll and create have been fused together
+# don't rely on pipefail (/bin/sh 3.2+)
+.haco.haco-c:
+	@cmd="$(HACKT_CREATE_EXE) $< $@" && \
+	echo "$$cmd" && \
+	{ $$cmd 2>&1 || exit $$? ;} | $(TEE) $@-err ; \
+	$(TOUCH) $@-err
+
+.haco-c.haco-c-err:
+	@:
+
+.haco-c-err.haco-c-err-filter:
+	$(HEX_ADDRESS_FILTER) $< > $@
+
+AUTO_DEPENDS += createtest.autodepend \
+	createfailtest.autodepend
+
+BOGUS_TESTS += .hacktcreatetest .hacktcreatefailtest
+BOGUS_TARGETS += .createstderr .createfaildiff .createfaildump
+
+CHECK_SUMMARIES += creatediffs createfaildiffs creatediffs.noindex creatediffs.nosize
+
+
+creatediffs: force
+	-$(CAT) *.creatediff > $@
+
+createfaildiffs: force
+	-$(CAT) *.createfaildiff > $@
+
+creatediffs.noindex: force
+	-$(CAT) *.creatediff-noindex > $@
+
+creatediffs.nosize: force
+	-$(CAT) *.creatediff-nosize > $@
+
+
+HACKT_CREATE_TEST_SUBJECTS = \
+	$(HACKT_CREATE_TEST_PASSES) \
+	$(HACKT_CREATE_TEST_FAILURES)
+
+srcdir_EXTRA_DIST += $(HACKT_CREATE_TEST_SUBJECTS:=.createstderr)
+
+if CHECK_TESTS
+TESTS += \
+	$(HACKT_CREATE_TEST_PASSES:=.hacktcreatetest) \
+	$(HACKT_CREATE_TEST_FAILURES:=.hacktcreatefailtest)
+endif
+
+CREATE_BUILD_CHECK_LOCAL = \
+	$(HACKT_CREATE_TEST_PASSES:=.haco-c) \
+	$(HACKT_CREATE_TEST_PASSES:=.haco-c-err) \
+	$(HACKT_CREATE_TEST_PASSES:=.createdump) \
+	$(HACKT_CREATE_TEST_PASSES:=.createdump-filter) \
+	$(HACKT_CREATE_TEST_PASSES:=.creatediff) \
+	$(HACKT_CREATE_TEST_FAILURES:=.createfaildump) \
+	$(HACKT_CREATE_TEST_FAILURES:=.createfaildiff)
+
+
+build-check-local: $(CREATE_BUILD_CHECK_LOCAL)
+
+echo-create-passes: force
+	@$(ECHO) $(HACKT_CREATE_TEST_PASSES)
+
+echo-create-failures: force
+	@$(ECHO) $(HACKT_CREATE_TEST_FAILURES)
+
+echo-create-tests: force
+	@$(ECHO) $(HACKT_CREATE_TEST_SUBJECTS)
+
+
+clean-createtests:
+	patternlist='$(HACKT_CREATE_CLEAN_IGNORE_PATTERNS)' ; \
+	for p in $$patternlist ; do \
+	  pp=`$(ECHO) $$p | $(SED) 's/"//g'` ; \
+	  $(RM_PATTERN) "$$pp" ; \
+	done
+
+clean-local: clean-createtests
+
+.PHONY: clean-createtests
+

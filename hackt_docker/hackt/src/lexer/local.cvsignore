@@ -1,0 +1,10 @@
+.deps
+.libs
+.dirstamp
+*.lo
+*-lex.cc
+*-real.cc
+*.loT
+*.swp
+*.hchk
+lex_version.h

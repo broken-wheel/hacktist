@@ -1,0 +1,8 @@
+# "array-03.prsimrc"
+#	$Id: array-03.prsimrc,v 1.3 2010/04/06 00:04:18 fang Exp $
+# @haco@ array.haco-c
+# testing bad references
+
+# consider introducing getall-unique
+ls X[0].w[99]
+

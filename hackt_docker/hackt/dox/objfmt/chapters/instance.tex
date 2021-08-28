@@ -1,0 +1,161 @@
+% "chapter/instance.tex"
+%	$Id: instance.tex,v 1.4 2005/05/08 20:50:41 fang Exp $
+
+\chapter{Instances}
+\label{sec:instance}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Virtual vs. physical instances}
+
+Hierarchical names handled by the front-end correspond to virtual instances.  
+Virtual instances are an indirection to physical instances.  
+Multiple virtual instances may alias to the same physical instance.  
+(Nomenclature: virtual instances are currently called instance aliases
+	in the compiler implementation --- get the names straight!)
+
+Only after all connections have been unrolled and established are the 
+unique physical instances created.  
+This step of unique instance creation is the final step of the 
+front-end compiler.  
+
+\tbf{Implementation:}
+Concern: this expanded form is only useful to a subset of the tools, 
+such as simulators and analyzers.  
+The expanded form is going to be large, which is undesirable for 
+the tools that don't need it.  
+Consider: The final unique creation phase should be tool-specific, 
+but provide a library function for it.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Instance Collections}
+\label{sec:instance:collection}
+
+Every instance name may refer to either a single (scalar, 0-dimensional)
+virtual instance, or a higher-dimension array (up to 4) of virtual instances.  
+When we refer to instance collections, we also include the case for
+0-dimensional instances.  
+
+The contents of an instance collection is summarized as follows:
+
+\begin{enumerate}
+\item pointer: back-reference to parent namespace
+\item string: name of this instance collection
+\item map of virtual instances that are 
+	\emph{actually unrolled} during the unique creation phase.  
+	Each individual virtual instance contains
+	the index with which it is associated.
+	The virtual instances sequence is stored as a list of pointers.  
+\end{enumerate}
+
+Prior to the creation phase, the map of index-instance pairs may be empty.  
+
+In addition, the following subtypes have additional fields stored with 
+the instance collections:
+
+\begin{itemize}
+\item Process: contains an additional process type reference.  
+\item Channel: contains an additional channel type reference.  
+\item Data (excluding int and bool): 
+	contains an additional data type reference.  
+\item int: contains a integer (4B) width parameter
+\item bool: nothing else
+\end{itemize}
+
+For instance collections that reside outside of definitions, 
+the types referenced by the instance collections must be resolved
+to canonical definitions i.e, they may not reference typedefs.  
+Instance collections residing inside definitions may reference typedefs.  
+
+NOTE: the type reference contained by the collection must have
+strict template arguments specified, but need not have
+relaxed template arguments specified.  
+If the relaxed arguments are specified, then they apply
+to all instance members of the collection, 
+and the members are forbidden from supplying relaxed template arguments.  
+If the relaxed arguments are not specified, then the 
+instance members (see Section~\ref{sec:instance:virtual})
+\emph{must} supply relaxed template arguments to complete their types.  
+
+Scalars instance collections simply replace the sequence of 
+virtual instance with a single virtual instance.  
+The scalar collection's type reference must specify relaxed template
+arguments, if applicable.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Virtual Instances}
+\label{sec:instance:virtual}
+
+All virtual instances have the following data in common:
+
+\begin{enumerate}
+\item multidimensional index used to associate with the collection
+	of which it is a member (only if non-scalar)
+\item pointer: alias connection to the next instance
+	of its kind\footnote{Connections are maintained 
+	as circular linked lists of virtual instances of the same type.  
+	This way, all aliases are reachable from each other.
+	If it is not aliased to another instance yet, 
+	then the pointer refers to this object, a self-reference.}.
+\item pointer: to the unique physical instance 
+	(spawned only after the unique creation phase)
+\item pointer: back-reference to the collection of which this is a member
+\item (proposed): relaxed template parameters, 
+	which may be different for each member of the collection
+	(with the same strict parameters, of course)
+\end{enumerate}
+
+The only distinction for the various subtypes of virtual instances is that
+the pointers are statically typed to their own respective type.
+(Processes point to process collections, physical processes, etc.)
+
+\begin{comment}
+\subsection{Process VI}
+\label{sec:instance:virtual:proc}
+
+\subsection{Channel VI}
+\label{sec:instance:virtual:chan}
+
+\subsection{Data VI}
+\label{sec:instance:virtual:data}
+\end{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Physical Instances}
+\label{sec:instance:physical}
+
+These are only created by the expansion phase of the compiler, 
+which follows the final type-check phase.  
+(There is currently a debate whether the expansion phase should
+be done by default.)  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Instance References}
+\label{sec:instance:reference}
+
+Instance references contain the following data:
+
+\begin{enumerate}
+\item integer (4B): an index into the instantiation statement list
+	indicating which statements were in effect (visible) at the
+	point of reference.  (This is for catching errors that cannot
+	be statically resolved.)
+\item pointer to the (subtype-specific) referenced (virtual) instance collection
+\item pointer to list of index pointers, 
+	where the individual index pointers may be 
+	pointers to single integers or integer ranges.  
+\end{enumerate}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Member Instance References}
+\label{sec:instance:reference:member}
+
+Member instance references contain the following data:
+
+\begin{enumerate}
+\item pointer to the enclosing instance reference (generic)
+\item pointer to the (subtype-specific) instance collection 
+	that is a member of the enclosing instance reference.  
+	(Membership must be name-checked.)
+\end{enumerate}
+
+

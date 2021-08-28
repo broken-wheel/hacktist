@@ -1,0 +1,29 @@
+* channel or struct c1of2<> is omitted.
+
+.subckt add<> !GND !Vdd en a.d[0] a.d[1] b.d[0] b.d[1] c.d[0] c.d[1] s.d[0] s.d[1]
+M@foot:dn:0 !GND en @foot !GND nch W=5u L=2u
+M@odd_a:dn:0:pchg !Vdd en @foot !Vdd pch W=5u L=2u
+M@odd_a:dn:1 @foot a.d[1] @odd_a !GND nch W=5u L=2u
+M@odd_b:dn:0 @odd_a b.d[0] @odd_b !GND nch W=5u L=2u
+M@even_a:dn:0 @foot a.d[0] @even_a !GND nch W=5u L=2u
+M@odd_b:dn:1 @even_a b.d[1] @odd_b !GND nch W=5u L=2u
+M_s[0]:dn:0:pchg !Vdd en @odd_b !Vdd pch W=5u L=2u
+M_s[0]:dn:1 @odd_b c.d[1] _s[0] !GND nch W=5u L=2u
+M@even_b:dn:0:pchg !Vdd en @odd_a !Vdd pch W=5u L=2u
+M@even_b:dn:1 @odd_a b.d[1] @even_b !GND nch W=5u L=2u
+M@even_b:dn:2:pchg !Vdd en @even_a !Vdd pch W=5u L=2u
+M@even_b:dn:3 @even_a b.d[0] @even_b !GND nch W=5u L=2u
+M_s[0]:dn:2:pchg !Vdd en @even_b !Vdd pch W=5u L=2u
+M_s[0]:dn:3 @even_b c.d[0] _s[0] !GND nch W=5u L=2u
+M_s[1]:dn:0 @odd_b c.d[0] _s[1] !GND nch W=5u L=2u
+M_s[1]:dn:1 @even_b c.d[1] _s[1] !GND nch W=5u L=2u
+M_s[0]:up:0 !Vdd en _s[0] !Vdd pch W=5u L=2u
+M_s[1]:up:0 !Vdd en _s[1] !Vdd pch W=5u L=2u
+Ms.d[0]:dn:0 !GND _s[0] s.d[0] !GND nch W=5u L=2u
+Ms.d[0]:up:0 !Vdd _s[0] s.d[0] !Vdd pch W=5u L=2u
+Ms.d[1]:dn:0 !GND _s[1] s.d[1] !GND nch W=5u L=2u
+Ms.d[1]:up:0 !Vdd _s[1] s.d[1] !Vdd pch W=5u L=2u
+.ends
+
+xup !GND !Vdd up.en up.a.d[0] up.a.d[1] up.b.d[0] up.b.d[1] up.c.d[0] up.c.d[1] up.s.d[0] up.s.d[1] add<>
+

@@ -1,0 +1,28 @@
+# "CLEANUP"
+#	$Id: CLEANUP,v 1.5 2007/10/08 03:09:32 fang Exp $
+# Project-wide list of things to tidy up, re-organize, or just plain expurgate
+# As a first step, I will keep clean-up related tasks in this single file
+# instead of distributed across subdirectories.  
+# Tasks in here do not contribute any forward progress on the project
+# other than mess-reduction.  
+
+src/
+	I don't even know where to begin...
+		Object/devel_switches.h suggests perming switches.
+		Best done when no live branches are outstanding.
+
+lib/
+	...
+
+dox/
+	After migrating all documentation to texinfo, 
+		remove .tex source files (total replacement).  
+
+test/
+
+config/
+
+scripts/
+
+libltdl/
+

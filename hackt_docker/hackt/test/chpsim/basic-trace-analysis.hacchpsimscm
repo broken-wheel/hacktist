@@ -1,0 +1,53 @@
+#!hacchpsimguile -b
+!#
+;; "basic-trace-analysis.hacchpsimscm"
+;; common analysis routines
+;; vi: ft=scheme
+;;	$Id: basic-trace-analysis.hacchpsimscm,v 1.7 2008/05/08 04:34:34 fang Exp $
+
+;; don't call this script directly, but load me from another
+
+; (use-modules (hackt chpsim-primitives))
+(use-modules (hackt chpsim-trace))
+; (use-modules (hackt chpsim-primitives))
+; (use-modules (hackt chpsim))
+; (use-modules (hackt algorithm)) ; for list-flatten
+(use-modules (hackt rb-tree))
+(use-modules (hackt streams))
+; (use-modules (ice-9 streams))
+; (use-modules (srfi srfi-1))	; for alist (associative lists)
+
+; (define trace-name "...")
+; (define rand-trace (hac:open-chpsim-trace-accessor trace-name))
+
+(display "processing tracefile: ")
+(display trace-name)
+(newline)
+
+(define trace-stream (open-chpsim-trace-stream trace-name))
+
+(display "critical-path:\n")
+(define crit (chpsim-trace-critical-path trace-name))
+(stream-for-each-display-newline crit)
+(newline)
+
+(display "branch/select histogram:\n")
+(define branch-histo (make-select-branch-histogram trace-stream))
+(rb-tree/for-each-display-newline branch-histo)
+(newline)
+
+(display "loop histogram:\n")
+(define loop-histo (make-loop-histogram trace-stream))
+(rb-tree/for-each-display-newline loop-histo)
+(newline)
+
+(display "critical-event histogram:\n")
+(define crit-histo (make-critical-event-histogram crit))
+(rb-tree/for-each-display-newline crit-histo)
+(newline)
+
+(display "critical-process histogram:\n")
+(define proc-histo (make-critical-process-histogram crit))
+(print-named-critical-process-histogram proc-histo)
+(newline)
+

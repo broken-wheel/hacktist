@@ -1,0 +1,8 @@
+// "004.hac"
+// copy modified from "003.hac"
+// @hacknet-flags@ -T fifo<2>
+
+import "fifo.hac";
+
+fifo<2> f;
+

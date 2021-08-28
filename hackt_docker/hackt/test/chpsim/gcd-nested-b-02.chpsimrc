@@ -1,0 +1,12 @@
+# "gcd-nested-b-01.chpsimrc"
+#	$Id: gcd-nested-b-02.chpsimrc,v 1.3 2010/04/06 00:01:08 fang Exp $
+# Yes, use THIS object file
+# @haco@ gcd-nested-b.haco-c
+# @module@ -lbad_gcd1
+# @deps@ bad_gcd1.la
+
+watchall-events
+step 200
+time
+assert-queue
+

@@ -1,0 +1,2 @@
+ERROR: type of redeclaration of beans does not match previous declaration: 
+	was: pint<>, got: pbool<> ERROR!  [5:7..11]

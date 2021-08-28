@@ -1,0 +1,16 @@
+#!hacchpsimguile -b
+!#
+;; "countdown-nested-a-01.hacchpsimscm"
+;; vi: ft=scheme
+;;	$Id: countdown-nested-a-02.hacchpsimscm,v 1.4 2010/04/06 00:00:50 fang Exp $
+;; @haco@ countdown-nested-a.haco-c
+;; @chpsimtrace countdown-nested-a-03.chpsimtrace
+
+(define trace-name "countdown-nested-a-03.chpsimtrace")
+
+(load-from-path "basic-trace-analysis.hacchpsimscm")
+
+"NOTE: branch histogram entry 3->1 is one too high because the initial arrival
+at the do-while loop-head event is counted as a branch taken when it shouldn't 
+be.  This is a consequence of multiple entry events."
+

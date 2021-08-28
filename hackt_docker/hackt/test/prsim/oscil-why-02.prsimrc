@@ -1,0 +1,35 @@
+# "oscil-why-02.prsimrc"
+# @haco@ oscillator.haco-c
+
+watchall
+why-x R.x[6]
+why-x-verbose R.x[6]
+why-x-N-verbose R.x[6] 5
+
+set _Reset 0
+cycle
+why-not R.x[6]
+why-not-verbose R.x[6]
+why R.x[6]
+why-verbose R.x[6]
+why-N-verbose R.x[6] 4
+why-not R.x[12]
+why-not-verbose R.x[12]
+why-not-N-verbose R.x[12] 6
+why R.x[12]
+why-verbose R.x[12]
+why-N-verbose R.x[12] 6
+
+set _Reset 1
+step 30
+why-not R.x[6]
+why-not-verbose R.x[6]
+why R.x[6]
+why-verbose R.x[6]
+why-not R.x[12]
+why-not-verbose R.x[12]
+why-not-N-verbose R.x[12] 6
+why R.x[12]
+why-verbose R.x[12]
+why-N-verbose R.x[12] 6
+

@@ -1,0 +1,9 @@
+#!hacguile -b
+!#
+;; "006-06.hacscm"
+;;	$Id: 006-06.hacscm,v 1.4 2010/04/06 00:03:56 fang Exp $
+;; vi: ft=scheme
+;; @haco@ 006.haco-c
+
+(hac:reference-index->string (hac:parse-reference "blah"))
+

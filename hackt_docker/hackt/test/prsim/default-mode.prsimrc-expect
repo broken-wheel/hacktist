@@ -1,0 +1,19 @@
+mode: 
+	weak rules: off
+	unstable events propagate Xs
+	force-excl caused unstable events propagate Xs
+	on unstable: break
+	on weak-unstable: warn
+	on excl-unstable: break
+	on interference: break
+	on weak-interference: warn
+	checking exclusions: on
+	on exclusion-fail: fatal
+	on invariant-fail: break
+	on invariant-unknown: warn
+	on assert-fail: fatal
+	on channel-expect-fail: fatal
+	on keeper-check-fail: ignore
+	on setup-timing-violation: warn
+	on hold-timing-violation: break
+timing: uniform (10)

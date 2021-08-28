@@ -1,0 +1,6 @@
+Error: in subcircuit <top-level>:
+* GND supply of internal node differs between definition and use: @_int
+ERROR in production rule.
+	@_int & x -> y-
+Instantiated from -TOP-: 
+Caught exception during netlist generation.

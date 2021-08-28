@@ -1,0 +1,4 @@
+Error: expression at [6:5] is not scalar.
+Sorry, array nonmeta expressions are not yet supported.
+At least one error in expr-list at [6:4..6]
+ERROR: at least one error in CHP body.

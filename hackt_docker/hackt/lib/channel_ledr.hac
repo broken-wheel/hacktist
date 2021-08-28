@@ -1,0 +1,23 @@
+/**
+	\file "channel_ledr.hac"
+	Library for level-encoded dual-rail channels.
+	These channels do not specify empty parity.
+	$Id: channel_ledr.hac,v 1.2 2011/03/23 18:47:33 fang Exp $
+ */
+
+deftype ledr <: bool (bool d, r) { }
+
+defchan eledr <: chan(bool) (bool e, d, r) { }
+
+// _d rail is active low in the inverted encoding
+deftype _ledr <: bool (bool _d, r) { }
+
+defchan _eledr <: chan(bool) (bool e, _d, r) { }
+
+template <pint N>
+defchan eNxledr <: chan(int<N>) (bool e; ledr b[N]) { }
+
+typedef	eNxledr<2>		e2xledr;
+typedef	eNxledr<3>		e3xledr;
+typedef	eNxledr<4>		e4xledr;
+

@@ -1,0 +1,14 @@
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+@ "bar.w" iscomb
+@ "bar.y" iscomb
+@ "bar.a" iscomb
+@ "bar.c" iscomb
+@ "bar.e" iscomb
+= "!GND" "bar.!GND"
+= "!Vdd" "bar.!Vdd"
+= "bar.w" "bar.x"
+= "bar.y" "bar.z"
+= "bar.a" "bar.b"
+= "bar.c" "bar.d"
+= "bar.e" "bar.f"

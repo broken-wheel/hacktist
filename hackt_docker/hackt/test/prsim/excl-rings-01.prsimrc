@@ -1,0 +1,19 @@
+# "excl-rings-01.prsimrc"
+#	$Id: excl-rings-01.prsimrc,v 1.4 2010/04/06 00:06:25 fang Exp $
+# @haco@ excl-rings.haco-c
+# testing excl rings features
+
+watchall
+what foo
+
+fanin x
+fanin y
+echo allrings-mk:
+allrings-mk
+
+echo rings of x:
+rings-mk x
+
+echo rings of y:
+rings-mk y
+

@@ -1,0 +1,18 @@
+# "stable-test-medium.prsimrc"
+#	$Id: stable-test-medium.prsimrc,v 1.1 2006/09/07 00:41:32 fang Exp $
+# common test script for stbility testing, short version
+
+timing random
+mode reset
+set _Reset 0
+set Reset 1
+cycle
+status X
+
+mode run
+set _Reset 1
+set Reset 0
+step 1000000
+
+assert-queue
+

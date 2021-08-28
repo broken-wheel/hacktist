@@ -1,0 +1,34 @@
+# "inv-16.prsimrc"
+# @haco@ inv.haco-c
+# copy-modified from "inv-14.prsimrc"
+#	$Id: inv-16.prsimrc,v 1.4 2010/04/06 00:06:54 fang Exp $
+
+# testing the setf command
+
+watchall
+set a 0
+advance 15
+queue
+time
+
+setf c 1
+echo set c 1 accepted
+queue
+echo continuing...
+cycle
+echo now what?
+echo when does c- get restored, because b is 1?
+echo since most vacuous events are dropped, c may be stuck...
+echo 'unset' to force a re-evaluation of fanins
+
+get b
+get c
+
+unset c
+echo release c by re-evaluation
+queue
+echo end of queue
+cycle
+queue
+echo now empty queue
+

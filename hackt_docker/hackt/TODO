@@ -1,0 +1,63 @@
+to do list:
+
+#	$Id: TODO,v 1.27 2007/08/09 03:47:01 fang Exp $
+
+this TODO list is way outdated... clean TODO list.
+Pay more attention to the src/ChangeLog.  
+
+REVISION TARGETS:
+
+0.1.4 series goals for 0.1.5:
+	(all old goals have been completed long ago)
+
+0.1.6 Goals:
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+for lack of organization:
+list of things accomplished in 0.1.3 series:
+
+	BASIC parameter unrolling only (scalars)
+		done for integers, including arrays.
+
+	MAJOR ISSUES with parameter unrolling and assignment ordering
+		(resolved: ordered items are decoupled from scopes)
+	keep definitions around as back-references in unpacked objects.
+	unpack instantiation_bases into live instances
+		using multidimensional_qmap, or now, multikey_qmap.  
+		Make live instances and multidimensional sets persistent.
+		Mark modules as unrolled or not.  
+
+	Hold off on parameter assignments until after restructuring
+		parameter_assignment classes.  
+		(*done* -- 10/09/04)
+
+	Add cvs Id tags to all source files (done -- 11/01/04).  
+		Maybe non-essential files as well...
+	
+	Documentation: add documentation headers to beginning of
+		every source file, so doxygen will create file
+		inclusion dependence graphs! (*done* -- 10/09/04)
+
+-------------------------------------------------------------------------------
+source management:
+	automake: AUTO_IGNORE_PATTERNS for cvsignore
+
+-------------------------------------------------------------------------------
+configury:
+	organize configure checks by section:
+		basic build environment
+		programs and paths
+		compiler and required compilation tools
+			headers, standard libraries
+			options, flags, characteristics, conformance...
+		architecture-depedendence
+		library functions
+		headers
+		packages...
+	summarize results of configure at the very end
+		stating which required packages missing
+		which optional packages found, etc...
+	save errors until the very end for summary
+	produce a pkg-config .pc file if available, using configure results
+
+-------------------------------------------------------------------------------

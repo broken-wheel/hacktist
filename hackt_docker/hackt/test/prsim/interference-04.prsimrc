@@ -1,0 +1,24 @@
+# "interference-04.prsimrc"
+# @haco@ interference.haco-c
+# bug fix test case: incorrect unset
+
+watchall
+set a 1
+set b 1
+cycle
+assert c 0
+status-interference
+status-weak-interference
+
+set b X
+cycle
+assert c 0
+status-interference
+status-weak-interference
+
+unset c
+queue
+assertn-queue
+status-interference
+status-weak-interference
+

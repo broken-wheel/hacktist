@@ -1,0 +1,119 @@
+// "int-source.hac"
+//	$Id: int-source.hac,v 1.5 2008/04/29 05:23:09 fang Exp $
+// cyclic and non-cyclic sources of int tokens
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+	Sources finite sequence of int values.  
+***/
+template <pint W><pint N; pint B[N]>
+defproc int_source_once(chan!(int<W>) S) {
+chp {
+{;i:N:
+	S!(B[i])
+}
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+	Sources random integer values.  
+
+	Requires stdchpfn library for lrand48().
+***/
+template <pint W><pint N>
+defproc int_source_random_once(chan!(int<W>) S) {
+chp {
+	  {;i:N: S!(lrand48() & ((1 << W) -1)) }
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+	Cycles through finite sequence of int values.  
+***/
+template <pint W><pint N; pint B[N]>
+defproc int_source(chan!(int<W>) S) {
+chp {
+*[
+	{;i:N:
+		S!(B[i])
+	}
+]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+	Sources random integer values.  
+
+	Requires stdchpfn library for lrand48().
+***/
+template <pint W>
+defproc int_source_random(chan!(int<W>) S) {
+chp {
+	*[ S!(lrand48() & ((1 << W) -1)) ]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Sources series of values each time it receives a control token.
+	Output channel is shared.  
+	Control channel is a void channel.  
+ */
+template <pint W><pint N; pint B[N]>
+defproc int_source_shared(chan?() Cin; chan!() Cout; chan!!(int<W>) S) {
+chp {
+*[
+	Cin?;
+	{;i:N: S!(B[i]) };
+	Cout!
+]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Could define in terms of generalized bool_source.
+ */
+template <pint W><pint V>
+defproc int_source_constant(chan!(int<W>) S) {
+chp {
+*[ S!(V) ]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Exhausts all combination of values from both arrays on two channels.
+ */
+template <pint W><pint N1, V1[N1], N2, V2[N2]>
+defproc twin_int_source_once(chan!(int<W>) A, B) {
+chp {
+{;i:N1:
+{;j:N2:
+	A!(V1[i]), B!(V2[j])
+}}
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Exhausts all combination of values from both arrays on two channels, 
+	and repeats in loop, infinitely.
+ */
+template <pint W><pint N1, V1[N1], N2, V2[N2]>
+defproc twin_int_source(chan!(int<W>) A, B) {
+chp {
+*[
+{;i:N1:
+{;j:N2:
+	A!(V1[i]), B!(V2[j])
+}}
+]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

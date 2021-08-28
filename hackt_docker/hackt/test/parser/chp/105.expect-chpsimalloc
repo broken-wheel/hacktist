@@ -1,0 +1,36 @@
+Variables: 
+bool[1]: "!GND" 
+bool[2]: "!Vdd" 
+bool[3]: "bar.a" 
+bool[4]: "bar.b" 
+bool[5]: "bar.y" 
+bool[6]: "bar.z" 
+chan[1]: "bar.A" 
+chan[2]: "bar.B" 
+chan[3]: "bar.C" 
+chan[4]: "bar.D" 
+chan[5]: "bar.E" 
+chan[6]: "bar.F" 
+
+Event graph: 
+event[0]: fork: null, #pred: 0, succ: 1 
+
+# process[1]:
+event[1]: fork: , pid: 1, #pred: 1, succ: 10 11 
+event[2]: join: , pid: 1, #pred: 4, succ: 1 
+event[3]: send: bar.C!(bar.z), pid: 1, #pred: 1, succ: 2 
+channel deps: 3 
+event[4]: send: bar.D!(~bar.z), pid: 1, #pred: 1, succ: 2 
+channel deps: 4 
+event[5]: send: bar.E!(bar.a&&bar.b), pid: 1, #pred: 1, succ: 2 
+channel deps: 5 
+event[6]: send: bar.F!(bar.a||bar.b), pid: 1, #pred: 1, succ: 2 
+channel deps: 6 
+event[7]: fork: , pid: 1, #pred: 1, succ: 3 4 5 6 
+event[8]: assign: bar.z := bar.a!=bar.b, pid: 1, #pred: 1, succ: 7 
+event[9]: join: , pid: 1, #pred: 2, succ: 8 
+event[10]: receive: bar.A?(bar.a), pid: 1, #pred: 1, succ: 9 
+channel deps: 1 
+event[11]: receive: bar.B?(bar.b), pid: 1, #pred: 1, succ: 9 
+channel deps: 2 
+

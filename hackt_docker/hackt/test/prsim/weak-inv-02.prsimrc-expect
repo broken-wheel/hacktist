@@ -1,0 +1,7 @@
+compare with "inv-23.prsimrc" 
+Fanins of node `b':
+(from [top-level]):
+[after 10, weak]	~a:X -> b+:X
+[after 10, weak]	a:X -> b-:X
+	0	a : 1
+	10	b : 0	[by a:=1]

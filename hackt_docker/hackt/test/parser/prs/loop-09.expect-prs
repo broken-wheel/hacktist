@@ -1,0 +1,10 @@
+"foo.x" -> "foo.y"-
+~"foo.x" -> "foo.y"+
+"foo.x" -> "foo.y"-
+~"foo.x" -> "foo.y"+
+"foo.x" -> "foo.y"-
+~"foo.x" -> "foo.y"+
+= "!GND" "foo.!GND"
+= "!GND" "none.!GND"
+= "!Vdd" "foo.!Vdd"
+= "!Vdd" "none.!Vdd"

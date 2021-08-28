@@ -1,0 +1,190 @@
+@c "macros.texi"
+@c $Id: hacmacros.texi,v 1.4 2008/11/28 22:07:03 fang Exp $
+@c Eventually share this file across several documents
+
+@c ****************************** macros **************************************
+@macro homepageref
+@url{http://www.csl.cornell.edu/~fang/hackt/}
+@end macro
+
+@macro homepagesubref{page}
+@url{http://www.csl.cornell.edu/~fang/hackt/\page\}
+@end macro
+
+@macro sourcerepo{sub}
+@url{http://github.com/fangism/hackt/\sub\}
+@end macro
+
+@macro copyrightnotice{from}
+Copyright @copyright{} \from\-2014 Cornell University
+@end macro
+
+@c ****************************** tools ***************************************
+
+@macro haco
+@command{haco}
+@end macro
+
+@macro haccreate
+@command{haccreate}
+@end macro
+
+@macro hacprsim
+@command{hacprsim}
+@end macro
+
+@macro hacchpsim
+@command{hacchpsim}
+@end macro
+
+@macro hacknet
+@command{hacknet}
+@end macro
+
+@c yes, trailing @c is needed to suppress extra blank line
+@macro shellkbd {p1}
+$ @kbd{\p1\}@c
+@end macro
+
+@macro prsimkbd {p1}
+@b{prsim>} @kbd{\p1\}@c
+@end macro
+
+@macro prsimkbd2 {p1}
+@b{prsim>>} @kbd{\p1\}@c
+@end macro
+
+@c consider bolding prompts?
+
+@macro exercise
+@noindent
+@b{Exercise:}
+@end macro
+
+@macro HAClangref
+@HAC{} Language Reference
+@end macro
+
+@c ****************************** macros **************************************
+@macro bool
+@t{bool}
+@end macro
+
+@macro Int
+@t{int}
+@end macro
+
+@macro ebool
+@t{pbool}
+@end macro
+
+@macro pbool
+@t{pbool}
+@end macro
+
+@macro pint
+@t{pint}
+@end macro
+
+@macro preal
+@t{preal}
+@end macro
+
+@macro CAST
+CAST
+@end macro
+
+@macro HAC
+HAC
+@end macro
+
+@macro HACKT
+HACKT
+@end macro
+
+@macro kwdefine
+@t{define}
+@end macro
+
+@macro kwdefproc
+@t{defproc}
+@end macro
+
+@macro kwdefchan
+@t{defchan}
+@end macro
+
+@macro kwdefdata
+@t{defdata}
+@end macro
+
+
+@macro chpbeginloop
+@t{*[}
+@end macro
+
+@macro chpendloop
+@t{]}
+@end macro
+
+@macro chpendprobsel
+@t{]%}
+@end macro
+@c probe?
+
+@macro prsand
+@t{&}
+@end macro
+
+@macro prsor
+@t{|}
+@end macro
+
+@macro prsnot
+@t{~}
+@end macro
+
+@macro prsup
+@t{+}
+@end macro
+
+@macro prsdn
+@t{-}
+@end macro
+
+@macro prsrarrow
+@t{->}
+@end macro
+
+@macro prslarrow
+@t{<-}
+@end macro
+
+@macro prscarrow
+@t{=>}
+@end macro
+
+@macro prsfarrow
+@t{#>}
+@end macro
+
+@macro prsrarrowup
+@t{+>}
+@end macro
+
+@macro prslarrowup
+@t{<+}
+@end macro
+
+@macro thickbar
+@t{[]}
+@end macro
+
+@macro thinbar
+@t{:}
+@end macro
+
+@macro oldthinbar
+@t{|}
+@end macro
+

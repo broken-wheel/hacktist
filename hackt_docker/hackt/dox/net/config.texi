@@ -1,0 +1,102 @@
+@c "config.texi"
+@c $Id: config.texi,v 1.15 2011/04/03 22:31:18 fang Exp $
+
+@c ****************************************************************************
+@node Configuration Options
+@section Configuration Options
+@cindex configuration
+
+There are two ways to pass configuration options to @command{hacknet}.
+One is through the @option{-f} option on the command-line, 
+the other way is to pass them in through a configuration file 
+with the @option{-c} option.  
+The option value specifications share the same syntax:
+@i{key=values} where @i{values} can be blank, a single value, 
+or a comma-separated list of values.  
+A key-value specifier is not permitted to have spaces
+in the string!
+The values themselves cannot contain comma characters.  
+
+In a configuration file, blank lines are ignored, 
+as well as lines that begin with @t{#} (pound).
+Where boolean values are expected, pass 0 for @var{false}, 
+or 1 for @var{true}.  
+
+The following parameters are used to manage distributed configuration files.
+This allows one to create incrementally different configurations.  
+
+@include config/config_path.texi
+@include config/config_file.texi
+
+The following parameters affect emitted device sizes and units.
+
+@include config/lambda.texi
+@include config/length_unit.texi
+@include config/area_unit.texi
+@include config/electrical_units.texi
+@include config/std_widths.texi
+@include config/stat_widths.texi
+@include config/min_width.texi
+@include config/min_length.texi
+@include config/max_p_width.texi
+@include config/max_n_width.texi
+@include config/fet_type_overrides.texi
+@include config/stack_attributes_from_internal_footer.texi
+
+The following parameters are specific to FinFET processes:
+@include config/width_by_nfin.texi
+@include config/fin_drawn_width.texi
+@include config/fin_pitch.texi
+
+The following options are related to transistor parasitics.  
+@cindex parasitics
+
+@include config/emit_parasitics.texi
+@include config/fet_perimeter_gate_edge.texi
+@include config/fet_diff_overhang.texi
+@include config/fet_spacing_diffonly.texi
+
+@command{hacknet} provides several options for formatting the
+emitted output (because not all SPICEs are created alike).
+@cindex formatting
+@cindex SPICE-formatting
+@cindex Spectre-formatting
+
+@include config/print.texi
+@include config/output_format.texi
+@include config/emit_top.texi
+@include config/nested_subcircuits.texi
+@include config/empty_subcircuits.texi
+@include config/subcircuit_definition_style.texi
+@include config/instance_port_style.texi
+@include config/node_ports.texi
+@include config/struct_ports.texi
+@include config/unused_ports.texi
+@include config/named_port_connections.texi
+@include config/prefer_port_aliases.texi
+@include config/preferred_names.texi
+@include config/emit_port_summary.texi
+@include config/emit_node_aliases.texi
+@include config/emit_node_caps.texi
+@include config/emit_node_terminals.texi
+@c @include config/top_type_ports.texi
+@include config/transistor_prefix.texi
+@include config/subcircuit_instance_prefix.texi
+@include config/pre_line_continue.texi
+@include config/post_line_continue.texi
+@include config/comment_prefix.texi
+@include config/auto_wrap_length.texi
+
+The following options are used for name mangling
+type-names and instance-names.
+By default, no mangling is done to keep the output (more) human-readable.
+
+@cindex mangling
+@cindex name-mangling
+@include config/mangle.texi
+@include config/mangle_escaped_identifiers.texi
+@include config/emit_mangle_map.texi
+@include config/reserved_names.texi
+
+@include config/diagnostic_policies.texi
+

@@ -1,0 +1,46 @@
+"TODO"
+	$Id: TODO,v 1.7 2007/08/15 21:57:01 fang Exp $
+
+Use configure to generate Makefiles suitable for installations of hackt.  
+Distinguish between build Makefiles and install Makefiles.  
+
+file organization:
+	push definitions into smaller files into subdirectories
+	to avoid polluting the global "file namespace"
+	which can cause unexpected including of files outside the library.  
+	(If user names her file "channel.hac"...)
+
+sub-language support:
+	What the hell do we do about CHP-only libraries?
+	How should we try to separate CHP libraries from PRS equivalents?
+		Naming convention?
+
+library catalog (documentation):
+	Use doxygen to generate standard library documentation
+	from the comments in the .hac sources.  Will probably have to
+	emit 'fake' C/C++ sources for the sake of feeding doxygen 
+	with a familiar input language.  This could be accomplished
+	by the AST front-end as a translator.  
+	(distribute the docs, auto-generation should be optional, 
+		to eliminate user-dependency on doxygen, 
+		may complicate distcheck a little.)
+
+inline documentation:
+	Ideally every comment preceding a definition should confirm
+	that it is working by pointing to the relevant test cases
+	in test/lib that demonstrate it (prsim with random timing for QDI).  
+	The pointer to the test case is a certification.  
+	Use embedded texinfo, and extract_texinfo.awk them!
+
+library additions:
+	buffered logic family
+		boolean logic
+		arithmetic
+		splits
+		merges
+	memory cells
+	precharge skeletons
+
+	active-high/low bool-wrapper, useful for Resets.  
+	so the direction of the a node is encoded as a type.  
+

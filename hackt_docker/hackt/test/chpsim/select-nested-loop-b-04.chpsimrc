@@ -1,0 +1,6 @@
+# "select-nested-loop-b-04.chpsimrc"
+#	$Id: select-nested-loop-b-04.chpsimrc,v 1.3 2010/04/06 00:01:29 fang Exp $
+# @haco@ select-nested-loop-b.haco-c
+
+dump-all-event-source
+

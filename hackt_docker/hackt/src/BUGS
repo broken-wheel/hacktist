@@ -1,0 +1,102 @@
+"BUGS"
+The jar of known bugs and issues.  
+	$Id: BUGS,v 1.15 2008/03/17 23:02:05 fang Exp $
+
+guile: [CRITICAL]
+	This is an issue primarily with guile.
+	guile uses C-style exception handling with setjmp/longjmp, 
+	which screws up proper stack unwinding and destruction of local objects
+	consequence: errors during guile will leak resources like crazy
+	Issue has been raised on guile-users@gnu.org.
+	Propose to re-implement their exception mechanism.
+
+getopt: is not re-entrant on most platforms, and is not required to be
+	by the POSIX standard.  getopt has side-effects on internal state
+	and thus cannot be used in a nested manner, as needed by
+	nested command line option parsing (forwarding compile driver flags).
+	TODO: replace with own nicer version.
+
+editline: 2006-07-09
+	piping or redirecting script into editline-histedit
+		doesn't terminate properly on end-of-file/stream.
+	workaround: pass the -b flag (batch mode, non-interactive)
+		to bypass editline.
+
+Hierarchical connections:
+	Instance aliases with relaxed actuals may have NULL actuals
+	only if they are connected to a port.  Internal instances
+	must be strictly specified.  
+	(see test cases: connect/116,117,120,121)
+
+	For simplicity, aliases of relaxed types should be explicitly
+	connected into a single alias ring (flat) because of the
+	new method for symmetrically merging rings and the 
+	strict equivalence requirement between aliases (explicit
+	or hierarchical).  
+
+Global references from with definition-scopes:
+	Out-of-scope references are simply not implemented yet, 
+	which means, everything should be passed in through
+	public ports or template arguments.  
+	Currently, the compiler bombs because I haven't bothered to
+	trap out-of-scope references yet.  
+	TODO: make it at least catch such references and just error-out.  
+	Example case: param/049
+
+DEFECT:
+lookup:
+	Since global namespace is anonymous, there no way of 'open'-ing
+		it from a sub-namespace, e.g. when wanting to change
+		lookup precedence.  
+
+expression-lists with optional rvalues (e.g. function/template arguments)
+	potentially ambiguous interpretation of foo<>:
+		0 template arguments vs. 
+		1 template argument expecting default value
+	proposal: favor the latter
+	conflict: <> has special meaning in the context of relaxed types
+		with 0 strict template arguments.
+
+Relaxed actuals interaction with typedefs:
+	completely borked, see parser/template/env_source_typedef* test cases.
+
+Relaxed actuals:
+	This may no longer be relevant (2007-07-17):
+	Since strict parameters may not depend on relaxed parameters we 
+	must keep track of the *origin* of values, like a poison bit
+	per value.  This will prevent relaxed parameters from leaking
+	to places where their use is forbidden.  
+	(see test cases: template/056,057)
+
+-------------------------------------------------------------------------------
+NOT BUGS:
+
+memory leak false positives:
+	valgrind will report that memory allocated from hash_map is not
+		deallocated because it is actually managed through a pool.
+		This is not a problem.  See note in Object/common/scopespace.h.
+	memory allocated by readline in history buffer:
+		I have no idea how to reclaim.
+	flex lexers' buffer [one-time leak, not critical, but FIXED anyways]
+
+-------------------------------------------------------------------------------
+CLOSED BUGS:
+
+minor detail in type information dumping:
+	parser/connect/130.hac
+	port dump of definition should at least contain dimensionality
+		of collection (type^dim), but is missing.  
+	is probably to be fixed in port_manager's call to 
+		instance_collection::dump or dump_collection_only.
+	status: FIXED
+
+readline and command-line interpreters: (2006-03-29)
+	readline eats '\t' characters, duh!
+	solution: non-interactive script interpretation should
+		use getline() over readline() to preserve these.  
+	For prsim, explicitly use the -b flag when redirecting a script in.
+	(Program cannot tell difference between redirected and interactive
+		stdin input...)
+	status: FIXED (same day)
+
+

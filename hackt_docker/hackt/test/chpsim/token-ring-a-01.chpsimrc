@@ -1,0 +1,12 @@
+# "token-ring-a-01.chpsimrc"
+#	$Id: token-ring-a-01.chpsimrc,v 1.4 2010/04/06 00:01:54 fang Exp $
+# @haco@ token-ring-a.haco-c
+
+timing per-event
+# trace-flush-interval 40
+# trace token-ring-a-01.chpsimtrace
+step 150
+trace-close
+trace-dump token-ring-a-01.chpsimtrace
+# !rm token-ring-a-01.chpsimtrace
+

@@ -1,0 +1,11 @@
+# "delayed-source-a-02-trace.chpsimrc"
+#	$Id: delayed-source-a-02.chpsimrc,v 1.3 2010/04/06 00:00:57 fang Exp $
+# @haco@ delayed-source-a.haco-c
+
+# trace delayed-source-a-02.chpsimtrace
+# this test seems redundant now...
+source delayed-source-a-01.chpsimrc
+trace-close
+trace-dump delayed-source-a-02.chpsimtrace
+# !rm delayed-source-a-02.chpsimtrace
+

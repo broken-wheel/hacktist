@@ -1,0 +1,219 @@
+# "src/Make.hchk-tail.am"
+#	$Id: Make.hchk-tail.am,v 1.20 2010/09/02 00:34:33 fang Exp $
+#	vi: ft=automake
+# Makefile footer for enforcing header checks.  
+# Counterpart is "src/Make.hchk-head.am"
+
+# This uses the following Makefile variables:
+# ALL_HEADER_FILES -- list of all .h files to check
+# ALL_TCC_FILES -- list of all .tcc files to check
+# EMPTY_C_SOURCE -- dummy (empty) source file (not defined in the -head)
+# EMPTY_CXX_SOURCE -- dummy (empty) source file (not defined in the -head)
+# HEADER_CHECK_SRCDIRS -- used by promote_header_deps.awk to adjust paths
+#	The first path should be the primary srcdir relative to this
+#	working directory $(srcdir), subsequent paths are space-delimited.  
+
+###############################################################################
+# EMPTY_CXX_SOURCE = $(srcdir)/test/header_test.cc
+
+CPREPROCESS = $(COMPILE) -E
+CXXPREPROCESS = $(CXXCOMPILE) -E
+
+# no need for -MT (if already correct target)
+# no need for -MP for phony targets, awk-script already does it, 
+#	but redundant phony targets are ignored by it anyhow.
+# expects name of temporary file after -MF
+FAST_MAKEDEP_FLAGS = -MMD -MT $@ -MF
+PROMOTE_HEADER_DEPS = $(AWK) -f $(srcdir)/scripts/promote_header_deps.awk \
+	-v srcdir="$(HEADER_CHECK_SRCDIRS)" -v src="$<"
+FILTER_HEADER_DEPS = $(SED) -e 's|[^ ]*\.cc||g' -e 's| /[^ ]*||g'
+#	-e 's|[^ ]*config\.h||g' 
+FAKE_DEP_FILTER = $(GREP) "^#" | $(GREP) -v '\"/' | $(GREP) -v '\"<' | \
+	$(GREP) -v pragma | $(AWK) '{print $$3;}' | $(SORT) -u
+# first filter -- removes any dependencies on config.h for efficiency
+# second filter -- removes any .cc files
+# third filter -- removes header files starting with / in the path name
+# some exceptions to checking
+
+# experimental header-deps
+# TODO: reduce to headers that were *directly* included
+.h.hdep:
+	$(CPREPROCESS) -I$(srcdir) -include $< $(EMPTY_C_SOURCE) | \
+		$(FAKE_DEP_FILTER) > $@
+
+.hh.hhdep:
+	$(CXXPREPROCESS) -I$(srcdir) -include $< $(EMPTY_CXX_SOURCE) | \
+		$(FAKE_DEP_FILTER) > $@
+
+.tcc.tccdep:
+	$(CXXPREPROCESS) -I$(srcdir) -include $< $(EMPTY_CXX_SOURCE) | \
+		$(FAKE_DEP_FILTER) > $@
+
+# cray-zee anal-retentive header checking with depdendence-tracking
+# make the script accessible to those who want to override
+# predefine more_hchk_flags before invoking the test script to 
+# add CPPFLAGS for the header check test
+
+# We now strip srcdir to force the -include header to undergo -I path lookup
+# which helps find built header files mistakenly referenced in the srcdir
+# by the Makefile from VPATH lookup.
+H_CHECK_TEST_SCRIPT =
+if am__fastdepCC
+H_CHECK_TEST_SCRIPT += \
+	$(SED_srcdir_strip_setup) && \
+	src=`$(ECHO) $< | $(SED_srcdir_strip_fast)` && \
+	depbase=`$(ECHO) $@ | $(SED) 's|[^/]*$$|$(DEPDIR)/&|;s|\.hchk$$||'` && \
+	if $(COMPILE) $(FORCE_LANG_C) -I$(srcdir) $$more_hchk_flags -include $$src \
+		$(FAST_MAKEDEP_FLAGS) "$$depbase.Thd" \
+		-c $(EMPTY_C_SOURCE) -o $@ ; \
+	then $(CAT) "$$depbase.Thd" | $(FILTER_HEADER_DEPS) | \
+		$(PROMOTE_HEADER_DEPS) > "$$depbase.hchkd" ; \
+		$(RM) "$$depbase.Thd" ; \
+	else $(RM) "$$depbase.Thd"; exit 1; fi
+else
+H_CHECK_TEST_SCRIPT += \
+	$(SED_srcdir_strip_setup) ; \
+	src=`$(ECHO) $< | $(SED_srcdir_strip_fast)` ; \
+	$(COMPILE) $(FORCE_LANG_C) -I$(srcdir) $$more_hchk_flags -include $$src -c $(EMPTY_C_SOURCE) -o $@
+endif
+
+.h.hchk:
+	@$(ECHO) "Validating $< ... " ; \
+	$(H_CHECK_TEST_SCRIPT)
+
+HH_CHECK_TEST_SCRIPT =
+if am__fastdepCXX
+HH_CHECK_TEST_SCRIPT += \
+	$(SED_srcdir_strip_setup) && \
+	src=`$(ECHO) $< | $(SED_srcdir_strip_fast)` && \
+	depbase=`$(ECHO) $@ | $(SED) 's|[^/]*$$|$(DEPDIR)/&|;s|\.hhchk$$||'` && \
+	if $(CXXCOMPILE) $(FORCE_LANG_CXX) -I$(srcdir) $$more_hchk_flags -include $$src \
+		$(FAST_MAKEDEP_FLAGS) "$$depbase.Thhd" \
+		-c $(EMPTY_CXX_SOURCE) -o $@ ; \
+	then $(CAT) "$$depbase.Thhd" | $(FILTER_HEADER_DEPS) | \
+		$(PROMOTE_HEADER_DEPS) > "$$depbase.hhchkd" ; \
+		$(RM) "$$depbase.Thhd" ; \
+	else $(RM) "$$depbase.Thhd"; exit 1; fi
+else
+HH_CHECK_TEST_SCRIPT += \
+	$(SED_srcdir_strip_setup) ; \
+	src=`$(ECHO) $< | $(SED_srcdir_strip_fast)` ; \
+	$(CXXCOMPILE) $(FORCE_LANG_CXX) -I$(srcdir) $$more_hchk_flags -include $$src -c $(EMPTY_CXX_SOURCE) -o $@
+endif
+.hh.hhchk:
+	@$(ECHO) "Validating $< ... " ; \
+	$(HH_CHECK_TEST_SCRIPT)
+
+TCC_CHECK_TEST_SCRIPT =
+if am__fastdepCXX
+TCC_CHECK_TEST_SCRIPT += \
+	$(SED_srcdir_strip_setup) && \
+	src=`$(ECHO) $< | $(SED_srcdir_strip_fast)` && \
+	depbase=`$(ECHO) $@ | $(SED) 's|[^/]*$$|$(DEPDIR)/&|;s|\.tccchk$$||'` && \
+	if $(CXXCOMPILE) $(FORCE_LANG_CXX) -I$(srcdir) $$more_hchk_flags -include $$src \
+		$(FAST_MAKEDEP_FLAGS) "$$depbase.Ttccd" \
+		-c $(EMPTY_CXX_SOURCE) -o $@ ; \
+	then $(CAT) "$$depbase.Ttccd" | $(FILTER_HEADER_DEPS) | \
+		$(PROMOTE_HEADER_DEPS) > "$$depbase.tccchkd" ; \
+		$(RM) "$$depbase.Ttccd" ; \
+	else $(RM) "$$depbase.Ttccd"; exit 1; fi
+else
+TCC_CHECK_TEST_SCRIPT += \
+	$(SED_srcdir_strip_setup) ; \
+	src=`$(ECHO) $< | $(SED_srcdir_strip_fast)` ; \
+	$(CXXCOMPILE) $(FORCE_LANG_CXX) -I$(srcdir) $$more_hchk_flags -include $$src -c $(EMPTY_CXX_SOURCE) -o $@
+endif
+.tcc.tccchk:
+	@$(ECHO) "Validating $< ... " ; \
+	$(TCC_CHECK_TEST_SCRIPT)
+
+EXTRA_DIST += scripts/automake_include.awk \
+	scripts/promote_header_deps.awk
+
+# NOTE: subdirectories which will not have .o,.lo object files built
+# will not be generated in the _build tree of the distcheck.
+# This means we have to fake an object file in each subdirectory
+# containing headers we want to check for standalone-ness.  
+# Really, they should just be able to link to "test/header_test.cc"
+HEADER_TCC_TESTS = \
+	$(ALL_HEADER_FILES:.h=.hchk) \
+	$(ALL_CXX_HEADER_FILES:.hh=.hhchk) \
+	$(ALL_TCC_FILES:.tcc=.tccchk)
+
+HEADER_TCC_DEPBASES = \
+	$(ALL_HEADER_FILES:.h=.hchkd) \
+	$(ALL_CXX_HEADER_FILES:.hh=.hhchkd) \
+	$(ALL_TCC_FILES:.tcc=.tccchkd)
+
+check-headers: $(HEADER_TCC_TESTS)
+	@$(ECHO) "All header tests passed."
+
+AUTOMAKE_INCLUDE_AWK = scripts/automake_include.awk
+
+# TODO: generate this in configure instead using AC_CONFIG_COMMAND
+# *should* depend on all of Makefile.in's dependencies, but *not* Makefile.in
+$(srcdir)/headers_deps.make: Makefile.am Make.hchk-tail.am $(AUTOMAKE_INCLUDE_AWK)
+	@$(ECHO) Regenerating $@ ...
+	@{ $(ECHO) "# $@ -- generated by rule in Make.hchk-tail.am" ; \
+	$(ECHO) "#	(This is not an automake feature, just a custom extension.)" ;} > $@ && \
+	$(MAKE) Makefile && \
+	$(MAKE) echo-header-depbases | \
+		$(AWK) -f $(srcdir)/$(AUTOMAKE_INCLUDE_AWK) >> $@
+
+# inlined into Makefile.in by automake
+# really only needed for dynamic dependence-tracking
+include $(srcdir)/headers_deps.make
+
+EXTRA_DIST += headers_deps.make
+all-local: $(srcdir)/headers_deps.make
+
+# may be disabled to speed up building
+if ENABLE_HEADER_VALIDATION
+all-check-headers: check-headers
+else
+all-check-headers:
+endif
+
+all: all-check-headers
+
+clean-header-tests:
+	-$(RM) $(HEADER_TCC_TESTS)
+
+# Incidentally, automake is smart enough to make initial dummy files
+# for dependencies that are automatically generated.
+# You never want to manually remove the .Po .Plo files
+# (now including .hchkd, .tccchkd) from the .deps directories.  
+# IF you do remove it, be sure to replace it with an empty placeholder
+# before re-running make.  
+
+clean-header-deps:
+	@$(ECHO) "Resetting .deps/*chkd in all sub-directories..."
+	@for f in $(HEADER_TCC_DEPBASES); do \
+		$(ECHO) "# reset" > \
+			`$(ECHO) $$f | $(SED) 's|[^/]*$$|$(DEPDIR)/&|'` ; \
+	done
+
+echo-header-depbases: force
+	@$(ECHO) $(HEADER_TCC_DEPBASES)
+
+# cvsignore targets
+AUTO_IGNORE += headers_deps.make
+
+# output becomes mangled...
+# help-local: help-check-headers
+
+help-check-headers:
+	@$(ECHO) "Header-checking targets:" ; \
+	$(ECHO) "    check-headers: validate all header files in source tree" ; \
+	$(ECHO) "    clean-header-tests: resets results of header validations" ; \
+	$(ECHO) "    clean-header-deps: resets dependencies of header validations" ; \
+	$(ECHO) "    echo-header-depbases: lists header validation outputs"
+
+.PHONY: help-check-headers check-headers clean-header-tests \
+	clean-header-deps echo-header-depbases all-check-headers
+
+# standard targets
+include $(top_srcdir)/Make.global
+
+# help: help-check-headers
+

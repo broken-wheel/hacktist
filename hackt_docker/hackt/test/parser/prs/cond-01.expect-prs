@@ -1,0 +1,7 @@
+"a2.x" -> "a2.a"-
+= "!GND" "a0.!GND"
+= "!GND" "a1.!GND"
+= "!GND" "a2.!GND"
+= "!Vdd" "a0.!Vdd"
+= "!Vdd" "a1.!Vdd"
+= "!Vdd" "a2.!Vdd"

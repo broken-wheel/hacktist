@@ -1,0 +1,62 @@
+@c "tips.texi"
+
+@node Tips
+@chapter Tips
+
+This section contains the collected wisdom of users of 
+the simulator.  
+Think of this as an FAQ.  
+
+@menu
+* Interactive mode::
+* Scripting::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node Interactive mode
+@section Interactive mode
+
+@b{Readline completion and history}
+Hopefully, you or your package has built the HACKT tools with 
+the GNU Readline library.
+Readline provides numerous line-editing, history, and completion
+features that will make the interactive mode much more efficient.  
+The most basic feature is cycling through history with the 
+up and down arrow keys.
+Consult the Readline documentation for details, 
+@xref{Top, , Readline, readline, The GNU Readline Library}.
+
+
+@c ----------------------------------------------------------------------------
+@node Scripting
+@section Scripting
+
+@b{Long simulations.}
+Q: If I have a simulation that is supposed to run infinitely, deadlock-free, 
+with the @command{cycle} command how do I check it non-interactively?
+(By now you've figured out that in interactive mode, you can
+interrupt the simulation with @t{Ctrl-C} to give you back the command prompt, 
+or equivalently, send the process a @t{SIGINT} signal.)
+
+A: Instead of @command{cycle}, use @command{advance} or @command{step}
+or @command{step-event} to run for a finite time.  
+Upon completion of the command, however, one typically wants to verify
+that the system did not deadlock.  
+@command{assert-queue} will error out if the event queue is empty.  
+
+@b{Checkpointing}.
+You can manually save a checkpoint at any time using the @command{save}
+command, and restore to using the @command{load} command.  
+You can also have the simulator automatically take a checkpoint
+upon exit, regardless of the exit status by using:
+
+@example
+autosave on FILENAME
+@end example
+
+This is particularly useful for analyzing failed simulations that
+stop in some unexpected manner.
+After a failed run, you have a checkpoint that takes you right to
+the moment of failure for further examination.  
+
+

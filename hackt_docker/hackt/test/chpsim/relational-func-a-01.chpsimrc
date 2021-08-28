@@ -1,0 +1,13 @@
+# "relational-func-a-01.chpsimrc"
+#	$Id: relational-func-a-01.chpsimrc,v 1.3 2010/04/06 00:01:23 fang Exp $
+# Yes, use THIS object file
+# @haco@ relational-func-a.haco-c
+# @module@ -lgcd
+# @deps@ gcd.la
+
+watchall-events
+step 120
+time
+assert-queue
+
+

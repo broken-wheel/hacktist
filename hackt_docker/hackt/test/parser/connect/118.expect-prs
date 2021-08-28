@@ -1,0 +1,7 @@
+= "!GND" "p.!GND"
+= "!GND" "q.!GND"
+= "!Vdd" "p.!Vdd"
+= "!Vdd" "q.!Vdd"
+= "x" "p.a"
+= "x" "q.a"
+= "x" "y"

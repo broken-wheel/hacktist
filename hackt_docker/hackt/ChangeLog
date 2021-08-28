@@ -1,0 +1,4250 @@
+"ChangeLog"
+#	$Id: ChangeLog,v 1.256 2011/05/03 19:20:32 fang Exp $
+
+2017-02-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-64:
+	  Date bump configure.ac, 20170223.
+
+
+2016-12-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-62:
+	  Merged hac_finfet branch.
+
+
+2016-07-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-61:
+	  prsim: allow mk_excl rings to contain one node (and ignore)
+
+
+	* HACKT-00-01-04-main-00-86-60:
+	  Added random number generators to chpsim standard library.
+
+
+2016-06-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-59:
+	  Support Cadence incisive for VPI cosimulation.
+
+
+2014-08-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-55:
+	  Merged prsim-timing-backannot branch.
+	  configure.ac: bump date
+
+
+2014-08-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-54:
+	  Merged clang34ification branch to address compatbility with
+		clang-3.4 and libc++ in std=c++11 mode (past)
+	  config/cxx_STL.m4: macros updated to account for 
+		libc++ differences like versioned std namespace.
+	  Make.stddef, Make.global: move some universally useful
+		definitions from test/Make.test-tail
+
+
+2013-11-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-53b:
+	  config/hackt.m4, configure.ac: check CONFIG_SHELL for pipefail
+
+
+2013-01-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-52c:
+	  config/cc.m4: conditionally define AC_C_TYPEOF, which was
+		introduced in autoconf 2.60, to allow bootstraping with 2.59.
+
+
+2012-12-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-52b:
+	  config/hackt.m4: also search for tputs in libtinfo
+		needed for some linux distros: Ubuntu, Fedora
+
+
+2012-10-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-51:
+	  configure.ac: date bump, .h files have been renamed .hh (C++)
+
+
+2012-10-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-50:
+	  Merged clangification branch to master!
+	  Merged prsim-engine-rewrite branch to master!
+	  configure.ac: date bump
+
+
+2012-08-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-41f:
+	  configure.ac: detect whether or not Makefiles were bootstrapped
+		with automake version that produces .hh or .h from .yy(.cc).
+
+
+2012-08-07	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-41e:
+	  config/{hackt,guile}.m4, configure.ac: do NOT accumulate
+		libraries to link in the LIBS var, that's just sloppy.
+		Explicitly add them to the appropriate LIBADD and LDADD
+		automake variables.
+
+
+2011-11-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-99:
+	  configure.ac: date-bump
+
+
+2011-06-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-78:
+	  repository moved over to git, copy .cvsignore to .gitignore.
+	  updated bootstrap and scripts/maintainerclobber for git use
+	  bootstrap now propagates ACLOCAL_FLAGS to libltdl's
+		configure.ac and Makefile.am (assist in libtool2 migration)
+	  Now pretty much require libtool 2.x (been around for years).
+		Updated configure.ac to substitute new LT_* variables
+		and pass them to Makefiles.
+
+
+2011-05-03	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-70-merged-pr-01-20:
+	  Merged branch to trunk -- introducing 'ipple' placer tool.
+
+
+2011-04-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-06:
+	  configure.ac: check for sincos family of match functions,
+		which compute both sin() and cos() at the same time
+		for efficiency.
+
+
+2011-04-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-03:
+	  configure.ac: check for abs(), fabs() family of cmath functions.
+
+
+2011-03-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-61:
+	  config/cxx_STL.m4: fix std::_Construct tests to try calling
+		the functions of interest instead of attempting to redefine.
+	  Verified against g++-4.6.
+
+
+2011-03-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-59:
+	  config/cxx_STL.m4: new test for whether or not
+		std::istream properly fails when reading
+		a negative input to an unsigned value type.
+		http://gcc.gnu.org/bugzilla/show_bug.cgi?id=39802
+		Fails for i386-gcc-3.4.6, oddly.
+	  configure.ac: call FANG_CXX_ISTREAM_NEGATIVE_UNSIGNED
+	  use this new test result in util/strings.tcc:string_to_num.
+
+
+2011-03-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-53-merged-portdir-01-05:
+	  Branch merge.  Checking channel/datatype connectivity.
+
+
+2011-02-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-50:
+	  config/guile.m4: added support for guile-2.0.
+		modified detection of guile lib basename, 
+		and scm_boot_guile symbols.
+		detect scm_t_subr typedef.
+		Many guile API symbol checks fail b/c they
+		are now defined to macros, but not to fret, 
+		they still work, as macro definitions are now
+		detected and used in src/util/guile_STL.h.
+	  configure.ac: now specify AC_CONFIG_MACRO_DIR([config])
+		to where our m4 macros live.  Wish they were in 
+		config/m4, oh well.
+
+
+2011-02-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-49:
+	  config/lexyacc.m4: added a test to detect the initial value
+		of yy_init in the generated skeleton, and pass to our 
+		machinery that re-factor lexer boilerplate code.
+		This finally allows our lex files to work with
+		newer versions of flex (>= 2.5.33).
+
+
+2011-02-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-46:
+	  config/lexyacc.m4: more general check for yacc skeleton version.
+	  config/cxx_STL.m4: bits/stl_construct.h checks include
+		<iterator> for iterator_traits.
+	  Various source fixes to try to appease clang++.
+
+
+2010-09-20	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-27-merged--string-01-04:
+	  Branch merge, introducing string parameters, 
+		string manipulations, compile-time functions.
+
+
+2010-09-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23-string-01-04:
+	  configure.ac, config/cxx.m4: check for typeof, __typeof__,
+		and decltype operators.  
+
+
+2010-09-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23-string-01-03:
+	  Make.stddef: useful sed command for substituting some directory
+		variables $(builddir) and $(top_builddir)
+
+
+2010-09-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23:
+	  Portability fixes, tested on powerpc-apple-darwin8
+		against gcc-3.3 and gcc-4.0.
+	  configure.ac: don't AC_CHECK_PROG echo before LT_INIT
+		date bumped.
+	  config/cc.m4: check whether uint32_t and size_t are identical
+		also compare against uint32_t and uint64_t
+		result used in util/numeric/inttype_traits.h
+	  config/cxx_STL.m4: check for std::_Construct copy-ctor
+	  see also src/ChangeLog, lib/ChangeLog
+
+
+2010-04-09	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-77:
+	  configure.ac: generate src/scripts/hacalloc
+
+
+2010-04-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-73:
+	  configure.ac: date bump
+	  General post-branch-merge clean-up of sources and tests.
+
+
+2010-04-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-69-merged-scalable-01-33:
+	  Merge of -scalable-01 branch, major revisions to make middle and
+		back ends of HACKT more memory scalable.  
+
+
+2010-03-10	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-68:
+	  Mostly portability fixes.
+	  configure.ac: version bump, reject mawk, not just warn.
+		Error out if lex/yacc missing at summary.
+	  config/hackt.m4: checking for tputs, force AC_LANG C
+	  Re-validated on ubuntu vs. gcc-4.4.1, many thanks to
+		Ilya Konstantinovich Ganusov for helping test!
+
+
+2010-02-09	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53-scalable-01-16:
+	  Make.stddef: provide LN_SF as ln -s -f
+
+
+2010-02-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-66:
+	  configure.ac: generate src/hac-cpp wrapper script
+
+
+2010-01-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-58+:
+	  configure.ac: libtool macros depending on m4_ifdef([LTINIT])
+	  Make.global: standardized distclean-depend recursive target
+
+
+2010-01-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-58:
+	  configure.ac: bootstrap with libtool-2.x,
+		enable use of installed libltdl,
+		date bump
+
+
+2009-11-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53:
+	  configure.ac: date bump, release checked, distchecked
+
+
+2009-10-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-41:
+	  configure.ac: generate src/scripts/hackt-env
+
+
+2009-10-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-32:
+	  Fixed test/Make.test-guile, use LTDL_LIBRARY_PATH.
+	  configure.ac: date bump
+
+
+2009-10-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-31-merged-supply-01-09:
+	  Branch merge of the supply-01 branch.
+
+
+2009-09-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-30:
+	  Build system maintainence, testing on i686-apple-darwin10.
+	  bootstrap: re-wrote portions to order calls around libtool
+	  configure.ac: bootstrap with libtool-2.x! old macros commented out.
+		May need to switch back and forth... :S
+		removed BUILD_DARWIN test, no longer patch Makefile[.in]'s
+		am__remove_distdir script.
+	  scripts/maintainerclobber: re-wrote to wipe files in each
+		directory based on .cvsignore files.  (easier!)
+	  test/Make.test-...: see test/ChangeLog, basically fixed all 
+		plug-in dependent tests to use libtool --mode=execute wrapper.
+		Much cleaned up use of Makefile variables.
+	  Not regression test clean on i686-apple-darwin10!
+
+
+2009-09-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-29-merged-netlist-02-13:
+	  Branch merge of hacknet features, batch 2.
+	  configure.ac: date bump
+
+
+2009-08-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28-merged-netlist-01-23:
+	  Branch merge of -netlist-01, introducing hacknet!
+	  configure.ac: date bump
+
+
+2009-08-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-22:
+	  configure.ac: generate dox/net/Makefile,
+		earlier on branch, also added test/net/Makefile
+
+
+2009-07-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-26:
+	  configure.ac: date bump
+
+
+2009-05-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-20:
+	  configure.ac: date bump
+
+
+2009-04-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-17:
+	  Ported to g++-4.4.
+	  config/cxx_STL.m4: check for copy_if
+	  configure.ac: use it
+
+
+2009-03-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-06-merged-footprint-02-05:
+	  Branch merge of footprint rework.
+
+
+2009-02-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-02:
+	  configure.ac: generate src/{hacguile,hacchpsimguile}
+		installed wrapper scripts, replacing binaries.
+	  config/guile.m4: now use and allow override of GUILE
+		variable (--with-guile), and find GUILE_PATH as well.
+	  Former libguile optional dependency is now replaced
+		with the guile (binary) executable because
+		HAC facilities are independently loadable plug-ins now.
+
+
+2009-02-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-01:
+	  config/rl_el.m4: also check for readline/readline.h for editline,
+		check for symbols rl_completion_matches and completion_matches.
+	  configure.ac: date bump
+
+
+2009-01-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-96-merged-prsim-13-03:
+	  Branch merge: node/rule attributes for hacprsim.
+	  configure.ac: date bump
+
+
+2009-01-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-92-merged-prsim-12-09:
+	  Merged prsim tracing branch.
+	  configure.ac: date bump
+
+
+2008-12-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-71+:
+	  configure.ac: check for tr
+	  Make.stddef: use tr to convert spaces to newlines
+	  fixed a few test dependencies
+
+
+2008-12-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-70:
+	  config/lexyacc.m4, README: warn against flex 2.5.35 :(
+
+
+2008-11-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-66:
+	  config/hackt.m4: added --enable-interactive-tests option.
+
+
+2008-11-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-65-merged-gprsim-11-05:
+	  Branch merge: improvements of prsim error handling policy.
+
+
+2008-11-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-63-merged-gcc43-01:
+	  Merged gcc43 branch, which requires -Wno-conversion.  
+	  Also works in std=c++0x mode!
+
+
+2008-11-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-61-gcc43-01:
+	  First crack at patching for gcc-4.3.  (does not compile yet)
+	  config/cxx_STL.m4: updated standard header checks to account
+		for -std=c++0x.
+	  config/guile.m4: -include cstdio in header check.
+
+
+2008-11-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-54:
+	  configure.ac: default AC_DISABLE_STATIC, AC_ENABLE_SHARED.
+	  config/rl_el.m4: removed warning about GPL incompatbility, 
+		b/c this project is now officially GPL, thanks to Cornell.
+	  Updated NEWS, for once.  
+
+
+2008-11-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-50-merged-prsim-10-20:
+	  Major branch merge: prsim scalability rework.
+
+
+2008-06-03	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-24:
+	  Long time no distcheck, passes after minor dist fixes.  
+		Make available as minor release.
+	  configure.ac: date bump for release
+
+
+2008-03-20	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-09-merged-parser-06-07:
+	  Branch merge: improved lexer/parser configury checking.
+		Project-wide Makefiles use printf over echo -n for portability
+
+
+2008-03-17	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-07-merged-ACT-03-59:
+	  Branch merge.
+
+
+2008-03-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-05-parser-06-07:
+	  Project-wide cleanup of "echo -n", replaced with equivalent
+		'printf' for POSIX standards-compliant behavior.  
+		echo is not required to accept options.
+	  config/lexyacc.m4: improved yacc/bison traits checking, 
+		no longer based on executable name, but generator output
+		which is much more reliable.
+
+
+2008-03-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-05-parser-06-06:
+	  config/lexyacc.m4: detect and warn against known bad flex.
+
+
+2008-03-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-56:
+	  Make.stddef, Make.global: added CLEANDIRS variable, cleandirs target
+		Revised check.log rule to catch more specific errors in log.
+
+
+2008-03-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-05-parser-06-02:
+	  config/lexyacc.m4: added parser property tests.
+
+
+2008-02-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-05:
+	  configure.ac: AM_CONDITIONAL SRCDIR_BUILD
+
+
+2008-02-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-43:
+	  config/hackt.m4: VPI check now checks for 'vcs' and provide
+		automake conditional HAVE_VCS.
+	  configure.ac: AC_OUTPUT(test/prsim/vpi/Makefile)
+
+
+2008-02-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-04:
+	  configure.ac: date bump
+
+
+2008-01-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-15:
+	  config/cxx_STL.m4: check for <set> <map> _Rb_tree implementation.
+	  configure.ac: use it
+
+
+2008-01-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-02-merged-prsim-08-29:
+	  Child branch merge.  
+
+
+2007-12-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-01-prsim-08-09:
+	  config/hackt.m4: check for vpi_user.h support for prsim.
+	  configure.ac: use it
+
+
+2007-11-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-00-merged-router-01-12:
+	  Branch merge of chpsim bitrouter case study.
+
+
+2007-11-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-89:
+	  config/lexyacc.m4:
+		detect flex lexer characteristic with a few link tests
+
+
+2007-10-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-88:
+	  configure.ac: call all AC_CHECK_FUNCS together (compressed)
+	  A bunch of cygwin-support:
+		check for rand48 function family in strict C++ mode,
+		check for additional libc functions fdopen, popen.
+		config/cc.m4: check for __FILE for foward decl, 
+			additional check for declaration conflict
+			new tests for non-ansi libc functions rand48 family
+		config/cxx_STL.m4: un-hardcode /dev/std{in,out,err} and take
+			result from other test in ...
+		config/os.m4: check for standard file descriptors, 
+			which are horked on cygwin
+		config/guile.m4: correct the AM_CONDITIONAL HAVE_LIBGUILE test
+
+
+2007-10-21	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-85-router-01-09:
+	  configure.ac: patch Makefile's tar command to use POSIX 
+		compatibility mode to support path/names longer than 99.
+
+
+2007-09-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-78:
+	  configure.ac, config/cc.m4: check whether or not 
+		unsigned long is equivalent to uint32_t.
+
+
+2007-09-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-76:
+	  configure.ac: WARN if mawk is found and used (it sucks),
+	  	AM_CONDITIONAL and AC_DEFINE HAVE_X11.
+	  config/guile.m4: remove unused test AC_CHECK_FUNCS(scm_boot_guile)
+	  Note: this snapshot validated against autoconf-2.61, automake-1.10.
+
+
+2007-08-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-66:
+	  configure.ac, config/cc.m4:
+		Check for non-conforming type equivalence between
+		size_t and unsigned long, for workarounds.  
+
+
+2007-08-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-57:
+	  Critical patch needed for Darwin.
+	  configure.ac: AC_SUBST LTDL_SHLIBPATH_VAR and LTDL_OBJDIR
+		so Makefile can construct environment to pass during tests.
+
+
+2007-08-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-53:
+	  Remove obsolete references to configured test scripts.
+
+
+2007-08-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-52:
+	  Check for 'info' and AM_CONDITIONAL HAVE_INFO for installcheck.
+
+
+	* HACKT-00-01-04-main-00-81-50:
+	  Make.stddef: define EXTRACT_TEXINFO_IN_SRCDIR invokation of 
+		extract_texinfo.awk suitable in scripts that cd $(srcdir) first
+	  configure.ac: AC_CONFIG_COMMANDS to make auxiliary build directories
+
+
+2007-08-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-49-merged-chpsim-07-08:
+	  Merged -chpsim-07 branch.
+
+
+2007-08-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-48-merged-parser-05-03:
+	  Merged -parser-05 branch.
+
+
+2007-08-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-07:
+	  configure.ac: make test/chpsim/libinstalltest/Makefile
+
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-06:
+	  configure.ac: replace docs/chpsim/figs/build_path with .dirstamp
+	  hackt-config.in: use datarootdir
+
+
+2007-08-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-05:
+	  Added scripts/extract_texinfo.awk.  Guess what it does.
+	  Make.stddef: use extract_texinfo.awk
+
+
+2007-08-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-45:
+	  Make.global: more echo-* targets listed under help.
+
+
+	* HACKT-00-01-04-main-00-81-44:
+	  Make.stddef: directory variables moved to ...
+	  installdirs.mk: some additional installation subdirectories, 
+		intended as post-configure variables, for convenience.  
+	  Makefile.am: distribute installdirs.mk
+
+
+2007-07-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-41-merged-chpsim-06-26:
+	  Branch merge of chpsim-06 branch: chpsim run-time function support.
+	  Also includes some system-wide additions:
+		addition of libltdl fr plug-in support
+		improved support for installcheck targets
+	  Updated bootstrap to support libltdl regeneration.
+	  pkg/*.info: fink packaging deps updated (not tested)
+
+
+2007-07-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-25:
+	  Make.stddef: define examplesdir for installing examples.  
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-23:
+	  Make.stddef: define docdir, pdfdir, psdir, htmldir for installation.
+
+
+2007-07-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-22:
+	  README.CVS: now list texinfo as a bootstrapper requirement.
+	  README.maintainer: more backport tag conventions.
+	  configure.ac, config/documentation.m4: check for ps2epsi
+	  More documentation updates involving Texinfo in dox/ChangeLog.
+
+
+2007-07-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-21:
+	  README.CVS: note known bad version of libtool's libltdl (1.5.18) :S
+	  bootstrap: remove libltdl/{Makefile.in,configure,aclocal.m4} to
+		force them to be regenerated by this bootstrap and autoreconf,
+		to automatically handle version mismatches in auto{make,conf}.
+
+
+2007-07-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-19:
+	  Makefile.am: revert adding of ACLOCAL_AMFLAGS and add a configurable
+		AC_ARG_VAR for additional ACLOCAL_FLAGS to be appended.
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-17:
+	  config/hackt.m4, configure.ac: added macros to conditionally
+		disable tests for faster testing turn-around.
+		For maintainer use only, please.  :)
+		All Makefile.am's updated using AM_CONDITIONALs.
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-16:
+	  Makefile.am: installcheck bin_SCRIPTS.
+	  configure.ac: produce test/chpsim/installtest/Makefile from .in
+	  hackt-config.in: @datarootdir@ -> @datadir@ for AM-1.9 compat.
+		added --help, --datadir, --pkgdatadir options.
+
+
+2007-07-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-15:
+	  configure.ac: warn if --disable-shared given, because now 
+		ltdl module opening features depend on shared libraries.  
+		Consequence: handful of test cases will fail in test/chpsim.
+	  Configure-generate an 'installcheck.mk' from .in, 
+		to be used in install-time tests.  
+
+
+2007-07-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-11:
+	  Makefile.am: install a copy of configured libtool as hackt-libtool
+
+
+2007-07-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-06:
+	  hackt-config.in: prepended cflags with -DINSTALLED_HACKT
+		so compiling against installed headers can be different.
+
+
+2007-07-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-02:
+	  Added initial libtool's libltdl support.
+		configure.ac, and libltdl/ subdir.
+
+
+2007-07-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-40-merged-template-02-28:
+	  Branch merge of -template-02 (relaxed template parameters).
+
+
+2007-07-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39:
+	  configure.ac, config/hackt.m4: libtool script now invoked
+		non-silently by default, in anticipation of ltdl use.
+
+
+2007-06-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-38:
+	  config/documentation.m4: support older fig2dev
+	  config/guile.m4: strip out guile-snarf, guile-tools (unused)
+
+
+2007-06-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-35:
+	  README: noted known versions of yacc skeletons,
+	  	known bad version of mawk.
+	  configure.ac, config/cxx.m4: detect inconsistency between long long
+	  	configure test and strict dialect conformance.
+		Automatically add -Wno-long-long when appropriate.
+
+
+2007-06-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-34-merged-LPxx-04:
+	  Branch merge.  Support for testing on non LP32 platforms.
+
+
+2007-06-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-32-LPxx-04:
+	  configure.ac: removed src/util/test/test-expect.sh[.in]
+
+
+2007-06-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-33:
+	  configure.ac: AC_CHECK_SIZEOF tests all wrapped in AC_LANG C++ now, 
+		so CXXFLAGS need not be copied to CFLAGS for correctness.
+
+
+	* HACKT-00-01-04-main-00-81-32:
+	  configure.ac: Added AM_CONDITIONAL ABI_ILP32
+
+
+2007-06-09	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-29:
+	  Added support for guile-1.6's API!
+	  config/guile.m4: a ton more API function checks.
+	  README: downgraded guile version requirement
+	  Added scripts/bootstrap.freebsd.
+
+
+2007-06-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-28:
+	  Added lib/mk/Makefile.am, installed makefile templates, 
+		now generated to reduce maintainence replication.
+
+
+2007-06-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-25:
+	  configure.ac: date bump, added summary at end
+	  pkg/*.info: updates of fink packages
+
+
+2007-05-03	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-22-merged-chpsim-04-34:
+	  chpsim-04 branch merge.
+
+
+2007-05-03	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-21:
+	  config/guile.m4: eval and AC_SUBST(GUILE_CONFIG_VERSION)
+		now report this in build reports.  
+	  configure.ac: date bump
+
+
+2007-04-20	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-19-merged-scm-01-37:
+	  scm-01 branch merge.
+
+
+2007-03-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-14:
+	  Now install bin/init_hackt.[c]sh scripts, subst'd by configure.
+		Setup scripts establish some environment variables for user.
+	  config/guile.m4: override-able --with-guile-snarf AR_ARG_WITH
+		for systems that install guile under some name-transformation.
+		Same with --with-guile-tools.
+
+
+2007-03-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-13:
+	  Added hackt-config.in as an installed configure flag script.
+
+
+2007-03-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-14:
+	  config/guile.m4: fixed conditional AM_CONDITIONAL to unconditional.
+	  README, README.CVS: additional instructions.
+	  Added pkg/README, pkg/hackt-{cvs,dist}-deps.info fink packages.
+		Listed them in EXTRA_DIST of Makefile.am.
+
+
+2007-03-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-11:
+	  AC_CHECK_FUNC(atexit), because we need it for guile-ism.
+	  config/guile.m4: also check for scm_init_guile()
+
+
+2007-03-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-07:
+	  config/guile.m4: restructured configure tests more, 
+		now AM_CONDITIONAL(HAVE_LIBGUILE) requires correct API (1.8)
+		AC_CHECK_FUNC on true symbol function, not macro function.
+		Now allow user to pass specific guile-config as
+			--with-guile-config=... for version selection.  
+	  configure.ac: generate test/guile/Makefile
+
+
+2007-03-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-05:
+	  config/guile.m4: more specific function tests.
+	  README: we now require guile-1.8 for now, until we re-write
+		wrappers for 1.6's missing interfaces.  
+
+
+	* HACKT-00-01-04-main-00-81-04:
+	  config/builtin_funcs.m4: added long long tests and parity tests.
+
+
+2007-03-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-02-merged-shlib-01-07:
+	  installed-scripts now replaced with dynamically linked executables.
+
+
+2007-03-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81:
+	  Dropping swig as a bootstrap requirement, maintaining
+		guile-scm wrappers by hand.  
+
+
+2007-03-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-92:
+	  Date bump after minor patches.  
+
+
+2007-03-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-91:
+	  config/cxx_STL.m4: fstream tests assume OK if cross compiling.
+
+
+2007-02-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-87-merged-chpsim-03-10:
+	  Branch merge.
+
+
+2007-02-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-86:
+	  config/cxx_STL.m4: check whether SGI extension bitset member 
+		functions are actually *linkable* using g++.
+		Extends tests to compile and link (separately)
+
+
+2007-02-21	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-83:
+	  configure.ac: new autoconf macro tests for SGI extensions
+		in std::bitset, tests added to config/cxx_STL.m4.
+	  config/builtin_funcs.m4: testing compiler's builtin functions
+		such as popcount (mostly bit-operations)
+
+
+2007-02-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-81:
+	  Executables are now built using dynamic shared library!
+
+
+2007-02-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-79:
+	  Makefile.am: distclean Makefile.orig if produced by patching Makefile.
+	  README.CVS: notes about updates and patch creation.
+
+
+2007-02-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-72-merged-chpsim-02-19:
+	  Branch merge.
+
+
+2007-01-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-71:
+	  AC_SUBST X11_INCLUDE and X11_LDPATH.  
+
+
+	* HACKT-00-01-04-main-00-80-70:
+	  configure.ac, config/guile.m4: autoconf macros for checking
+		guile-config and setting appropriate AC_SUBST variables.  
+
+
+2007-01-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-69:
+	  Global Makefile maintainence.  Fixed some broken dependencies.  
+	  Make.stddef: added useful strip srcdir macros
+
+
+2007-01-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-68:
+	  configure.ac: now generate dox/{chpsim,prsim}/Makefile
+
+
+2007-01-21	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-64-merged-chpsim-01-54:
+	  Major branch merge of -chpsim-01.
+	  See src/ChangeLog for gory details.
+	  Short story: we now have chpsim.  
+
+
+2007-01-20	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-52:
+	  New AC_OUTPUT: test/chpsim/testlib/Makefile.
+
+
+2007-01-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-44:
+	  Make.stddef and global Makefile.am clean-ups for maintainability.  
+
+
+2006-12-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-merged-channel-02-09:
+	  Branch merge.  src/ChangeLog for summary.  
+
+
+2006-11-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-62-channel-02-02:
+	  configure.ac, config/hackt.m4: added option to re-enable the
+		now-obsolete unroll phase tests in test suite.  
+		Unrolling is now deprecated because it has been fused
+		into the create phase -- they are now one and inseparable.
+
+
+2006-11-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-58:
+	  dox/ChangeLog only -- improved LaTeX dependency management.  
+
+
+2006-11-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-53:
+	  configure.ac: test for more libc functions, many related to 
+		streams, pipes and process control.  
+	  Make.global: fixed help echo entry for build-check.
+
+
+2006-11-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-52-merged-test-12:
+	  Merged branch for test parallelization and other miscellaneous
+		Makefile maintainence.  
+
+
+2006-11-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-50-test-11:
+	  config/hackt.m4: renamed NO_VPATH to AUTO_CVSIGNORE, also 
+		added to it a test if srcdir is writeable.
+	  Make.global: now generates .cvsignore in the $(srcdir) if permitted.
+
+
+	* HACKT-00-01-04-main-00-80-50-test-09:
+	  Make.stddef,.global: new AUTO_DEPENDS variable for generated
+		dependencies, removed by distclean.  
+	  Earlier in branch, phased out sequential test scripts in favor
+		of Makefile-controlled concurrency in regression test suite.
+	  configure.ac: new --enable-verbose-check configure option.  
+
+
+2006-11-07	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-50:
+	  configure.ac: patch src/Makefile to ignore errors on "test && mkdir"
+		during parallel installs.  
+
+
+2006-11-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-49-merged-instance-02-31:
+	  Branch merge, see src/ChangeLog.
+
+
+2006-10-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-46:
+	  Confirmed against g++-4.2-20061024, noted in BUILDS.
+
+
+2006-10-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-44:
+	  config/hackt.m4: arg-enable option to turn off object alignment
+		padding markers to reduce space.  
+
+
+	* HACKT-00-01-04-main-00-80-43-merged-instance-01-14:
+	  Branch merge, summary in src/ChangeLog.
+
+
+2006-10-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-42:
+	  Make.global: 
+		new srcdir_EXTRA_DIST variable, which works similar to
+			EXTRA_DIST but looks only in the $(srcdir) for files.
+		new echo targets: distfiles, disthook-cleanfiles,
+			and srcdir-extra-dist (all listed in make help).
+		Added more commends on usage of special global targets.  
+	  Is now distcheck-able from a VPATH build.  
+		And there was much rejoicing.  
+
+
+2006-10-17	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-30-merged-instance-00-39:
+	  Merged -instance-00 branch in its entirety.
+	  BRANCHES: updated, closing the -instance-00 branch.  
+	  configure.ac: date bump.
+
+
+2006-10-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-26:
+	  Added BRANCHES file for tracking purposes.  
+	  Updated branch-related notes in README.maintainer.
+
+
+2006-09-03	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-08:
+	  Packaging improvements:
+	  Make.stddef: DISTHOOK_CLEANFILES variable for automatic 
+		distribution removal, per Makefile.  
+	  Make.global: new distdir-subdir target for manually
+		building subtree of distribution for diagnostics.  
+
+
+2006-08-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-05:
+	  config/lexyacc.am: defined HACKT_YACC_PURE_PARSER macro.
+	  config/config_subst.awK: not using anymore, added POSIX comment.
+		No longer depends on any posix standard behavior.
+	  configure.ac: plain AC_CONFIG_FILES output of yacc sources.  
+
+
+2006-08-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-03:
+	  configure.ac: added test/quarantine/Makefile to output list.
+
+
+2006-08-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80:
+	  Duplicate tag.
+
+
+2006-08-21	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-61:
+	  Updated scripts/maintainerclobber, result is now squeaky clean!
+
+
+2006-08-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-60:
+	  Added AC_PATH_X for future planning.
+
+
+2006-08-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-58:
+	  Makefile maintainence:
+		Fixed cvsignore target recursiveness, using Makefile.in's
+		template recipe for RECURSIVE_TARGETS (MORE_RECURSIVE_TARGETS)
+
+
+2006-08-09	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-54-prsim-07-06:
+	  configure.ac: check for unsigned type aliases, like uchar.  
+
+
+2006-08-07	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-51:
+	  config/config_subst.awk: handle autoconf-2.60 substitution sugar.
+	  bootstrap now supports autoconf-2.60.
+
+
+2006-08-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-49:
+	  Added MAINTAINER-checklist and CONTRIBUTORS.  
+
+
+2006-07-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-40:
+	  config/documentation.m4, configure.ac:
+		added more checks for graphviz programs.  
+
+
+2006-07-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-38:
+	  scripts/tally_tests.awk now counts skipped tests.
+
+
+2006-07-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-24-merged-cow-07:
+	  Branch merge.  copy-on-write unrolling, higher-dimension
+		aggregate references and collections.  
+	  scripts/rm_pattern.sh: more robust file cleaning of patterns
+	  config/am__remove_distdir.diff: more robust rm -rf
+
+
+2006-07-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-20-cow-03:
+	  Added scripts/rm_pattern.sh used in the definition of
+		RM_PATTERN in Make.stddef.  rm residues begone!
+
+
+2006-07-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-21:
+	  config/rl_el.m4: forgot to allow header check for histedit.h
+		in the check for --with-editline.  Now works with histedit.  
+	  Minor provisions to enable use with bison-2.1.  Damn you, bison.  
+
+
+2006-06-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-20-cow-02:
+	  configure.ac: apply extra patch to top_builddir/Makefile:
+		am__remove_distdir hacked to repeatedly try rm -rf $(distdir)
+		until command succeeds because of residual files from
+		recursive remove when too many files in directory.  
+	  config/am__remove_distdir.diff is the patch for this.
+		This patch should (IMO) be applied to automake's 
+		am/distdir.am upstream source.  
+
+
+2006-05-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-03-CHP-02-04:
+	  Added vim modelines to Makefile.am snippets, lexer .ll files:
+		e.g., "vim: ft=automake"
+
+
+2006-05-10	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-03-CHP-02-01:
+	  Make.global: cvsdiffs target now works in VPATH builds
+		by switching to the $(srcdir) to run cvs diff, 
+		still redirecting to the builddir's 'cvsdiffs'.  
+
+
+2006-05-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-03:
+	  Documented config/*.m4 autoconf macros, suitable for publication.  
+		Documented in the style recommended by ac-archive.sf.net.  
+	  Renamed many custom-defined AC_* macros to FANG_ or HACKT_
+		to not infringe upon reserved autoconf namespaces.  
+		configure.ac calls to macros updated accordingly.  
+	  top_builddir generates a install_transform.sh
+		to assist in transforming program names.
+
+
+2006-05-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79:
+	  Cleaned out the top-level TODO log.  
+	  Minor source clean-ups.  
+
+
+2006-05-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-24-merged-prsim-04-12:
+	  Branch merge of -prsim-04-12.
+	  Includes minor configure test fix in config/cxx.m4 (attribute).
+
+
+2006-04-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-20-merged-icc-01-04:
+	  Merged portability and configurisms from branch.  
+		Vast improvement in icc support, but it still doesn't fully
+		build yet.  Punting for later, when I have time to waste.
+
+
+2006-04-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-19-icc-01-03:
+	  configure check for std::_Identity, _Select1st, _Select2nd.  
+
+
+2006-04-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-19-icc-01-02:
+	  Tons of configurisms for SGI vs. Intel hash_map.
+		Checking for namespace and template argument style.  
+	  Forward declaration headers fixed accordingly.  
+
+
+	* HACKT-00-01-04-main-00-78-19-icc-01-01:
+	  Another crack at getting icc to compile hackt.  
+	  configure.ac: moved AC_HEADER_STDCXX test earlier
+	  config/cxx.m4: switched the ordering of detecting compiler
+		in determining the set of anal compile flags to test.
+		New test to check that standard headers pass strict
+		compile flags.  If not, then you're pretty sunk already!
+		Attribute tests that include standard headers now use
+		CONFTEST_CXXFLAGS instead of ANAL_FLAGS to forgive
+		selected warnings.  
+	  config/cxx_STL.m4: some new header checks
+	  config/hackt.m4: new FANG_CONFTEST_FLAGS macro
+
+
+2006-04-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-19:
+	  Reasonable initial attempt to accommodates icc-9.0.
+	  To be configured...
+		Started to rewrite some config/cxx.m4 macros to account
+		for icc differences, in particular compile flags.  
+	  Global cvsignore generation is now disabled during VPATH builds.  
+
+
+2006-04-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-18-merged-prsim-03-09:
+	  Branch merge.  
+
+
+2006-04-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-17:
+	  Major standard conformance updates, tested against gcc-4.2 (pre).
+	  Most affected are the util libraries.  
+
+
+2006-04-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-15:
+	  Bunch of configuration improvements, motivated by trying to get this
+		damn thing to build again on a legacy sparc-sun-solaris2.9 box.
+	  configure.ac: use new tests, check for int64 and uint64 before
+		typedef-ing them ourselves in util/inttypes.h.
+		Most notably, the anal-warning flags are applied during
+		conftests so the build matches the results more properly.  
+		In general, check config.log for anomalies.  
+		Also inserted AC_CACHE_SAVE for checkpointing.
+	  Added option to disable the default -ansi -pedantic-error flags.  
+	  config/cxx.m4: improved handling and binning of warning flags, 
+		and added set of tests for un-flags during AC_CHECK_ conftests.
+	  config/cc.m4: special function checks for fmod and fmodf, because
+		they may need libm to link properly (solaris).  
+	  General configure-improvements in source tree.  
+
+
+2006-04-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-13-merged-spec-02-04:
+	  Branch merge of -spec-02-04.  
+
+
+2006-04-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-12-merged-prsim-02-08:
+	  Branch merge of -prsim-02-08.  configure.ac date bump.  
+
+
+2006-04-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-10:
+	  configure improvements: pushed generated config.h to src/__config__.h
+		to eliminate super-directory references.  
+	  configure.ac: AM_CONFIG_HEADER (obsolete) replaced with
+		AC_CONFIG_HEADERS([src/__config__.h])
+	  Make.global: echo-config target to show configure params, 
+		by invoking (top_builddir)'s ocnfig.status --version
+	  config/rl_el.m4: preliminary support for non-wrapped editline
+		usage (without the readline symbol interface).  
+
+
+2006-04-03	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-07-prsim-01-15:
+	  Branch merge of -prsim-01, also bringing some configure improvements.
+
+
+2006-04-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-14:
+	  configure.ac: check for *rand48 family of stdlib C functions.  
+
+
+2006-03-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-11:
+	  Wrote some configure tests for checking usability of standard
+		file descriptors with C++ file streams.  
+		This achieves redirection from inside a program back to
+		stdin and stdout.  
+
+
+2006-03-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-04:
+	  Added configure checks for signal.h headers.  
+
+
+2006-03-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-03-merged-nonmeta-02-05:
+	  Branch merge.
+
+
+2006-03-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-02:
+	  Removed the configure check for sqrt because we're not using it
+		and it seems to be causing problems (bad test).  
+		Possibly built-in funcs should be checked differently.  
+
+
+2006-03-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-merged-connect-02-09:
+	  Branch merge.  Major unroll/create pass improvements.  
+
+
+	* HACKT-00-01-04-main-00-77-19-connect-02-09:
+	  Added test for known compiler bug in the util test-suite, 
+		configurating the shell script for it.  
+
+
+2006-02-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-17-merged-maintainence-05:
+	  Merged configure-maintainence revisions from branch.
+
+
+2006-02-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-05:
+	  New configure macro policy:
+		Instead of allowing LIBS to accumulate across many library
+		check invocations, we're going to store the result of
+		each library in its own _LIB variable and accumulate
+		into AUTO_LIBS in configure.ac, which then becomes LIBS.
+		The reason: for better control, we're no longer accumulating
+		LDFLAGS and CPPFLAGS in each package check; each one produces
+		its own private variable.  This results in better isolation
+		for each package check, whish is made possible by use of
+		PATH arguments in all the various AC_ARG_WITH macro calls.  
+	  Added main/*.h to header-checks, was strangely missing before.  
+
+
+2006-02-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-04:
+	  More autoconf macro checks for libraries, and automatic
+		accumulation of CPPFLAGS, LDFLAGS.  (Should use AC_SUBST)
+
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-03:
+	  AC_DEFUN'd more attribute macros and lex/yacc checking.  
+	  configure.ac: is reasonably clean (maintainable) now.  
+
+
+2006-02-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-02:
+	  Round two of defining autoconf checks in config/*.m4.
+		This already feels much more organized and manageable.  
+
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-01:
+	  Organizing the clutter of autoconf macros into the config directory.
+	  This first revision is just a start for demonstration.  
+
+
+2006-02-20	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-12-merged-aggregate-01-10:
+	  Branch merge.
+
+
+	* HACKT-00-01-04-main-00-77-11:
+	  Checked against g++-4.1 (RC1, 20060219).
+	  configure.ac: check for presence of STL reverse_iterator comparisons.
+
+
+2006-02-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-10+:
+	  configure.ac: check for prerelease version of compilers
+		and issue warning at configure time.  
+
+
+2006-02-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-10:
+	  configure.ac: checks for compiler __attribute__ characteristics.  
+
+
+2006-02-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-2:
+	  configure.ac: Added option to disable default building of ps and pdf
+		documents in the dox tree.  Useful for checking on systems
+		missing these.  
+
+
+2006-02-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77:
+	  Organization changes, basic Makefile maintainence, 
+		addition of lib/ directory for development of standard
+		libraries.  Starting to look into installation organization.  
+	  Documentation build system now supports VPATH building.  
+		pdfs and ps's are installed targets now.  
+
+
+	* HACKT-00-01-04-main-00-76-8-merged-spec-01-04:
+	  Merged in spec directive branch.  
+
+
+2006-01-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-4-merged-fixdump-06:
+	  Bumped snapshot date upon branch merge.  
+	  TODO: configure.ac to check for bison versions. 
+
+
+2006-01-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-merged-PRS-04-03:
+	  Series of bug fixes on mainline, followed by merge of 
+		-PRS-04 branch.
+
+
+2006-01-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-73-merged-prsim-00-34:
+	  Branch merge.  see src/ChangeLog for details.
+	  Initial prsim and PRS language extensions.  
+	  Improved configurability and portability.  
+
+
+2006-01-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-25:
+	  Configurability and portability update only, 
+		after a major libary clean-up from -prsim-00-24.
+
+
+2006-01-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-22:
+	  Most compiler warning flags are now checked during configure
+		and passed to automake's AM_CFLAGS and AM_CXXFLAGS.
+
+
+2006-01-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-17-merged-temp-04:
+	  Branch merge.  
+
+
+2006-01-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-16-temp-03:
+	  More libc function config tests, pertaining to <ctype.h>.
+	  Contemplating support for fat binaries in the future.  
+
+
+2006-01-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-15:
+	  Many new configuration checks for libstdc functions were
+		added to configure.ac, and used in "src/util/libc.h".
+
+
+2005-12-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-01:
+	  Added "make help" target to all generated Makefiles.  
+		Gives brief description of global and local make targets
+		per directory.  Never be lost again!
+
+
+2005-12-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-merged-rename-00-06:
+	  Merge to trunk.  
+	  Completed renaming phases: all (most) traces of "art" and "ART"
+		have been removed, and replaced with consistent names.  
+	  Source tree is now purged of ART, blessed with HACKT.  
+	  Entire test suite has been renamed, including intermediate files.
+	  Documentation updated to reflect changes.  
+	  Also includes many configuration improvements.  
+	  Restored parallel-make-ability, previously broken.  
+
+
+2005-12-12	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71-rename-00-05:
+	  configure.ac: simplified header file generation, 
+		but wishing for combined AC_CONFIG_FILES and AC_CONFIG_HEADERS
+		functionality (perform AC_SUBST *and* check for file change).
+	  in test/: major file renaming for test setup.  
+	  in src/: minor comment updating and file-cross-reference renaming.  
+
+
+2005-12-11	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71-rename-00-03:
+	  Played around with other configure-generating src/header_deps.make
+		but with limited success (failure).  
+	  Updated maintainerclobber script, and moved it to scripts/.
+	  Moved some useful configure-found exec Makefile variables
+		into Make.stddef, and some useful echo- targets
+		into Make.globals.
+
+
+2005-12-09	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71:
+	  DevelopmentPlan.dot: added graph of plan for graduation, 
+		which looks rather daunting.  
+	  configure.ac: added bunch of new standard library function checks
+		and GNU readline warning.  
+
+
+2005-12-07	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-70:
+	  Makefile for-loop sh scripts:, using list=$(SUBDIRS); ...
+		for compatibility with bash, which doesn't like empty
+		macro variable expansions in for-syntax.  
+	  configure.ac: checking for [u]int64_t types in <inttypes.h>.
+	  Various other minor configuration tweaks.  
+	  Updated DevelopmentPlan.dot.  
+	  Gone through all shell scripts and fixed use of test [.
+		Correct use of negation is "test ! ...", not "! test ..."
+		Never use [, less compatible.
+	  awk scripts: replaced "delete <array>" for for-loop delete
+		for POSIXLY_CORRECT-ness.  
+	  NEWS: validated on sun-sparc-solaris2.9, gcc-3.3!
+		(Sun UltraSparc IIi, 440 MHz)
+
+
+2005-11-12	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-69:
+	  Configuration support for byacc.  Details in src/ChangeLog.  
+	  Updated exhaustive check script, and verified it.  
+
+
+	* ARTXX-00-01-04-main-00-68-merged-parser-04-06:
+	  Merged -parser-04 branch to make import mechanism work.
+		Featuring completely reentrant lexers and parsers.  
+		Validated against bison-1.35 -2.0, yacc, flex-2.5.4, -2.5.31.
+
+
+2005-11-10	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-67:
+	  Fixed support for bison-1.35 and made bison generated parser pure.
+	  configure.ac: now responsible for generating
+		src/parser/hackt-parse.yy from src/parser/hackt-parse.yy.in
+		at configure time.  
+
+
+2005-11-09	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-66-merged-parser-03-10:
+	  Merged -parser-03 branch which includes tons of configuration
+		and Makefile improvements in configure.ac and Makefile.am
+		along with some useful helper scripts.  
+
+
+2005-11-07	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65-parser-03-05:
+	  Moved around AUTO_IGNORE in Make.global so that it always
+		includes CLEANFILES and DISTCLEANILES.  
+		Cleaned up AUTO_IGNORE and EXTRA_DIST variables in Makefile.am.
+	  Added config/config_subst.awk for convenient substitutions
+		using config.status *during* config.status of 
+		configure-generated files.  
+	  configure.ac: now uses generated config_subst.awk.sh to perform
+		substitutions during config.status operations.  
+
+
+2005-11-06	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65-parser-03-04:
+	  configure now generates
+		src/{cxx_version.h,lexer/lex_version.h,parser/yacc_version.h}
+
+
+2005-11-03	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65:
+	  Renewed BOUNTY.  
+	  Minor non-source fixes in scripts and Makefiles.  
+	  configure.ac check for 'find'.
+
+
+	* ARTXX-00-01-04-main-00-64-merged-cflat-03-02:
+	  Merged -cflat-03 branch for added cflat functionality.  
+	  Improved bootstrap script.  
+
+
+2005-11-02	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-63-merged-cflat-02-05:
+	  Merged -cflat-02 bug fix branch.  
+
+
+2005-10-30	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-62-merged-flow-01-08:
+	  Merged flow-01 branch.
+
+
+2005-10-28	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-61-flow-01-07:
+	  Contributed scripts/backup_repository.sh, self-explanatory.  
+
+
+2005-10-25	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-61-merged-PRS-02-11:
+	  Merged PRS-02 branch.  
+
+
+2005-10-07	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-60-merged-cflat-01-11:
+	  Merged in cflat branch revisions, bumped devel. date.
+
+
+2005-10-05	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-59-cflat-01-07:
+	  configure.ac: now checks for prsim (CAST tool)
+		to conditionally enable checks in test/hackt-cflat-expect.sh.
+
+
+2005-09-14	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-59-merged-unique-02-15:
+	  Merged branch -unique-02, rev. 15 to trunk.
+
+
+2005-09-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-57:
+	  Created some new diectories for scripts and documentation.
+
+
+	* ARTXX-00-01-04-main-00-56-merged-footprint-01-36:
+	  Merged configure revisions from -footprint branch.  
+
+
+2005-08-15	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-07:
+	  configure.ac: added tons of standard C++ header tests.  
+		the src/util library now uses these heavily in 
+		including the right headers, most of which are
+		wrapped into configured headers for ease of use.  
+
+
+2005-08-14	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-05-canonical-03:
+	  Found some autoconf snippets I liked from ngspice source
+		regarding readline and editline -- for future CLI use.  
+		Shamelessly copied them over (with attribution).  
+		(Has nothing to do with the branch.)
+
+
+2005-08-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-53-merged-configtest-03:
+	  Merged in configuration fixes and improvements from -configtest
+		branch (-03).  Includes critical getopt fix for enforcing 
+		POSIX behavior.   
+
+
+2005-08-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-52-configtest-03:
+	  README updated with resolution about POSIX getopt behavior.
+	  configure.ac: generate test/test-series.sh
+
+
+	* ARTXX-00-01-04-main-00-52-configtest-01:
+	  Configure properly determins and sets the shell interpreter
+		for all Makefiles, using @SH_PATH@, just in case
+		/bin/sh is in non-standard location, and also to prevent
+		bash from being used as the interpreter.  
+
+
+2005-07-24	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-52:
+	  Reported known issue with some broken getopt behavior on 
+	  another system in the README.  Investigation pending.  
+
+
+2005-07-24	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-51:
+	  Posted BOUNTY for found bugs.  
+	  Added more information in README.
+	  Added distcleandirs to Make.global.
+
+
+2005-07-23	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-50-merged-maintainence-10:
+	  Project-wide Makefile.am rework, configuration improvements, 
+		and much reorganization in the source tree, 
+		as described in src/ChangeLog.  
+
+
+	* ARTXX-00-01-04-main-00-49-maintainence-10:
+	  Final revision for the maintainence branch.
+		Cross-checked against gcc4, one header fixed.
+	  Renamed doxygen config file to hack.doxygen.config.in.  
+	  configure.ac: project renamed, version number refined.  
+	  Ready to merge to trunk.
+
+
+	* ARTXX-00-01-04-main-00-49-maintainence-09:
+	  More Makefile.am rework and configure.ac rework.
+	  doxygen configuration file is now properly generated by
+		the configure script, thanks to AC_SUBST from autoconf.  
+	  TODO: (not important) detect doxygen version and adjust?
+	  Now use AC_DEFINE to generate USING_BISON/USING_YACC in config.h.
+	  Re-organized Makefile in the dox/ directory tree:
+		new header and footer Makefiles.
+	  Improved LaTeX Makefile rules in dox/mk/Make.latex, aided by
+		the results of configure.  
+		Also uses stamp to check for last command run:
+		latex vs. pdflatex to conditionally clobber auxiliary files!
+
+
+2005-07-20	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-49-maintainence-01:
+	  Project-wide cleaning of Makefile.am and cvsignore files.  
+	  New policy: .cvsignore files will be semi-autogenerated.  
+		Use local.cvsignore to append cvsignores manually, 
+		or accumulate AUTO_IGNORE in the Makefiles.  
+
+
+2005-07-20	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-49-merged-connect-01-42:
+	  Merge -connect-01 branch entirely to trunk.  
+		Summary in src/ChangeLog.
+
+
+2005-07-07	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-22:
+	  Added distcheck.log target to Makefile.am.  Nice!
+
+
+2005-06-21	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-45-merged-anal-04:
+	  Merged in branch revisions for anal-retentitiveness, 
+		turning on max warnings, warnings-to-errors.  
+	  Code was cleaned up, no non-standardness remains.  
+	  Life is good.  
+
+
+2005-06-20	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-44:
+	  Renamed "configure.in" to "configure.ac" to be more correct.
+
+
+2005-06-18	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-43-merged-CHP-01-25:
+	  Details of source code merge in src/ChangeLog.  
+	  In this directory, updates to include new test subdirectories
+		test/parser/{chp,channel}.
+
+
+2005-06-08	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-14:
+	  Introducing 'bootstrap' 1.2!
+		added: touch src/headers_deps.make
+		to break the chicken-before-the-egg dependency problem.  
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-12-merged-dataexpr-10:
+	  Child branch merge.  Details in src/ChangeLog.  
+
+
+2005-06-06	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-09-dataexpr-06:
+	  .cvsignore: ignore auto-generated config.hchk
+
+
+2005-05-22	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-39:
+	  Major housework with headers, making them 'standalone'.
+		See src/ChangeLog for details.  
+
+
+2005-05-20	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-38:
+	  configure.in: check for getopt
+	  Reorganized main programs, having factored out common top-level
+		functionality into main/main_funcs.{h,cc}
+	  see also src/ChangeLog, test/ChangeLog for more details.
+
+
+2005-05-19	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-37-merged-PRS-01-09:
+	  Merged revisions from -PRS-01 branch, which also includes
+		essential core utility library fixes.  
+		Details in src/ChangeLog.  
+	  Also updated a few parser/prs tests to account for bison/yacc 
+		differences.
+
+
+2005-05-13	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-36-merged-exprcheck-07:
+	  Merged revisions from -main-00-35-exprcheck branch to trunk.  
+	  Summary: replaced parser::expr::check_build() (and friends)
+		with more appropriate routines and interfaces.  
+		Eliminated entity::object_list, and context's object_stacks.  
+	  See src/ChangeLog for details.  
+
+
+2005-05-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-35:
+	  From now on, #include files should refer to full relative path, 
+	  never relying on -Ipath in CPPFLAGS.  Hopefully, this makes code
+	  easier to follow when tracing through includes across different
+	  directories.  
+
+
+2005-05-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-30:
+	  Re-synchronized test expected outputs between bison- and yacc-
+	  generated parsers.  (This has not been checked for a long time.)
+
+	* ARTXX-00-01-04-main-00-29:
+	  Re-organized dox subdirectory, making room for new documents.
+	  Factored out common Makefile-ism into the dox/mk directory, 
+	  including maketexdepend business and suffix rules into Make.latex.  
+
+
+2005-05-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-28-merged-template-01-09:
+	  Merged revisions from -template-01 branch.  
+	  Summary: added front-end language support for strict+relaxed
+		template parameters.  
+	  	Re-worked parser and AST (and scripts), eliminating
+			need for ART::parser:node.  
+		TODO: implement strict and relaxed template argument checks.  
+	  Will return to this branch as -template-02 in the near future.  
+	  Some of the revisions of this branch just had to be merged to trunk.
+
+
+2005-05-01	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-27-template-01-04:
+	  Added more latex-related conditionals to configure.in.  
+
+
+2005-04-28	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-27:
+	  Updated configure.in, as recommended by autoscan.  
+
+
+2005-04-18	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-24:
+	  From now on, revision details should be written to
+		directories' ChangeLogs.  This ChangeLog will only contain
+		high-level summaries.  (It's just been getting too cluttered.)
+	  Added: dox/lang/ChangeLog, src/ChangeLog.
+
+
+2005-04-14	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-23:
+	  Bring code up to speed with gcc-4 (20050409).
+	  Compiles and runs cleanly with gcc-3.3 through 4.0 on
+		powerpc-darwin, i686-linux, i386-freebsd.
+	  Needed to respect missing virtual destructor warning with struct
+		  functors in "util/operators.h".  
+
+
+2005-04-14	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-22-merged-parser-02-05:
+	  Merged parser-02 branch, through revision -05.  
+
+
+2005-04-11	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-21-parser-02-05:
+	  Clean-up, making USE_NEW_NODE_LIST permanent.  
+	  (Removed old "AST/art_parser.tcc")
+
+
+2005-04-10	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-21-parser-02-03:
+	  Replaced most token_keyword with faster keyword_position, 
+	  	which still stores redundant strings, using a fixed-length
+		char array[12].  
+
+	* ARTXX-00-01-04-main-00-21-parser-02-04:
+	  Enabled chunk-map pooling of most (terminal) token classes.
+
+
+2005-04-09	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-21-parser-02-02:
+	  Modified parser to use node_position for syntactic sugar tokens
+		  such as characters and short symbol strings.
+	  Enabled USE_NEW_NODE_LIST in "AST/art_parser_fwd.h".
+	  art_parser.tcc can be replaced by art_parser_node_list.tcc.
+		No more delimiter lists, but open/close list-wrappers kept.
+	  Replaced most non-essential token_char and token_string with
+		  node_position (using char_punctuation_type, etc...)
+	  Fixed typo bug in "util/numeric/integer_traits.h".
+	
+
+2005-03-11	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-21-parser-02-01:
+	  New branch for parser/AST-related improvements.  
+	  Plans include: stripping unnecessary token information, 
+		saving only position, token pooling for effective reclamation, 
+		replacing node_list class template with simpler one.
+	  This revision just added conditional code for USE_NEW_NODE_LIST, 
+		in preparation for upcoming changes, and is disabled.  
+
+	* ARTXX-00-01-04-main-00-20:
+	  Upgraded param_expression_assignments to use template.  
+	  Updated DevelopmentPlan.dot.
+	  Updated a few artc test outputs' error messages.  
+
+		+ -main-00-21: Just cleaned up conditional code.  
+
+	* ARTXX-00-01-04-main-00-19-merged-inststmt-09:
+	  Merged all revisions from -inststmt branch (-09) to main trunk.  
+
+
+2005-03-11	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-18-inststmt-07:
+	  Ported data,proc,chan instantiation_statements to use new
+	  template class, no problems!
+	  Next revision will clean up #if USE_INST_STMT_TEMPLATE.  
+	  Plan: clean-up, merge to trunk, work templateing expr-assignments.  
+
+	* -inststmt-08:
+	  Cleaned up, instantiation_statement template is now "committed."
+	  Another -1000 LOC!
+
+	* -inststmt-09: gcc4 standard compliance patch, 
+	  template-related name fixes.  Compiles and passes all tests.  
+	  Ready to commit to trunk.  
+
+
+2005-03-10	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-18-inststmt-04-merged-collection-03:
+	  Merged revisions from -collection child branch (-03).
+
+	* -inststmt-05:
+	  Updating the way instantiation statements are unrolled
+	  (tested on pint and pbool inst_stmts, which currently use
+	  the instantiation statement class template.  
+	  The work for resolving the range of instantiation is pushed
+	  to the instantiation_statement_base, which owns the
+	  indices (range_expr_list) pointer.  
+	  value_collection::instantiate_indices now takes const_range_list&.
+	  Added range_expr_list::unroll_resolve (pure virt.).
+	  Added const unroll_context& argument to 
+		class_traits<Tag>::instantiation_statement_type_ref_base::
+			unroll_type_check().  
+
+	* -inststmt-06:
+	  Applied same changes to proc,chan,data types, but haven't
+	  applied instantiation_statement template to them yet.
+
+	* ARTXX-00-01-04-main-00-18-inststmt-03-collection-03:
+	  Cleaned up conditional code with USE_VALUE_COLLECTION_TEMPLATE.  
+	  Resulting in 2000 fewer LOC.  :)
+
+	* ARTXX-00-01-04-main-00-18-inststmt-03-collection-02-merged-expr-05:
+	  Merged in revisions from -expr child branch (through -05).
+
+	* ARTXX-00-01-04-main-00-18-inststmt-03-collection-01-expr-04:
+	  Fixed problem with error message, mis-carried return statement
+	  turned into bug during copying.  Doh.  
+	  Use of value_reference template is now enabled.  
+	  After cleanup, we can retire this baby branch...
+
+	* -expr-05:
+	  Cleaned up USE_VALUE_REFERENCE_TEMPLATE and 
+	  USE_CONST_COLLECTION_TEMPLATE.  Ready to merge to parent.  
+
+
+2005-03-08	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-18-inststmt-03-collection-01-expr-01:
+	  We need to port many expressions classes to follow consistent
+	  templates, this has been punted for way too long. 
+	  Need to rename some methods to conform to standard interface.  
+
+	* -expr-02:
+	  Ported pint_const_collection to const_collection_template.
+	  Renamed {may,must}_be_equivalent method functions of many
+	  pint and pbool class derivatives.  
+
+	* -expr-03:
+	  Added code for porting pint/pbool_instance_reference to
+	  value_reference template class, but kept it disabled for this
+	  revision with USE_VALUE_REFERENCE_TEMPLATE set to 0.  
+	  (Enabling it yielded different error messages in the param test
+	  directory, and haven't figured out why... will need stacktrace?)
+	  Removed (comment) unnecessary
+	  pint_instance_reference::unroll_resolve_index method.  
+
+	* ARTXX-00-01-04-main-00-18-inststmt-03-collection-01:
+	  Porting parameter instance collections to use new value_collection
+	  template, similar to instance_collection class template.  
+	  Updated "art_built_ins.cc" to follow more procedural
+	  default parameter initialization.  
+	  More of class_traits<{pint,pbool}_tag> fleshed out, giving them
+	  some parameter-specific traits.  
+	  Next: param_instance_reference upgrading.  
+
+
+2005-03-07	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-18-inststmt-03:
+	  More details on class_traits<>::instantiation_statement_type_ref_ptr
+	  interface, also provided a default empty class implementation.  
+	  Need to rework instantiation statement framework: which methods
+	  are responsible for type-checking, index/range-resolving, 
+	  sparse-instance populating, etc...
+	  but _after_ fixing interface for range_expr_lists.
+
+	* Happy Birthday to ART++!
+	  (Wait, I've spent a year on this!?)
+
+
+2005-03-06	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-18-inststmt-02:
+	  Ported pbool and pint_instantiation_statement to using
+	  new instantiation_statement template, everything works still.  
+	  Leveraging specialization of a parent type-reference base
+	  through class_traits, so that built-in types need not
+	  include unnecessary pointers (optimization).  
+	  Will continue with data, channel, and process inst-stmts.  
+
+
+2005-03-06	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-18-inststmt-01:
+	  Spawned branch for reworking instantiation statement classes
+	  into easier-to-maintain templates, using class_traits<Tag>.
+	  This first revision just renamed instantiation_statement to
+	  instantiation_statement_base to make way for the template name.  
+
+	* ARTXX-00-01-04-main-00-18:
+	  Major cleanup.
+	  Stripped archaic debugging files "art_debug.h"
+		  "art_parser_debug.h" "art_switches.h".
+	  Removed any debug macros that were derived from those files.  
+	  Split some more AST header files to reduce inclusion of
+		unnecesary header files, by recursion.
+
+
+2005-03-05	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-17-merged-chunkmap-03:
+	  Merged revisions from -chunkmap child branch (through -03).  
+
+	* ARTXX-00-01-04-main-00-16-chunkmap-01:
+	  This branch is for developing custom allocators.  
+	  Draft of working chunk_map_pool, tested.  
+	  Rule for allocators: they are NOT responsible for calling
+	  construct and destroy, only allocating.  
+	  Need to revisit list_vector_pool's use.  
+	  No more lazy- or eager- destruction business...
+	  Later revision will add macros to override new and delete
+	  using the chunk_map_pool.  
+
+	* -chunkmap-02:
+	  Realized mistake in list_vector_pool implementation.
+	  Even overloaded new/delete operators implicitly call
+	  ctors and dtors on the relevant pointers, thus rendering
+	  eager/lazy destruction somewhat irrelevant -- always destroyed
+	  afer delete.  To compensate, re-construct elements pointed
+	  in the free-list before destruction of the pool.  
+	  Cleaned up files a bit.  Will apply these concepts to chunk_map_pool.
+
+	* -chunkmap-03:
+	  Wrote CHUNK_MAP_POOL declaration and definition macros, 
+	  in the style ripped from list_vector_pool.  
+	  Updated LIST_VECTOR_POOL_DEFAULT_STATIC_DECLARATIONS macro name.  
+	  Corrected little pointer arithmetic bug in 
+	  typeless_memory_chunk::__deallocate.
+	  Ported ART::parser::token_char to using chunk_map_pool now.  
+	  Everything still works.  Going to check with gcc4 before
+	  marking ready to merge to trunk... still good, no new issues.  
+
+
+2005-03-03	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-16-merged-collect-02:
+	  Merged in revisions from -collection child branch up to 
+	  subrevision -02.  
+
+	* ARTXX-00-01-04-main-00-15-collect-01:
+	  This branch is intended really a continuation of where the last
+	  -13-persistent branch left off.  This focuses on improvements
+	  to the persistent object manager.  
+	  Major improvements in this revision:
+	  Added mechanism to mark and classify visits through
+	  persistent_object_manager::read_pointer<>().
+	  This allows the manager to verify the status of ownership of each
+	  reconstructed pointer during load_objects().  
+	  Any object that doesn't meet the "claimed" criterion may be
+	  deleted by the reconstruction_table_entry when it expires
+	  (unless otherwise flagged).  
+	  This makes load_objects() exception-safe!  
+	  Little note: needed "special handling" of built-in-datatype-def
+	  pointers faked as user-defined-datatypes,
+		see "art_object_type_ref.cc"
+	  Minor improvements include cleanup of other source and header files.  
+	  To do: upgrade the reconstruction_table to list_vector to 
+	  avoid bulk copy-construction on a push back operation.  
+
+	* -collect-02:
+	  Upgraded persistent_object_manager's reconstruction_table
+	  to util::list_vector<reconstruction_table_entry>.  
+	  NEVERMORE will the entire array of entries be reallocated to 
+	  new locations upon push_back()!  
+	  Accesses to the array are now O(log(N/C)) where N is the 
+	  total size, and C is the chunk-size (because of internal map).  
+
+
+2005-03-03	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-15:
+	  Cleaned up commented out code in #if HAVE_PERSISTENT_CONSTRUCT_EMPTY
+
+	* ARTXX-00-01-04-main-00-14-merged-persistent-02:
+	  Some file tags were screwed up in CVS, so merging early back to
+	  main trunk first (for coherence sake), then splitting off again.  
+
+	* ARTXX-00-01-04-main-00-13-persistent-02:
+	  (With old code kept commented out)
+	  Replaced bare construct_empty function pointers with
+	  nullary constructor functors, more generalizable.
+	  (Tradeoff: virtual dispatch overhead.)
+	  Almost every file in src/Object affected.  
+		+ util: improvements to new_functor, and nullary_function
+			templates including compile-time switch
+			between virtual and non-virtual parent.  
+		+ new_functor is always derived from virtual base, 
+			nullary_function_virtual<T*>.
+	  Some later revision will have to clean-up code as always.  
+
+
+2005-03-02	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-13-persistent-01:
+	  Some big plans for this line of development.  
+	  This revision just added a few utility classes for turning
+	  constructor calls into functors (with virtual function).  
+	  Some persistence files were touched up for clean up.  
+	  Plans include: re-doing the persistent reconstruction 
+		framework to use constructor functors, rather than
+		raw pointers to static construct_empty(int).
+		+ Instead of overloading one type-key entry for the 
+		  table of reconstructors, we'll upgrade to a table
+		  of vectors of constructor functors, where the vector
+		  is indexed by the auxiliary constructor argument, 
+		  (instead of passing it to construct empty).  
+		+ Will phase out the construct_empty pattern.  
+		+ re-do collect_transient_info so that the object
+		  manager will handle visit once traversal.  
+		+ Transient object registration will be done through
+		  passing pointer-objects so that each visit may be flagged
+		  with the type of pointer used to visit.  
+		  (But we also don't want to burden the caller with 
+		  knowing the type-key, that should be automatic still.)
+		+ Handle exceptions during load object, and ensure 
+		  proper methodical clean-up of allocated but un-touched
+		  memory upon exception in load_objects().  
+		  This will require some finesse.  
+
+
+2005-03-01	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-13:
+	  So I forgot to include the new try_lex_catch.awk script 
+	  last revision, my bad!  
+	  While I was at it, straightened out some symbol namespaces
+	  and linkage with the parser.  
+
+	* ARTXX-00-01-04-main-00-12:
+	  Made lexer/parser more exception-safe by throwing exceptions
+	  and proprely freeing memory when caught.  
+	  A few basic tests have been added to the lexer that demonstrate
+	  that no memory leaks occur with this mechanism in place.  
+	  Updated {yacc,bison}-union-type.awk to do a litle more 
+	  array-bounds checking on union-lookup.  
+	  To do eventually: make persistent object-loader exception safe.
+	  This will be much more difficult because of difficult
+	  guarantee that each object in the table is visited only once.  
+	  May require a destructor-like method in each class that
+	  registers each visit with the persistent object manager.  
+
+	* ARTXX-00-01-04-main-00-11-merged-what-01:
+	  Merged insignificant revisions from -10-what-01.  
+
+	* ARTXX-00-01-04-main-00-10-what-01:
+	  This branch attempting to work around some multiple definition
+	  linking issues with implicitly instantiated symbols, 
+	  particularly from util::what.  This issue only arises with
+	  gcc-4.0 with odcctools' ld linker.  
+	  This is going to be nearly impossible to fix in the near future, 
+	  but nothing is broken, I'm only easily irritated by warnings.  
+	  Will revisit this issue another day.  
+
+
+2005-02-28	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-10-merged-bool-06:
+	  Merged revisions from -bool branch (-06), 
+	  improving semantic clarity of boolean values in the program.  
+
+	* ARTXX-00-01-04-main-00-09:
+	  Support for gcc-3.2 (ix86-linux) dropped.  It *BOMBS* completely.
+	  Wrote some notes in the source on where and why things die.
+	  Don't even bother trying to compile util/test/integer_traits_test.
+	  (If you try, don't say I didn't warn you.)
+	  The art* executables all compile with a little help from this patch,
+	  but all executables die a horrible abort-trap death.
+	  (Something is horked with the global static initialization 
+	  and destruction, I believe.)
+	  (It's a fact of compiler-life: code dies, life goes on.)
+
+	* ARTXX-00-01-04-main-00-08-bool-03:
+	  This revision has nothing to do with bools, 
+	  but are targeted back to the main trunk anyhow.  
+		+ Makefile notes on various CFLAGS, for future
+		  super-anal-retentiveness.  
+		+ Notes on where gcc4 gets multiple definition warning
+		  with ranlib.  
+		+ A few standard-conforming tweaks.  
+		+ Better namespace injection workaround "pointer_manipluator.h"
+
+	* -bool-04:
+	  Upgraded bool return values for methods in definition classes, 
+	  some expression classes, instantiation statements, 
+	  instance collections.  
+
+	* -bool-05:
+	  Upgraded more bool return values in expression methods and
+	  param value instance collection methods.  
+	  Actually caught an old (wrong error message) bug in the process!
+
+	* -bool-06:
+	  Final revisions upgrading bools.
+	  Upgraded some class methods in context, definitions, 
+	  param assignments, connections, instance_references, namespace.
+	  This is ready to merge to trunk.  
+
+
+2005-02-27	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-08-bool-01:
+	  This branch is for changing ALL diagnostic functions to 
+	  return a "good_bool" or "bad_bool" two new bool types defined
+	  in "util/boolean_types.h".  This will help keep the meaning of 
+	  return values clear and self-documenting.  
+	  Initially testing on a few classes at a time.  
+
+	* -bool-02: boolean upgrades to expression assignments.  
+
+	* ARTXX-00-01-04-main-00-08:
+	  Passes on all tested platforms and compilers:
+	  {gcc-3.3, 3.4, 4.0} x {FreeBSD, linux, darwin}
+	  Some ranlib warnings about multiple definitions 
+	  (related to util::what) using odcctools' ld with g++-4.0.  
+	  Will try to appease it in next revisions.  
+	  Will spend some revisions improving code that will benefit
+	  development along all directions before branching again.  
+
+	* ARTXX-00-01-04-main-00-07-merged-object-01-18:
+	  The great merge.
+	  Merged huge revisions from object-01 branch to mainline.  
+	  Tested on powerpc-apple-darwin, with gcc-3.3.  
+	  Will also check with gcc-4.0 (pre- 20050130)
+	  FreeBSD gcc-3.4, and ix86-linux.  
+
+	* ARTXX-00-01-04-main-00-06-merged-parser-01-05:
+	  Merged moderate revisions to parser and front-end into mainline.  
+
+	* ARTXX-00-01-04-main-00-05-merged-docs-00-01:
+	  Merged in tiny revisions to documentation from last series
+	  into mainline.  
+
+	* ARTXX-00-01-04-main-00-04-parser-01-05:
+	  Slight reorganization of some util library headers.  
+	  Added placeholder code for chunk_map_pool.  
+	  Definition is pending a merge to the main trunk, 
+	  will depend on maplikeset, defined in -object-01 branch.  
+	  It's time for convergence!
+
+	* ARTXX-00-01-04-main-00-04-object-01-17:
+	  Successfully worked around defects in prerelease of gcc4 (20050130).  
+	  Code compiles and passes all tests, with some archival warnings
+	  from odcctools' ld/ranlib.  (powerpc-darwin only)
+	  Workarounds included additional using declaration in
+	  util/memory/pointer_manipulator.h to prevent friend class
+	  forward declaration name-injection.  
+	  Explicit template typedef typename was added to 
+	  art_object_instance_alias.h and art_object_instance_collection.h.
+	  None of these modifications cause any regressions with gcc-3.3.
+	  Added some missing *_instance method definitions to satisfy
+	  g++-4.0's ld.  
+
+	* -object-01-18:
+	  Updated DevelopmentPlan.dot.
+
+
+2005-02-26	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-15-merged-alias-12:
+	  Merged in tons of revisions from the alias child branch.  
+	  Hallelujah!  *Basic* alias connections work.  
+
+	* -object-01-16:
+	  Added DevelopmentPlan.dot, which makes a .ps.  
+	  No more relying on the white-board in my office.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-10-merged-instance-13:
+	  Merged all revisions from -09-instance child branch (rev -13)
+	  in this branch, very critical for progress.  
+
+	* -alias-11: "breakthrough"
+	  The moment we've been waiting for...
+	  First successful unrolling of connections, with persistence!
+	  Tested one case with scalars, and one complicated case 
+	  with multidimensional slices, and they pass!
+	  Currently, connection-equivalence type-checking is not yet
+	  implemented, that will have to wait until the -object-02 phase.  
+
+		Other minor changes:
+		+ cleaned up packed_array*, removing packed_array_base.
+
+	* -alias-12:
+	  Added more tests for alias connections in connect directory.  
+	  Many unroll tests disabled because required features aren't
+	  implemented yet, such as port connections and member instance
+	  references.  (Member instance references will require
+	  type/definition layout first.)  
+	  This branch is now ready to merge to parent.  
+
+
+2005-02-25	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-09-instance-10:
+	  Ported all int-related instance classes (aliases, info, collection, 
+	  arrays) using the instance_collection template family.  
+	  This added ring-connection data to the binary, which resulted
+	  in updating tests because of increased object binary sizes.  
+	  New member of class_traits: tag_name (const char[]).
+	  90% of art_object_instance_{int,bool}.{h,cc} are commented out now.
+	  Will perform massive cleanup after applying instance collection
+	  template to remaining types: enum, struct, channel, process.
+
+	* -instance-11:
+	  Ported and upgraded enum to instance_collection template, 
+	  same story as before.  They now have alias connections.  
+	  Sweet, that was easy... structs, you're next.
+
+	* -instance-12:
+	  Ported datastruct, channel and process collections using 
+	  instance_collection template in one fell swoop.  
+	  Added a physical_instance_collection type between
+	  instance_collection_base and datatype/channel/process collections.  
+	  Wrote appropriate functor specializations for them.  
+	  Updated interface of collection_persistence to use 
+	  static function calls: collect, write, load. 
+	  Process and channels (aliases) are now initially connected
+	  to themselves.  
+	  This branch is nearly mature,  next revision will be 
+	  massive cleanup before merging to parent.  
+
+	* -instance-13:
+	  Ahhhh... code is 7000 lines lighter after the removal
+	  of blatantly replicated code in the old instance_collection
+	  implementations.  This branch is ready to merge to parent.  
+
+
+2005-02-24	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-parser-01-03:
+	  art++-parse.yy: deleted uses of *_append *_wrap macros, 
+	  in preparation for substituting code with new node_list.
+
+	* -parser-01-03:
+	  Some clean-up of macros, added node_position class, 
+	  wrote new node_list class.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-09-instance-05:
+	  Chose bool_instance_alias_info as the first guinea pig class
+	  to use instance_alias_info class template, 
+	  based on class_traits<Tag>.  
+	  Nothing blew up, all tests still intact.
+
+	* -instance-06:
+	  Major name clean-up and substitution to reduce ambiguity
+	  and provide template-typedef-like naming interface
+	  with class_traits for dimension-specific classes.  
+
+	* -instance-07:
+	  Ported bool_instance_alias_info, bool_instance_alias_base, 
+	  and bool_instance_alias<D> to class_traits template version.  
+	  All test still intact!  Next: porting instance_collections.
+
+	* -instance-08:
+	  Converted bool_instance_collection and arrays over using
+	  template instance_collection.  Nothing died, but code is 
+	  messy with conditionals...
+	  To do: define functors for type-specific variations
+	  in methods... may have to make them 'friendly'.  
+
+	* -instance-09:
+	  Added instance_collection functor prototypes for 
+	  collection parameter persistence, type-committing.  
+	  So far, only specialized for bool_tag, others will follow in time.  
+
+
+2005-02-23	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-parser-01-02:
+	  Started to re-organize parser code base some.
+	  check_build is no longer in ART::parser_node, because we only ever
+	  call it from main through root_body.  
+	  Later, each sub-class may have its own prototype, 
+	  especially for return types -- makes much more sense
+	  and waill actually make some use of the return value, which 
+	  is currently ignored in most cases.  
+	  Some lexer structs moved into the ART::lexer namespace.
+	  Supplied "Fang, write me!" to many unimplemented 
+	  check_build()'s temporarily, causing a few updates to
+	  test suite expected outputs.  
+	  Coming soon: replacement code for node_list class template.
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-09-instance-01:
+	  New branch for the purpose of making the instance_collection
+	  class framework consistent.  
+	  This revision introduces classification tag which control the 
+	  infrastructure of template class patterns with a set of
+	  traits-class specializations.  
+	  So far, we applied this to member_instance_references as a 
+	  test case, and everything is hunky-dory.  
+
+	* -instance-02:
+	  Converted instance_reference to use class_traits<Tag>.
+	  Next: alias_connections, then ... instance collections, 
+	  the final frontier!
+
+	* -instance-03:
+	  alias_connections converted to class_traits, muahahaha...
+	  Code needs some serious clean-up before proceeding.  
+
+	* -instance-04:
+	  Cleaned-up, no more conditionals on SUBTYPE_ALIAS_CONNECTION
+	  and USE_CLASSIFICATION_TAGS.  
+
+
+2005-02-22	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-parser-01-01:
+	  New branch started off of the trunk, dedicated to improving the
+	  front-end lexer/parser.  
+	  In this revision, we sliced and diced the AST/ header files into
+	  more manageable units, resulting in noticeably faster 
+	  compile-times, and even smaller binaries.  
+	  See what a little organization can do?
+	  Later revisions will re-work the parser, especially the 
+	  node_list aspect, eliminating non-essential terminals.  
+
+
+2005-02-21	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-09:
+	  Fixed multikey_assoc::is_compact(), adding necessary, 
+	  implicit conversion to key type in {int,bool}_instance_alias.  
+	  Really sick and tired of maintaining copies of code for each
+	  physical instance collection type... it's time to employ
+	  templates with policy functors... (sub-branch).
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-08:
+	  Initial testing of instance unrolling, without connections, 
+	  just for int_instance_collection, our guinea pig.  
+	  Placeholder code pasted into other instance collections, 
+	  but marked as empty for now.  
+
+		+ Updated packed_array[_generic] template signature to 
+		  include type for index, so it's not hard-coded to size_t.  
+
+		+ Fixed bug in multikey_assoc::is_compact()'s return value
+		  for the case where D == 1.
+		  There may be another bug for D != 1, related to 
+		  index_extremities, look for "WRONG" in "multikey_assoc.tcc".
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-07:
+	  Added draft of code for alias_connection unrolling, untested.  
+	  Added draft code for reference unrolling, packing aliases
+	  into packed_array_generics.  
+	  Added tons of methods for unroll-time expression resolution, 
+	  many of which seem redundantly redundant -- clean later.  
+
+		+ unroll_aliases method only appears in int_instance_collection
+		  for now.
+
+		+ Some minor interface improvements to packed_array_generic, 
+		  and multikey_generator_generic.  
+
+
+2005-02-20	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-06-merged-instref-02:
+	  Merged -instref-02 revisions.
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-05-instref-01:
+	  Replaced copy-pasted *_instance_reference with template
+	  class definition instance_reference<Collection,Parent>, 
+	  which makes this code so much more maintainable!
+	  Next revision: clean-up.
+
+	+ -instref-02: cleaned up, ready to merge to parent branch.
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-05-merged-persistent-04:
+	  Merged -persistent-04 branch revisions into this branch.
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-04-persistent-04:
+	  Substituted direct use of TYPE_KEY macros with
+	  persistent_traits<...>::type_key for less copying, 
+	  better maintainability.  
+	  This revision is clean and ready to merge with parent branch.
+
+
+2005-02-19	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-04-persistent-02-member-01:
+	  Child branch created for the sake of revising the 
+	  member_instance_reference system.  
+	  Testing to see if member_instance_reference_base
+	  really requires simple_instance_reference as the base type, 
+	  should really be generic.
+	  (a few connect tests will still die until announced otherwise)
+
+	+ -member-02:
+	  Changed base type of member_instance_reference_base to generic
+	  instance_reference_base.  Later, the base type shouldn't be allowed
+	  to be complex-aggregate, so perhaps deriving from nothing 
+	  (instead of instance_reference_base) is the correct thing to do.  
+
+	+ -member-03:
+	  Replaced all member_instance_references with template
+	  versions, extended datatypes members into subtype-specific
+	  versions.  ALL tests pass in this revision!
+	  This revision is littered with commented out code, next revision
+	  must clean up.  
+
+	+ -member-04: cleaned-up, ready to merge to parent branch.
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-04-persistent-03-merged-member-04:
+	  Merged -member-04 child branch.
+
+
+2005-02-18	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-04-persistent-01:
+	  Subtype template classes for alias_connection s are enabled, 
+	  everything compiles, but there is some difficulty with 
+	  persistent type registration: the hash_key's are not retrieved
+	  properly by calls to static persistent_traits<T>::get_hash_key.
+	  Solution: we need proper specialization of persistent_traits, 
+	  which currently isn't done because type-keys are only registered
+	  dynamically by static objects, hence specialized definitions
+	  do not exist.  This branch will remedy this by using specialization
+	  and dynamic registration (for unique ID).  
+	  This initial revision compiles, but some tests will die while
+	  modifications are in transient state.  
+
+	+ -persistent-02:
+	  Overhauled persistent type registration as promised.  
+	  Compiles, runs most tests, some unexpected deaths in 
+	  tests/parser/connect.  Must sleep first...
+	  Deaths related to datatype_member_instance_references.
+
+
+2005-02-18	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-04:
+	  Draft of template code for alias_connection.  
+	  Need to write instance_reference_base::make_alias_connection
+	  before enabling new class heirarchy (conditional now).
+	  Happened to do some header clean-up in this revision too.  
+
+
+2005-02-17	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-13-alias-01:
+	  New branch created for working on alias_connections.  
+	  May require some serious reworking and sub-typing.  
+	  Issue is what the interface for unrolled instance connection
+	  should be.  
+
+	+ -alias-02:
+	  Cleaned up some of object class heirarchy, having object as
+	  super-uber-parent is totally unnecessary in most cases.  
+	  Preparing to perform some major surgery on instance_reference
+	  and alias_connection class sub-heirarchy for connections.  
+
+	+ -alias-03:
+	  Renamed some classes, conditional code in-place for
+	  extending aliases_connection_base class heirarchy.  
+	  Some NOTES on proposed parse-context improvement in the future.  
+	  Everything still stable, the calm before the storm...
+
+	* ARTXX-00-01-04-main-00-04-object-01-13:
+	  Prelimiary testing of saving and restoring bool instance aliases, 
+	  where there are no actual connections.  So far so good.
+	  Some minor updates to instance dumping.  
+	  Tests were also updated because of expansion in bool
+	  instance object binary size.  
+
+
+2005-02-16	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-12:
+	  Wrote draft of code to save and restore bool aliases, 
+	  untested and disabled, so all tests still pass.  
+	  Will enable and test in next revision.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-11-merged-gcc4-02:
+	  Merged tiny revisions from the -09-gcc child branch, 
+	  through rev -02.
+	  These were micro-changes needed to make gcc-4.0 (prerelease)
+	  happy, because of more standard-conforming behavior.  
+	  That snapshot of gcc-4.0 (20050130) will not actually compile
+	  succesfully due to a bug discovered, see 02-14 entry of ChangeLog.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-10-merged-multikey-09:
+	  Merged all revisions from the -09-multikey child branch 
+	  (through rev. -09)
+
+	* ARTXX-00-01-04-main-00-04-object-01-09-multikey-07:
+	  bool_instance_collections (scalar, array<D>) are once again
+	  reconstructible *without* connections.  
+	  (A lotta work to get nowhere!)
+	  Next revision will massively clean-up before porting over the 
+	  overall changes with bool collections to int<W> collections.
+	  Then we'll attempt to reconstruct aliases... ooooh...
+
+	+ -multikey-08:
+	  Massively cleaned up, as promised.
+	  Affected: multikey_map-related files, art_object_instance_bool.*
+
+	+ -multikey-09:
+	  int_instance_collections are reconstructible once again.  
+	  No aliases reconstructed yet.  
+	  Many test output updated because binary objects have changed size.
+	  All tests pass, this snapshot is good enough to merge back to
+	  the parent branch.  
+
+
+2005-02-15	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-09-multikey-05:
+	  Namespace clean-up only, replaced *_NAMESPACE in the util/
+	  directory with 'util'.  
+
+	+ -multikey-06:
+	  IO_utils*: added value_writer and value_reader functors to
+	  facilitate partial specializations with template classes.  
+	  Defaults to using plain-old write_value and read_value.  
+	  Skeletal implementations of bool alias persistence and 
+	  reconstruction.  
+	  bool_instance_alias<D> is now derived from 
+	  multikey_set_element_derived!  (except when D == 0)
+	  Thus, bool_array<D> may directly use multikey_set<element_type>.
+	  This revision compiles, same as before, but not all tests pass
+	  because code is in transient state.  
+
+
+2005-02-14	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-09-multikey-03:
+	  Designed "derived" versions of maplikeset_element and
+	  multikey_set_element.  Functionally, they are the same as their
+	  non-derived counterparts, but their implementations facilitate
+	  composition of features such as ring_node-connectivity.  
+	  These have been tested individually in the util/test directory.  
+	  Next revision will test the composability on
+	  "art_object_instance_bool.*".  
+
+	+ -multikey-04:
+	  Now using node_ring_derived for alias base.
+	  Now using multikey_set_element_derived in bool_array<D>.
+	  Trying replacing bool_instance_alias_base derived definition
+	  with typedef to ring_node_derived<bool_instance_alias_info>.
+	  Everything compiles, nothing dies, tests don't pass still
+	  because alias persistence hasn't been implemented yet.  
+	  Some updating in maplikeset.h, multikey_assoc.h now uses
+	  _Select1st, _Select2nd functors to allow specialization
+	  of key-value accessors.  (Needs clean-up.)
+
+	* ARTXX-0-01-04-main-00-04-object-01-09-gcc:
+	  Branch created for the sake of isolating an ICE bug with
+	  gcc-4.0 prerelease 20050130.  
+
+	+ ICE-trigger example reduced to about 30 lines in "gcc4death.cc"
+	  Submitted to gcc bugzilla database as report # 19948.  
+
+
+2005-02-13	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-09-multikey-02:
+	  Enabled instance_alias persistence of parameters (pint, pbool)
+	  because they contain no pointers.  
+	  multikey_map.tcc: using {write,read}_value with the key 
+	  of the key-value pair.  
+
+	+ Complication: desire the connective properties of ring_node
+	  and the key-aware properties of maplikeset_element
+	  (manifested as multikey_set_element), but creating such
+	  a result is highly non-trivial with the current data structure
+	  library.  
+
+	+ Added a variation of ring_node call ring_node_derived, which
+	  extends a base type, by making it ring-node-connected to
+	  its own type.  This will be required for use with 
+	  maplikeset_element, because one cannot compound two container-like
+	  adapters to make a super-type with the properties of both parents.  
+	  Testing passed easily... too easily.  
+
+	+ Drafted an implementation of bool_instance_alias_info
+	  and bool_instance_alias_base, which will be adapted in the
+	  next revision to use ring_node_derived.  
+
+	+ Much clean-up of art_object_instance_bool.h.
+
+	* ARTXX-00-01-04-main-00-04-object-01-09-multikey-01:
+	  In this child branch, I'm play-testing the development of 
+	  using multikey_set for instance aliases, and ways of 
+	  reconstructing connections through object persistence.  
+	  This snapshot compiles and runs, but many tests will not pass
+	  because instance collection persistence has been disabled.  
+	  Working on the persistence of aliases...
+
+
+2005-02-08	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-08-merged-set-16:
+	  Merged all revisions from -set child branch.  No issues.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-07-collection-00-trans-00:
+	  Temporary sibling branch for changes that have to wait until
+	  after -set branch is merged.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-07-set-15:
+	  Once again stable.  Introduced maplikeset interface to 
+	  adapt a set to have a map-like interface, where key components
+	  of set::value_type may be passed to method functions.  
+	  Stuck this into multikey_set and multikey_set_element, 
+	  and it works like magic, AFAICT.  
+	  Code is in real desparate need of housekeeping... next rev.
+
+	+ -set16:
+	  Cleaned up and removed excess commented code.  
+	  Reverted some changes to multikey_assoc back to the way they
+	  were before the multikey_set fiasco.  
+	  Code is trim and functional.  Time to move on.  
+
+
+2005-02-07	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-07-set-12:
+	+ "ring_node.h": eliminated need for const_cast of second
+	  pointer in iterator construction by const-ifying 
+	  the second pointer member, which is never dereferenced anyways.  
+
+	+ -set-13: "multikey_assoc*": multidimensional associative 
+	  container adapter.  Factored out multidimensional facilities
+	  of multikey_map into multikey_assoc template wrapper.  
+	  Much removed code in commends in this snapshot.  
+
+	+ -set-14-trans-00: "multikey_set*" family added (1st draft), 
+	  *almost* entirely working, just needed to add initial files
+	  to checkpoint first revision.  
+	  This is a *transient* snapshot, and will compile, but the newly
+	  added test (multikey_set_test) does not run correctly yet.  
+	  Many adaptations have been made to the base multikey_assoc, 
+	  without disturbing the functionality of multikey_maps.  
+	  Future plans for major improvement of code maintainability:
+	  Make a set adapter to give map-like key-value interface to 
+	  std::set, since we find ourselves working around basic
+	  fundamental differences.  
+
+
+2005-02-06	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-07-set-07:
+	  Obliterated multikey_base, multikey_map_base.
+	  (Actually, just #if 0'd all referenceds to them)
+	  A few regression tests were updated with more accurate
+	  error reporting in test/parser/param.  
+
+	+ -set-08:
+	  Expurgated any and all references to the virtual base types
+	  involving multikey and multikey_map.  
+
+	+ -set-09:
+	  Factored out multikey implementation into seperate struct, 
+	  for the sake of specializing the <1> case.  
+	  Implements standard sequence/iterator interface.
+	  Replaced direct references to indices[] array with iterators.  
+	  Removed (comment) specialization of multikey_map using qmap
+	  as the implementation type, no longer needed.  
+
+	+ -set-10:
+	  Eliminated virtual base classes (in comments, flagged out):
+		  base_multidimensional_qmap
+		  base_multidimensional_sparse_set
+	  Internalized/privatized implementation of 
+	  simple_instance_reference::mset_base, defining as a module-local
+	  virtual base class in "art_object_inst_ref.cc".
+	  In general, we prefer this pattern of "let the user virtualize"
+	  the various dimension-specific data structures.  
+	  We provide a uniform functional interface to make this easy.  
+
+	+ -set-11:
+	  Cleaned out commented and flagged out blocks of code
+	  removed from revision -set-10.
+
+
+2005-02-05	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-07-set-01:
+	  Many util library improvements.
+
+	+ "pointer_traits" completely re-done.
+	  Individualized traits, for better orthogonal design.  
+	  Instantiating pointer_traits for the purpose of using one trait
+	  would try result in instantiating for all traits, some of 
+	  which were not applicable.  
+	  Leveraged partial specializations in various pointer classes.  
+
+	+ "const_assoc_query" an implementation-independent wrapper
+	  for maps to overload the lookup [] operator.  
+	  (This would've saved hundreds of lines of useless wrapping
+	  in qmap.* and hash_qmap.*)
+
+	+ "null_construct.h" guarantees initial values for constructed
+	  objects, especially pointers, which default to junk.  
+	  Useful for const-query returning of null pointers when 
+	  something is not found.  
+
+	+ "hash_qmap.*" wiped verbose definition, and replaced with
+	  const_assoc_query wrapper.  So simple!  Legacy code 
+	  in the declaration and definitions files is block commented out.  
+	  Next revision will alter qmap, and add qset.  
+
+	+ -set-02: qmap now derived from const_assoc_query<std:map<...> >
+
+	+ -set-03: consistency patch
+	  Changed multikey_base<pint_value_type> to
+	  ART::entity::multikey_index_type as defined in "art_object_index.h"
+	  Preparing to obliterate multikey_base...
+	  and create multikey associative interface...
+	  multikey_base has been obsoleted by the introduction of 
+	  multikey_generic.  
+
+	+ -set-04: slowly phasing out multikey_base.
+	  Minor extensions to multikey interface, ablility to convert from
+	  generic type to dimension-specific with assertion check on size.  
+	  Replaced definition of multikey_index_type with multikey_generic.  
+	  Goal: no more virtual function calls from multikey_base.  
+	  To do: continue similar changes with "unroll_index_type".
+	  Possibly specialize multikey<1> as plain value instead of [1].
+
+	+ -set-05: no more references to multikey_base remaining.
+	  Replaced unroll_index_type with multikey_index_type, 
+	  both are multikey_generic<pint_value_type>.
+
+	+ -set-06: changed signature of dereference functor
+	  to take a generic class argument, and using pointer_traits
+	  (internal_reference<T>::type).
+	  Relocated "dereference_t" and hellper to "dereference.h".
+	  Updated all affected source files.  
+
+
+2005-02-04	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-07-set:
+	  Branch dedicated to developing multikey_set structure.  
+	  Consider re-doing all of multikey_map family:
+	  create a qtree, underlying base type to qmap, qset.
+	  Or a multikey-tree, with new multikey methods?
+
+
+2005-02-03	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-06:
+	  Worked on new data structure: ring_node!
+	  Is a singly-circularly linked list that implements the 
+	  standard container and iterator interfaces, so one may use any 
+	  STL algorithm on begin() and end(), or intermediate iterators.  
+	  Maintains circular linkage (and uniqueness) invariant.
+	  Nodes maintain circular structure even when members of ring
+	  are destroyed, thus no additional memory management burden 
+	  on the user.  Note that such nodes are not truly copy-constructible;
+	  when a node is copied, only the value object is copied, never
+	  the forward pointer, which is in fact, always initialized to 
+	  point to itself.  This is intended for use with connections
+	  of instances and aliases... muahaha.
+	  ring_node<instance_alias_containing_count_ptr_to_unique_instance>
+
+
+2005-02-02	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-05:
+	  Duplicate tag of -01-04-merged-unroll-00-03.
+
+	* ARTXX-00-01-04-main-00-04-object-01-04-merged-unroll-00-03:
+	  Merged in revisions from -unroll-00 sub-branch.
+
+	* ARTXX-00-01-04-main-00-04-object-01-03-unroll-00-03:
+	  Basic single process instance (alias) works.  
+	  Made proc_instance_alias pseudo-persistent, 
+	  never actually dynmically allocating through the object
+	  manager, but still contains aliases to unique instances, 
+	  which requires pointer management.  
+	  Many tests updated.  
+	  To do: be able to write / read collections of aliases.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-03-persistent-00-02:
+	  Factored out "safety" code for persistent object management
+	  out of all implementations of write_object, load_object.  
+	  Gave write/load object references to iostream arguments.  
+	  Gave persistent::load_object const persistent_object_manager& 
+	  argument.
+	  Cleaned out hash_map headers, moved to STL subdir, with forward
+	  declaration file.  
+	  Next, clean up the commented out code mess.  
+
+
+2005-02-01	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-03-persistent-00-01:
+	  Un-templated some non-essential method functions in
+	  persistent_object_manager.tcc, relocated to .cc.  
+
+	* ARTXX-00-01-04-main-00-04-object-01-03-persistent-00:
+	  This branch created to introduce complete redo of 
+	  persistent object management.  
+	  Need to distinguish between heap/non-heap objects.  
+	  Need to factor out object alignment and visit-once code. 
+
+
+2005-01-31	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-docs-00:
+	  New branch created for documentation of the ART++ language spec.  
+	  (Not for doxygenating code comments.)
+
+	* ARTXX-00-01-04-main-00-04-docs-00-01:
+	  Defined template signature equivalence.  
+	  Minor text tweaks.  
+	  Consider using the listings.sty package, or converting
+	  grammar into latex interpreter...
+
+
+2005-01-30	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-02:
+	  Major contributions in this release, improving template 
+	  signature equivalence checking to be more precise.  
+
+		+ Refined definition_base::dump to also report whether a 
+		  definition object is merely declared or fully defined.  
+
+		+ new: definition_base::lookup_template_formal_position()
+		  to determine whether or not two formal parameter
+		  instance references are equivalent (useful for comparison
+		  during re-declarations).
+
+		+ Changed template_formals_list implementation to vector, 
+		  for constant-time formal position distance evaluation.  
+		  (Can probably use vectors more for this reason...)
+
+		+ instance_collection_base::is_template_formal():
+		  now returns the 1-indexed position of the referenced
+		  parameter instance collection, 0 if not found.  
+		  formal_size_equivalence is updated to check for 
+		  template parameter equivalence.  
+
+		+ art_object_expr* (important):
+		  Equivalence checking refined with pbool/pint/index/range
+		  -specific versions to allow comparison by structural 
+		  equivalence which is far more precise (but not perfect)
+		  than what was in place before, which was over-conservative
+		  w.r.t. constants and non-constants.  
+		  Only the "must_be_equivalent" family of method functions
+	 	  was improved.  
+		  De-inlined some empty constructors and destructors.  
+
+		+ Implemented part of process instance unrolling.  
+		  Dumping-related functions improved.  
+		  Added full set of checks in test/parser/process/.
+		  Updated some old artc tests.  
+
+
+2005-01-29	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04-object-01-01:
+	  Implemented (enabled) unrolling for datatypes, added 
+	  datatype_instance_collection::dump().
+	  Refined error messages during unroll-time errors,
+	  in pint/pbool_instance_collection, and updated tests.  
+	  New tests in test/parser/array to test unroll-time error catching.  
+
+
+2005-01-28	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-04:
+	  These revisions merged and converged the revisions on the
+	  -parser-00, -util-00, and -object-00 branches.  
+	  No issues in merging, since their develop was mostly sequential.
+
+	* ARTXX-00-01-04-main-00-04-object-01-00:
+	  Implemented object de/serialization of enum data-type definitions
+	  and instances.  Added bunch of tests in test/parser/datatype.
+	  Updated definition_base::*_object_base to include the
+	  'defined' member flag, which was forgotten before.  
+	  Enum members are just treated as strings for binary persistence.  
+
+
+2005-01-27	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-object-00-13:
+	  Specialized read/write_value of pbool_instance, which contains
+	  bit-fields, same story as bool -- 3 bools "compressed" to 1 char.  
+	  (A few tests updated.)
+
+	* ARTXX-00-01-04-object-00-12:
+	  In util/IO_utils.{h,cc}, specialized write_value and read_value
+	  with <bool> to use write/read_value <char> to ensure that
+	  booleans are written out as one byte.  
+	  (On darwin-gcc-3.3, passing bool defaulted to using a 4-byte int, 
+	  on i686-linux-gcc-3.4, passing bool defaulted to using char.)
+	  Gotta ensure platform independence!  
+
+	* ARTXX-00-01-04-object-00-11-merged-fixutil-12:
+	  Merged changes from the -fixutil sub-branch (up to -12)
+	  into the main object branch.  
+
+	* ARTXX-00-01-04-object-00-10-fixutil-12:
+	  Test directory updated for new expected unrolled objects.
+	  Differences to due to exclusion of built-in template int
+	  definition argument.  (wasn't supposed to be there anyways)
+	  Typedef_alias forgot to call scopespace base persistent
+	  methods, resulting in fake leak.  Fixed.  
+	  This revision should be sufficiently stable (verified on
+	  darwin) to commit to the parent branch.  
+
+
+2005-01-26	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-object-00-10-fixutil-10-merged-gcc-01:
+	  Merged gcc-3.3 workaround into this parent branch.
+	  Enhanced test scripts in src/util/test to be able to write
+	  hook filters/scripts in case tests need more than the 
+	  default filtering.  
+	  This is intended to permit *slightly* different or even
+	  non-deterministic behavior of various compilers, 
+	  a common variation being LINK-ORDERING and global static
+	  module initialization and destruction ordering.  
+	  Fortunately, the revisions in this series have made 
+	  the libraries extremely robust to "the ordering problem"
+	  with explicit dependence macros.  
+	  Slowly, we'll work our back out of "fixutil" to the parent branch.
+
+
+2005-01-25	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-object-00-10-fixutil-09-gcc:
+	  New quick branch spawned off to work around a gcc-3.3 bug.
+	  (Not a problem in gcc-3.4)
+	  Problem is related to friend function formal parameter misuse.
+	  Problem can be demonstrated by
+	  "util/test/friend_function_formal_bug.cc" in gcc-3.3.
+	  Fixed, and merged back into -fixutil-10.
+
+	* ARTXX-00-01-04-object-00-10-fixutil-08:
+	  Been spending a few days fixing up a mysterious pseudo
+	  memory leak (*GASP*).  The problem is cause by improper handling
+	  of the built-in datatype definitions.  The whole definition
+	  contents were still written out, which cause bad reconstruction.  
+	  Data-type references have special handling for built-in types.
+	  This snapshot has fixed it, but kept all the extraneous 
+	  debugging options on.  After more testing, will gradually
+	  recede the debugging level.  
+
+
+2005-01-22	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-object-00-09:
+	  Merged changes from -fixutil sub-branch, up to its -03 revision.
+	  Net result: pool-allocate pint_const and pbool_const, 
+	  but we made many side improvements along the way.
+
+	* The lesson of the day is "function-local static."
+
+	* ARTXX-00-01-04-object-00-08-fixutil:
+	  Sub-branch created for introducing new improvements and fixes to
+	  the util library.  
+	  Modules affected: stacktrace, list_vector_pool, what.
+	  list_vector_pool: introduced more robust version of macros
+		for overriding new and delete operators
+		-- new version is practically immune to adverse ordering
+		of global static initialization, which is an issue when
+		cross-module allocators are invoked; there must be a way
+		to guarantee on-demand initialization:
+			solution: function-local static instances!
+		observation: consequence: out of conservativeness, 
+			such static allocators will not be destroyed
+			upon program termination IF the pool is referenced
+			by multiple modules.  (won't be able to get leak 
+			diagnostics from such pools)
+		side note: tried and abandoned a reference-count scheme.
+	what: updated interface and default macro definition
+		now must call ::name() by function (no arg), 
+		to match the typeinfo interface.  
+		All definitions of name() store function-local static
+		copies of the string, which are initialized upon 
+		first entry to the function, so performance is still
+		very efficient.
+		This revision should be robust to all link-orderings
+		so it is safe to reference ::name across modules.  
+	stacktrace: replaced class static stack structures
+		with function-local static objects.
+		This makes stacktrace safe to use for debugging
+		during static initialization and destruction.  
+		+ New macros STACKTRACE_BRIEF and STACKTRACE_VERBOSE
+		so user need not pass custom string everywhere.  
+		+ Also added ostream check protection, in case ostream
+		is destroyed before a trace is printed.  
+	persistent_object_manager:
+		you guessed it, replaced static members 
+		(reconstruction_function_tbale) with 
+		function-local static in the referencing static function.  
+
+
+2005-01-21	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-objject-00-08:
+	  New files: src/Object/art_object_extern_templates.{h,cc}
+	  Tried playing around with separate template compilation for 
+	  a few classes (multikey, packed_array).
+	  Very little reduction in compilation time and final binary size.  
+	  Only the smallest, most common classes were factored out.  
+	  More signficant dimension-specific, content-type-specific
+	  map classes cannot be efficiently collated.  
+	  "With great specialization come great replication."
+
+
+2005-01-20	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-object-00-04-cleanup:
+	  Many typedef's updated, espcially those involving multikey.
+	  Now everything is consistently maintained in a few definitions
+	  in "art_object_index.h".  Other minor changes like renaming
+	  parent to parent_type.  
+
+	* ARTXX-00-01-04-object-00-05:
+	  FINALLY wrote a prototype unroll system for the built-in 
+	  datatypes.  Successfully tested basic int<32> instantiations.
+	  Created placeholder class unroll_context for use in unrolling.  
+	  Not all unroll methods have been adapted to use it yet.  
+	  Expressions are unrolled into pint_const_collections
+	  (pbool_const_collection to be created).  
+	  Also updated util/multikey.* to provide reverse iterator interface.  
+
+	* ARTXX-00-01-04-object-00-06:
+	  Removed a TON of empty .stderr files from the repository, 
+	  they are now automatically generated and cleaned by
+	  the rules in the template makefile Make.test.
+
+	* ARTXX-00-01-04-object-00-07:
+	  test-Makefile's pain in the a**...
+	  Updated .cvsignore generation to copy template (was linked before)
+	  and include additional CLEANFILES, in all test subdirectories.  
+	  Re-did Makefile.am's in all test subdirectories:
+	  ARTC_TEST_SUBJECTS = $(ARTC_TEST_PASSES) $(ARTC_TEST_FAILURES)
+	  This way, ARTC_TEST_FAILURES can be used for EXTRA_DIST, 
+	  to avoid having to regenerate extraneous .stderr files.  
+	  Perhaps auto-generating .cvsignore everywhere is a good idea...
+
+
+2005-01-19	David Fang	<fangism@users.sourceforge.net>
+
+	* New sub-branch: ARTXX-00-01-04-object-00-04-cleanup
+	  Needed a makeover of typedefs, for sake of consistency
+	  (e.g. long vs. int) and future ease of migration to templates.
+
+
+2005-01-18	David Fang	<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-object:
+	  Added unroll tests for namespace subdirectory.  
+	  Not exciting until example with int<>s are introduced.  
+
+	* Created branch: ARTXX-00-01-04-util
+	  This branch is for modifications to the utils library that
+	  do not concern ART directly.  
+
+	* Added util/numeric/integer_traits.h for compile-time evaluations.  
+	  Some useless and fun code, like compile-time primality.  
+
+	* Added util/ifthenelse.h for compile-time type and value selection.  
+
+	* Merged patches to the utils from -object-00-03 to -util.
+
+
+2005-01-17	David Fang	<fangism@users.sourceforge.net>
+
+	* RELEASE 0.1.4
+	  The root tag for this series is ARTXX-00-01-04.
+
+	* Created branch: ARTXX-00-01-04-parser
+	  This branch is intended for modifications to the front-end
+	  lexer and parser.
+
+	* Created branch: ARTXX-00-01-04-object
+	  This branch is intended for updates to the type-checker, 
+	  unroller, and object system of the compiler.  
+
+	* ARTXX-00-01-04-parser:
+	  Updated lexer: yy_current_buffer -> YY_CURRRENT_BUFFER
+	  The macro's definition differs slightly between the current stable
+	  version of flex (2.5.4) and the development version (2.5.31).
+	  This maintains compatibility.  
+
+	* Added LEX and YACC to configure.in with AC_ARG_VAR.
+
+	* ARTXX-00-01-04-object:
+	  Revised test *.sh check test-scripts.  
+	  Introduced (preliminary) unrolling test, finally!  
+	  Need to write {bool,int}_instance_collection::unroll().  
+
+	* Added unroll tests to tests/parser/param directory.
+	  Updated artobjunroll-expect.sh script to handle 
+		  expected unroll errors.
+	  Test suite is coming along...
+
+	* Minor stuff:
+	  In util/indent.cc: fixed disable_indent.
+	  Updated dump() method to use better indentation in
+		many Object class definitions.
+	  artobjdump and artobjunroll handles exceptions from unrolling, 
+		and also if input object file is empty.
+
+
+2005-01-16	David Fang	<fangism@users.sourceforge.net>
+
+	* FIXED: issue with __PRETTY_FUNCTION__ (linux-gcc only).
+	  In src/Object/art_built_ins.cc, an innocent assert statement
+	  (commented out) created an undefined reference to the 
+	  __PRETTY_FUNCTION__ symbol, which is NEVER SUPPOSED TO EXIST, 
+	  because it is a reserved MACRO internal to the compiler.
+	  Removing the assertion statement suppressed the faulty symbol.  
+	  Can you say, 'WTF'?
+
+
+2005-01-15	David Fang	<fangism@users.sourceforge.net>
+
+	* Added macros for convenient default use of list_vector_pool, 
+	  in-class static member declarations and definitions.  
+
+	* Added memory leak diagnostics to list_vector_pool:
+	  basically size of free-list should be equal to peak usage, 
+	  else there's a dangling pointer to an element in an allocated
+	  region.  This is non-fatal (as long as the memory is not touched)
+	  because deallocate() uses lazy destruction, i.e. only destroys
+	  upon allocation off of the free-list.  
+
+	* Fixed premature memory deallocation of assignment and 
+	  connection objects in context::add_assignment and ::add_connection, 
+	  in "art_context.cc".
+
+	* Updated src/util/test/test-expect.sh:
+	  uses test/address_filter.sed to filter out addresses which will
+	  vary on every system.  
+
+	* PROBLEM (solved): 
+	  Upon exit(1) of program, sometimes memory leak is diagnosed.  
+	  check reports unaccounted token_char's (among other types)
+	  for *some* tests, whereas check doesn't find any problems.  
+	  May have to do with destructor behavior upon exit.  
+	  IDEA: may need to replace exit() with throw() to ensure
+	  proper stack cleanup.  
+
+	* SOLUTION (to the above PROBLEM):
+	  Problem was indeed in premature exit(), which doesn't clean up
+	  the call-stack objects, and jumps straight to the end of main().
+	  Exception unwinding, on the other hand, guarantees proper
+	  stack clean-up.  Thus we catch a general exception at main()
+	  to delay exit/returning from main until stack objects are 
+	  properly destroyed.  
+	  I've globally replaced exit(1) with throw std::exception()
+	  to accomplish simple, yet safe, termination.  
+	  In "macros.h", THROW_EXIT means "throw generic exception
+	  with intention of exit(1)-ing."
+
+	* Fixed yet another problem with pointer-classes.
+	  There was an implicit conversion from never_ptr to excl_ptr
+	  through excl_ptr_ref, which should not have existed, 
+	  and no longer exists.  pointer_classes_test is updated
+	  to reflect this.  No other compiler code is affected by this, 
+	  fortunately.  (Also cleaned up much obsolete code in
+	  "pointer_classes.h")
+
+	* To fix: why do I get undefined references to __PRETTY_FUNCTION__
+	  when compiling for linux?  (something to do with std::alloc?)
+
+
+2005-01-14	David Fang	<fangism@users.sourceforge.net>
+
+	* Solved global static initialization ordering problem w.r.t. 
+	  stacktrace.  Previously, stacktrace was only usable for tracing 
+	  functions AFTER global initializations were complete.
+	  We were able to trace some static initialization calls because 
+	  we got lucky, and stacktrace's static objects happened to be 
+	  initialized early enough.  Now it is reliably usable to debug 
+	  static initialization-time function calls.  
+
+	* memory/pointer_classes.h: intentionally declared an explicit, 
+	  private, undefined const-reference copy constructor, because
+	  the default action (which was actually implicitly used!)
+	  copies member-for-member, which violates exclusion.  
+	  This may fix other hidden problems.  
+
+	* Added partial specializations for util::what template, 
+	  pointer, reference, const-ness.  
+	  Only one module has trouble with static initializations:
+	  art_parser_definition.cc, don't know why yet...
+
+	* Some minor fixes in util template library, compile-time
+	  problems discovered with gcc-3.4.0, due to improved two-phase
+	  template definition evaluation.  
+
+	* MAJOR PROBLEM: severe crashes on FreeBSD-3.4/gcc-3.4.0, 
+	  currently investigating.  
+
+
+2005-01-13	David Fang	<fangism@users.sourceforge.net>
+
+	* Cleaned up the AST/* headers and definitions, with some corrections.
+	  De-virtualized some methods that did not require it.  
+	  Converted CHP/HSE class members to pointer-classes.  
+	  Purged unnecessary repetitive declarations.  
+	  Applied NEVER_NULL and INVARIANT macros gratuitously.  
+
+	* Specialized util::what for most classes in the ART::parser
+	  namespace.
+
+	* Globally changed node::check_build's signature to
+	  never_ptr<const object> check_build(context& c) const;
+
+	* More clean up in the src/Object directory, 
+	  replaced assert() with NEVER_NULL and INVARIANT macros.  
+
+	* Added some notes regarding parser in src/parser/NOTES.  
+
+	* Tested everything with bison-2.0 -generated parser, all good!
+
+	* Added -ansi compilation flag to everything.  
+
+
+2005-01-12	David Fang	<fangism@users.sourceforge.net>
+
+	* Massive clean up of code in the src/Object directory.
+
+	* Changed many function / method prototypes to pass
+	  excl_ptr arguments by reference, 
+	  count_ptr arguments by const reference, 
+	  never_ptr arguments by const.
+
+	* Bunch of formatting improvement for readability.  
+
+	* Spotty documentation added, always going to be behind on this...
+
+	* Tomorrow: the AST directory clean-up.
+
+	* Soon: release 0.1.4
+
+
+2005-01-11	David Fang	<fangism@users.sourceforge.net>
+
+	* MAJOR BUG FIXED: memory management by pointer classes corrected.
+	  Basically, ownership transfer failed in a few cases where they were
+	  expected to have occured. 
+
+	* memory/pointer_classes.h: 
+	  Eliminated empty copy constructor for excl_ptr.  
+	  Specialized std::_Construct for only sticky_ptr's
+	  because no copy-constructor exists, and the standard containers
+	  require copy-constructability.  
+	  Overloading _Construct works around the problem with an 
+	  explicit const-cast to guarantee that placement construction
+	  (with value to assign) is done with transfer semantics.  
+
+	* stacktrace more developed, simple and solid.
+	  Added method for accessing the current output stream, 
+	  using macro STACKTRACE_STREAM.
+	  Eliminated construction with const char* to avoid ambiguity
+	  with the constructor that accepts std::string.
+	  Default what<T>::name is const char*, not const char[].  
+
+	* list_vector_pool optionally uses util::what for producing 
+	  useful verbose messages.
+	  NOTE however, that automatic instantiation of what<T>::name
+	  does NOT guarantee that it is statically constructed before
+	  it is referenced, EVEN WITHIN THE SAME MODULE!  
+	  You must explicitly instantiate the template class what
+	  before it's first use in a module to guarantee correct ordering.  
+	  Specialization of what<T> also accomplishes this, assuming
+	  it retains a ::name member.
+
+	* Lots more debug stacktracing code added everywhere (turned off).
+
+	* Changed several (not all, yet) function prototypes that 
+	  take excl_ptr by value and now take excl_ptr arguments by reference.  
+
+	* ART::parser::token_char are allocated with its own 
+	  static memory pool.  
+
+	* ART::entity::data_instantiation_statement are allocated
+	  with its own memory pool.  
+
+	* Many single argument constructors were made explicit to
+	  prevent promiscuous conversions.  
+
+	* Fixed built-in datatype int initialization, guarantee
+	  that memory is not immediately deallocated upon construction.  
+	  (More remnants of debug code too.)
+
+	* Next commit will clean up some debug code, promise.  
+	  Will tag ARTXX-00-01-03-x.
+
+
+2005-01-06	David Fang	<fangism@users.sourceforge.net>
+
+	* MAJOR BUG: see the 2005-01-05 entry of src/NOTES.  
+	  Will address the pointer class bug after isolation.  
+	  (release vs. reset in destructor)
+	  Much debugging code in-place is commented out.  
+	  MUST FIX this before release 0.1.4.
+
+	* Many instance reference constructors no longer need a
+	  NULL index argument, just uses default of NULL.
+
+
+2005-01-02	David Fang	<fangism@users.sourceforge.net>
+
+	* New way of "naming" classes for using a "what" trait-like class.
+	  By default it uses typeinfo's built-in .name() function, 
+	  but may be partially specialized and overridden, especially if
+	  name is mangled.  
+
+	* Experimented around with allocating new tokens (token_char)
+	  using list_vector_pool, accomplished with overloaded new/delete
+	  static member operators.  
+	  
+	* Parser bothers freeing memory of symbol stack tokens and symbols
+	  before exit(1) on error.  (Not necessary, but a good exercise.)
+
+
+2004-12-24	David Fang	<fangism@users.sourceforge.net>
+
+	* New expression class for multidimensional collections
+	  of constant integers, pint_const_collection, which is implemented
+	  as packed_array_generic.  (will add pbool_const_collection next)
+	  Thinking of reworking expr class hierarchy...
+
+	* IO_utils.{h,tcc}: replaced template signatures with 
+	  template template parameters with simpler non-template parameter
+	  class with explicit concept requirements in the implementation
+	  definitions.  Added write_array for valarray, or anything similar
+	  that doesn't have an iterator interface, relying only on
+	  random access.  write_array is complemented by 
+	  read_sequence_resize().  
+	  Consider future container traits to avoid multiple definition 
+	  names -- consolidation is good.  
+
+	* multikey.{h,tcc}: added comparison and addition and subtraction
+	  operator overloads.  
+
+	* packed_array.{h,tcc}: some methods should've been public.
+	  added ostream-write and istream-read methods to 
+	  packed_array_generic.  
+	  Minor bug fix in constructing coeffs member when size_t argument
+	  is 0 (zero-detection for unsigned size-1).  
+
+
+2004-12-22	David Fang	<fangism@users.sourceforge.net>
+
+	* Eliminated last template argument of multikey, the default value. 
+	  Constructors take an optional default value argument.  
+
+
+2004-12-20	David Fang	<fangism@users.sourceforge.net>
+
+	* Split multikey into declaration and definition files, 
+	  actually reduced object sizes.  Also cleaned up header file
+	  inclusion as a result.  
+
+	* Added multikey_generic for variable dimension interface, 
+	  which just uses valarray functionality.
+
+	* Added packed_array_generic, updated tests to include it.
+
+	* Finished moving structures in the util directory to the
+	  util namespace.  From now on, new definitions in here
+	  should be in the util namespace, or a subnamespace thereof.  
+
+
+2004-12-15	David Fang	<fangism@users.sourceforge.net>
+
+	* Revised multikey_qmap to be a specialization of 
+	  multikey_map, resulting in less code bloat.  
+
+	* More massive clean up of namespace usage in header and
+	  source files.  
+
+	* Added draft of packed_array structure (untested).  
+
+
+2004-12-12	David Fang	<fangism@users.sourceforge.net>
+
+	* Removed virtual size_t dimensions() const = 0 from
+	  all children of instance_collection_base, in favor of caching
+	  a const size_t dimension member per collection.  
+	  This field, however, is not stored persistently, and is 
+	  set upon construction as a run-time constant per collection object.  
+
+
+2004-12-11	David Fang	<fangism@users.sourceforge.net>
+
+	* Split process and channel instance collections into 
+	  dimension-specific subclasses.  
+
+	* Working on phasing out the depth (dimensions) member
+	  of instance_collection_base... done!
+	  But at a minor cost :(.  
+	  Had to de-inline dimensions() in all instance_collections
+	  to force symbols to be generated.  
+	  The rememdy (if overhead is high) is to cache the 
+	  dimensions in a pseudo-const field of instance_collection_base.  
+	  (But wait, didn't we just eliminate it?)
+
+	* Lessons learned: 
+	  1) Inline virtual functions bad idea, because the base classes
+		will be missing the symbols to inlined functions.  
+	  2) Calling virtual functions of a class during its construction
+		is a no-no, will result in "pure virtual method called"
+		run-time abort trap.  Beware of indirect calls to 
+		virtual functions through other functions as well.  
+
+	* Some more code clean-up, making base classes persistence
+	  helper methods named consistently with _base.  
+	  Privatized some methods that need not be visible.  
+
+
+2004-12-11	David Fang	<fangism@users.sourceforge.net>
+
+	* Tagging this snapshot as ARTXX-00-01-03-u
+
+	* UPDATED persistent_object management slightly.
+	  Rather than force user to include static const members
+	  within a class, I switched to a less intrusive technique
+	  using a new persistent_traits template class.  
+	  Now a type is registered by creating an instance of
+	  persistent_traits<T>, which is done through a macro.  
+	  A single instance of such an object will register the 
+	  type (with a supplied hash-string) for the duration of the 
+	  program.  (The macro call is unchanged.)  The maintainer 
+	  need not declare any additional static members, not even
+	  through the old PERSISTENT_STATIC_MEMBERS_DECL.  
+	  The persistent_traits template definition may be specialized
+	  arbitrarily, so the user need not conform to the same pattern, 
+	  although it would save time for specialized maintenance.  
+	  Any less effort for the maintainers helps.  
+
+
+2004-12-10	David Fang	<fangism@users.sourceforge.net>
+
+	* Massively extended the data-type instance collection and reference
+	  classes into specialized type, via copy-paste-tweak.  
+	  (OMG, nothing broke!)
+	  Divided up data instance class files.  
+	  datatype_instance_collection is now an abstract parent of
+	  many children.  
+
+	* When a datatype reference creates an instance, it now
+	  correctly resolves typedefs to generate the correct class
+	  of instance collections.  
+
+	* Standardized parent calls to persistent object management
+	  helper methods (collect_transient, write_object, load_object), 
+	  named by default with _base.  This dramatically reduces
+	  the amount of copy-paste maintenance in children classes.  
+
+	* art_object_type_hash.h: Updated persistent object type keys
+	  to reflect extensions to class hierarchy.  
+
+	* TODO: instance reference classes that are similar should
+	  be rewritten as templates for trivial generalizability.  
+	  Same goes for generic instance collection patterns.  
+
+
+2004-12-06	David Fang	<fangism@users.sourceforge.net>
+
+	* More code clean-up, header file organization continued...
+
+	* Wrapped some lexer variables and functions in ART::lexer namespace.
+
+
+2004-12-05	David Fang	<fangism@users.sourceforge.net>
+
+	* Major source tree re-organization, partitioning large header
+	  files into chunks, usually pulling out the abstract base classes
+	  which need to be visible, where there implementers need not
+	  be visible.  
+	  Implementation source files (.cc) are kept the same.  
+
+	* Much clean-up and header file pruning.  
+	  Slightly smaller objects and binaries. 
+	  Slightly faster compile-time.  
+
+
+2004-12-04	David Fang	<fangism@users.sourceforge.net>
+
+	* Re-organized util/ library directory.  
+	  Split many template classes into declarations and definition files. 
+
+	* Added util/STL subdirectory with wrappers to split the 
+	  standard containers into declarations and definitions files.  
+	  Not terribly useful yet.  Current revision is safe
+	  to switch arbitrarily between unified and split headers.  
+
+	* Touched up ART source files to work with new headers.  
+	  No functionality has changed.  
+
+
+2004-12-02	David Fang	<fangism@users.sourceforge.net>
+
+	* Further elaborated on pointer_traits.
+
+	* Improved persistent_object_manager pointer manipulation, 
+	  leveraging pointer_traits, resulting in much nicer
+	  compile-time specialization and selection.  
+
+	* Split hash_qmap and qmap into declaration (.h) and 
+	  definitions (.tcc) files, inlining very few basic
+	  methods in the declarations file.  
+	  So far, this makes squat different in binary size because
+	  the .h file still includes the entire definitions of the
+	  base classes.  Will experiment further with STL wrappers...
+
+
+2004-12-01	David Fang	<fangism@users.sourceforge.net>
+
+	* art_object_instance.{h,cc}: Subclassed pbool_instance_collection
+	  into dimension-specific variants.  Currently wrapped 
+	  with SUBCLASS_PBOOL_ARRAY, but next revisions will 
+	  clean out conditional compilation.  
+
+	* util/indent.{h,cc}: Nifty little auto-indentation library.
+
+
+2004-11-29	David Fang	<fangism@users.sourceforge.net>
+
+	* Miraculously swapped out old pointer-class system with 
+	  the new one, without breaking anything.  
+
+	* Obsolete code is retained in util/obsolete for historical
+	  purposes.  
+
+
+2004-11-23	David Fang	<fangism@users.sourceforge.net>
+
+	* Added some useful data structures to the util library.  
+
+	* Planning restructuring of util/.  
+	  Memory management (including pointer classes) relocated to
+	  util/memory subdirectory.  
+
+
+2004-11-06	David Fang	<fangism@users.sourceforge.net>
+	
+	* Debugged and finished testing the list_vector_pool allocator.  
+
+
+2004-11-05	David Fang	<fangism@users.sourceforge.net>
+
+	* Minor fixes in template code to make gcc-3.4.0 happy, 
+	  changes which make code more standard-compliant. 
+
+	* Recovered from a week of using only Apple gcc-3.3
+	  while home directory on FreeBSD metwork was dead
+	  on a failed hard drive.  Thank goodness for CVS 
+	  (being on separate disk/server was *crucial*.)
+
+
+2004-11-04	David Fang	<fangism@users.sourceforge.net>
+
+	* art_object_instance.{h,cc}: Subclassed pint_instance_collection
+	  into dimension-specific variants.  This is prototype code, 
+	  switchable to old method (non-persistent) with SUBCLASS_PINT_ARRAY
+	  flag defined in the header file.  
+	  (Includes specialization for 0-dimensions.)
+	  Will remove this switch after it is deemed stable.  
+
+	* multikey*.h: Completed methods for read/writing multidimensional 
+	  map collections to binary streams.  
+
+	* list_vector_pool.h: simple template-based chunk allocator. 
+	  Not fully debugged yet, so no warranty.  
+
+	* Renamed some src/util files without the art_ prefix
+	  because they are independent w.r.t. this project.  
+
+	* Some general clean-up of obsolete #if 0 code-blocks.  
+
+
+2004-11-01	David Fang	<fangism@users.sourceforge.net>
+
+	* Insiginificant change.  Added CVS Id tags to all source files.   
+
+	* Standard public class member typedefs added to 
+	  hash_qmap and qmap data structures.  
+
+
+2004-10-25	David Fang	<fangism@users.sourceforge.net>
+
+	* Added auxiliary argument type to peristent object management.
+	  This allows one to `escape' into a second-level of constructor 
+	  tables, or pass at most one argument to initial allocation, 
+	  in (class)::construct_empty().  
+
+	* Auxiliary construction argument allows us to sub-type
+	  (e.g. size_t templates) within a single registered type.  
+
+	* art_util.{h,cc,tcc}:
+	  Added more utility methods for binary I/O, for generic
+	  value-sequence (list-like) persistence, and value-map (map-like)
+	  persistence.  
+	  Reminder that containers of pointers must still go through
+	  the persistent object manager.  
+
+	* Going to sub-type instance collections by dimensions (size_t), 
+	  leaving a common abstract interface.  
+	  Need this to be strongly and statically typed
+	  to be able to manipulate persistent multidimensional maps.  
+
+
+2004-10-23	David Fang	<fangism@users.sourceforge.net>
+
+	* Added abstract operator wrappers around most STL
+	  binary operators to enable use in virtual function table.  
+	  Implemented in util/operators.h, used in Object/art_object_expr.*.
+
+	* Copy-paste-modified pint_instance_collection to pbool counterpart, 
+	  same with pbool_expression_assignment.  
+
+	* Added to class module a boolean flag to indicate whether
+	  entire module has already been (successfully) unrolled.  
+
+
+2004-10-21	David Fang	<fangism@users.sourceforge.net>
+
+	* Tag: ARTXX-00-01-03-l
+
+	* Fixed parameter index unrolling, correctly detecting
+	  unroll time errors, in multidimensional arrays, 
+	  such as uninitialized or uninstantiated parameters.  
+
+	* Hand-checked behaviour of artobjunroll on test/parser/param dir.
+
+
+2004-10-19	David Fang	<fangism@users.sourceforge.net>
+
+	* Finished first draft code for unrolling collections of
+	  parameter integers, but remains largely untested.  
+	  Most other existing code is unaffected.  
+	  (Just needed to commit 2+k lines of code...)
+
+
+2004-10-18	David Fang	<fangism@users.sourceforge.net>
+
+	* Finished developing and testing classes for detecting
+	  compacts subslices of multidimensional sparse maps, 
+	  namely multikey_map.  
+	  See testing class in util/test/cube_slice.h for rigorous testing.  
+
+	* Split parameter assignments into separate compilation module, 
+	  art_object_assign, used to be in art_object_connect.
+
+
+2004-10-13	David Fang	<fangism@users.sourceforge.net>
+
+	* A day of compiler infamy.  
+	  GCC nightmares have forever scarred me.  
+
+	* Minor update on how static global persistent type registry
+	  is initialized.  The table itself is maintained as a
+	  pointer initialized NULL, and access to it is granted through 
+	  a static accessor function that allocates upon first use.  
+	  Not making static table as an object because is not guaranteed
+	  to be properly initialized in order, if not at all!
+
+	* De-allocation of the type registry is managed by a little
+	  hackery using a pointer class.  
+
+	* Template method bug in gcc-3.3.x and earlier was worked around
+	  by inserting keyword template in the middle of the member
+	  function call.  See persistent_object_manager::get_root<T>().  
+
+	* SEVERE PROBLEM (worked-around) with "artobjdump" and 
+	  "artobjunroll" on Apple's gcc-3.3:
+	  The ART::entity::module class was only referenced as a 
+	  pointer, not a static object, in the main executables' source.  
+	  In "artc" and "art++2obj" the module references in main()
+	  were local objects, NOT pointers.  
+	  Apple's gcc failed to link in the majority of modules 
+	  in libart++.la, resulting in failure to properly register
+	  any and all persistent types.  
+	  This is evidenced by the size of the resulting executable, 
+	  which ended up as 1/10 of the size it should have been.  
+	  The workaround to force proper linkage was to create
+	  an artificial local object of type entity::module. 
+	  See art_persistent_table.cc.
+
+
+2004-10-12	David Fang	<fangism@users.sourceforge.net>
+
+	* MAJOR REWORK:
+	  Extracted serializable/persistent object functionality
+	  and interface into ART-independent framework classes.  
+	  Now in "util/persistent.h" and "util/persistent_object_manager.h".
+
+	* Replaced class type enumeration system ("art_object_type_enum.h")
+	  with a static type registration system, where each type
+	  calls a static function to register itself with the global
+	  type map.  Registration requires a unique type-key (here, a 
+	  short string), and a pointer to a (possibly static) allocator
+	  of the mapped type.  
+
+	* Rewrote some what() functions in object classes, because it
+	  should NOT depend on any members being initialized, such as 'key'.
+
+
+2004-10-10	David Fang	<fangism@users.sourceforge.net>
+
+	* Re-typed ::write_object() with *const* persistent_object_manager&.
+
+	* Considering re-working persistent object type-enumeration.  
+	  Instead of giving each persistent type a number, 
+	  give a unique key (string/hash), to avoid collisions in
+	  cuncurrent development.  
+	  See TODO list for more on rationale.  
+
+
+2004-10-09	David Fang	<fangism@users.sourceforge.net>
+
+	* Sub-typed param_expression_assignment (now abstract) class into 
+	  pbool- and pint- specific versions, porting over old
+	  functionality.  
+	  Also distinguished right-hand-side expression (source) from the 
+	  remaining (instance references) in the list (destinations).  
+	  Greatly simplified object_list::make_param_assignment as a result.  
+	  Moved type-check for parameter initialization from 
+	  pint/pbool_expr::initialize into ::append_param_instance_refence.  
+	  Much old code commented out, expunge in next revision.  
+
+	* Minor update of a few old error messages; 3 test expectations
+	  files in regression suite were updated, first time any of them 
+	  were touched in a long time!
+
+	* Added doxygen file header to most header and source files.  
+	  As a reward, Doxygen generates really nice file dependency graphs.  
+	  Also did some general header clean-up while I was at it.  
+	  Updated namespaces, eliminating all references to `fang', 
+	  which was only intended to be temporary.
+
+	* Added some standard typedefs to pointer-classes:
+	  value_type, pointer, reference, const_...
+	  Now they may be referenced, and used for concept checking.  
+
+
+2004-10-08	David Fang	<fangism@users.sourceforge.net>
+
+	* NEWS: Returned from long hiatus working on conference paper.  
+
+	* Tailored some multidimensional data structures
+	  (multikey, and multikey_[q]map) for near-future use in
+	  instance-collection classes.  
+
+	* TODO list is somewhat more structured and comprehensible.
+	  (Important!)
+
+	* Initial attempt at unrolling parameters (pints only).  
+	  Seems straightforward enough for scalars (0-D), but may
+	  take some redesign for robust multidimensional support.  
+	  No tests written for `artobjunroll' yet, just spot checks.  
+
+	* Next thing to do: restructure param_expr_assignments to
+	  be type-specific (only pints and pbools).  
+	  Implement basic parameter assignments.  
+
+
+2004-09-14	David Fang	<fangism@users.sourceforge.net>
+
+	* Completely redone instantiation_base and subclasses, 
+	  now called instance_collection_*.  
+	  (~5000 lines diff)
+	  instantiation_statement and instance_collection classes
+	  are *tightly* coupled now.  
+	  Instead of containing list of indices directly, 
+	  contains list of instantiation_statements, which contain indices.  
+	  Instantiation_statements need a back-reference to the
+	  containing instance_collection.  
+	  As a result, re-implemented handling of 
+	  scopespace::add_instance and context::add_instance.  
+	  Miraculously, all regression tests still pass.  
+
+	* In class context, introduced sequential scope stack for 
+	  appending sequentially managed items (instances, assignments, 
+	  connections) to the right list.  
+	  Remember that everything outside of definitions (even in 
+	  namespaces) is in the globally sequenced list.  
+
+	* Fundamental_type_reference now creates instantiation_statements
+	  in addition to instance_collections (static methods).  
+
+	* Multidimensional data structure interface improvements.  
+
+	* A few more safety checks in persistent_object_manager
+	  pointer I/O manipulation.  
+
+	* Expressions objects now load (de-serialize) recursively.  
+
+	* Code is littered with #if code blocks -- next commit will
+	  be a mandatory clean-up.  
+
+
+2004-09-10	David Fang	<fangism@users.sourceforge.net>
+
+	* Major reworking of instance management: all instantiations, 
+	  parameters, assignments, connections that appear outside of
+	  definitions will be globally ordered into a namespace-independent
+	  instance management list, to preserve source ordering.  
+	  Each definition will have its own local instance management list.
+	  Instance management lists will expand into sequentially scoped 
+	  bodies, such as loop scopes and conditional scopes.  
+	  Namespaces no longer have separate assignment or connection lists.  
+	  (most affected: Object/art_context.* Object/art_object_base.*)
+
+	* class instantiation_statement encapsulates a sequential 
+	  addition of instance (possible to an array).
+
+	* Object de/serialization interface now uses class "module" instead
+	  of the root namespace.  "module" implements standard
+	  de/serialization interface.  
+
+	* Introduced new top-level object "module" which includes a
+	  global namespace and a globally ordered instance management list.  
+	  Note: type enumeration shifts as a result.  
+
+	* Some more documentation on the language spec, for templates, 
+	  typedefs, and type-equivalence.
+
+	* Some general improvements and extensions to algorithm library
+	  interface (functors and adapters) in the util/ directory.  
+
+	* Minor insignificant shifts in object class hierarchy.  
+
+
+2004-09-03	David Fang	<fangism@users.sourceforge.net>
+
+	* Started a documentation directory dox/lang for the language
+	  specification documentation, not to be mixed with the 
+	  doxygen-generated code reference manual.  
+
+	* Added some rather harmless data structure tests that have been 
+	  sitting around for a long time (in src/util/test).  
+
+
+2004-09-01	David Fang	<fangism@users.sourceforge.net>
+
+	* Reworked connection and assignment management in class scopespace.
+	  Now kept in separate lists.  (No more connection_assignment_base.)
+
+	* Some initial groundwork for unrolling parameters and instances.  
+	  Some major languauge issues need to be resolved first.  
+
+	* Wrote and tested some data structures for multidimensional maps, 
+	  both true multidimensional, and pseudo-multidimensional 
+	  (with multidimensional key in a flat map).  
+	  Also renamed some namespaces along the way.  
+
+	* Note the change in email address.  :)
+
+
+2004-08-21	David Fang	<fangism@gmail.com>
+
+	* Release 0.1.3.
+
+	* Completed object de/serialization for core classes.  
+	  Recycle old type-check test inputs for object dump diff testing.  
+	  New tests read in file, produce object file, and text dump.  
+	  Second part takes object file and produces text dump.  
+	  Text dumps are compared for consistency.  
+
+
+2004-08-19	David Fang	<fangism@gmail.com>
+
+	* Wrote majority of (semi-tested) object serialization /
+	  deserialization code for Object class hierarchy.  
+	  So far regression tests run clean, with self_test_no_file().  
+
+	* The next release (0.1.3) should contain a new set of tests
+	  for verifying object integrity through dump-and-load.  
+
+
+2004-08-13	David Fang	<fangism@gmail.com>
+
+	* Release 0.1.2.
+
+	* Made parser code robust to variations in yacc/bison versions, 
+	  updated test expected outputs.  This was not trivial.  
+	  Works on FreeBSD yacc/bison-1.875, linux yacc/bison-1.35.  
+
+	* Minor tweaks in configuration and Makefile.am's.  
+
+
+2004-08-12	David Fang	<fangism@gmail.com>
+
+	* Releasing 0.1.1, the completely GNU-ified version.  
+
+	* Completed porting process, with slightly restructured test suite.
+	  Short test scripts are automatically generated by the Makefile
+	  and run by "make check".  
+	  Tests are now run recursively by directory, and recursion 
+	  terminates as soon as there is one failure in a directory.  
+
+	* Considerable effort was spent getting the parser grammar files
+	  to work with bison, whereas they were exclusively compiled 
+	  with yacc only before.  Even test outputs were augmented
+	  to account for differences between yacc and bison.  
+
+
+2004-08-10	David Fang	<fangism@gmail.com>
+
+	* Took the old flattened source directory, and prepared it
+	  for use with automake, autoconf, and libtool.  
+	  Moving sources into subdirectories meant severing files
+	  from their previous revision history, which should remain
+	  in the CVS repository's Attic.  
+

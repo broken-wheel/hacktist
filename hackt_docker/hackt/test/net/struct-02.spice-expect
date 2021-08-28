@@ -1,0 +1,22 @@
+* channel or struct pfoo is omitted.
+
+* channel or struct pbar is omitted.
+
+* channel or struct pick is omitted.
+
+.subckt invert__it !GND !Vdd x y
+Mx:dn:0 !GND p/b/b/b x !GND nch W=5u L=2u
+Mx:up:0 !Vdd p/b/b/b x !Vdd pch W=5u L=2u
+Mq/a/a/a:dn:0 !GND y q/a/a/a !GND nch W=5u L=2u
+Mq/a/a/a:up:0 !Vdd y q/a/a/a !Vdd pch W=5u L=2u
+Mp/b/b/b:dn:0 !GND q/a/a/a p/b/b/b !GND nch W=5u L=2u
+Mp/b/b/b:up:0 !Vdd q/a/a/a p/b/b/b !Vdd pch W=5u L=2u
+.ends
+
+.subckt invert__them !GND !Vdd p q
+xdee !GND !Vdd p z invert__it
+xdum !GND !Vdd z q invert__it
+.ends
+
+xnow !GND !Vdd now.p now.q invert__them
+

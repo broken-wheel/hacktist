@@ -1,0 +1,9 @@
+Type mismatch in reference 1 of receive list.  
+	got: bool<>
+	expected: foo<>
+At least one type error in expr-list in [8:7..9]
+Type mismatch in expression 1 of send expression list.  
+	got: bool<>
+	expected: foo<>
+At least one type error in expr-list in [8:14..16]
+ERROR in CHP statement(s) at [8:2..18]

@@ -1,0 +1,1976 @@
+# "src/util/ChangeLog"
+#	$Id: ChangeLog,v 1.122 2011/05/05 06:50:47 fang Exp $
+
+2012-10-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-51b:
+	  util/tokenize.cc: added tokenize_string(), test case added.
+
+
+2012-09-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-46:
+	  util/IO_utils.cc: read_string():
+		fix typo from == to = (string assignment).
+
+
+2012-08-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-41e:
+	  util/Makefile.inc: explicitly add RL_LIB to fangutil_LIBADD.
+
+
+2012-04-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-85-27:
+	  util/packed_array.h: added sizes_product() as a member function.
+
+
+2011-10-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-98-spice-verilog-02:
+	  Introduced util/syntax.h for generic syntax tree structures.
+
+
+2011-05-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-85-prsim-precharge-check-12:
+	  util/iterator_more.h: added map_key_insert_iterator
+
+
+2011-05-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-71:
+	  Added util/fig/xfig.{h,cc}: for emitting xfigs
+
+
+2011-05-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-70-merged-pr-01-20:
+	  Merged branch to trunk.
+
+
+2011-04-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-07:
+	  util/random.h: added default empty constructors
+	  Added util/numeric/constants.h for popular math constants.
+	  Added util/numeric/trigonometry.h for sincos function.
+
+
+2011-04-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-06:
+	  util/optparse.tcc: dump enhanced with auto_indent
+
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-05:
+	  Added util/iomanip.h for changing and saving ios_base
+		parameters like precision, width.
+
+
+2011-04-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-04:
+	  util/optparse.h: inherited some re-usable functions.
+	  util/numeric/random.{h,cc}: added write_seed48 and read_seed48.
+
+
+2011-04-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-03:
+	  util/optparse.h: split out util/optparse_fwd.h for type decl. only
+	  util/vector_ops.h: added new functions
+		apply, min_swap_element, min/max_clamp_elements
+	  util/numeric/abs.h: new wrapper for abs() absolute value
+	  util/numeric/zero.h: wrapper for type-based 0 value
+
+
+2011-04-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-01:
+	  Added util/vector_ops.h: define and overload valarray/vector 
+		operations through a single interface.
+	  util/array.h: added size() member function.
+
+
+2011-03-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-59:
+	  util/strings.tcc: use configure result from 
+		FANG_CXX_ISTREAM_NEGATIVE_UNSIGNED to workaround
+		libstdc++ bug: failure to fail on reading
+		negative number to unsigned type.
+
+
+2011-02-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-50:
+	  util/guile_STL.h, util/libguile.h:
+		initial support for guile-2.0, coordinated with 
+		autoconf macro updates in config/.
+		Many functions in the guile-1.8 API are no longer
+		detected by AC_CHECK_FUNCS because they are now
+		macro definitions, and thus fail link checks.
+		Now rely on them being defined().
+		Maintain compatibility with guile-1.8.
+	  Wrap a new typedef (conditionally) scm_t_subr, appeared in 2.0.
+
+
+2011-02-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-44:
+	  numerous g++-4.6 portability fixes:
+		named_ifstream_manager: implement as ptr<istream>
+			instead of ifstream, to be able to use std::cin
+			without relying on opening "/dev/stdin".
+		Added istream deallocation_policy: delete-if-not-cin
+	  still doesn't completely build yet though, but much closer.
+
+
+2010-09-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23-string-01-04:
+	  Added util/typeof.h that uses __typeof__ or decltype if available,
+		also paired with autoconf macro checks.
+	  Added util/function_traits.h: to automatically infer
+		arity and return type, and arg types.  
+		Inspired by boost::function and friends.
+
+
+2010-09-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23:
+	  util/STL/construct_fwd.h: check for copy constructor
+	  util/numeric/inttype_traits.h: use configure result of
+		comparing types size_t vs. unsigned long
+		before specializing.
+
+
+2010-05-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-92:
+	  optparse.tcc: added new wrapper class interface for managing
+		maps of mangling options.  TODO: use this more widely.
+
+
+2010-04-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-85:
+	  util/persistent_object_manager.{h,cc}: implemented object file
+		format version tag check, settable through a global variable.
+
+
+2010-04-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-82:
+	  Patched sources to compile under g++-3.3 again.
+	  New libs: array (like std::array or tr1::array),
+		bitarray (fixed-length bitvectors) for set operations.
+		bitwise_functional: standard functors for &|^~
+
+2010-04-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-70:
+	  util/memory/allocator_adaptor.{h,tcc}: wraps around a
+		pool-allocator class like chunk_map_pool, and provides
+		an interface to an allocator that can replace std::allocator.
+	  Tested with allocator_adaptor_test.cc.
+
+
+2010-03-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53-scalable-01-25:
+	  Welcome new data structure: util/tree_cache.{h,tcc}
+		maintains a child-weighted tree-cache structure.
+
+
+2010-03-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53-scalable-01-23:
+	  util/guile_STL.h: added scm_builders for std::map and std::set, 
+		defaulting to constructing SCM list.
+
+
+2010-02-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53-scalable-01-20:
+	  Added util/swap_saver, akin to value_saver, but uses swap()
+		method instead of copying where possible for 
+		efficiency, and saving memory.
+
+
+2010-01-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53-scalable-01-07:
+	  util/persistent_functor.{h,tcc}: abstracted away 
+		persistent object manager type as generic template parameter.
+
+
+2010-01-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-57:
+	  util/tokenize.h: added tokenize_char for simple tokenization
+		using a single char delimiter.
+	  util/optparse.cc: use it
+
+
+2010-01-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-56:
+	  chunk_map_pool.*: updated declaration and definition macros
+		to workaround passing empty arguments for C99 preprocessing.
+
+
+2009-11-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-50:
+	  Moved directory.{h,cc} to new home in util.
+		Directory stack facilities.
+
+
+2009-09-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-30:
+	  util/IO_utils.h: fixed minor typo on read_pair() template.
+
+
+2009-09-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28-netlist-02-11:
+	  util/string.cc:strgsub() checks for s == r before attempting
+		any substitution, to save work.
+
+
+2009-09-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28-netlist-02-07:
+	  util/string.cc:strgsub(): don't bother doing anything if
+		search string is empty, for efficiency.
+
+
+2009-09-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28-netlist-02-04:
+	  util/optparse.{h,cc}: added _compat functions for
+		backward compatibility with an older config format.
+
+
+2009-09-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28-netlist-02-02:
+	  util/peristent_functor.h: operators should be const
+
+
+2009-08-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-21:
+	  Added util/optparse.{h,cc} for generic option string parsing.
+
+
+2009-08-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-16:
+	  Added util/string.cc: strgsub(), global string exact match
+		substitution function, convenient for name mangling.
+		Not usable for regular expressions.  
+	  Added util/test/string_test.cc.
+
+
+2009-07-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-02:
+	  BUG FIX (util/IO_utils.{h,tcc}): fixed template overloads of 
+		write_value and read_value on std::pair, 
+		which was causing a read/write imbalance, which led to
+		persistent_object corruption.
+		Also added debugging switches for stack-tracing IO_utils.
+
+
+2009-04-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-17:
+	  util/copy_if.h: now configure checks if already defined
+		by C++ STL, recently appeared in gcc-4.4 (c++0x)
+	  Minor fixes to accommodate strictire g++-4.4.
+		util/persistent.cc: re-wrote char[4] -> int cast.
+
+
+2009-03-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-08:
+	  Added util/uninitialized.h, for annotating explicit uninitialized
+		constructors in classes, or special partial initializations.
+
+
+2009-02-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-04:
+	  util/copy_if.h: added binary transform_if algorithm
+
+
+2009-02-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-01:
+	  util/readline.h: also check for readline/readline.h
+		when using editline wrapper interface.
+	  Substitute rl_completion_matches for completion_matches
+		when appropriate.
+
+
+2009-02-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-99:
+	  util/copy_if.h: added transform_if algorithm.
+	  TODO: note to deprecate use of _Select1st, etc. in favor
+		of more generalized util::member_select templates.
+
+
+2008-11-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-61-gcc43-01:
+	  First crack at compiling against gcc43 and std=c++0x.
+	  Updated guile helper headers.
+	  Use unordered map where possible, instead of hash_map.
+	  Built-in numeric functions have proper conversion casts.
+
+
+2008-11-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-57:
+	  util/list_vector.{h,tcc}: added flattening copy-constructor
+		and also flatten() method, to turn log-time accesses
+		into constant-time accesses to a monolithic array.
+		Updated util/test/list_vector_test.{cc,stderr}
+
+
+2008-10-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-49:
+	  Added util/index_functor.h: for basic[index] functors
+
+
+2008-07-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-33:
+	  util::string_to_num(): auto-detect hexadecimal numbers
+
+
+2008-05-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-23:
+	  persistent_object_manager.cc: sign binary format and endianess, 
+		and verify on reading in an object file. 
+		Gives appropriate diagnostic on mismatch.  
+
+
+2008-03-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-07-merged-ACT-03-59:
+	  Branch merge.
+	  Brings in critical fixes in library, minor additions.
+
+
+2008-02-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-58:
+	  util/numeric/random.h:
+		conditionally specialize for size_t (when not equiv. ulong)
+
+
+2008-02-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-48:
+	  Added util/memory/deep_copy.h utility.
+	  util/memory/excl_ptr.h: added deep_copy member functions
+		to excl_ptr and sticky_ptr.
+
+
+2008-02-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-38-prsim-09-05:
+	  Added: util/numeric/div.h for efficient quotient/remainder division,
+		through consistent template-deduced interface.
+
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-38-prsim-09-04:
+	  util/IO_utils.{h,tcc}: added write/read_range (pair of iterators)
+
+
+2008-02-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-37:
+	  Added util/numeric/functional.h: includes reciprocate.
+
+
+2008-01-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-06:
+	  memory/free_list.h: more efficient set uniqueness check.
+
+
+2008-01-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-01-prsim-08-29:
+	  CRITICAL bug fix (latent) in packed_array.tcc:
+		index_to_key was borked '/' and '%' operations were swapped,
+		causing incorrect print out of indices.
+		Thanks to Clint for initial unreduced test case.  
+		Test now covers this in test/packed_array_test.cc.  
+
+
+2007-12-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-01-prsim-08-08:
+	  Latent BUG FIX in tokenize.cc, somehow memory was not being 
+		allocated properly with old call to basic_string(Iter, Iter),
+		now replaced with simpler code.  (Still can't explain old
+		failure, and is difficult to reproduce, only exposed
+		during test in module, and no test-case, unfortunately.)
+		Very mysterious indeed.
+	  util/strings.h: eat whitespace now works with iterators.  
+	  Bug seems critical and should go to trunk ASAP.
+
+	
+2007-10-31	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-88:
+	  util/FILE_fwd.h: portability adjustments
+	  util/libc.h: update check for rand48 function family prototypes, 
+		and also for fdopen and popen.
+	  util/named_ifstream_manager.cc: use configure-determined name
+		of standard file streams.  
+
+
+2007-10-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-80-merged-ACT-01-15:
+	  Branch merge.
+
+
+2007-09-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-78:
+	  util/numeric/inttype_traits.h: check whether or not
+		unit32_t is the same as unsigned long before specializing.
+		Problem was first exhibited on cygwin-g++3.4.
+
+
+2007-09-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-74-ACT-01-05:
+	  Added util/convert.h: converting functor, using explicit construction
+
+
+2007-09-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-75-CHP-03-05:
+	  util/binders.h: added binder1st_argval_void and friends.
+	  util/persistent_object_manager:
+		added load_once_pointer_list and helpers.  
+
+
+2007-09-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-71:
+	  util/getopt_mapped.cc: added splitopt to tokenize a string
+		into an array of strings suitable for getopt.  
+
+
+2007-09-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-68-chpsim-09-02:
+	  util/discrete_interval_set: prefer initialization to assignment.
+		provide insert/erase set-like interface methods
+	  util/persistent_object_manager.h: assert_ptr_registered function
+
+
+2007-08-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-67:
+	  util/format_IO.{h,cc}: for string to integer conversions
+		in various bases, some missing functionality in stdlib.
+
+
+	* HACKT-00-01-04-main-00-81-66:
+	  util/bitset.cc: use numeric::ctz.
+	  util/numeric/*.h: #if to #ifdef corrections,
+		workaround g++-3.3 syntax shortcomings.
+	  util/numeric/clz.h: use correct lookup table
+	  util/numeric/ffs.h: fix recursive definition
+	  util/numeric/{parity,popcount}.h: missing parens
+	  util/numeric/inttype_traits.h: provide specialization for
+		half_type<unsigned long> if configure detects 
+		type is not equivalent to size_t.
+
+	* HACKT-00-01-04-main-00-81-65:
+	  util/bitmanip.h: new, includes new manip headers in util/numeric/
+	  util/numeric/{clz,ctz,popcount,parity,ffs}.h:
+		uniform type-based dispatches to built-in functions
+		using template argumet deduction, and with defined
+		specializations for unsigned int, long, long long types.
+		Added test/bitmanip_test.cc to compare outputs.  
+	  util/numeric/nibble_tables.{h,cc}: no longer defines MSB_position,
+		now only contains lookup-table decalrations.  
+	  util/numeric/sign_traits.h: argument-deduced convenience functions.
+	  util/Makefile.inc: added new files.  
+	  util/memory/typeless_memory_chunk.tcc:
+		conditionally use numeric/clz.h to call msb().
+
+
+2007-08-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-07:
+	  Added "util/stream_ptr.{h,cc} template class instantiations.
+
+
+2007-08-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-02:
+	  util/Makefile.inc: install cppcat.h
+
+
+2007-08-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-41-chpsim-07-03:
+	  util/memory/chunk_map_pool.h: default static pool init macros fixed.
+
+
+2007-07-31	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-41-merged-chpsim-06-26:
+	  Branch merge summary:
+		critical bug fix in IO_utils.cc
+		subset of headers are listed for installation
+
+
+2007-07-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-15:
+	  Makefile.inc: install boolean_types.h and macros.h
+
+
+2007-07-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-06:
+	  Added more install-headers, and modified some headers to remove
+		install-time dependencies on "config.h"
+		affected: macros.h count_ptr.h pointer_traits.h
+		Expect 'built' compilations to pass -DBUILT_HACKT
+		and 'installed' compilations to pass -DINSTALLED_HACKT
+		as CPPFLAGS.
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-05:
+	  persistent.h: split-off persistent::hash_key definition into
+		persistent_hash.h to reduce unnecessary include material.
+	  Makefile.inc: started naming installed headers (pkginclude)
+		for external development support, 
+		initially intended for chpsim dl-linking.
+
+
+2007-07-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-template-02-27:
+	  Latent critical bug fixed:
+		IO_utils.cc: buffer size off by one, not anymore
+
+
+2007-06-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-38:
+	  libguile.h: attempt to support even older guile-1.4 API,
+		not likely to be serious effort.
+
+
+2007-06-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-35:
+	  numeric/sign_traits.h: fix to allow non-strict use of long long
+	  	and avoid collision with [u]int64 types.  
+
+
+2007-06-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-29:
+	  util/libguile.h: No longer forcing guile-1.8's API!
+	  Completed porting interfaces to support guile-1.6's API in addition
+		to guile-1.8's API.
+	  Supported by bunch of standard autoconf function tests, using results
+		in config.h.
+	  util/libguile.h, util/guile_STL.h: do all the dirty work
+		In many cases, we provide missing functions with the same name.
+
+
+2007-04-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-20:
+	  util/for_all.h: use <algorithm>, not <functional>, duh.
+
+
+2007-04-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-24:
+	  util/guile_STL.h: scm_list_insert_iterator default constructor
+		now starts with an empty list.  
+
+
+2007-04-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-23:
+	  util/guile_STL.h: defined scm_extract<string> specialization.
+
+
+2007-03-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-17:
+	  util/guile_STL.h: added explicit pointer decay for string
+		for make_scm inline overload.  
+
+
+2007-03-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-14:
+	  util/for_all.h: lazy man's std::for_each.
+	  util/caller.h: functor that *calls* the argument, e.g. function-ptr.
+	  util/guile_STL.h: added const char* specialization to scm_builder.
+
+
+2007-03-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-13:
+	  util/guile_STL.h: added scm_list_builder class functor for re-use, 
+		and make_scm_list() helper function (argument deduction).
+
+
+2007-03-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-08:
+	  util/libguile.{h,cc}: added combined define-and-export functions
+		for convenience.
+
+
+2007-03-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-02:
+	  util/guile_STL.h: added conversion wrappers for float and double.  
+
+
+2007-03-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-12:
+	  util/memory/chunk_map_pool.{h,tcc}: Added some debugging code, 
+		and privatized copy/assignment out of paranoia.
+
+
+2007-03-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-10:
+	  persistent_object_manager: now returns count_ptr instead of
+		excl_ptr, b/c can always go from shared to exclusive, 
+		but not vice verse.  
+
+
+2007-03-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-08:
+	  Partially split out guile-related sources into own variable
+		and own library.  
+	  More additions to libguile, which is now a separate library.
+	  Added more test cases to test/parser/connect.
+
+
+2007-03-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-06:
+	  NOTE: we now require guile-1.8 until we have to time re-write
+		wrappers for interfaces missing in guile-1.6.  
+	  Added util/guile_gh.h for deprecated interfaces, 
+		util/guile_STL.h for STL converters and wrapper interfaces,
+			this woulld make a nice contribution to scheme's API.  
+		Essence: linear number of orthogonally composable
+			recursive type/container manipulators.  
+
+	* HACKT-00-01-04-main-00-81-05:
+	  Previous patch reverted because two separate g++-3.3 compilers
+		ICE on attempting SFINAE substitution in deallocation_policy.
+
+
+	* HACKT-00-01-04-main-00-81-04:
+	  util/sfinae_types.h: new tools using SFINAE for Jedi
+		template meta-programming.
+
+	  util/memory/deallocation_policy_fwd.h: determine if
+		pointee has operator delete [] and call it.
+		Used to check for possible bug in standard conformance.
+
+
+2007-03-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-03:
+	  util/libguile.h: wrapped header
+
+
+2007-02-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-89:
+	  value_saver.h: not copy-able or assignable
+	  static_trace.{h,cc}: add an ios_base::Init member that is
+		initialized upon construction.
+	  stacktrace.{h,cc}: make non-copy-able and non-heap-allocatable.
+
+
+2007-02-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-86:
+	  Workaround for missing library definition of std::bitset's
+		_M_do_find_first (suse-linux-g++-3.3).  
+
+
+2007-02-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-84:
+	  Re-checking 64b-ness on amd64.  
+	  util/test/Makefile.am: add util/bitset.cc to libfangutil.la
+		for 64b builds.
+	  util/bitset.h: qualify 1 with 1UL (unsigned long)
+	  util/bitset.cc: pretty-print formatting
+
+
+	* HACKT-00-01-04-main-00-80-83:
+	  util/bitset.h: fleshed out more of util::bitset wrapper class
+		and added functor specializations for it.
+	  util/memory/chunk_map_pool.{h,tcc}: factored out re-usable
+		code into finite_pool_chunk (was chunk_map_pool_chunk)
+		and typeless_memory_chunk.  
+		typeless_memory_chunk now uses util::bitset for
+		member map management.  
+
+
+2007-02-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-77:
+	  Moved temp-file related prototypes from libc.h to (new)
+		libc_temp.h, with some configury notes.  
+
+
+2007-01-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-69-chpsim-02-10:
+	  Added missing reference-binder functor overloads with
+		non-const reference argument types.  
+	  Give me boost::bind or give me a headache!
+	  util/IO_utils.tcc: read_sequence_in_place elides the temporary,
+		which was a stupid oversight, now enabled thanks to 
+		using a quick-and-dirty template specialization functor.  
+
+
+2007-01-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-69-chpsim-02-05:
+	  Fixed minor typo in "util/libc.h": tmpnam, not tmpname.
+
+
+2007-01-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-64-merged-chpsim-01-54:
+	  Branch merge.  Still wish for boost::lambda facilities.
+
+
+2007-01-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-33:
+	  util/member_select.h: rewrote without add_reference, 
+		specialized forwarding-operator overload for const. 
+	  I wish for boost::lambda.  
+
+
+2007-01-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-30-channel-03:
+	  memory/count_ptr.tcc: re-wrote assignment operator using
+		release() call, expected to inline.  Doesn't change 
+		functionality, but makes more comprehensible and maintainable.  
+	  Added util/test/chunk_pool_ref_count_test.cc:
+		tests reference-count pointer, validating no leak using
+		a pool-allocated class (diagnostics upon exit).
+
+
+2006-12-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-08:
+	  Added supplemental interface to container iterators:
+		util/STL/container_iterator.h and
+		util/STL/valarray_iterator.h for specializations.  
+		Specialization doesn't quite work as expected... doh.
+
+
+2006-11-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-60:
+	  Moved algorithms in conditional.h to namespace util.
+	  Added copy_if algorithm to util/copy_if.h
+	  Added util/algorithm.h to include related headers.  
+
+
+2006-11-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-53:
+	  util/memory/deallocation_policy.h: added assertion checks
+		upon close/destruction.  Added new policy for libc's
+		pclose(), analogous to fclose() but for processes.  
+	  Added new tests: pipe_fork_test.cc and popen_test.cc
+
+
+2006-11-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-45-instance-02-18:
+	  util/memory/excl_ptr.h: added swap() member function.  
+
+
+2006-10-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-45-instance-02-07:
+	  util/persistent_functor.h: write generalized functors with
+		customizable member functions.  
+
+
+2006-10-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-46:
+	  util/readline_wrap.h: visibility attribute removed, 
+		as usage was incorrect according to g++-4.2.  
+
+
+2006-10-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-44:
+	  util/persistent_object_manager.cc: object padding and alignment
+		is now a configure --enable option, for when object size
+		is of greater importance.  
+		Expects ENABLE_OBJECT_ALIGN_CHECKING in __config__.h.
+
+
+2006-10-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-40-instance-01-09:
+	  util/packed_array.tcc: fixed key translation, once again.  
+
+
+2006-10-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-40-instance-01-08:
+	  util/packed_array.tcc: packed_array_generic::index_to_key()
+		tested and fixed key translation algorithm.  
+
+
+2006-10-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-40-instance-01-06:
+	  multikey_assoc.tcc: std::accumulate is in <numeric>, so include it.
+	  Also implemented a lookup_index policy to 'handle' vector<bool> case.
+		also added index_to_key translation member function.
+
+
+2006-10-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-40-instance-01-05:
+	  1-D specialization of multikey is-compact algorithms greatly
+		simplified to O(N) as opposed to O(N lg N).
+		Empty detection, no longer depends on the mapped_type, ever.
+		Added iterator tests to util/test/sparse_collection_test.cc.
+
+
+2006-10-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-40-instance-01-04:
+	   multikey_assoc.{h,tcc}: factored out member functions
+		is_compact and is_compact_slice to make them readily available
+		for use with any multikey associative containers.  
+
+
+2006-10-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-40-instance-01-01:
+	  list_vector: now uses internal map instead of qmap, simplified. 
+
+
+2006-09-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-20:
+	  util/IO_utils.cc: instead of assert-failing long strings, 
+		throw an exception to give the rest of the program a chance
+		to continue.  
+
+
+2006-09-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-14:
+	  util/numeric/sign_traits.h: avoid repeated specialization
+		for 64 longs.  
+
+
+2006-08-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-06:
+	  util/boolean_types.h: disabled && and || overloads
+		to prevent accidental error and dependence on
+		missing sequence point.  
+
+
+2006-08-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-02:
+	  Split-off packed_array into packed_offset_array, and
+		packed_array_generic into packed_offset_array_generic, 
+		where the non-offset variants assume an offest of 0's.  
+	  This saves 8B of memory per packed array when offset is
+		invariably 0.  
+
+
+	* HACKT-00-01-04-main-00-80-01:
+	  Added util/STL/back_inserter.h with valarray specialization.  
+
+
+2006-08-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-54-prsim-07-06:
+	  Added "util/utypes.h" for unsigned type aliases.  
+	  Added long-forgotten "rebinder.h" file.  
+	  Updated "numeric/sign_traits.h" definitions using "util/utypes.h".
+
+
+2006-07-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-41:
+	  Added util::getopt_mapped class for generalizable getopt parsing.
+
+
+2006-07-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-35:
+	  Pointer classes added relational operator member functions
+		for actual address value comparison.  
+		No clue what relational operators were doing before!
+
+
+2006-07-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-29:
+	  util/operators.h: use std::binary_function interface, 
+		updated default template parameters, 
+		redefined shift_operation as a typedef template, 
+		added logical xnor and bitwise operations.  
+	  Added util/numeric/sign_traits.h for metafunctions on signedness.  
+	  Added util/numeric/zerodiv_detect.h to catch divide-by-zero, 
+		used in util/operators.h.
+
+
+2006-07-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-28:
+	  New useful utility classes:
+		util/member_select.h: makes functors out of member-selection, 
+			for use with functional programming, 
+			more general than std::_Select{1st,2nd}.
+		util/tagged_subtype.h: for subtyping data types with
+			an additional template parameter for type distinction, 
+			useful for error-prevention and self-documentation.  
+
+
+2006-07-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-24-merged-cow-07:
+	  Branch merge.
+
+
+2006-07-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-23:
+	  CRITICAL BUG FIX in pointer class library:
+		some_ptr assignment operator overloads used to depend
+		on function argument sequencing, which is not defined by
+		any standard -- re-wrote with explicit sequencing to correct.
+	  First triggered with i686-apple-darwin8-gcc-4.0.1 (build 5341).
+	  Thanks to Clint Kelly for reporting, and assisting with diagnosis.  
+
+
+2006-07-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-20-cow-05:
+	  Added operator overload to packed_array_generic for facilitating
+		multi-dimensional compositions and concatenations.  
+	  Removed requirement that resolve_sizes must result in non-zero
+		size, to allow for "thin empty collections".  
+
+
+2006-05-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-06-prsim-05-01:
+	  iterator_more.h: implemented push_iterator and pusher helper function
+		for stacks and queues, and set_insert_iterator (set_inserter)
+		for set-like containers. 
+
+
+2006-05-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-02:
+	  More portability clean-ups for standard conformance.  
+
+
+2006-05-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-01:
+	  Clean-ups for portability sake.
+	  Added util::addressof operator to assist in compiler workarounds.
+		NOTE: not as powerful as boost::utility::addressof.
+	  util/nested_iterator.h: use iterator_traits instead of
+		iterator directly, in case pointer iterator is not wrapped.  
+
+
+2006-05-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79:
+	  util/STL/functional.h: forgot header inclusion protection, doh!
+
+
+2006-05-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-24-merged-prsim-04-12:
+	  Branch merge:
+	  Minor fixes in util headers, and some metaprogramming additions.  
+
+
+2006-05-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-22-prsim-04-09:
+	  Bug fix in util/memory/free_list.h: acquiring from queue
+		free_list should access the front(), not back().
+
+
+2006-05-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-23:
+	  Added support for old histedit-style editline interface, 
+		so you can still use the same immaculate util::readline_wrapper
+		class to interface to an underlying readline/editline 
+		implementation -- all memory management automated.  
+		On OS X, this now works with /usr/lib/histedit.h
+		and /usr/lib/libedit.dylib, so installing a newer
+		readline-wrapped editline is not necessary.  
+	  The configuration step must (and already does) distinguish between
+		histedit-style and readline-style interface.  
+	  No changes in config/rl_l.m4 necessary.  
+	  Tab-completion is still missing from editline... for now.
+
+
+2006-04-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-22-prsim-04-04:
+	  Ooops, relocated definitions in util/binders.h to namespace util, 
+		rather than namespace std.  (For shame!)
+	  Also added util/reference_wrapper.h, to try to replace 
+		argval reference binders.
+	  util/type_traits: Added is_pointer/remove_pointer/add_pointer, 
+		volatile family, is_integral, is_floating_point, 
+		is_arithmetic.  
+	  Added: util/call_traits.h -- parameter traits.  
+	  Removed: util/const_traits.h -- deprecated in favor of call_traits.
+
+
+2006-04-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-21:
+	  Inlined bunch of ring_node basic methods, even though we no longer
+		use ring_nodes in hackt.  
+
+
+2006-04-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-20-merged-icc-01-04:
+	  Merge of portability fixes, and configurability improvements.  
+	  Many template-related issues, and template library issues resolved.
+
+
+2006-04-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-19-icc-01-03:
+	  Memory pools' operator new prototypes' arguments changed from
+		void*& to void*.  
+		Added missing placement delete operator (no-op).  
+	  chunk_map_pool.tcc: offset calculation now uses 
+		RandomIterator distance to avoid using reinterpret_cast.  
+	  Added util/STL/functional.h for confgure-dependent deficiencies
+		with std::_Identity, _Select1st, _Select2nd.  
+	  util/multikey.h: extra parens around address-of operand.  
+	  util/test/Makefile.am: use configure-generated @*_WARN_FLAGS@,
+		eliminated -pipe flag.  
+	  util/test/test-expect.sh.in: redirection fix.  
+
+
+2006-04-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-19-icc-01-02:
+	  Significant configuration improvements regarding standard
+		hash_map and friends.  
+
+
+2006-04-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-19-icc-01-01:
+	  Batch of minor header adjustments for icc's sake. 
+	  util/hash_specializations.h: using reinterpret_cast for pointer.
+	  util/inttypes.h: conditional definition re-written without
+		assuming short-circuit conditional evaluation.  
+	  util/union_find.h: typo fix.
+	  general: removed redundant using declarations in same namespace.  
+		Added declaration prototypes for some template functions.  
+	  TODO: hash_qmap and qmap are causing some problems with
+		incomplete types from const_assoc_query.h.
+		Now might be a good time to migrate to the original
+		STL associative containers.  Proceed with caution.  
+
+
+2006-04-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-18-merged-prsim-03-09:
+	  Branch merge.  Only minor revisions and clean ups from branch.
+
+
+2006-04-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-16-prsim-03-09:
+	  Improved macro interface for stacktrace indentation.  
+		STACKTRACE_INDENT_PRINT(x << y << z)
+		Wrote null_stacktrace_stream_type class that works
+		like an ostream, but does nothing, and always returns
+		itself.  Even handles case of ostream manipulators.  
+		Unforunately compiler isn't always smart enough to
+		optimize-away these no-ops, so STACKTRACE_INDENT_PRINT
+		is still preferred. 
+
+
+2006-04-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-17:
+	  Checking against g++-4.2 (prerelease) which has removed the
+		undocumented extension of binding template types to 
+		those with greater number of template parameter, with
+		trailing parameters bound to their default arguments.  
+		See http://gcc.gnu.org/gcc-4.2/changes.html
+	  So we've gone through the entire util library and fixed 
+		the affected headers.  
+	  Added a bunch of rebind helpers to the default template wrappers.  
+	  Also some general cleanups of STL fwd. headers.  
+	  Test case sources updated accordingly.  
+
+
+2006-04-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-16-prsim-03-01:
+	  member_saver defined as derivative of value_saver.  
+	  Minor common cleanups in util/STL/*_fwd.h
+
+
+2006-04-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-15:
+	  Significant configure improvements, mostly dealing with
+		defined integer types and library functions.
+	  util/operator.h now checks for fmod and fmodf.  
+	  chunk_map_pool's policy now checks for availability of 64b int type.  
+	  util/FILE_fwd.h: now checks to see if forward declaration is
+		already present from _FILEDEFED (defined for Solaris)
+		before typedef-ing.  
+
+
+2006-04-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-13-merged-spec-02-04:
+	  Branch merge.  
+
+
+2006-04-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-11-spec-02-02:
+	  util/STL: added forward declaration headers:
+		algorithm_fwd.h and iterator_fwd.h
+	  util/persistent_functor.h: added a few basic
+		container-of-container functors.  
+	  util/IO_utils.{h,tcc}: implemented read_sequence_set_insert.
+
+
+2006-04-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-08-prsim-02-05:
+	  Added "util/value_saver.h" in the spirit of "util/member_saver.h".
+
+
+2006-04-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-08-prsim-02-04:
+	  util/static_assert.h: seperated into dependent and non-dependent
+		macro for static_assert because of underlying typedef. 
+	  util/const_traits.h: considering obsoleting, in favor of
+		unified util/type_traits.h.  Emptied out for now.  
+	  Added util/member_saver.h template class for temporarily
+		saving away a member value and restoring upon destruction.  
+
+
+2006-04-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-07-merged-prsim-01-15:
+	  Branch merge of -prsim-01 work.  
+	  This branch brings some library and configure improvements.  
+
+
+	* HACKT-00-01-04-main-00-78-06:
+	  Afternote: no source revisions, only additions to the lib directory. 
+
+
+2006-04-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-15:
+	  Cross-checked against g++-4.1.  
+	  Private copy-ctor in named_ifstream_manager befriends
+		__gnu_cxx::new_allocator, if present
+		(replaces std::_Construct).  
+
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-14:
+	  Added configure-checks for *rand48 family of stdlib functions.
+	  Implemented rand48 template wrapper in util/numeric/random.*.
+
+
+2006-03-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-11:
+	  Added util/named_ifstream_manager.{h,cc}, spawned from external 
+		lexer/file_manager.{h,cc} with the following differences:
+		Already seen files are also opened, AS LONG AS the are
+		not currently open on the file stack, in other words, 
+		cyclic file references are still caught, but once-only
+		processing is not enabled for this.  
+		Possible TODO: use a flag to decide opening policy.
+		named_ifstream_manager also kept the include-path list
+		for effective file searching.  
+	  util/STL/construct_fwd.h: added some friend function macros
+		for those pesky exceptional cases for std::_Construct.  
+
+
+2006-03-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-07:
+	  Fixed util/string.h: string_to_num's return value, 
+		checking fail or bad-bit from istringstream.
+
+
+2006-03-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-01:
+	  list_vector_pool, chunk_map_pool: added rebind template typedef, 
+		improved class member definition macros to be generalizable
+		to simple templates (as long as commas don't interfere with
+		the C preprocessor...) and other macro fixes.  
+
+
+2006-03-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-19-connect-02-09:
+	  There've been minor tweaks to the ring_node and union_find code.
+		ring_node code is no longer used for the hackt project.  
+	  Added util/test/hash_map_iterator_O2_bug.cc test to test dir
+		which covers a known -O2 wrong-code bug in Apple's g++-3.3.
+		We've safely worked around it in the main source.  
+	  Minor g++-4.1 fixes applied.  
+
+
+2006-02-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-18:
+	  Finished writing union_find classes, including test case.
+	  Updated all tests in util/test/ with #undef NDEBUG.
+
+
+2006-02-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-17-merged-maintainence-05:
+	  Maintainence branch merge.  
+
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-05:
+	  Added configure-wrapped "util/xdr.h"
+	  Suppressing LIBS in the util/test directory.  
+
+
+2006-02-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-16-maintainence-04:
+	  Applied __ATTRIBUTE_MALLOC__ to memory pool allocators.  
+	  Properly detect and use __builtin_expect "in util/likely.h".
+
+
+2006-02-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-11:
+	  Checked against g++-4.1 (RC1) [prerelease 20060219].  
+		configure now checks for presence of reverse_iterator
+		comparisons for conditional use in 
+		"util/STL/reverse_iterator.h".
+	  const_assoc_query.tcc: qualified call to parent method find().
+
+
+2006-02-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-10+:
+	  Disabled integer_traits_test #13 because 13! overflows 32b, DUH!
+
+
+2006-02-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-10:
+	  Made libraries usable with -DNDEBUG with appropriate use
+		of __ATTRIBUTE_UNUSED__ around unused assertion variables.  
+	  util/attributes.h: now uses config.h to conditionally define
+		some attribute macros.  
+	  Test cases in util/test, however, force-undefine NDEBUG.
+
+
+2006-02-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-4-preal-01-03:
+	  util/operators.h: added functor specializations for 
+		the modulus<float> and modulus<double>.  
+	  parser::arith_expr::check_meta_expr(), added check for
+		operating on pair of real-valued operands.  
+
+
+2006-02-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-8-merged-spec-01-04:
+	  Branch merge, contains a few critical fixes, and minor improvements.  
+
+
+2006-02-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-7-spec-01-04:
+	  Critical fix in util/IO_utils.tcc:
+		implementations of sequence readers and writers uses
+		value_writer and value_reader template functors.  
+		This way, it can pick up specializations.  
+	  Minor improvement: persistent_functors were changed to
+		non-template classes with template forwarding () operator.  
+
+
+2006-02-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-7-spec-01-03:
+	  Added "util/visitor_functor.h" to provide convenient bound
+		functors for easy visiting over iterated structures.  
+
+
+2006-01-31	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-6:
+	  Fixed critical bug in multikey_assoc::is_compact_slice, 
+		and simplified it to be less recursive.
+	  Also updated util test suite with smaller example.  
+
+
+2006-01-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76.2:
+	  Temporary char buffer array now uses excl_array_ptr, 
+		in persistent_object_manager.cc.
+	  Improved interface to util::wtf.
+
+
+2006-01-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-74:
+	  Minor prototype fix for setvbuf in util/libc.h.
+
+
+	* HACKT-00-01-04-main-00-73-merged-prsim-00-34:
+	  Branch merge.  Includes revisions from -prsim-00 and 
+		-PRS-03 branches.
+	  Includes the fixes and clean-ups listed below.
+	  Much improved configurability.  
+
+
+2006-01-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-PRS-03-02:
+	  Added some handy persistent template functions in
+		"util/persistent_functor.{h,tcc}", some in the style
+		of util/IO_utils {read,write}_sequence_* functions.  
+		These versions also propagate a persistent_object_manager
+		reference (bound to functor), and cell the canonical 
+		persistence member functions: collect_transient_info, 
+		write_object, load_object.  
+	  Minor enhancement to persistent_object_manager::read_pointer_list<>
+		by using smart call to util::reserve().  
+	  In util/IO_utils: read_sequence_realloc, for safety, inserted
+		a call to the dtor of the argument valarray prior to 
+		placement construction.  
+
+
+2005-01-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-25:
+	  Configuration and portability update only.  
+
+
+2005-01-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-24:
+	  MAJOR round of clean-up.
+	  pointer_classes: owning, sharing and deleting pointer classes
+		now use a deallocation_policy template argument, 
+		that defaults to delete_tag (single-alloc deletion).
+		Variants are defined in terms of the other 
+		deallocation_policy tags.
+		This results in FAR cleaner code in "excl_*_ptr.h"
+		eliminating the old preprocessor name hacks. 
+		The non-default variants however are defined as 
+		nested typedefs, such as excl_malloc_ptr<T>::type.  
+		These may be less convenient, however, the non-default
+		uses are discouraged in-place of more conventional methods, 
+		such as using a vector instead of managing new [].  
+		Essentially the non-default uses should be infrequent.  
+	  util/STL/{list,map}.{h,tcc} are now obsolete, just use <list>
+		and <map>.  For now they remain in the repository but
+		are not distributed.  Attempts to include them will #error.  
+	  util/STL/*_fwd.h: all define a default_* struct with a
+		::type member typedefed to the default arguments.
+		e.g. template <class T> std::default_vector {
+			typedef	vector<T, allocator<T> >	type;
+		};
+		Now you can use non-macro'd forward declarations when 
+		the definition for a type is not required.  
+	  util/stacktrace.h: deleted USING_STACKTRACE macro.
+
+
+	* HACKT-00-01-04-main-00-72-prsim-00-23:
+	  Added (not used yet) deallocation policy classes to util/memory.
+	  It's about time we do this because of the need to handle 
+		other types of deallocation-like activity using 
+		pointer-classes.  
+	  Forthcoming in next revision.  
+
+
+2005-01-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-19:
+	  Fixed stupid typo in util/readline_wrap.h" in conditionally
+		defining USE_READLINE... arg!
+	  Added small readline_toy program in util/progs for 
+		interpreter debugging, no need to compile rest of project.  
+	  Added more stdio function checks in "util/libc.h"
+
+
+2005-01-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-18:
+	  Re-instated some name substitutions in the lexyacc-prefix-generator.
+		Needed to disambiguate some flex symbols.  
+
+
+2005-01-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-17-merged-temp-04:
+	  Branch merge.
+
+
+2005-01-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-16-temp-04:
+	  util/readline_wrap.cc: added gets() method with custom prompt arg.
+
+
+2005-01-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-16-temp-03:
+	  Moved <ctype> -related configure stuff to "util/ctype.h"
+		and added a handful of conditional library checks.  
+	  util/readline_wrap.cc: corrected EOF behavior for
+		the case of the BSD editline library.  
+	  Added util/template.h (empty) for compiler characteristic
+		checks related to templates in C++.  
+
+
+2005-01-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-16:
+	  Added util/Makefile.inc: this is where this subdirectory's
+		makefile management should go, it is included by
+		the parent Makefile.am.  
+	  Added util/lang subdirectory for language-specific
+		general tools.  
+
+
+2005-01-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-15:
+	  Added "util/NULL.h" finally.
+		No longer need "util/macros.h" for just the NULL definition.  
+	  Added "util/FILE_fwd.h" for configuration-dependent
+		forward declaration of FILE, so you won't have to include
+		<stdio.h> for name-uses of FILE* anymore.  Hallelujah!
+		(Falls back to including stdio if all else fails)
+	  Updated many util library header files to reflect these
+		updates in headers.  
+
+
+2005-01-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-14:
+	  util/memory/excl_malloc_ptr.h: const_cast away pointer type
+		as it is passed to free(void*).
+	  util/libc.h: configure-checked some more (unimplemented)
+		standard functions.
+	  util/readline_wrap.{h,cc}: folded whitespace-eating into gets(),
+		factored history-adding into seperate member function.
+	  Added util/tokenize.{h,cc}: default method of tokenizing
+		whitespace-delimiter std::string into list<string>.  
+		TODO (much later): more sophisticated command-line parsing.  
+
+
+2005-01-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-09:
+	  Untested draft of unique_ptr in "util/memory/unique_ptr.h".
+	  Added another class to util/static_trace.{h,cc} for debugging
+		in the middle of a module's static initialization/destruction.  
+
+
+2005-12-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-05:
+	  Added visitee class template.  
+	  Added offset_array array wrapper template. 
+
+
+2005-12-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-04:
+	  Added "using clear" to util::memory::index_pool for 
+		en masse deallocation.  
+
+
+2005-12-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-03:
+	  Created util/memory/index_pool.h which is an adapter to turn
+		any vector-like container into an index-based allocator.  
+	  Wrote util/memory/free_list adapter helper function to
+		use any of several standard containers as free-list, 
+		primarily use for memory-management.  
+
+
+2005-12-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-02:
+	  Added "util/string.h" to configure-wrap around string.h, strings.h
+		and cstring, and provide some handy inline functions
+		in the util::string namespace.  
+	  util/readline_wrap.cc: configure dependencies on some readline
+		prototypes' (const-incorrect) argument types.  
+	  util/readline.h: configure-wrapped inclusion of the proper
+		readline header.  
+
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-merged-rename-00-06:
+	  Merge from rename-00 branch.  
+	  Some comments updated.  
+
+
+2005-12-09	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71:
+	  Library additions:
+		enhanced excl_ptr and count_ptr families of pointer classes
+		to be able to define new classes with different delete
+		policies (e.g. array [], malloc).
+		This is accomplished by making the original header file
+		template-able, via preprocessing magic.  
+		Added a few basic tests for these new pointer classes.  
+	  Added util/readline_wrap.{h,cc}, configured readline header
+		providing a consistent (limited) common interface.  
+		Since read line are malloc-allocated, we use an
+		excl_malloc_ptr to manage the memory for it.  HUGE!
+	  Added libc.h and libc.c as configurable workarounds for systems
+		lacking the essential library functions (in C).  
+	  Corrected configurability of util/STL/hash_map.h.
+
+
+2005-12-07	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-70:
+	  Configure-checked for [u]int64_t in "inttypes.h", "bitset.h",
+		"numeric/inttype_traits.h", "numeric/bigger_ints.h".
+
+
+2005-11-09	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-66-merged-parser-03-10:
+	  Merged branch revisions to trunk.  
+
+
+	* ARTXX-00-01-04-main-00-65-parser-03-10:
+	  Added util/file_status.h for consistent use of file return
+		statuses, includes a meaningful enumeration.  
+
+
+2005-11-07	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65-parser-03-07:
+	  Gave unique_list::push* return value, indictaing whether or
+		not the value pushed already existed in set.  
+
+
+2005-11-07	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65-parser-03-05:
+	  Added configured util/dirent.h, and wrapper functions direct.cc.
+	  Typo fix in unique_list::push() parameter.
+
+
+2005-11-06	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65-parser-03-03:
+	  Added util/unique_stack.{h,tcc}.
+	  Completed more list interface to unique_list.
+
+
+2005-10-25	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-61-merged-PRS-02-11:
+	  Merged revisions to trunk.  
+
+
+2005-10-16	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-60-PRS-02-09:
+	  Determining containership in util::unique_list fixed. 
+		It was just plain wrong before.  (Fortunately, never used.)
+
+
+2005-10-13	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-60-PRS-02-08:
+	  Added associativity (is_associative) virtual function to
+		binary arithmetic operators in "util/operators.h".
+
+
+2005-10-07	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-60-merged-cflat-01-11:
+	  Merged branch revisions to trunk.  
+
+
+2005-10-06	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-59-cflat-01-09:
+	  Fixed false positive warning condition at the end of
+		persistent_object_manager loading.  
+		Allow shared visit to classify as owning an entry.  
+
+
+	* ARTXX-00-01-04-main-00-59-cflat-01-08:
+	  util/ptrs_functional.h: changed inline mem_fun (const versions)
+		to take argument of type const P<const T> instead of
+		just const P<T>.  (Likewise in the functor classes.)
+		g++-3.3 through 4.0.1 accepted this, but 4.0.2 rejected 
+		(no match found).  This revision make the code more correct, 
+		and is accepted by all versions to date.  
+		(FYI: case was submitted as PR 24243 to gcc-bugzilla)
+
+
+2005-10-05	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-59-cflat-01-06:
+	  Added BOUNDS_CHECK() assertion to "util/macros.h".
+
+
+2005-10-03	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-59-cflat-01-05:
+	  Fixed typo in list_vector::swap().  
+	  IO_utils.{h,tcc}: added util::read_sequence_prealloc
+		specially for valarray reconstruction (uses placement ctor).  
+
+
+2005-09-05	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-58:
+	  Fixed some \file doxygen commands in comments in a few headers.  
+
+
+2005-09-04	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-56-merged-footprint-01-26:
+	  Merged fixes and enhancements from -footprint branch.  
+
+
+2005-08-28	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-27:
+	  Added explicit instantiation macro to mutikey_generic
+		constructor (from non-generic multikey).  
+
+
+2005-08-21	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-19:
+	  list_vector: (bug fix) wrote custom copy-constructor because
+		structure contains raw pointers, which must be relinked
+		upon copy.  
+
+
+2005-08-19	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-16:
+	  Added STACKTRACE_INDENT macro to stacktrace.h to allow users
+		to print stacktrace prefix before diagnostic messages.  
+	  auto_indenter manipulators in indent and stacktrace declared const.
+
+
+2005-08-15	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-08:
+	  util/static_assert.h: uses typedef rather than static const value.  
+
+
+2005-08-15	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-07:
+	  Using enhanced header configuration, we've "config-ed" many 
+		util headers with the results from "config.h"
+		header existence and usability tests.  
+	  Also now enforcing -Wunnused except for -Wno-unused-parameter.
+
+
+2005-08-08	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-54-macros-02:
+	  Standardized some stacktrace macros for _PERSISTENT and _DTOR
+		and _CTOR, because they were blatantly copied everywhere
+		before.  Now they are available for each module
+		to enable or disable.  
+	  Added pointer-class-specific assertion macros, versions
+		of NEVER_NULL and INVARIANT to control debug level
+		of the most commonly used templates.  
+		Each module may alter the debug mode or use the default.  
+
+
+2005-08-06	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-53-unique-01-07:
+	  Fixed bug in ring_node:
+		iterator copy-constructor wrongly asserted condition, 
+		now we allow copy-constructor to call an unchecked constructor
+		because the source is already a valid iterator.  
+
+
+2005-08-05	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-53-unique-01-03:
+	  Cleaned up list_vector.{h,tcc} some.  
+
+
+	* ARTXX-00-01-04-main-00-53-unique-01-02:
+	  Added bitset placeholder class, intending to extend
+		std::bitset with arithmetic functionality later.
+	  util/inttypes.h: configure-dependent wrapper to standard headers.
+	  util/numeric/bigger_ints.h: definitions of larger synthesized
+		integer types.
+	  util/numeric/inttype_traits.h: relationships between
+		next larger/smaller integer types.  
+	  util/numeric/nibble_tables.h: generalized MSB_position.  
+	  util/static_assert.h: like compile-time constraint/concept check.
+	  Working towards more extendable chunk_map_pool, 
+		allowing for bigger chunks (64 now enabled by uin64).
+	  util/test/chunk_map_pool_test.cc:
+		added (disabled) checks for huge chunked-pools.  
+		Need to turn them on by hand and hand-check.  
+
+
+2005-07-15	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-30:
+	  Added front() and back() interface to packed_array[_generic].
+	  Added "util/wtf.h" as developer tool for figuring out
+		the canonical type of a typename/typedef and 
+		the type of an object, e.g. return type.  
+
+
+2005-07-14	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-28-subinstance-07:
+	  Critical bug fix in multikey_generic<>::operator =:
+		detected self-assignment (alias) condition
+		and avoid self-destruction.  Hello?  C++ 101.  
+		Strangely, this problem only exhibited on a linux build...
+
+
+2005-07-12	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-28-subinstance-04:
+	  util/ring_node.h:
+		Added default iterator structs for convenience.
+		Sometimes necessary when wanting to refer to 
+		ring_node_derived<incomplete type>.
+
+
+2005-07-06	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-06-actuals-16:
+	  Cleaned up "util/multidimensional_sparse_set.tcc"
+		iterator construction over assignment, 
+		new flexible template methods for key method functions:
+		add_ranges() and query_compact_dimensions().
+	  Fixed (and used, and tested) "util/reserve.h".
+
+
+2005-07-05	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-06-actuals-14:
+	  Added "util/reserve.h" policy for vector-like memory reserve
+		when possible -- for other non-vectors, it no-ops.
+
+
+2005-07-03	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-06-actuals-10:
+	  Fixed scalar initialization bug in util::multikey_generic, 
+		where passing in 0 dimension would result in
+		allocating size_t(-1) size array in constructor. 
+		Moral of lesson: look before you subtract one.  
+		(Updated bunch of multikey_generic's constructors)
+	  Fixed multikey_generic assignment (=) bug:
+		default assignment semantics for valarray (implementation type)
+		are insufficient: defaults to truncated copy.
+		We replaced with proper reallocation (vector-style)
+		assignment, with explicit destruction and placement
+		copy-construction.  
+	  Eliminated copy-modified specialization of packed_array<bool>
+		and replaced it with a packed_array_implementation
+		policy class, with specialized types for bool case.  
+		Result: much code reduction for equivalent functionality.
+	  Updated pretty-print dump for all packed_array*.
+		Includes a nice multidimensional array dump.  
+	  Also added a test to packed_array_test to check for this.  
+	  While I was at it, replaced iterator initialization
+		with construction where possible in util::multikey*
+		and util::packed_array*.
+
+
+2005-06-30	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-06-actuals-07:
+	  Added explicit instantiation macros to "util/multikey.tcc".
+
+
+2005-06-21	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-06-actuals-02:
+	  Figured out how to automatically generate unique identifiers
+		using cpp, after discovering macro tricks on the web.  
+	  "util/indent.h" and "util/stacktrace.h" now use these macros.
+	  No more shadowing identifier conflicts!  Hallelujah!
+
+
+2005-06-21	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-45-merged-anal-04:
+	  Merge to trunk.  
+
+
+	* ARTXX-00-01-04-main-00-44-anal-04:
+	  Tiny patches after cross-checking against different gcc versions
+		on different platforms.  
+
+	* ARTXX-00-01-04-main-00-44-anal-03:
+	  Updated a bunch of files to conform to new warning strictness, 
+		describe in src/ChangeLog (same entry).
+	  persistent_object_manager's indices have been updated to
+		size_t (unsigned int) type.  
+
+
+2005-06-20	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-44-anal-02:
+	  Every util/.tcc file has been updated with the following
+		macros for controlling template instantiation:
+		EXTERN_TEMPLATE_<file-name>
+			predefine to suppress template method definitions
+			and only include the .h header of the same class(es).
+		EXCLUDE_DEPENDENT_TEMPLATES_<file-name>
+			predefine to exclude the template definitions
+			that this file/class depends on.  
+	  By default, when the user does nothing different, all dependent
+		definitions are included recursively in .tcc files.  
+		So If you don't even think about it, it just works.  
+	  We now explicitly suppress template instantiation by *hiding*
+		the complete template definition when the above macros
+		are used.  Since -pendantic was added to the compiler 
+		dialiect flags, replace "extern template" with these
+		macros.  
+	  Caveat: There can be cross-interactive effects between 
+		multiple .tcc files that share the same dependencies, 
+		so be warned.  You can always diagnose a problem
+		by using -save-temps and examining the .ii files.  
+
+
+2005-06-14	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-19:
+	  Provided INDENT_SOURCE() macro in "util/indent.h".
+
+
+2005-06-08	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-09-dataexpr-10:
+	  Adding -Wundef to CFLAGS caught an unremoved obsolete conditional
+		in "util/packed_array_fwd.h", harmless, but fixed.  
+
+
+2005-06-06	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-09-dataexpr-06:
+	  util/memory/ref_count_pool.h:
+		removed cyclic header dependence on count_ptr.h, 
+		replacing with forward declarations.  
+
+
+2005-05-23	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42:
+	  ptrs_functional.h: relocated to util namespace, not std anymore.  
+
+
+2005-05-22	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-39:
+	  Modified and verified that all headers properly standalone.
+		(except using{i,o}stream.h, which aren't supposed to be.)
+	  Anything that directly depends on the definition of size_t
+		now includes configure-dependent "util/sizet.h".
+	  Split out forward declarations of persistent.h into separate file.  
+
+
+2005-05-20	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-38:
+	  Started this ChangeLog.
+	  From now on, util-library related changes should be noted here.  
+	  getopt_portable.h:
+		now uses conditional results of configure script in config.h.  
+	  static_trace.h:
+		added DEFAULT macros for convenience, now don't have to
+		pass in string argument for BEGIN and END, 
+		defaults to using built-in __FILE__.
+

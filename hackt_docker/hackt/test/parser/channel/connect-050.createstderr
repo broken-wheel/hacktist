@@ -1,0 +1,7 @@
+Error: cannot mix meta- and nonmeta-referenced channel in consumer alias.
+Error referencing foo::Y.
+Error resolving do-forever loop.
+Error unrolling action_sequence.
+Instantiated from: foo<>
+Error encountered during module::create.
+ERROR in creating.  Aborting.

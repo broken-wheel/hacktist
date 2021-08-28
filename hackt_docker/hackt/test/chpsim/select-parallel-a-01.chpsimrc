@@ -1,0 +1,147 @@
+# "select-parallel-a-01.chpsimrc"
+#	$Id: select-parallel-a-01.chpsimrc,v 1.4 2010/04/06 00:01:29 fang Exp $
+# @haco@ select-parallel-a.haco-c
+
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+step
+queue
+get a
+get b
+get c
+get d
+time
+

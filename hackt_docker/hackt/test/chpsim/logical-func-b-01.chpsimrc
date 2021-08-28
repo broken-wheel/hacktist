@@ -1,0 +1,13 @@
+# "logical-func-b-01.chpsimrc"
+#	$Id: logical-func-b-01.chpsimrc,v 1.3 2010/04/06 00:01:22 fang Exp $
+# Yes, use THIS object file
+# @haco@ logical-func-b.haco-c
+# @module@ -lgcd
+# @deps@ gcd.la
+
+watchall-events
+step 200
+time
+assert-queue
+
+

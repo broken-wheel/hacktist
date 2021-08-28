@@ -1,0 +1,3 @@
+[submodule "hackt"]
+	path = hackt
+	url = https://github.com/fangism/hackt.git

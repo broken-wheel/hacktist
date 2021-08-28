@@ -1,0 +1,13 @@
+version: "3.2"
+services:
+    hackt:
+        build: .
+        image: hackt/ubuntu
+        volumes:
+            - ./hackt:/hackt/src
+            - ./deps:/hackt/deps
+            - ./local:/usr/local
+        command: /bin/bash
+        privileged: true
+        stdin_open: true
+        tty: true

@@ -1,0 +1,40 @@
+# "after-celem-03.prsimrc"
+#	$Id: after-celem-03.prsimrc,v 1.2 2010/04/06 00:04:09 fang Exp $
+# @haco@ after-celem-more.haco-c
+# testing different delays on rules
+
+watchall
+timing after
+
+what w
+what x
+what y
+what z
+
+fanin-get c
+
+set a[0] 0
+set a[1] 0
+set a[2] 0
+set a[3] 0
+set b[0] 1
+set b[1] 1
+set b[2] 1
+set b[3] 1
+cycle
+
+assert c X
+fanin-get c
+
+set a[3] 1
+cycle
+
+assert c 0
+fanin-get c
+time
+
+getall w
+getall x
+getall y
+getall z
+

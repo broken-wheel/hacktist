@@ -1,0 +1,7 @@
+.subckt bad_inv<> !GND !Vdd a
+Mb:dn:0 !GND a b !GND nch W=5u L=2u
+Mb:up:0 !Vdd a b !Vdd pch W=5u L=2u
+.ends
+
+xbar !GND !Vdd bar.a bad_inv<>
+

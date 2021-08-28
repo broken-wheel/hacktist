@@ -1,0 +1,18 @@
+// "034.hac"
+// copy-modified from "033.hac"
+// should reject channel type inside data
+// NO LONGER: because deftypes are munged into process definitions
+// UPDATE: no local instances in deftype
+
+defchan e1of2 <: chan(bool) (bool t, f, e) {
+	send { }
+	recv { }
+}
+
+deftype my_data <: int<4> (int<8> x; bool y) {
+	bool foo;
+	e1of2 BAD;
+	set { }
+	get { }
+}
+

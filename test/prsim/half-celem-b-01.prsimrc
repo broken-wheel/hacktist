@@ -1,0 +1,44 @@
+# "half-celem-b-01.prsimrc"
+#	$Id: $
+# @haco@ half-celem-b.haco-c
+# testing instability scenario
+
+# reminder: b is only in the pull-dn guard for c
+
+# proceed past unstable events
+unstable warn
+
+fanin c
+
+watchall
+set b 0
+set a 0
+cycle
+time
+
+set a 1
+step
+echo b+ should enqueue c-
+set b 1
+advance 5
+queue
+time
+
+echo introduce high-glitch on b, should cause instability
+set b 0
+advance 1
+queue
+echo end queue
+
+set b 1
+advance 1
+
+cycle
+status X
+status 0
+status 1
+queue
+echo in a state where c should be 0, but remains X while pull-dn guard true!
+# We'd like a mode where this is 'fixed'
+echo this is now fixed by the branch: prsim-engine-rewrite
+

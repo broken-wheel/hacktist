@@ -1,0 +1,79 @@
+# "dox/Make.dox-tail"
+# To be included last by Makefiles in subdirectories
+#	$Id: Make.dox-tail,v 1.17 2009/06/05 16:28:01 fang Exp $
+#	vim: ft=automake
+
+if AUTO_CVSIGNORE
+local.cvsignore: $(top_srcdir)/dox/local.cvsignore
+	$(CP) $< $@
+
+AUTO_IGNORE += local.cvsignore
+DISTCLEANFILES += local.cvsignore
+endif
+
+######## HTML install hooks ###################################################
+if ENABLE_DOCS
+# don't bother if configured with --disable-docs
+noinst_DATA += $(HTML_HOOKS)
+# workaround: use install hooks
+EXTRA_DIST += $(HTML_HOOKS)
+
+# should use $(mkinstalldirs)?
+install-data-hook: $(HTML_HOOKS)
+	$(mkdir_p) $(DESTDIR)$(htmldir) && \
+	for d in '$^' ; do \
+	  test -z "$$d" || \
+	    { $(CP) -r $$d $(DESTDIR)$(htmldir) && \
+	    base=`basename $$d` && \
+	    $(CHMOD) u+w $(DESTDIR)$(htmldir)/$$base ;} ; \
+	done
+# for distcheck, chmod to fix permissions copying from read-only dir
+# perhaps something like $(INSTALL_DATA) would be more correct?
+
+uninstall-hook:
+	for d in '$(HTML_HOOKS)' ; do \
+	  test -z "$$d" || \
+	    $(RM) -r $(DESTDIR)$(htmldir)/$$d ; \
+	done
+endif
+
+###############################################################################
+
+clean-local: clean-figs
+
+# be careful, PNGs might be listed as source images, not necessarily generated
+clean-figs: force
+	$(RM) figs/*.fig.orig
+	$(RM) figs/*.figtex
+	$(RM) figs/*.eps
+	$(RM) figs/*.ps
+	$(RM) figs/*.pdf
+	$(RM) figs/*.pstex
+	$(RM) figs/*.pdftex
+	$(RM) figs/*.pstex_t
+	$(RM) figs/*.pdftex_t
+	$(RM) figs/*.png
+
+clean-texi:
+	-test -z "$(TEXI_CLEANFILES)" || $(RM) $(TEXI_CLEANFILES)
+
+# prefer to list .pdf/.dvi pairs explicitly, more fine-grained
+# .NOTPARALLEL: pdf ps
+
+.PHONY: help-dox clean-figs clean-texi
+
+help-dox:
+	@$(ECHO) "Documentation make targets" ; \
+	$(ECHO) "    pdf: builds PDF documents" ; \
+	$(ECHO) "    ps: builds PostScript documents"
+
+help-local:
+	@{ $(CALLMAKE) help-dox ; \
+	$(CALLMAKE) help-latex ;} 2> /dev/null
+
+include $(top_srcdir)/dox/mk/Make.latex
+include $(top_srcdir)/dox/mk/Make.fig
+include $(top_srcdir)/Make.global
+
+# help: help-dox
+

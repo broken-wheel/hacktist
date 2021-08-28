@@ -1,0 +1,119 @@
+"NEWS"
+	$Id: NEWS,v 1.13 2009/03/27 20:07:03 fang Exp $
+
+2009-03-27	David Fang	<fangism@users.sourceforge.net>
+
+	The HACKT project is now CVS-read-only accessible to the public
+		via anonymous checkout.  See instructions:
+		http://www.csl.cornell.edu/~fang/hackt/source.php#cvs
+
+
+2008-11-07	David Fang	<fangism@users.sourceforge.net>
+
+	The HACKT project is now officially GPL licensed, with many thanks
+		to Cornell University for agreeing on the license.  
+	A project home page has been set up:
+		http://www.csl.cornell.edu/~fang/hackt/
+
+
+2008-05-06	David Fang	<fangism@users.sourceforge.net>
+
+	Fang has received official congratulations from the graduate school:
+		he has succesfully graduated his Ph.D.!
+
+
+2007-12-31	David Fang	<fangism@users.sourceforge.net>
+
+	Over a year passes and Fang has neglected to post any news items...
+
+
+2006-05-06	David Fang	<fangism@users.sourceforge.net>
+
+	Long time no... news.
+	hackt prsim is in pretty darn good shape, please start using!
+
+
+2005-09-29	David Fang	<fangism@users.sourceforge.net>
+
+	Development was interrupted for about two weeks working on ASYNC
+	conference paper.  And now, back to work!
+
+
+2005-07-26	David Fang	<fangism@users.sourceforge.net>
+
+	For the first time ever, fangism is taking a vacation in the 
+	summer -- a week long trip to Deustschland.  Development 
+	will resume in early August.  
+
+
+2005-07-24	David Fang	<fangism@users.sourceforge.net>
+
+	Pre-screening release at tag ARTXX-00-01-04-main-00-51, 
+	open to our research group only for now.  
+
+
+2005-04-05	David Fang	<fangism@users.sourceforge.net>
+
+	From early March to the beginning of April, Fang has hosed
+	from a conference trip and a little tapeout project, 
+	the 3D-FPGA.  Being drafted into the Emergency FPGA Layout
+	Expedition Task Force, he was unable to attend to art++.  
+	He has now returned to active duty as art++-hacker.  
+
+
+2005-01-16	David Fang	<fangism@users.sourceforge.net>
+
+	Looks like this file hasn't been touched in a long time... oops.
+	All the NEWS worth reading (and not worth) is in the ChangeLog.
+	New Year's resolution: organize updates a little better this year.  
+
+	Releasing 0.1.4.  (just a few months late...)
+	Goals for this series (up to 0.1.5) are outlined in TODO.  
+	The root tag for this series is ARTXX-00-01-04.  
+
+
+2004-10-12
+
+	Major rework of persistent object de/serialization framework
+	completed.  Persistent types can be statically registered
+	with the persistent_object_manager's global static type registry, 
+	using some convenient macros.  
+	This framework is now portable to any other project.  
+
+
+2004-09-03
+
+	Starting language specification documentation in dox/lang.  
+
+
+2004-08-21
+
+	Releasing 0.1.3.
+	Object de/serialization complete for core classes.  
+	Basic tests using diffs of textual object dumps pass.  
+
+
+2004-08-19
+
+	(still using tag ARTXX-00-01-02)
+	Finished writing majority of object dump and load code 
+	for many classes.  artc regression tests, which serialize objects
+	in memory and deserialize to make a deep copy, all pass, 
+	which only means nothing crashed and burned.  
+	Goal for release 0.1.3: new set of regression tests using
+	art++2obj and artobjdump to compare textual dumps
+	to verify content-correctness.  
+
+
+2004-08-12
+
+	Finished GNU-ifying the entire project.  
+	Everything builds correctly, the distribution is coherent and intact.  
+	Make distcheck passes.  
+
+
+2004-08-10
+
+	Porting existing art++ project to use automake, autoconf, libtool.  
+	Things could get ugly.  Stay tuned until the dust clears.  
+

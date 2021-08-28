@@ -1,0 +1,12 @@
+"a" -> "b"-
+~"a" -> "b"+
+"b" -> "c"-
+~"b" -> "c"+
+= "!GND" "bar.!GND"
+= "!GND" "bq.!GND"
+= "!Vdd" "bar.!Vdd"
+= "!Vdd" "bq.!Vdd"
+= "a" "bar.x"
+= "b" "bar.y"
+= "b" "bq.x"
+= "c" "bq.y"

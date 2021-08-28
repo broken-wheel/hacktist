@@ -1,0 +1,176 @@
+@c "chapters/expressions.texi"
+@c $Id: expressions.texi,v 1.4 2011/04/05 18:26:19 fang Exp $
+
+@node Expressions
+@chapter Expressions
+@cindex expressions
+@cindex meta-expressions
+
+Expressions live in the realm of parameters and datatypes.  
+Compile-time meta language.  
+
+Boolean.
+
+Integer.
+
+Real.
+
+String.
+
+@menu
+* Range expressions::
+* Built-in Operators::
+* Function expressions::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node Range expressions
+@section Range expressions
+@cindex range expressions
+
+Range expressions are used to index into arrays.
+@example
+x[0..3]
+@end example
+references the first four elements of array @var{x}.
+
+Limits: interpretation of negative ranges?
+Are we allowing negative indices?
+
+Implicit ranges.
+
+Explicit ranges.
+Q: does @math{x<=y}?
+If we allow negative indices then yes, because we need to be able 
+to express empty ranges, when @math{x>y}.
+
+Compile-time (meta-language) interpretation.  
+
+See chapter on compile-time flow-control (loops and conditionals).  
+
+
+@c ----------------------------------------------------------------------------
+@node Built-in Operators
+@section Built-in Operators
+@cindex operators
+
+The @HAC{} supports the typical set of 
+arithmetic, relational, logical, bitwise, and negation operators on
+primitive types.
+
+@cindex operator precedence
+Operator precedence follows that of the (ANSI/ISO) C Language.
+
+
+@menu
+* Arithmetic Operators::
+* Relational Operators::
+* Bitwise Operators::
+* Logical Operators::
+@end menu
+
+
+@node Arithmetic Operators
+@subsection Arithmetic Operators
+@cindex arithmetic operators
+
+The arithmetic binary operators work on integers and reals:
+@table @code
+@item +
+addition
+@item -
+subtraction
+@item *
+multiplication
+@item /
+division
+@item %
+modulus
+@end table
+
+The lone arithmetic unary operator negation:
+@table @code
+@item -
+negate
+@end table
+
+@node Relational Operators
+@subsection Relational Operators
+@cindex relational operators
+
+Relational binary operators work on integers, reals, and strings.
+For strings, less-than is interpreted as the left operand
+being lexicographically before the right operand.  
+
+@table @code
+@item ==
+equiality
+@item !=
+inequality
+@item <
+less-than
+@item <=
+less-than-or-equal
+@item >
+greater-than
+@item >=
+greater-than-or-equal
+@end table
+
+@node Bitwise Operators
+@subsection Bitwise Operators
+@cindex bitwise operators
+
+Bitwise binary integer operators.
+@table @code
+@item &
+AND
+@item |
+OR
+@item ^
+XOR
+@end table
+
+@table @code
+@item ~
+NOT
+@end table
+
+@node Logical Operators
+@subsection Logical Operators
+@cindex logical operators
+
+Boolean binary logical operators.
+@table @code
+@item &&
+AND
+@item ||
+OR
+@end table
+Note that there is no exclusive-OR operator, 
+use the @code{!=} operator as a substitute.
+
+Boolean logical negation
+@table @code
+@item !
+NOT
+@end table
+
+
+@c ----------------------------------------------------------------------------
+@node Function expressions
+@section Function expressions
+@cindex function expressions
+
+The @HAC{} language supports function calls in expressions.
+Supported argument types and return types include integer, boolean, 
+real (float, double), and strings.  
+
+@include fn/strcat.texi
+@include fn/cond.texi
+@include fn/minmax.texi
+@include fn/strtox.texi
+@include fn/rtoz.texi
+@include fn/ztor.texi
+@include fn/math.texi
+

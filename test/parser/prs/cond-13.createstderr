@@ -1,0 +1,81 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	8	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	9	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	10	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	11	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	12	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	13	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	14	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	15	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	16	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	17	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	18	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	19	##ADDR##	condscop	0	#HEAD#	#TAIL#	32
+	20	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	21	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	22	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	23	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	24	##ADDR##	PRSrcond	0	#HEAD#	#TAIL#	28
+	25	##ADDR##	PRSrnest	0	#HEAD#	#TAIL#	32
+	26	##ADDR##	PRSrcond	0	#HEAD#	#TAIL#	32
+	27	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	28	##ADDR##	PRSpuldn	0	#HEAD#	#TAIL#	21
+	29	##ADDR##	PRSlitrl	0	#HEAD#	#TAIL#	20
+	30	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	32	##ADDR##	PRSpulup	0	#HEAD#	#TAIL#	21
+	33	##ADDR##	PRSnot__	0	#HEAD#	#TAIL#	12
+	34	##ADDR##	PRSlitrl	0	#HEAD#	#TAIL#	20
+	35	##ADDR##	footprnt	0	#HEAD#	#TAIL#	471
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  4 instantiation-collections
+  0 sub-namespaces
+  0 definitions
+  0 typedefs
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    d = bool<> d
+    z = bool<> z
+}
+
+top-level prs:
+  [ true ->
+    {
+    [ true ->
+      d -> z-
+      ~d -> z+
+    ]
+    }
+  ]
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  d = bool^0 = d (4) @[ loc-FO- loc-FO+ ] 
+  z = bool^0 = z (3) @[ loc-FI- loc-FI+ ] 
+  Created state:
+  bool instance pool: (0 ports, 4 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	z @[ loc-FI- loc-FI+ ]	
+  4	d @[ loc-FO- loc-FO+ ]	
+  resolved prs:
+  d -> z-
+  ~d -> z+
+  rule supply map: (rules, macros, @nodes : Vdd, GND)
+  0..1 none none : 2, 1 | 2, 1
+}

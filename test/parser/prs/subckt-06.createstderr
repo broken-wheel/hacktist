@@ -1,0 +1,124 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procplch	0	#HEAD#	#TAIL#	27
+	6	##ADDR##	procdefn	0	#HEAD#	#TAIL#	134
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	10	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	11	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	portscop	0	#HEAD#	#TAIL#	32
+	13	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	14	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	15	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	18	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	19	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	20	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	21	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	22	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	24	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	25	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	26	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	28	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	29	##ADDR##	footprnt	0	#HEAD#	#TAIL#	352
+	30	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	31	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	32	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	33	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	34	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	35	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	36	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	37	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	38	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	41	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	42	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	43	##ADDR##	footprnt	0	#HEAD#	#TAIL#	478
+	44	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    bogus = process-definition (defined) bogus(
+        bool<> !GND
+        bool<> !Vdd
+        bool<> x
+        bool<> y
+        bool<> z
+      )
+      In definition "bogus", we have: {
+      Instances:
+        !GND = bool<> bogus::!GND
+        !Vdd = bool<> bogus::!Vdd
+        x = bool<> bogus::x
+        y = bool<> bogus::y
+        z = bool<> bogus::z
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          bool<> x
+          bool<> y
+          bool<> z
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      footprint: {
+        !GND = bool^0 = bogus<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = bogus<>::!Vdd (2) @[ supply_high port-alias ] 
+        x = bool^0 = bogus<>::x (3) @[ port-alias ] 
+        y = bool^0 = bogus<>::y (4) @[ port-alias ] 
+        z = bool^0 = bogus<>::z (5) @[ port-alias ] 
+        Created state:
+        bool instance pool: (5 ports, 0 local, 0 mapped)
+        1	bogus<>::!GND @[ supply_low port-alias ]	
+        2	bogus<>::!Vdd @[ supply_high port-alias ]	
+        3	bogus<>::x @[ port-alias ]	
+        4	bogus<>::y @[ port-alias ]	
+        5	bogus<>::z @[ port-alias ]	
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    art = bogus<> art
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  art = process bogus<>^0 = art (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    x = bool^0 = art.x (3) 
+    y = bool^0 = art.y (4) 
+    z = bool^0 = art.z (5) 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	art	bogus<>
+    bool: 1,2,3,4,5
+  bool instance pool: (0 ports, 5 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	art.x	
+  4	art.y	
+  5	art.z	
+}

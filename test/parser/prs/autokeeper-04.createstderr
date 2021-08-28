@@ -1,0 +1,135 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	10	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	11	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	13	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	14	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	15	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	16	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	17	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	18	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	19	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	20	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	22	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	23	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	24	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	27	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	28	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	29	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	30	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	31	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	32	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	33	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	34	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	35	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	36	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	37	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	38	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	39	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	41	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	42	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	43	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	46	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	47	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	48	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	51	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	52	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	53	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	54	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	55	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	56	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	57	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	58	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	60	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	61	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	62	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	63	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	64	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	65	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	66	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	67	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	68	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	69	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	70	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	71	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	72	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	73	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	74	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	75	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	76	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	77	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	78	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	79	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	80	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	81	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	34
+	82	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	83	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	84	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	85	##ADDR##	footprnt	0	#HEAD#	#TAIL#	478
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  12 instantiation-collections
+  0 sub-namespaces
+  0 definitions
+  0 typedefs
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    a = bool<> a
+    b = bool<> b
+    c = bool<> c
+    d = bool<> d
+    e = bool<> e
+    f = bool<> f
+    w = bool<> w
+    x = bool<> x
+    y = bool<> y
+    z = bool<> z
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  a = bool^0 = a (5) @[ !autokeeper ] 
+  b = bool^0 = a (5) @[ !autokeeper ] 
+  c = bool^0 = c (6) @[ !autokeeper ] 
+  d = bool^0 = c (6) @[ !autokeeper ] 
+  e = bool^0 = e (7) @[ !autokeeper ] 
+  f = bool^0 = e (7) @[ !autokeeper ] 
+  w = bool^0 = w (3) @[ !autokeeper ] 
+  x = bool^0 = w (3) @[ !autokeeper ] 
+  y = bool^0 = y (4) @[ !autokeeper ] 
+  z = bool^0 = y (4) @[ !autokeeper ] 
+  Created state:
+  bool instance pool: (0 ports, 7 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	w @[ !autokeeper ]	
+  4	y @[ !autokeeper ]	
+  5	a @[ !autokeeper ]	
+  6	c @[ !autokeeper ]	
+  7	e @[ !autokeeper ]	
+}

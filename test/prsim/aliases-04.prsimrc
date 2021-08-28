@@ -1,0 +1,17 @@
+# "aliases-04.prsimrc"
+#	$Id: aliases-04.prsimrc,v 1.2 2010/04/06 00:04:12 fang Exp $
+# @haco@ inv.haco-c
+# testing user-defined alias commands
+
+
+alias foo echo
+aliases
+foo hello, world!
+unalias foo
+echo unaliased foo
+aliases
+alias foo exit
+foo
+
+echo never reached
+

@@ -1,0 +1,35 @@
+# "unstable-02.prsimrc"
+#	$Id: unstable-02.prsimrc,v 1.3 2010/04/06 00:08:01 fang Exp $
+# @haco@ inv.haco-c
+# testing different modes of instabilities
+
+watchall
+time
+
+# this is the default
+unstable-unknown
+
+initialize
+set a 1
+advance 5
+set a 0
+echo expect instability
+advance 5
+queue
+echo vacuous X events were dropped from queue (prsim-engine-rewrite)
+assertn-pending b
+# echo expect b:X in queue
+echo end of queue
+
+initialize
+set a 0
+advance 5
+set a 1
+echo expect instability
+advance 5
+# but again, this is reported as interference due to evaluation 
+# ordering problem of combinational gates.  
+# FIXED: HACKT-00-01-04-main-00-79-27-prsim-06-03
+queue
+echo vacuous X events were dropped from queue (prsim-engine-rewrite)
+

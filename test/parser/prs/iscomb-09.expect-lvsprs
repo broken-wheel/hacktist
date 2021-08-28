@@ -1,0 +1,14 @@
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+@ "bar.x" iscomb
+@ "bar.z" iscomb
+@ "bar.b" iscomb
+@ "bar.d" iscomb
+@ "bar.f" iscomb
+connect "!GND" "bar.!GND"
+connect "!Vdd" "bar.!Vdd"
+connect "bar.x" "bar.w"
+connect "bar.z" "bar.y"
+connect "bar.b" "bar.a"
+connect "bar.d" "bar.c"
+connect "bar.f" "bar.e"

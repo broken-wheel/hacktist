@@ -1,0 +1,6 @@
+FATAL: reference to uninstantiated bool index [3]
+Error referencing member collection: baz<3>::z.
+ERROR: unrolling aliases.
+ERROR: unrolling instance references in bool_connection::unroll().
+Error encountered during module::create.
+ERROR in creating.  Aborting.

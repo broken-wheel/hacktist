@@ -1,0 +1,644 @@
+# "lib/ChangeLog"
+#	$Id: ChangeLog,v 1.70 2011/05/07 03:43:39 fang Exp $
+
+2016-02-22	David Fang	<fangism@google.com>
+
+	* HACKT-00-01-04-main-00-86-64:
+	  wrap_verilog_modules_to_hacprsim.awk: fix bug where repacked arrays
+		of inputs were assigned in wrong direction.
+
+
+2016-02-17	David Fang	<fangism@google.com>
+
+	* HACKT-00-01-04-main-00-86-63:
+	  wrap_verilog_modules_to_hacprsim.awk: support multidimensional array of ports.
+		Also added workaround for input ports with trailing array dimensions
+		(like input X [1:0]) failing to transport values into prsim.
+		Workaround: repack array dimensions into bus dimensions
+		(like wire [1:0] X_repack_) and transport those into prsim.
+
+
+2016-07-11	David Fang	<fangism@google.com>
+
+	* HACKT-00-01-04-main-00-86-60:
+	  Added *rand48() random number functions to chpsim's library.
+
+
+2016-04-26	David Fang	<fangism@google.com>
+
+	* HACKT-00-01-04-main-00-86-59:
+	  Makefile.am: add .prs and .chp to extension list for vimrc.
+
+
+2012-11-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-51b:
+	  wrap_verilog_modules_to_hacprsim.awk:
+	  	concatenate reg-to-reg for newer vcs compilation
+		of system verilog (no string casting needed).
+		Still works w/ previous versions of vcs.
+
+
+2012-09-04	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-44d:
+	  verilog/vcs_scandepend.sh: improve dep scanner and regex
+
+
+2012-08-08	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-42:
+	  wrap_verilog_modules_to_hacprsim.awk:
+		dummy instances emit ports connected by name
+		rather than position now.
+
+
+2012-08-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-41b:
+	  lib/Makefile.am: install stdchpfn.cc to pkgdata_DATA
+		for newer automake conformance (1.11.3+, 1.12+).
+
+
+2011-07-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-79a:
+	  New: scripts/spice-to-hac.awk to convert hierarchical spice netlists
+		to HAC for crude hierarchical queries with existing tools.
+	  Basic test case added in test/net/hac/.
+
+
+2011-05-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-70+:
+	  New: scripts/prsim_timed_fwdtrace.awk to find all critical
+		paths that spawn from a root transition, 
+		searching through a prsim watchall log.
+
+
+2011-02-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-49b:
+	  scripts/spice-wrap.awk: continue long comments with comment
+
+
+2011-02-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-49:
+	  alternator.hac: added onehot_sequencer that sequences
+		an array of e1of1 channels, exclusively.
+		Test case added.
+
+
+2010-09-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23-string-01-03:
+	  libchpfn/conditional.cc: added strcond, documented in texinfo.
+
+
+2010-09-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23:
+	  alternator.hac: comment fix of an HSE, 
+		thanks to Carlos Tadeo Ortega Otero.
+
+
+2010-05-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-96:
+	  added lib/compat directory for compatibility scripts
+		hac_fix_vt.sh: for syntax change of PRS
+		upgrade_hacprsim_channel_commands.awk: automatically converts
+			legacy prsim channel commands to hacprsim.
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		added -v output_format option to generate empty HAC
+			defproc if requested.
+
+
+2010-04-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-89:
+	  support/hac.vim: updated to reflect new embedded #FILE
+		delimited tokens %{ and %}
+
+2010-01-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-65:
+	  lib/alternator.hac: CRITICAL FIX alternator_source_1of2_fast
+		did not actually alternate values before!
+		Now fixed and simplificied by removing the y variable
+		and using mutex-cross-locking in rules for _o.
+
+
+2010-01-05	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-44:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		replace strtonum calls with equivalent "+= 0" (POSIX).
+
+
+2009-12-11	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53-scalable-01-01:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		fixed parsing of ranges.
+		properly parse "strings" now.
+		Tested, new test case added to prsim/vpi/parse-test.v
+	  vpp.sh: changed single quote protection string
+
+
+2009-10-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-44:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		now emit parameters port-style using #(...)
+		and preserves ordering, appending prsim_name="".
+	  Tested.
+
+
+2009-10-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-41:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		now handles optional "wire" keyword in port declarations.
+	  verilog/vcs_scandepend.sh: script to scan compile logs
+		for list of included source files, for dependency generation.
+
+
+2009-09-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-29+:
+	  Added scripts/spice-wrap.awk: post-processor to automatically
+		wrap long lines of spice files with customizable
+		line continuation string.
+
+
+2009-08-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28+:
+	  Added some scripts to convert prsim dumps to evcd files, 
+		to export to other waveform viewers.  Not tested.
+		Use prsimlog_to_evcd.sh.
+
+
+2009-07-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-26:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		extended parser to handle parameterized module definitions, 
+		function blocks, parameter values, and for-loop
+		expanding to_prsim and from_prsim connections.
+	  Added verilog/vpp.sh: crude verilog preprocessor through cpp
+
+
+2009-04-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-16-b:
+	  Added script: prsim_alter_instance.awk, used to change
+		instance hierarchy names in prsimrc scripts.
+
+
+2009-03-20	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-11:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		extended parser to allow signal directions to be specified
+		directly in the ports list, rather than in the module body.
+		No test cases added, unfortunately.  
+
+
+2009-02-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-03+:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		added option -v reverse=[01] option to specify that
+		verilog definition represents a HAC implementation, 
+		and suppresses connection to a dummy instance, 
+		and reverses direction of $to_prsim/$from_prsim statements.
+
+
+2009-02-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-96+:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		support optional argument to emit wrapper definitions
+		with public ports.  Ports also emitted in consistent
+		order with original definition.
+
+
+2008-12-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-87:
+	  channel.hac: added _e1of<N> definitions, and _a1ofN defs.
+
+
+2008-12-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-72:
+	  Added scripts/prsim_timed_backtrace.awk, for more informative
+		traces of causality with time stamps, grabbing a slice
+		of logged history from prsim:watchall.
+
+
+2008-11-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-68:
+	  verilog/wrap_verilog_modules_to_hacprsim.awk:
+		added support for buses and ports declared "output reg".
+		Fixed port forwarding to dummy instance to use correct order.
+
+
+2008-10-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-48:
+	  added Verilog support directory, with
+		"wrap_verilog_modules_to_hacprsim.awk" which takes
+		a Verilog library and automatically generates
+		wrapper definitions that connect Verilog to prsim through VPI.
+
+
+2008-06-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-31:
+	  channel.hac: updated channels to defchan, and datatypes to deftype
+	  *.hac: removed syntax highlight directives to use C++
+
+
+2008-03-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-10+:
+	  Added connect.hac utility definitions, tested in test/lib.
+
+
+2006-09-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-74-ACT-01-07:
+	  logic.hac: explicitly export all definitions
+
+
+2006-08-29	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-67:
+	  libchpfn/io.{h,cc}: added new hexedecimal and binary integer
+		scanners for formatted input.  
+		Re-factored family of scan functions to maximize code-reuse.
+		EOF cases throw EOF_exception to distinguish from
+		other failures.  
+		Test cases added for most key functions, minus repetition. 
+		Documentation updated. 
+	  New functions registered in libchpsim/stdchpfn.cc.
+
+
+	* HACKT-00-01-04-main-00-81-65:
+	  libchpfn/bitmanip.{h,cc}: new, bit manipulation functions.
+
+
+2006-08-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-09:
+	  libchpfn/string.cc: forgot to *return* the value...
+		Test cases added for remaining new functions.
+
+
+2006-08-25	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-08:
+	  libchpfn/io.cc: scan now tests for .eof() before .fail().
+	  Rest of revision is just fscan test cases in test/chpsim.
+
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-07:
+	  libchpfn/io.cc:
+		fprint now opens file in create mode, instead of append.
+		fopen (new): opens file in create mode.
+		fappend (new): opens file in append mode.
+		fclose: now removes entries from stream maps.  
+	  libchpfn/OS.h: (new)
+		system: execute cmd string in shell.
+
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-06:
+	  libchpfn/io.cc: added sprint function, similar to fprint, 
+		but through stringstream, and returns concat'd string.  
+		Also called tostring, which may be a more intuitive name.  
+
+
+2006-08-24	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-05:
+	  libchpfn/io.cc: Minor fix -- specialize scan for strings to
+		use getline instead of istream operator >>.
+	  Test cases for many new functions added to test/chpsim.
+		scan tests filed under FAIL tests to avoid checkpoint
+		wrapper script, which screws up stdin redirection.
+
+
+2006-08-23	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-04:
+	  libchpfn/: conditional.cc: fix select()
+		io.{h,cc}: added scan_loop family of functions.  Documented.
+
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-03:
+	  CHP library: added string functions, documented.
+
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-02:
+	  CHP library: added libchpfn/io.{h,cc} for I/O functions, 
+		through stdio and file streams.  Untested.
+
+
+2006-08-22	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-62:
+	  mk/Makefile.am: forgot dependence on hackt-stddef.mk
+
+
+2006-08-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-51:
+	  mux.hac: pchb multiplexers that unconditionally consume all inputs.
+
+
+2006-08-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-06:
+	  Added chpsim function library to libchpfn subdir.
+
+
+2006-08-01	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-42:
+	  Added buffer_init.hac: a few WCHB buffer pairs with initial value,
+		defined using new relaxed template support.
+		Test cases included in test/lib.
+
+
+2006-07-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-41-merged-chpsim-06-26:
+	  Branch merge: mk/ template makefiles support chpsim +libtool.
+
+
+2006-07-30	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-25:
+	  mk/hackt-lt-progs.mk: define CHPSIM_OBJECT_CPPFLAGS
+
+
+2006-07-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-18:
+	  Added -lt versions of Makefile template for libtool build support.
+
+
+2006-07-17	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-template-02-26:
+	  env.hac: sources rewritten with relaxed template parameters
+		NOTE: this may break compatibility with old uses
+		see examples and documentation for updating.  
+	  test/lib: test cases updated accordingly (and trivially).
+
+
+2006-06-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-31:
+	  Added Makefile rules for chpsim event graph generation.
+
+
+2006-06-07	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-26:
+	  Added vim syntax highlighter, courtesy of Carlos Tadeo Ortega Otero.
+		Mucho gracias!
+	  Installs hac.vimrc (to be sourced by ~/.vimrc) and hac.vim
+		in $(pkgdatadir)/vim/
+
+
+2006-10-17	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-28:
+	  alternator.hac: added missing literal in a cross-couple feedback term,
+		replaced dynamic drive of an acknowledge with inverter pair.
+
+
+2006-09-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-24:
+	  Alternating buckets generalized to Nxe1of1,
+		and token eaters generalized to e1ofN channels.  
+
+
+2006-09-19	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-23:
+	  Generalized alternator splits/merge/tree-fifos to e1ofN channels.
+
+
+2006-09-18	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-22:
+	  alternator.hac: definitions for token repeaters, 2-for-1 producers, 
+		two different reshufflings, both decent, one more intuitive.
+		Also defined their chains tor 2^K repeaters.  
+	  env.hac: 'ev'-style buckets added, wrapped around e1of1 buckets, 
+		also includes inactive_reset variants.  
+	  Also started mpl/ directory for template metaprogramming constructs.  
+
+
+2006-09-17	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-21:
+	  Detected and fixed potential one-time instabilities on
+		several lock, source, and merge alternators, by
+		reshuffling the reset phase.  
+		Thanks to new reset-tests in test/lib, 
+		now called by old tests and will appear in all new tests.  
+
+
+2006-09-16	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-20:
+	  merge.hac: (new) basic wchb merges, tested.
+	  copy.hac: added and tested  basic buffered copies
+
+
+	* HACKT-00-01-04-main-00-80-19:
+	  alternator.hac: implemented fast alternator bucket, 
+		low latency alternating merge, and
+		low latency binary tree fifo (all e1of1).  
+		All new tests passed.  
+
+
+2006-09-15	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-18:
+	  alternator.hac: onehot_stage reduced a pull-up rule,
+		implemented faster alternators with better concurrency
+		and lower latency, includes source, lock, and eater.  
+		Tree fifo draft works, but has long latency split/merge.
+	  Next: faster split and merge alternators (latency too 
+		horrendous as is).
+
+
+2006-09-14	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-17:
+	  alternator.hac: Working, but slow, merge alternator, tested.
+
+
+2006-09-13	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-16:
+	  Added an alternator-lock that passes one of several
+		sources through in round-robin order (alternation).  
+		This will be the basis for alternator merges.  
+	  Updated the reset initial phase of alternator-eaters to 
+		work with environment resets in general.
+	  Also updated initial reset phase of alternating splitters.  
+	  Added binary alternating split tree definition.
+	  Next: finish alternating merger, construct tree FIFO.  
+
+
+	* HACKT-00-01-04-main-00-80-15:
+	  env.hac: CMOS sources now work for all N > 0, 
+		except that for N==2, need inactive R.e on reset.
+	  Added more test cases, and removed some useless ones.  
+
+
+2006-09-12	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-14:
+	  New alternator cells, many tested.
+
+
+2006-09-11	Sandra Jackson	<sjj3@cornell.edu>
+
+	* HACKT-00-01-04-main-00-80-12:
+	  alternator.hac: Added draft of alternating token-eater 'alt'.
+
+
+2006-09-06	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-10:
+	  Added: "alternator.hac" base definitions for template cells to 
+		be used in counters and alternators.  
+	  env.hac: defined CMOS-implementable sources for environment
+		using new (CMOS) alternator cells.
+		Rewrote bitbuckets to be CMOS implementable.  
+	  New and revised definitions have been tested in test/lib.
+
+
+2006-09-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-07:
+	  Added copy.hac: unbuffered wire-copies.
+	  Added sync.hac: synchronization primitives, both unbuffered
+		and weak-condition half-buffered.  
+	  None are tested yet.  
+
+
+2006-08-09	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-54:
+	  mk/ Makefiles now have hackt cflat-lvs (.lvsprs) rules.
+
+
+2006-08-07	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-53:
+	  Fixed acknowledge of inactive_reset_bitbucket_a1ofN.
+
+
+2006-08-04	Sandra Jackson	<sjj3@cornell.edu>
+
+	* HACKT-00-01-04-main-00-79-48:
+	  Added renv.hac to the library.  
+
+
+2006-08-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-46:
+	  Ton of comments and comment-placeholders (TODO markers).  
+	  Buffers' prs adjusted to use _c1ofN for exclusive-low-ness.
+	  Added some buffers for other used protocols and channel types.  
+
+
+2006-08-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-45:
+	  Fixed/simplified the exclhi/lo directives in "channel.hac".
+
+
+2006-07-28	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-40:
+	  Makefile support for graphviz-generated PostScript targets.
+
+
+2006-07-27	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-37:
+	  Added automatic dependency generators to mk/ Makefile rules.  
+
+
+2006-07-26	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-35:
+	  Added "logic.hac" for standard logic gates.  
+	  Includes test cases in test/lib.
+
+
+2006-07-18	Sandra Jackson 	<sjj3@cornell.edu>
+
+	* HACKT-00-01-04-main-00-79-33:
+	  Fixed a convention bug in channel.hac so that parameters
+		in template appear in the order they are added.
+
+
+2006-06-02	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-14:
+	  Replaced definitions of width-specific buckets and sources
+		with template typedefs, to eliminate redundant definitions.  
+		Test cases in test/lib updated accordingly.  
+
+
+2006-05-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-13:
+	  Fixed typo in channel's exclhi/lo spec-directives.
+
+
+2006-05-31	David Fang	<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-09:
+	  Added ev (shared validity) style channels to "channel.hac".
+	  Added exclhi/lo directives to channels' data rails.  
+	  Added comments of port descriptions.  
+
+
+2006-05-30	Sandra Jackson	<sjj3@cornell.edu>
+
+	* HACKT-00-01-04-main-00-79-08:
+	  Added library file env.hac. (sources/sinks)
+	  Updated channel.hac to more efficient version.
+	  File buffer.hac uses new versions.
+
+
+2006-05-10	Sandra Jackson	<sjj3@cornell.edu>
+
+	* HACKT-00-01-04-main-00-79-03-CHP-02-01:
+	  Updated template Makefiles in mk/, removed .*test suffixes
+		because they are only used for regression testing, 
+		added .prsimexpr-{dot,ps} rules.  
+
+
+2006-03-28	Sandra Jackson	<sjj3@cornell.edu>
+
+	* HACKT-00-01-04-main-00-78-06:
+	  Added library files buffer.hac and channel.hac.
+
+

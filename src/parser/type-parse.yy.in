@@ -1,0 +1,699 @@
+/**
+	\file "parser/type-parse.yy.in"
+	vi: ft=yacc
+	Yacc-generated parser source for types in the HAC language.  
+	ALERT: Make sure you are editing "parser/type-parse.yy.in"
+	and NOT the configure-generated "parser/type-parse.yy"
+	or else your changes will be clobbered during the next configure!
+	$Id: type-parse.yy.in,v 1.8 2010/04/27 18:33:22 fang Exp $
+ */
+
+%{
+#include <iostream>
+
+#include "parser/yacc-config.h"
+#include "AST/AST.hh"		// should be first
+#include "parser/type-prefix.h"
+#include "parser/type-parse.output.hh"	// auto-generated state strings! :)
+#include "parser/type-parse-options.h"
+#include "parser/type-union.hh"
+#include "lexer/type-lex-options.h"
+#include "lexer/flex_lexer_state.hh"
+#include "util/using_ostream.hh"
+
+#define	ENABLE_STACKTRACE		0
+#include "util/stacktrace.hh"
+
+// extern FILE* yyin;
+
+/**
+	This is never used, libbogus.  
+ */
+#ifdef	LIBBOGUS
+static flex::lexer_state	_lexer_state;
+#endif
+
+using namespace HAC::lexer;
+using namespace HAC::parser;
+
+/***
+// list macros (now inline functions in "AST/node_list.hh")
+WRAP_LIST
+DELETE_TOKEN
+APPEND_LIST
+APPEND_NULL
+CONCAT_LIST
+***/
+%}
+
+/**
+	NOTE: to use the following union definition, which will be
+	summarized in "type-parse-prefix.h" (generated), 
+	you will need to include "art_parser_fwd.h" first
+	(with using namespace HAC::parser;) to provide forward
+	declarations of the union-members' types.  
+ */
+%union {
+/*	void*			_null;		// reserved for NULL */
+	terminal*		_terminal;
+	node_position*		_node_position;
+	keyword_position*	_keyword_position;
+	token_keyword*		_token_keyword;
+/*	token_string*		_token_string;	*/
+/*	token_char*		_token_char;	*/
+	token_int*		_token_int;
+	token_bool*		_token_bool;
+	token_float*		_token_float;
+	token_identifier*	_token_identifier;
+	token_quoted_string*	_token_quoted_string;
+	token_datatype*		_token_datatype;
+	token_bool_type*	_token_bool_type;
+	token_int_type*		_token_int_type;
+	token_paramtype*	_token_paramtype;
+	token_pbool_type*	_token_pbool_type;
+	token_pint_type*	_token_pint_type;
+	token_preal_type*	_token_preal_type;
+	token_else*		_token_else;
+
+/*	type_base*		_type_base;	*/
+	concrete_type_ref*	_concrete_type_ref;
+	generic_type_ref*	_generic_type_ref;
+	type_id*		_type_id;
+/*	data_type_ref_list*	_data_type_ref_list;	*/
+	user_data_type_def*	_user_data_type_def;
+/*	chan_type*		_chan_type;		*/
+/*	user_chan_type_def*	_user_chan_type_def;	*/
+/*	data_param_id*		_data_param_id;		*/
+/*	data_param_id_list*	_data_param_id_list;	*/
+/*	data_param_decl*	_data_param_decl;	*/
+/*	data_param_decl_list*	_data_param_decl_list;	*/
+
+	expr*			_expr;
+	inst_ref_expr*		_inst_ref_expr;
+	qualified_id*		_qualified_id;
+	id_expr*		_id_expr;
+
+/*	HAC::parser::index_expr*	_index_expr;	*/
+/*	member_expr*		_member_expr;		*/
+/*	assign_stmt*		_assign_stmt;		*/
+/*	incdec_stmt*		_incdec_stmt;		*/
+	expr_list*		_expr_list;
+	inst_ref_expr_list*	_inst_ref_expr_list;
+	template_argument_list_pair*	_template_argument_list_pair;
+	array_concatenation*	_array_concatenation;
+	loop_concatenation*	_loop_concatenation;
+	array_construction*	_array_construction;
+
+}
+
+%{
+
+/* Had to move these declarations AFTER YYSTYPE (above union) was defined
+ * for a particular "yyerror_bison_hack.awk" to work.  
+ */
+// extern	int yylex(void);		// ancient compiler rejects
+extern	YY_DECL;			// something like the above
+
+static void yyerror(const char* msg);	// ancient compiler rejects
+
+/* automatically generated function to resolve parser symbol type
+	on the yy value stack, base on yy state stack transitions
+	TODO: these symbols may have to be renamed
+		to avoid conflicts in multiple parsers.  
+ */
+extern	ostream& yy_union_resolve_dump(const YYSTYPE&, const short, const short, ostream&);
+extern	void yy_union_resolve_delete(const YYSTYPE&, const short, const short);
+extern	ostream& yy_union_lookup_dump(const YYSTYPE&, const int, ostream&);
+extern	void yy_union_lookup_delete(const YYSTYPE&, const int);
+
+static
+void
+yyfreestacks(const short* yyss, const short* yyssp, 
+		const YYSTYPE* yyvs, const YYSTYPE* yyvsp, 
+		const YYSTYPE yylval, const int yychar,
+		const flex::lexer_state& _lexer_state);
+%}
+
+/*
+	The lexer returns newly allocated nodes FOR ALL TOKENS, 
+	even ones that are just symbols.  
+	If you don't want to use a returned symbol, delete it!
+	We are keeping the memory and performance overhead of the 
+	front-end for now, for the sake of precise error reporting.  
+	If performance is a concern, consider writing new allocators
+	(using memory pools) to replace the default.  
+
+	The following single characters are legitimate tokens:
+	][(){}<>*%/=:;|!?~&^.,#+-
+
+	(can just copy these into a lex declaration, enclosed in [])
+
+	note on character classes from grep's man page:
+		Most metacharacters  lose  their  special  meaning  inside
+		lists.  To include a literal ] place it first in the list.
+		Similarly, to include a literal ^ place  it  anywhere  but
+		first.  Finally, to include a literal - place it last.
+
+*/
+%type	<_node_position>	'{' '}'
+/* %type	<_node_position>	'[' ']' '(' ')'	*/
+%type	<_node_position>	'<' '>'
+%type	<_node_position>	',' '#'
+/* %type	<_node_position>	'.' ';' ':' '='		*/
+/* %type	<_node_position>	'+' '-' '*' '/' '%'	*/
+/* %type	<_node_position>	'~' '&' '|' '^'		*/
+/* %type	<_node_position>	'!' '?'			*/
+
+/*
+	the following tokens are defined below because they consist of
+	2 or more characters
+*/
+
+%token	<_token_identifier>	ID
+%token	<_token_float>		FLOAT
+%token	<_token_int>		INT
+%token	<_token_quoted_string>	STRING
+
+%token	<_node_position>	SCOPE
+
+/* %token	<_node_position>	LE GE EQUAL NOTEQUAL	*/
+/* %token	<_node_position>	IMPLIES RARROW	*/
+/* %token	<_node_position>	LOGICAL_AND LOGICAL_OR	*/
+/* %token	<_node_position>	INSERT EXTRACT	*/
+
+/* _token_keyword: covert most of these to _keyword_position */
+/* %token	<_keyword_position>	CHANNEL		*/
+%token	<_keyword_position>	TEMPLATE
+
+%token	<_token_bool>		BOOL_TRUE BOOL_FALSE
+
+/* _token_type */
+%token	<_token_int_type>	INT_TYPE
+%token	<_token_bool_type>	BOOL_TYPE
+%token	<_token_pint_type>	PINT_TYPE
+%token	<_token_pbool_type>	PBOOL_TYPE
+%token	<_token_preal_type>	PREAL_TYPE
+
+/* non-terminals */
+%type	<_concrete_type_ref>	physical_type_ref
+%type	<_generic_type_ref>	generic_type_ref
+/* %type	<_concrete_type_ref>	data_type_ref base_data_type_ref */
+%type	<_concrete_type_ref>	type_id
+/* %type	<_token_paramtype>	base_param_type	*/
+/* %type	<_chan_type>	base_chan_type chan_or_port	*/
+/* %type	<_node_position>	optional_chan_dir	*/
+/* %type	<_data_type_ref_list>	data_type_ref_list_in_parens */
+/* %type	<_data_type_ref_list>	data_type_ref_list */
+/* %type	<_token_datatype>	base_data_type	*/
+/* %type	<_expr>	paren_expr	*/
+/* %type	<_expr>	expr		*/
+%type	<_expr>	literal
+/* %type	<_id_expr>	id_expr	*/
+%type	<_qualified_id>	qualified_id absolute_id relative_id
+/* %type	<_inst_ref_expr_list>	member_index_expr_list	*/
+/* %type	<_inst_ref_expr_list>	member_index_expr_list_in_parens	*/
+/* %type	<_inst_ref_expr_list>	mandatory_member_index_expr_list	*/
+/* %type	<_inst_ref_expr_list>	mandatory_member_index_expr_list_in_parens	*/
+/* %type	<_inst_ref_expr_list>	grouped_reference_list */
+/* %type	<_inst_ref_expr_list>	grouped_reference_list_in_parens */
+/* %type	<_expr_list>	expr_optional_list expr_optional_list_in_angles */
+%type	<_expr_list>	complex_expr_list_in_angles
+/* %type	<_expr_list>	expr_list_in_angles_optional */
+/* %type	<_inst_ref_expr>	optional_member_index_expr member_index_expr	*/
+/* %type	<_inst_ref_expr>	relative_member_index_expr	*/
+/* %type	<_inst_ref_expr>	grouped_reference	*/
+%type	<_expr> simple_expr
+/* %type	<_expr>	unary_expr	*/
+/* %type	<_member_expr>	member_expr local_member_expr	*/
+/* %type	<_index_expr>	index_expr local_index_expr	*/
+/* %type	<_expr>	multiplicative_expr additive_expr	*/
+/* %type	<_expr> shift_expr optional_complex_expr	*/
+/* %type	<_expr>	relational_equality_expr and_expr	*/
+/* %type	<_node_position>	relational_op	*/
+/* %type	<_node_position>	muldiv_op	*/
+/* %type	<_expr>	exclusive_or_expr inclusive_or_expr	*/
+/* %type	<_expr>	logical_and_expr logical_or_expr	*/
+/* %type	<_incdec_stmt>	unary_assignment	*/
+%type	<_expr_list>	optional_template_arguments_in_angles
+%type	<_template_argument_list_pair>	strict_relaxed_template_arguments
+/* %type	<_expr_list>	expr_list_in_parens	*/
+%type	<_expr_list>	complex_expr_list
+/* %type	<_expr>		complex_aggregate_reference	*/
+/* %type	<_expr>		optional_complex_aggregate_reference */
+%type	<_expr>		complex_expr_term
+%type	<_array_concatenation>		array_concatenation
+%type	<_array_construction>		array_construction
+/* %type	<_expr_list>	complex_aggregate_reference_list	*/
+/* %type	<_expr_list>	mandatory_complex_aggregate_reference_list */
+
+%start	type_id
+
+/* YACC_PURE_PARSER: conditionally substituted by configure */
+@YACC_PURE_PARSER@
+
+%%
+/******************************************************************************
+//	Grammar
+******************************************************************************/
+
+type_id
+	: physical_type_ref
+		{ $$ = $1;
+		if (!yychar) { yylval._concrete_type_ref = $1; }
+		}
+/*	| base_param_type { $$ = $1; }	*/
+	;
+
+/******************************************************************************
+//	Process types
+******************************************************************************/
+
+/* TODO: nested types */
+generic_type_ref
+	/* note: no optional_chan_dir */
+	: relative_id strict_relaxed_template_arguments
+		{ $$ = new generic_type_ref(new type_id($1), $2, NULL); }
+	| absolute_id strict_relaxed_template_arguments
+		{ $$ = new generic_type_ref(new type_id($1), $2, NULL); }
+	;
+
+physical_type_ref
+	: generic_type_ref { $$ = $1; }
+/*	| base_chan_type { $$ = $1; }		*/
+/*	| base_data_type_ref { $$ = $1; }	*/
+	;
+
+/**
+base_data_type_ref
+	: base_data_type strict_relaxed_template_arguments
+		{ $$ = new generic_type_ref($1, $2); }
+	;
+
+data_type_ref
+	: base_data_type_ref { $$ = $1; }
+	| generic_type_ref { $$ = $1; }
+	;
+**/
+
+/**
+base_param_type
+	: PINT_TYPE { $$ = $1; }
+	| PBOOL_TYPE { $$ = $1; }
+	| PREAL_TYPE { $$ = $1; }
+	;
+**/
+
+/**
+base_chan_type
+	: chan_or_port data_type_ref_list_in_parens
+		{ $$ = $1; $$->attach_data_types($2); }
+	;
+
+chan_or_port
+	: CHANNEL optional_chan_dir
+		{ $$ = new chan_type($1, $2); }
+	;
+
+data_type_ref_list_in_parens
+	: '(' data_type_ref_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+data_type_ref_list
+	: data_type_ref_list ',' data_type_ref
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| data_type_ref
+		{ $$ = new data_type_ref_list($1); }
+	;
+
+base_data_type
+	: INT_TYPE { $$ = $1; }
+	| BOOL_TYPE { $$ = $1; }
+	;
+**/
+
+/******************************************************************************
+// Tentatively, for the type-parser, we allow only constant expressions:
+// no operations or variable references
+******************************************************************************/
+/**
+paren_expr
+	: '(' expr ')'
+		{ $$ = $2; DELETE_TOKEN($1); DELETE_TOKEN($3); }
+	;
+**/
+
+literal
+	/* all default actions, all are expr subclasses */
+	: INT { $$ = $1; }
+	| FLOAT { $$ = $1; }
+/* no string constants yet */
+/*	| STRING { $$ = $1; }		*/
+	| BOOL_TRUE { $$ = $1; }
+	| BOOL_FALSE { $$ = $1; }
+	;
+
+/**
+id_expr
+	: relative_id { $$ = new id_expr($1); }
+	| absolute_id { $$ = new id_expr($1); }
+	;
+**/
+
+absolute_id
+	: SCOPE relative_id
+		{ $$ = $2->force_absolute($1); }
+	;
+
+relative_id
+	: qualified_id
+	| ID { $$ = new qualified_id($1); }
+	;
+
+qualified_id
+	: qualified_id SCOPE ID
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| ID SCOPE ID
+		{ $$ = new qualified_id($1); APPEND_LIST($$, $2, $3); }
+	;
+
+/**
+mandatory_member_index_expr_list_in_parens
+	: '(' mandatory_member_index_expr_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+mandatory_member_index_expr_list
+	: mandatory_member_index_expr_list ',' member_index_expr
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| member_index_expr { $$ = new inst_ref_expr_list($1); }
+	;
+
+member_index_expr_list
+	: member_index_expr_list ',' optional_member_index_expr
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| optional_member_index_expr { $$ = new inst_ref_expr_list($1); }
+	;
+
+optional_member_index_expr
+	: member_index_expr
+	| { $$ = NULL; }
+	;
+
+member_index_expr
+	: id_expr { $$ = $1; }
+	| index_expr { $$ = $1; }
+	| member_expr { $$ = $1; }
+	;
+
+relative_member_index_expr
+	: ID { $$ = new id_expr(new qualified_id($1)); }
+	| local_index_expr { $$ = $1; }
+	| local_member_expr { $$ = $1; }
+	;
+
+local_index_expr
+	: local_member_expr sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	| ID sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	;
+
+local_member_expr
+	: local_index_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| local_member_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| ID '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	;
+
+index_expr
+	: member_expr sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	| id_expr sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	;
+
+member_expr
+	: index_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| member_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| id_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	;
+**/
+
+/* single term */
+simple_expr
+	: literal { $$ = $1; }
+/*	| member_index_expr { $$ = $1; }	*/
+/* TODO: allow type-nested expressions */
+	;
+
+/**
+unary_expr
+	: simple_expr { $$ = $1; }
+	| paren_expr { $$ = $1; }
+	| '-' unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	| '!' unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	| '~' unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	;
+
+multiplicative_expr
+	: unary_expr
+	| multiplicative_expr muldiv_op unary_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+muldiv_op
+	: '*'
+	| '/'
+	| '%'
+	;
+
+additive_expr
+	: multiplicative_expr
+	| additive_expr '+' multiplicative_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	| additive_expr '-' multiplicative_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+
+shift_expr
+	: additive_expr
+	| shift_expr EXTRACT additive_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	| shift_expr INSERT additive_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+relational_equality_expr
+	: shift_expr
+	| '(' relational_equality_expr '<' shift_expr ')'
+		{ $$ = new relational_expr($2, $3, $4);
+			DELETE_TOKEN($1); DELETE_TOKEN($5); }
+	| '(' relational_equality_expr '>' shift_expr ')'
+		{ $$ = new relational_expr($2, $3, $4);
+			DELETE_TOKEN($1); DELETE_TOKEN($5); }
+	| relational_equality_expr LE shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	| relational_equality_expr GE shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	| relational_equality_expr EQUAL shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	| relational_equality_expr NOTEQUAL shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	;
+
+relational_op
+	: '<'
+	| '>'
+	| LE
+	| GE
+	| EQUAL
+	| NOTEQUAL
+	;
+
+and_expr
+	: relational_equality_expr
+	| and_expr '&' relational_equality_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+exclusive_or_expr
+	: and_expr
+	| exclusive_or_expr '^' and_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+inclusive_or_expr
+	: exclusive_or_expr
+	| inclusive_or_expr '|' exclusive_or_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+logical_and_expr
+	: inclusive_or_expr
+	| logical_and_expr LOGICAL_AND inclusive_or_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+
+logical_or_expr
+	: logical_and_expr
+	| logical_or_expr LOGICAL_OR logical_and_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+
+unary_assignment
+	: member_index_expr PLUSPLUS
+		{ $$ = new incdec_stmt($1, $2); }
+	| member_index_expr MINUSMINUS
+		{ $$ = new incdec_stmt($1, $2); }
+	;
+**/
+
+
+/* note: expressions are non-optional in this context */
+strict_relaxed_template_arguments
+	: complex_expr_list_in_angles optional_template_arguments_in_angles
+		{ $$ = new template_argument_list_pair($1, $2); }
+	|	{ $$ = NULL; }
+	;
+
+optional_template_arguments_in_angles
+	: complex_expr_list_in_angles { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/**
+expr_list_in_angles_optional
+	: expr_list_in_angles { $$ = $1; }
+	| { $$ = NULL; }
+	;
+**/
+
+complex_expr_list_in_angles
+	: '<' complex_expr_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+/**
+expr_optional_list_in_angles
+	: '<' expr_optional_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+expr_optional_list
+	: expr_optional_list ',' optional_complex_expr 
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| optional_complex_expr { $$ = new expr_list($1); }
+	;
+
+optional_complex_expr
+	: complex_expr_term { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+member_index_expr_list_in_parens
+	: '(' member_index_expr_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+expr_list_in_parens
+	: '(' expr_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+**/
+
+complex_expr_list
+	: complex_expr_list ',' array_concatenation
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| array_concatenation { $$ = new expr_list($1); }
+	;
+
+/* --- array declaration syntax ------------------------------------------- */
+/** giving up CAST-style for C-style arrays */
+
+
+/* ----end array ---------------------------------------------------------- */
+/* ---- complex expressions ----------------------------------------------- */
+
+/**
+complex_aggregate_reference
+	: array_concatenation { $$ = $1; }
+	;
+**/
+
+/* pasting arrays together */
+array_concatenation
+	: array_concatenation '#' complex_expr_term
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| complex_expr_term
+		{ $$ = new array_concatenation($1); }
+	;
+
+complex_expr_term
+	: array_construction { $$ = $1; }
+/*	| loop_concatenation { $$ = $1; }	*/
+/*	| expr { $$ = $1; }			*/
+/*	| array_concatenation { $$ = $1; }	*/
+	| simple_expr { $$ = $1; }
+	;
+
+/* building up to higher-dimensions */
+array_construction
+	: '{' complex_expr_list '}'
+		{ $$ = new array_construction($1, $2, $3); }
+	;
+
+/**
+	Later, introduces loop concatenations?
+	Don't always know number of terms statically...
+	For now, add to grammar, but don't implement for a while.  
+loop_concatenation
+	: '(' '#' ':' ID ':' range ':' complex_expr_term ')'
+		{ $$ = new loop_concatenation($1, $4, $6, $8, $9);
+		  DELETE_TOKEN($2); DELETE_TOKEN($3);
+		  DELETE_TOKEN($5); DELETE_TOKEN($7);
+		}
+	;
+**/
+
+/**
+optional_complex_aggregate_reference
+	: complex_aggregate_reference { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+mandatory_complex_aggregate_reference_list
+	: mandatory_complex_aggregate_reference_list ','
+		complex_aggregate_reference
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| complex_aggregate_reference
+		{ $$ = new expr_list($1); }
+	;
+**/
+
+/* ---- end complex expressions ------------------------------------------- */
+%%
+
+#include "parser/yyfreestacks.cc"		// we've moved!
+#include "parser/yyerror.cc"			// we've moved!
+
+// following prototype MUST appear as is (after "static") for awk hack...
+static
+void yyerror(const char* msg) { 	// ancient compiler rejects
+	STACKTRACE_VERBOSE;
+	__yyerror(msg);
+	// or throw exception
+	THROW_EXIT;
+}	// end yyerror(...)
+
+//=============================================================================
+

@@ -1,0 +1,3 @@
+ERROR: Expression at [6:5] does not refer to a data type.
+At least one error in expr-list at [6:4..6]
+ERROR: at least one error in CHP body.

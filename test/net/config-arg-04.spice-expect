@@ -1,0 +1,3 @@
+My:dn:0 !GND x y !GND nch W=50nm L=20nm
+My:up:0 !Vdd x y !Vdd pch W=50nm L=20nm
+

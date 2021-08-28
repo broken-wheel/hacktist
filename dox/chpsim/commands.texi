@@ -1,0 +1,255 @@
+@c "commands.texi"
+@c $Id: commands.texi,v 1.10 2010/07/07 23:01:19 fang Exp $
+@c TODO: index commands
+
+@node Commands
+@chapter Commands
+@cindex commands
+@cindex interpreter commands
+@cindex interactive commands
+
+This chapter describes all of the simulator's interactive commands.  
+Commands are organized into the following categories:
+
+@ifnotinfo
+@table @samp
+@item builtin
+Built-in interpreter commands
+@item general
+General-purpose commands
+@item info
+Information about the simulation state
+@item modes
+Simulator execution modes
+@item simulation
+Breakpoints and step control
+@item tracing
+Checkpointing and tracing
+@item view
+Simulation state monitoring and feedback
+@end table
+@end ifnotinfo
+
+@c is there a way to symchronize the above table as a menu?
+
+@menu
+* builtin:: built-in interpreter commands.
+* general:: general-purpose commands.
+* info:: simulation state information.
+* modes:: simulation execution modes.
+* simulation:: breakpoints and step control.
+* tracing:: checkpointing and tracing.
+* view:: state monitoring and feedback.
+@end menu
+
+
+@c ****************************************************************************
+@node builtin
+@section @t{builtin} commands
+@cindex built-in commands
+
+Built-in commands pertain to the interpreter, 
+and have no relation to simulation.
+
+@include cmd/help.texi
+@include cmd/comment.texi
+@include cmd/echo.texi
+@include cmd/exit.texi
+@include cmd/abort.texi
+@include cmd/precision.texi
+@include cmd/repeat.texi
+@include cmd/history.texi
+@include cmd/interpret.texi
+
+@deffn Command ! shell-cmd
+Shell escape.
+Execute @var{shell-cmd} in parent shell, 
+like the @samp{system} library function, e.g. @samp{!date}.
+Note: this preserves the rest of the line after the `!' verbatim.
+@end deffn
+
+@cindex aliases, command
+The following commands are related to command aliases.
+Every command line given to the interpreter recursively
+expands the first token if it has a known alias.  
+Aliases may reference to other aliases in the first token.  
+The interpreter is smart enough to catch cyclic aliases
+and report an error.  
+
+@include cmd/alias.texi
+@include cmd/aliases.texi
+@include cmd/unalias.texi
+@include cmd/unaliasall.texi
+
+@include cmd/directories.texi
+
+The following command is useful for showing each executed command.
+
+@include cmd/echo-commands.texi
+
+@c ****************************************************************************
+@node general
+@section @t{general} commands
+@cindex general commands
+
+The following commands relate to sourcing script files.
+Scripts may source other scripts.  
+Cyclic scripts are detected and diagnosed as errors.  
+
+@include cmd/source.texi
+@include cmd/addpath.texi
+@include cmd/paths.texi
+
+@cindex module commands
+The following commands relate to extending the simulator with
+user-defined functions in dynamically loaded shared libraries.  
+More on shared modules can be found in @ref{Extending simulation}.
+
+@include cmd/dladdpath.texi
+@include cmd/dlopen.texi
+@include cmd/dlpaths.texi
+@include cmd/dlcheckfunc.texi
+@include cmd/dlassertfunc.texi
+@include cmd/dlfuncs.texi
+
+@c ****************************************************************************
+@node info
+@section @t{info} commands
+@cindex info commands
+
+@include cmd/assert-queue.texi
+@include cmd/assertn-queue.texi
+@include cmd/queue.texi
+@include cmd/dump-event.texi
+@include cmd/dump-event-source.texi
+@include cmd/dump-all-event-source.texi
+@include cmd/dump-state.texi
+@include cmd/get.texi
+@include cmd/print-event-header.texi
+@include cmd/subscribers.texi
+@include cmd/subscribers-all.texi
+@include cmd/time.texi
+@include cmd/what.texi
+@include cmd/who.texi
+@include cmd/ls.texi
+
+@c ****************************************************************************
+@node modes
+@section @t{modes} commands
+@cindex modes commands
+@cindex uniform delay
+@cindex random delay
+@cindex per-event delay
+
+@include cmd/null-event-delay.texi
+@include cmd/timing.texi
+@include cmd/seed48.texi
+@include cmd/uniform-delay.texi
+
+@c ****************************************************************************
+@node simulation
+@section @t{simulation} commands
+@cindex simulation commands
+
+@cindex initialization, simulation
+
+@include cmd/initialize.texi
+@include cmd/reset.texi
+
+The following commands run the simulation.
+Simulation is interrupted if a run-time error occurs, 
+or a breakpoint is tripped.  
+@kbd{Ctrl-c} or @samp{SIGINT} (from @samp{kill -INT})
+interrupts the simulation and returns control back to the interpreter
+in interactive mode.  
+
+@include cmd/advance.texi
+@include cmd/advance-to.texi
+@include cmd/step.texi
+@include cmd/run.texi
+
+@cindex breakpoints
+The following commands pertain to breakpoints.  
+
+@include cmd/break-event.texi
+@include cmd/break-value.texi
+@include cmd/unbreak-event.texi
+@include cmd/unbreak-value.texi
+@include cmd/show-event-breaks.texi
+@include cmd/show-value-breaks.texi
+@include cmd/unbreakall-events.texi
+@include cmd/unbreakall-values.texi
+
+
+@c ****************************************************************************
+@node tracing
+@section @t{tracing} commands
+@cindex tracing commands
+
+@cindex checkpointing
+Checkpointing is useful for saving long simulations.
+Checkpoint files are only valid for simulations that load 
+@emph{the same object file} that was used to produce the checkpoint.  
+A few minimal consistency checks are performed to alert
+the user of a mistake.  
+
+The structure of the whole-program (after state allocation) 
+is not retained in the checkpoint;
+rather, it is regenerated from the object file.  
+@b{Note:} 
+Only the state of variables (their values) and events is written
+to the checkpoint.  
+Simulator modes, breakpoints, watchpoints, and dlopen-ed modules
+are @emph{not} preserved in checkpoints, 
+nor are they affected by loading checkpoints.  
+
+@strong{TODO:} periodic checkpointing, via @command{auto-save}.
+
+@include cmd/save.texi
+@include cmd/load.texi
+
+@cindex tracing commands
+Entire execution traces may be saved away for offline analysis.  
+Again the structure of the whole-program (after state allocation) 
+is not recorded in the trace; rather, it is assumed from the object file.  
+
+@strong{TODO:} Section on trace file details and internals?
+
+@include cmd/trace.texi
+@include cmd/trace-file.texi
+@include cmd/trace-close.texi
+@include cmd/trace-dump.texi
+@include cmd/trace-flush-interval.texi
+@include cmd/trace-flush-notify.texi
+
+
+@c ****************************************************************************
+@node view
+@section @t{view} commands
+@cindex view commands
+
+The @t{view} category commands controls what information is printed
+by the simulator as it executes events.  
+Watchpoints are similar to breakpoints in the feedback that is
+printed, but without interrupting simulation.  
+
+@include cmd/cause.texi
+@include cmd/nocause.texi
+
+@cindex event queue
+@c @include cmd/watch-queue.texi
+@c @include cmd/nowatch-queue.texi
+@include cmd/watchall-queue.texi
+@include cmd/nowatchall-queue.texi
+
+@cindex watchpoints
+
+@include cmd/watch-event.texi
+@include cmd/unwatch-event.texi
+@include cmd/watch-value.texi
+@include cmd/unwatch-value.texi
+@include cmd/show-event-watches.texi
+@include cmd/show-value-watches.texi
+@include cmd/watchall-events.texi
+@include cmd/nowatchall-events.texi
+

@@ -1,0 +1,447 @@
+@c "chpsim/tutorial.texi"
+@c $Id: tutorial.texi,v 1.2 2010/04/02 22:17:30 fang Exp $
+
+@node Tutorial
+@chapter Tutorial
+@cindex tutorial
+
+This chapter demonstrates the basic usage of @command{hacknet}
+for generating SPICE-netlists.
+A complete description of features and options follows
+in the next chapters.
+
+@menu
+* Compiling and Running::
+* Transistor Ordering::
+* Dimensional Units::
+* Transistor Sizing::
+* Transistor Attributes::
+* Staticizers::
+* Transmission Gates::
+* Shared Internal Nodes::
+* Internal Precharges::
+* Subcircuits::
+* PRS Supply Override::
+* Instance Supply Override::
+* Substrate Override::
+* Ignored Language Features::
+* Configuration help::
+@end menu
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Compiling and Running
+@section Compiling and Running
+
+In this section, you will compile an example of a top-level
+circuit into a spice netlist with @hacknet{}.
+Write the following HAC file, @file{inv-top.hac}:
+
+@example
+bool x, y;
+prs @{
+  x => y-
+@}
+@end example
+
+@noindent
+Compile the source to an object file:
+
+@example
+@shellkbd{haco inv-top.hac inv-top.haco}
+@shellkbd{haccreate inv-top.haco inv-top.haco-c}
+@end example
+
+@noindent
+Generate a netlist:
+
+@example
+@shellkbd{hacknet inv-top.haco-c > inv-top.spice}
+@end example
+
+@noindent
+@hacknet{} normally produces output to @t{stdout}, so its output
+should be redirected to a file.
+The resulting output should look like:
+
+@example
+My:dn:0 !GND x y !GND nch W=5u L=2u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
+@end example
+
+The resulting netlist produces a set of transistors at the top-level.
+The @t{!Vdd} and @t{!GND} nodes are implicit power supplies.
+The default device types are @t{nch} for NFETs and @t{pch} for PFETs.
+Default widths and lengths were chosen because none were specified.  
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Subcircuits
+@section Subcircuits
+
+Process definitions are emitted as subcircuit definitions, 
+and can be instantiated with the SPICE @t{X} card.  
+
+Write the following HAC file, @file{inv-def.hac}:
+
+@example
+defproc inv(bool x, y) @{
+prs @{
+  x => y-
+@}
+@}
+@end example
+
+@noindent
+Compile the source to an object file as before.  
+Since there are no top-level instances, you'll need to tell 
+@command{hacknet} what type to emit as the top subcircuit.  
+
+@example
+$ hacknet -T 'inv' inv-def.haco-c
+@end example
+
+@noindent
+should produce:
+
+@example
+.subckt inv<> !GND !Vdd x y
+My:dn:0 !GND x y !GND nch W=5u L=2u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
+.ends
+@end example
+
+@noindent
+Use of single-quotes around the type argument is encouraged
+(in fact, only required for template parameters to protect the 
+@t{<>} characters from being interpreted by the shell).  
+
+Finally, entire hierarchal netlists can be produced by instantiating
+subcircuit definitions.  Write the following file @file{invs.hac}, 
+and compile it into @file{invs.haco-c}:
+
+@example
+import "inv-def.hac";
+
+// pair of inverters
+defproc foo(bool a, b, c) @{
+inv p(a, b), q(b, c);
+@}
+
+foo bar;
+@end example
+
+@noindent
+Run @command{hacknet}:
+
+@example
+$ hacknet invs.haco-c > invs.spice
+@end example
+
+@noindent
+to produce the following hierarchical netlist.
+
+@example
+.subckt inv<> !GND !Vdd x y
+My:dn:0 !GND x y !GND nch W=5u L=2u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
+.ends
+
+.subckt foo<> !GND !Vdd a b c
+xp !GND !Vdd a b inv<>
+xq !GND !Vdd b c inv<>
+.ends
+
+xbar !GND !Vdd bar.a bar.b bar.c foo<>
+@end example
+
+In this example, there is a top-level instance of type @t{foo} named @t{bar}.
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Transistor Ordering
+@section Transistor Ordering
+
+The netlist produced depends on how production rules are written.
+While the boolean operators @code{|} and @code{&} are logically
+commutative and associative, the ordering of terms around
+@code{&} determine the ordering of transistors between
+supply and output.  The leftmost term will be closest to the supply,
+and the rightmost term will be directly connected to the output node.
+Re-arranging terms around the @code{|} operator produces equivalent 
+netlists, though the order in which devices appear in the netlist may change.
+
+One may care about series term ordering for a number of reasons:
+performance, signal integrity, charge-sharing.  
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Dimensional Units
+@section Dimensional Units
+@cindex units
+
+Spice netlists can refer to geometric dimensions in 
+units like micros and nanometers.
+@hacknet{} internally operates @emph{unitlessly}, however, 
+there is a global scale factor called @emph{lambda}
+that translates written values into absolute sizes.  
+By default, @t{lambda}=1, and @t{length_unit=u} (for 1 micron).  
+The value of @t{lambda} should be set in a configuration file
+that corresponds to your process node and foundry.  
+@ref{Configuration Options} lists parameter values supported
+by @hacknet{}'s configuration files.  
+
+For the remaining examples in this section, 
+we will assume the default @t{lambda=1} and @t{length_unit=u}.
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Transistor Sizing
+@section Transistor Sizing
+
+Some features of the @HAC{} language were added specifically
+for the sake of netlist generation.  
+We briefly describe them here, but the reader is referred to
+the full @HAC{} language documentation, specifically
+chapters "Connections" and "PRS".
+
+@c link?
+
+The production rule sub-language has enhancements to allow annotation
+of netlist attributes.  
+There are two ways of explicitly sizing devices: 
+using the @t{W} (width) rule attribute to apply to all literals, 
+or using a literal attribute to size a single device.
+The default width is 5 units.  
+
+The following examples illustrate variations in sizing devices.
+
+@example
+prs @{
+                           @i{// widths:}
+  [W=20] x & y -> ...      @i{// x=20; y=20}
+  [W=20] x & y<30> -> ...  @i{// x=20; y=30}
+  [W=25] x<20> & y -> ...  @i{// x=20; y=20}
+@}
+@end example
+
+@noindent
+The last example shows that after a sized literal, 
+literals that follow in series (@t{&}) get the same size, 
+unless explicitly resized.  
+Most of time transistor stacks will use a consistent width.  
+
+The default transistor length is 2 units.  
+Device lengths can also be specified, for longer channel devices.
+The rule attribute is @t{L} for length, and the literal 
+parameter is in second position.
+
+@example
+prs @{
+                               @i{// W,L}
+  [L=4] x & y -> ...           @i{// x=5,4; y=5,4}
+  x<6,3> & y<6,12> & z -> ...  @i{// x=6,3; y=6,12; z=6,12}
+@}
+@end example
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Transistor Attributes
+@section Transistor Attributes
+
+@subsection @t{iskeeper}
+
+The @t{iskeeper} attribute is used to signify (by device naming) that
+a transistor or group participates in state-holding feedback.
+This may aid other tools that read netlists.  
+For @hacprsim{}, rules flagged @t{iskeeper} are not even simulated.  
+
+@example
+prs @{
+  [iskeeper]          x_ => x-
+  [iskeeper;W=4;L=10] y_ => y-  @i{// example with multiple attributes}
+@}
+@end example
+
+There is also a related attribute @t{isckeeper} to flag rules 
+as participating in combinational feedback.
+
+@subsection Voltage Threshold
+
+@hacknet{} supports three variants of voltage thresholds in devices.  
+The default is @t{svt} for a "standard" threshold.  
+The other two are @t{lvt} and @t{hvt} for "lower" and "higher" thresholds.
+
+@example
+prs @{
+  [hvt] _z        => z-      @i{// NMOS and PMOS of inverter are hvt}
+  x & y<;hvt> & z -> q-      @i{// only the y-gate is hvt}
+@}
+@end example
+
+@noindent
+The semicolon in @code{y<;hvt>} is needed to separate the implicit
+width and length parameters (omitted) from the list of attributes.
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Transmission Gates
+@section Transmission Gates
+
+@cindex transmission gate
+@cindex pass gate
+@cindex macros
+
+@HAC{}'s PRS language uses the macros @t{passn} and @t{passp}
+to emit pass transistors (NMOS and PMOS).
+
+@example
+prs @{
+  passn(gate, source, drain)  @i{// NMOS transistor}
+  passp(gate, source, drain)  @i{// PMOS transistor}
+@}
+@end example
+
+@noindent
+While in @hacprsim{}, the pass gate is treated unidirectionally, 
+@hacknet{} just emits a single transistor that functions bidirectionally.
+
+The two complementary pass gates can be combined as follows:
+
+@example
+defproc full_pass (bool? in, en, en_; bool! out) @{
+  prs @{
+    passn(in,  en, out)
+    passp(in, en_, out)
+  @}
+@}
+@end example
+
+@noindent
+Pass gates also take width and length parameters and attributes, 
+just like expression literals:
+
+@example
+prs @{
+  passn<20,2;lvt>(in,  en, out)
+  passp<20;hvt>  (in, en_, out)
+@}
+@end example
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Staticizers
+@section Staticizers
+
+@hacknet{} does not automatically emit staticizers (keepers) for
+dynamic nodes; it is the designer's resposibility.  
+@HAC{} does provide an attribute for labeling transistors from
+feedback rules as those participating in staticizing.
+
+@example
+prs @{
+  [iskeeper]          x_ => x-
+  [iskeeper] ~Reset & ~y -> y+
+@}
+@end example
+
+@noindent
+Tools that consume netlists with this annotation
+can treat such transistors differently when analyzing circuits.  
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Shared Internal Nodes
+@section Shared Internal Nodes
+@cindex internal nodes
+@cindex shared nodes
+
+With production rules, one can think of every @t{&} operator
+translating to an unnamed internal node.  
+@hacknet{} just assigns these nodes auto-enumerated names like
+@t{#0}, @t{#1}, etc.
+
+While standard production rules are adequate for expressing
+series and parallel transistors, a syntax extension is required for
+explicitly naming and referencing shared internal nodes.  
+In @HAC{}, internal node are named with @t{@@} prefixes.
+
+@example
+prs @{
+  a & b           -> @@_int1-    @i{// internal node declaration}
+  ~@@_int1 & c & d -> o-         @i{// internal node use}
+@}
+@end example
+
+@noindent
+In this example, @t{@@_int1} is defined as the named internal node
+footed by @t{a&b}.  
+Then @t{@@_int1} is referenced in the @emph{negated} sense because
+it is considered `on' when it is pulled low.
+A pull-up PMOS stack with an internal node might look like the following:
+
+@example
+prs @{
+  ~a & ~b          -> @@_int2+    @i{// internal node declaration}
+  @@_int2 & ~c & ~d -> o+         @i{// internal node use}
+@}
+@end example
+
+The following example illustrates how internal nodes can be used to 
+describe a criss-cross topology found in the precharge evaluation
+of a full-adder's sum term.
+
+@example
+prs @{
+  en                            -> @@en_-
+  ~@@en_ & a.f                   -> @@p1f-
+  ~@@en_ & a.t                   -> @@p1t-
+  (~@@p1f & b.f) | (~@@p1t & b.t) -> @@p2f-
+  (~@@p1t & b.f) | (~@@p1f & b.t) -> @@p2t-
+  (~@@p2f & ci.f)|(~@@p2t & ci.t) -> _s.f-
+  (~@@p2t & ci.f)|(~@@p2f & ci.t) -> _s.t-
+@}
+@end example
+
+
+@c - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+@node Internal Precharges
+@section Internal Precharges
+
+@cindex charge sharing
+@cindex precharge
+
+A designer may wish to add precharges to a netlist as a means of
+mitigating charge sharing, and other internal node effects.
+@HAC{}'s PRS sublanguage supports a syntax for specifying precharges.
+@c Precharge annotations have no impact on logical behavior
+@c in @hacprsim{}; they only affect @hacknet{}'s spice netlists.
+A precharge expression can be attached to any @t{&}-operator,
+which represents an internal node.
+
+@example
+bool en, x, y, zx, zy;
+prs @{
+  en &@{+~en@} x  -> zx-
+  en &@{+~en@} y  -> zy-
+@}
+@end example
+
+@noindent
+The above example shows two stacks, each with its own PMOS precharge.
+The following example, uses a shared foot transistor on @var{en}:
+
+@example
+bool en, x, y, zx, zy;
+prs @{
+  en                -> @@en_-
+  ~@@en_ &@{+~en@} x   -> zx-
+  ~@@en_ & y         -> zy-
+@}
+@end example
+
+@noindent
+Note that the precharge expression @t{@{+~en@}} is only attached
+to one of the stacks, but both stacks share the same internal
+node @t{@@en_} and thus, benefit from the shared precharge.
+
+@itemize
+@item Stacks may have an arbitrary number of precharges.
+@item Pull-up stacks may also contain precharges.
+@item Precharges can also be expressions, not just single literals.
+@item Pull-up and pull-down precharges can be used in either
+        pull-up or pull-down rules.
+@end itemize
+
+

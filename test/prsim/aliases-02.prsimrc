@@ -1,0 +1,11 @@
+# "aliases-02.prsimrc"
+#	$Id: aliases-02.prsimrc,v 1.2 2010/04/06 00:04:12 fang Exp $
+# @haco@ inv.haco-c
+# testing user-defined alias commands
+
+
+echo should fail: can't override existing category
+alias builtin echo
+
+echo never reached
+

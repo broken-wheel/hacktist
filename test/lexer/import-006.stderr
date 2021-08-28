@@ -1,0 +1,3 @@
+At: "import-006.hac":4:
+Detected cyclic file dependency: import-006.hac
+Caught exception from lexer, aborting parsing.

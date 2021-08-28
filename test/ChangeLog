@@ -1,0 +1,1457 @@
+# "test/ChangeLog"
+#	$Id: ChangeLog,v 1.109 2011/05/05 06:50:50 fang Exp $
+# ChangeLog for test directory.
+
+2013-11-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-53c:
+	  Use of pipefail in many test scripts.
+	  Replace cat with input redirection where applicable.
+
+
+2012-08-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-86-42b:
+	  ipple tests: allow numerical diff filter awk script to call
+		strtonum() by unset POSIXLY_CORRECT.
+		Flag more tests whose results are random, due to
+		use of scatter command for seeding.
+
+
+2011-07-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-79d:
+	  installcheck fixes.
+	  Make.test-vpi, prsim/vpi/Makefile.am: fix installcheck, 
+		fix dependencies of Makefile.copy.
+	  chpsim/installtest/Makefile.in: amend run test with 
+		-L. to find loadable module in current dir.
+
+
+2011-05-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-71:
+	  Make.test.ipl: added support for .ipl-fig generation, 
+		and now prefer fig2dev over fdp/dot -> .ipl-pdf
+
+
+2011-05-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-70-merged-pr-01-20:
+	  Merged branch to trunk.
+
+
+2011-05-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-20:
+	  Added resolve-floating-point-diffs.awk to assist in filtering
+		out numerical differences within a specified tolerance,
+		to account for slightly different floating point 
+		results on different machines.  
+		ipple's (PR) tests are referenced on a 32b x86 arch, 
+		and differences occur on x86_64.
+
+
+2011-04-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-17:
+	  Make.test-ipl: added support for .ipl-dot, .ipl-pdf, using fdp.
+
+
+2011-04-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-08:
+	  Make.test-ipl: enabled and tested ipl-checkpoint testing.
+
+
+2011-04-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-04:
+	  Added Make.test-ipl for placer tests, but not included by 
+		Make.test-tail yet (untested).
+
+
+2010-03-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-50:
+	  Make.test-guile: additional hacscm (guile-scheme) output filtering
+		to account for guile-2.0 behavior.
+
+
+2010-09-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23-string-01-03:
+	  Make.test-tail: use BUIDLDIR_SUBST (sed) for dlopen_extra
+	  Make.test-chpsim: fixed chpsimrc-out compile script to properly
+		substitute $(builddir) and $(top_buildddir).
+		Without this, dyld was incorrectly looking in installed 
+		directory for built plug-ins.
+
+
+2010-09-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-23-string-01-01:
+	  Make.test-compile: made cpp parse test objects depend on haco
+
+
+2010-04-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-72:
+	  All test cases updated to use .haco-c instead of .haco-a.
+		Make.tail-* updated accordingly.
+
+
+	* HACKT-00-01-04-main-00-83-71:
+	  Make.test-cflat, Make.test-net: updated scripts to be able to
+		take pre-created object file.  Added test cases.
+
+
+2010-03-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-68:
+	  test/guile/Makefile.am: call INSTALLED_HACGUILE (hacguile)
+		instead of guile directly, so that user need not
+		manually set GUILE_LOAD_PATH, as used to be done in
+		src/scripts/init_hackt.{csh,sh}.in
+
+
+2010-01-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-58+:
+	  Make.test-tail: standardized distclean-depend target to Make.global
+
+
+2010-01-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-58:
+	  Make.test-tail, Make.test-chpsim: for darwin(10?), pass chpsim
+		library-plug-ins to the libtool wrapper's -dlopen option
+		to aid in finding libraries at runtime and test time.
+
+
+2009-10-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-44:
+	  prsim/vpi: added more tests for wrap_verilog_modules_to_hacprsim.awk,
+		covering reverse-mode, and parameter preservation, 
+		added demo examples of reverse-mode.
+
+
+2009-10-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-42:
+	  Make.test-head,compile: separated out Makefile variable for
+		HACPP_FLAGS for preprocessor-only options, 
+		while keeping HACO_FLAGS for compiler options.
+
+
+2009-10-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-41:
+	  Make.test-vpi: added verilog-wrap test for wrapper generator.
+		added verilog include dependency support by scanning
+		the compile log of VCS compiles.
+
+
+2009-10-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-40:
+	  Make.test-vpi: check-time now invokes libtool --mode=execute
+		instead of hacking SHLIB_PATH_VAR.
+	  Added update-expect-vpi.sh script.
+
+
+2009-10-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-32:
+	  Make.test-guile: still need to set LTDL_LIBRARY_PATH so that
+		guile:load-extension will find built-but-pre-installed
+		plug-ins in $(top_builddir)/src/.libs instead of
+		ones installed in user's path.  
+
+
+2009-10-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-31-merged-supply-01-09:
+	  Branch merge.
+
+
+2009-09-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-30:
+	  Basically discovered the libtool --mode=execute -dlopen magic
+		wrapping to properly load built, pre-installed dependent
+		libraries (was accidentally picking up old installed libs).  
+	  Make.test-tail: now distinguish between a libtool-wrapped and 
+		non-wrapped execution of chpsim.
+		HACKT_GUILE_EXE and HACKT_CHPSIM_GUILE_EXE now wrapped
+		with libtool --mode=execute -dlopen plug_in.la
+		GUILE_LOAD_FLAGS can be appended to add more paths.
+	  Make.test-guile: replaced use of GUILE_LOAD_PATH with
+		passing -L scm_path to guile invocation, just like
+		src/hacguile.in, hacchpsimguile.in (post-install)
+		No longer need any guile environment modification at test time.
+	  Make.test-chpsim: always wrap chpsimrc tests, no longer use 
+		CHPSIM_LIB_PATH variable.
+		No longer hack LTDL_SHLIBPATH_VAR to run plug-in dependent
+		tests, remove CHPSIM_TEST_ENV, SHOW_CHPSIM_TEST_ENV.
+
+
+2009-09-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-29-supply-07:
+	  Make.test-net: .spice script now saves error/warning messages
+		to .spice-err, and concatenates to .spice output
+		to be compared against expected reference results.
+
+
+2009-09-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-28-netlist-02-07:
+	  Make.test-net: added AM_HACKNET_FLAGS = -I$(srcdir)
+		analogously with AM_HACPRSIM_FLAGS, and AM_HACCHPSIM_FLAGS
+
+
+2009-08-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-08:
+	  Make.test-vpi: adjusted output filter for new version of
+		synopsys vcs, C-2009.06.  With new version, vcs may
+		fail to compile (generated Makefile) because of 
+		dependence on implicit suffix rules.  Oh well.
+
+
+2009-07-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-01:
+	  Drafted Make.test-net for hacknet, include it.
+
+
+2009-04-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-17:
+	  Make.test-guile: fixed use of LTDL_LIBRARY_PATH to use 
+		$(LTDL_SHLIBPATH_VAR), which is DYLD_LIBRARY_PATH on Darwin.
+
+
+2009-04-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-16-b:
+	  Make.test-vpi: added support for extracting additional flags
+		from top-level verilog source file: @vcs-flags@.
+
+
+2009-03-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-04-footprint-02-02:
+	  Make.test-{tail,guile}: suppress use of ~/.guile in
+		non-interactive guile tests, to isolate user-errors.
+
+
+2009-02-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-02:
+	  Make.test-tail, Make.test-guile: updated to reflect
+		replacing hacguile/hacchpsimguile binaries with
+		guile-loaded scheme startup scripts, using plug-ins.
+
+
+2009-01-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-90-prsim-12-08:
+	  Added prsimtrace dump test support with batch of test cases.
+
+
+2009-01-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-90-prsim-12-07:
+	  chpsim tests: all automatically save trace now (+checkpoint), 
+		many tests renamed for convenience.
+	  Many chpsim tests updated trivially.  
+
+
+	* HACKT-00-01-04-main-00-82-90-prsim-12-06:
+	  Make.test-prsim and Make.test-chpsim:
+	  Added new SUFFIXES: .prsimtrace .prsimtrace-O1
+	  TODO: added prsimtrace consistency tests (-O0 vs -O1)
+	  .prsimrc-out: now always save trace, autosave checkpoint is now
+		passed on command-line instead of through template script.
+	  prsimrcout-autodepend: check for trace...
+	  TODO: add autotracing to all chpsim (pass) tests.
+	  FIX: added some missing suffix rules for .prsimtraces
+
+
+2009-01-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-90-prsim-12-05:
+	  Added support for prsim tests with trace files that need
+		filtering on non-32-ILP platforms.
+
+
+2008-07-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-34:
+	  Make.test-{compile,flatten}: script variables for piping stdin
+		to hacpp and compile (haco).
+
+
+2008-05-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-16:
+	  In chpsim/, basic-trace-analysis, basic-analysis-nocrit, 
+		critical-path-verbose: added call to 
+		make-critical-process-histogram.
+		Used by many test cases, updated accordingly.
+
+
+2008-04-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-14:
+	  Added more sources to chpsim/testlib/int-source.hac.
+	  Added chpsim/bingcd test dir.
+
+
+2008-03-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-10:
+	  Make.test-vpi: test VPI runs in -full64 mode automatically.
+
+
+2008-02-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-49:
+	  Make.test-prsim: support for @hacprsim-flags@ extraction
+		in prsimrc and checkpoint testing.
+
+
+2008-02-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-44:
+	  Added Make.test-vpi to support vpi build-time and install-time
+		tests.
+
+2008-02-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-28-prsim-09-10:
+	  Added prsimrc-random-value-filter.awk (self-explanatory).
+	  Make.test-prsim: filter out random values where appropriate.
+		Also improved prsimrc-out suffix rule script.
+
+
+2008-01-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-19:
+	  prsim checkpoints should depend on the built executable as well.
+	  also extract additional dependencies @deps@ from .prsimrc.
+
+
+2008-01-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-01-prsim-08-23:
+	  prsimrc_filter.awk: filter out traced source file comments (vpath)
+
+
+2007-11-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-00-merged-router-01-12:
+	  Branch merge.
+
+
+2007-11-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-92:
+	  hacpp flatten test now checks for @hacpp-flags@ in source file
+		and applies to test command.
+	  .outdump rule now uses @haco-flags@ for consistency checking
+		against .indump (compileobjtest).  
+
+
+2007-11-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-90:
+	  vpath-file-filter.awk: update to detect new comment for #FILE close.
+
+
+2007-10-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-85-router-01-11:
+	  chpsim/basic-trace-analysis.hacchpsimscm:
+		Call make-critical-event-histogram.
+
+
+2007-10-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-85-router-01-09:
+	  Make.test-guile: improved support for extending GUILE_LOAD_PATH
+		per Makefile/directory.  
+	  *.chpsimrc: (tests that name stdchpfn.la as a dependency)
+		refer to library using $(top_builddir), instead of hard-code.
+
+
+2007-10-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-85-router-01-01:
+	  chpsimrc-out.autodepend: automatically have tracefiles depend
+		on $(HACKT_CHPSIM_EXE)
+
+
+2007-09-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-74-ACT-01-09:
+	  Make.test-tail, Make.test-compile: added support to embed
+		per-test-input flags in-source with @haco-flags@, 
+		extracted and used in test compiles.
+
+
+2007-08-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-07:
+	  Make.test-chpsim: added support for automatic anti-dependencies,
+		targets created as a side-effect of another command
+
+
+2007-08-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-57:
+	  Critical patch for Darwin.
+	  Make.test-chpsim: construct environment with dynamic library 
+		search path agumented to point to CHPSIM_LIB_PATH
+		when testing modules with additional dependent 
+		shared libraries (e.g. in lib/).
+	  chpsim/Makefile.am: point CHPSIM_LIB_PATH to ../../lib
+
+
+2007-08-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-56:
+	  Make.test-compile: workaround Apple's cpp defects in .hac-cpp rule.
+
+
+2007-08-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-53:
+	  Make.test-*: suffixes variable distributed across separate files
+		and accumulated, for easier management, less error-prone.
+	  Deleted references to obsolete scripts.
+
+
+2007-08-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-49-merged-chpsim-07-08:
+	  Branch merge.
+
+
+2007-08-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-47-parser-05-03:
+	  Minor filter adjustments to flatten consistency tests.
+
+
+	* HACKT-00-01-04-main-00-81-47-parser-05-02:
+	  Make.test-flatten: Added test support for flatten consistency checks.
+
+
+2007-08-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-47:
+	  Make.test-compile, Make.test-head:
+		Added test support for cpp (preprocesed) input tests.
+		Affects only lexer/ dir.
+
+
+2007-08-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-06:
+	  Removed cond.cc and assert.cc, moved to lib/libchpfn library.
+
+
+2007-08-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-04:
+	  Make.test-chpsim: run-scripts that produce trace files now
+		automatically generate the appropriate dependencies
+		in chpsimrc-out.autodepend, less maintainence is good!
+
+
+2007-08-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-01:
+	  cond.cc, assert.cc: conditional operator and assert functions, 
+		candidates for chp std library additions, to be tested.
+
+
+	* HACKT-00-01-04-main-00-81-46:
+	  chpsim/testlib/*_source.hac:
+		source definitions updated to use relaxed template
+			parameters where applicable.
+		Test cases that use these sources updated accordingly.
+
+
+2007-08-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-44:
+	  chpsim/Makefile.am: dependencies for installtest/Makefile
+		Use installdirs.mk.
+	  chpsim/installtest/Makefile.in: now use the *installed*
+		examples directory as the srcdir/VPATH for the 
+		install test's Makefile!  (as opposed to the srcdir)
+		Will do this from now on for installcheck tests.
+
+
+2007-07-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-25:
+	  chpsim/Makefile.am: install the installtest/ subdirectory
+		as a runnable example in $(examplesdir).  
+		Added README to go along, back-referencing texinfo docs.
+
+
+2007-07-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-17:
+	  chpsim/Makefile.am: export PATH to recursive installcheck-local
+		Fixed EXTRA_DIST of installtest subdir.
+	  chpsim/installtest/Makefile.in: fixed confirm-exec target, 
+		use configure's CXX to compile.
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-16:
+	  Added installcheck support in chpsim[/installtest].
+
+
+2007-07-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-10:
+	  Added test support for extra dependencies from .chpsimrc, 
+		and dl-linking modules, with @modules@ tag for arguments.  
+
+
+2007-06-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-32-LPxx-03:
+	  Make.test-chpsim, Make.test-guile: added LP64 support for test suite
+		differences in trace binary dumps (sizes).
+		Now no regressions remain in 64b testing!
+
+
+2007-06-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-32-LPxx-02:
+	  Make.test-create: support LP64 binary differences, resulting in
+		test successes for create tests!
+
+
+2007-06-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-32:
+	  Initial support for ILP64 compatbility test support.
+		First targeting header object size differences in create tests.
+	  Added POM-size-filter.awk.
+
+
+2007-06-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-31:
+	  Updated Makefile rules for chpsim event graph generation.
+
+
+2007-06-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-30-merged-chpsim-05-10:
+	  Branch merged to trunk.
+
+
+2007-06-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-25-chpsim-05-04:
+	  Make.test-chpsim: .chpsim-event-dot rule now defaults with
+		-fshow-channels for dot graph generation.  
+
+
+	* HACKT-00-01-04-main-00-81-25-chpsim-05-03:
+	  Make.test-chpsim: .chpsim-event-dot rule now defaults with
+		-fcluster-processes for dot graph generation.  
+
+
+2007-06-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-29:
+	  Make.test-guile: added hooks to account for expect fail message 
+		differences when using guile-1.6 as opposed to 1.8.
+	  Rectifies 2 cases in parser/connect --
+		now regression-free w.r.t guile-1.6!
+	
+
+2007-05-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-22-merged-chpsim-04-34:
+	  Branch merge -- no change.
+
+
+2007-04-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-19-merged-scm-01-37:
+	  Branch merge.
+
+
+2007-04-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-36:
+	  Make.test-guile: added $(srcdir) to GUILE_LOAD_PATH for testing
+		This allows is to load and call other scripts.  
+
+
+2007-04-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-18:
+	  Make.test-prsim: updated prsimrc-fail filter (simplified)
+	  Make.test-cflat: added missing lvs{prs,fail}diffs summaries
+
+
+2007-03-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-12:
+	  Make.test-*: changed dependencies on HACKT_EXE to specific
+		subprograms, which avoids unnecessary retesting of 
+		front/middle end objects when only back-end tools change.
+		Hooray for shorter testing cycles.  
+
+
+2007-03-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-08:
+	  Added GUILE_LOAD_PATH to .hacscm tests (suffix rule).
+
+
+2007-03-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-04:
+	  Make.test-tail: removed references to .libs, should not need because
+		libtool already does the magic.  
+
+
+2007-03-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15-scm-01-03:
+	  Added GUILE_LOAD_PATH environment to hacchpsimscm tests.  
+
+
+2007-04-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-18:
+	  Make.test-prsim: updated prsimrc-fail filter (simplified)
+	  Make.test-cflat: added missing lvs{prs,fail}diffs summaries
+
+
+2007-03-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-15:
+	  Added support for hacchpsimscm guile tests to test harness.
+	  Also hacchpsimscm test can take additional trace-file dependencies,
+		using the @chpsimtrace@ directive, for auto-depend.
+
+
+2007-03-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-01-shlib-01-08:
+	  Test support for hacguile is now conditional on HAVE_LIBGUILE.
+
+
+2007-03-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-01-shlib-01-07:
+	  Added test support for hacscm (hacguile).
+
+
+2007-03-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-01-shlib-01-06:
+	  Remaining programs now use dynamically linked executables.  
+
+
+2007-03-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-01-shlib-01-02:
+	  'hackt create' replaced by called to dynamically linked 'haccreate'.
+
+
+	* HACKT-00-01-04-main-00-81-01-shlib-01-01:
+	  Compile now uses shlib-linked 'haco' executable.  
+
+
+2007-02-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-87-merged-chpsim-03-10:
+	  Branch merge.
+
+
+2007-02-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-84:
+	  .depend dependencies now depend on the hackt executable and 
+		.libs link to built libraries.
+
+
+2007-02-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-81:
+	  Tests now run with shared-library built executables by making
+		soft-link to built src/.libs.
+
+
+2007-02-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-72-merged-chpsim-02-19:
+	  Branch merge.  Includes test support for chpsim checkpointing.
+
+
+2007-02-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-69-chpsim-02-14:
+	  Added support for chpsim checkpoint testing.  All 'pass' chpsimrc
+		tests automatically generate a checkpoint, using a
+		wrapper script that calls the actual script.  
+
+
+2007-01-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-69-chpsim-02-04:
+	  Make.test-*: various shell scripts group echo actions together
+		to perform a single redirection at the end of a group, 
+		rather than repeated appending to a target file.  
+		Rationale, Makefile shell execution performance, and reducing
+		redudant file/stream operations.  
+
+
+2007-01-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-64-merged-chpsim-01-54:
+	  Branch merge.  Summary:
+		chpsim test support.
+		autodepend generation improvement.
+		project-wide Makefile clean-up.
+
+
+2007-01-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-52:
+	  Added chpsim/testlib directory, containing library definitions
+		for testing purposes only.  
+
+
+2007-01-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-50:
+	  *.autodepend construction: should filter out empty variables
+		on empty lines which results in bogus suffix-only targets.
+	  Added support for chpsim expect-failure tests.
+
+
+2007-01-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-47:
+	  Removed accidental duplicate Makefile variable (spelled diff.)
+		SPACESTONEWLINE was supposed to be SPACES_TO_NEWLINE, 
+		now deferring to the definition in Make.stddef.
+
+
+2007-01-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-44:
+	  Global Makefile clean-ups only.  
+
+
+2007-01-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-38:
+	  Added support for chpsim run-commands tests.
+	  Added update-expect-chpsimrc.sh test update script.
+
+
+2006-12-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-23-expr-01:
+	  Updated test cases for footprint size reduction, after having
+		disabled user-defined datastructs.
+	  Also disabled some regression-causing (unused, undefined features)
+		test: parser/datatype/{032,036}
+
+
+2006-12-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-18:
+	  Added support for dot graph generation for chpsim event
+		graph visualization.  
+
+
+2006-12-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-13:
+	  Make.test-chpsim: support for chpsim allocation dump tests.
+
+
+2006-12-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-05:
+	  Added skeletal support for chpsim tests.  
+
+
+2006-12-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-merged-channel-02-09:
+	  Branch merge.  Unroll tests disabled, test cases added and updated.  
+
+
+2006-11-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-62-channel-02-02:
+	  Uses AM_CONDITIONAL USE_UNROLL_PHASE to enable/disable
+		obsolete unroll tests and features in the test-suite.
+		Notably: create (haco-c) is now built directly from .haco,
+		create-from-haco tests are obsolete.
+		alloc-from-haco tests are now two-way diffs instead of 3-way.
+	  subdir Makefile.am's: conditionally promote unroll-test-failures
+		to create-test-failures.  
+	  Mostly trivial test updates done, leaving 16 regressions
+		to analyze in parser/channel.  
+
+
+2006-11-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-57-merged-channel-01-09:
+	  Branch merge.
+
+
+2006-11-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-54-channel-01-08:
+	  Make.test-*: all diff test scripts now start by rm $@, 
+		because empty redirections don't cause overwrites.  
+	  Handful of test cases added to parser/channel.
+
+
+2006-11-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-54-channel-01-07:
+	  Update some dump/filter rules, now that we are logging
+		compiler warnings, and concatenating them to dumps.  
+		This revision mostly affected Make.test-create.
+		Added new ...-err suffixes to catch warning diagnostics.  
+	  POM-header-filter.awk.in: now preserve WARNINGs, 
+		but objdump diff still filters them out in rule for .outdump.
+
+
+2006-11-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-54:
+	  Make.test-*: appended touch commands to many rules that may
+		otherwise result in timestamps not updating, due to 
+		empty results in redirections.  
+		This reduces unnecessary rebuilds.  
+		Added some missing .autodepend: Makefile dependencies.
+	  Test update scripts updated.  
+	  Added new test cases to parser/{chp,channel}.  
+
+
+2006-11-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-53:
+	  Added Make.test-flatten for preprocessor tests.  
+	  Make.test-{head,tail} support for flatten tests.  
+	  Added hackt-flatten-expect-filter.awk.
+	  Added bunch of flatten test cases in lexer/ and parser/basic/.  
+
+
+2006-11-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-52-merged-test-12:
+	  Merged test parallelization branch to trunk.  
+
+
+2006-11-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-50-test-12:
+	  Re-factored test dependencies in Make.test-prsim to re-use
+		the checkpoint from the basic (pass) test for multiple tests.
+		Cuts a chunk of simulation time down by factor of 2.  
+
+
+	* HACKT-00-01-04-main-00-80-50-test-11:
+	  distclean: distclean-depend-local (don't recurse)
+
+
+	* HACKT-00-01-04-main-00-80-50-test-10:
+	  Partitioned Make.test-tail.
+	  distclean-depend is now recursive.
+	  build-check is now recursive from the top-level directory.  
+
+
+	* HACKT-00-01-04-main-00-80-50-test-09:
+	  Make.test-tail:
+		new recursive targets: build-check, cleaner.
+		Now uses AUTO_DEPENDS variable from project-wide top-level.  
+		Now uses AM_CONDITIONAL(VERBOSE_CHECK) to control
+		  some of the echoing during build-check.  
+		SUBJECTS = PASSES + FAILURES variable aggregation now
+		  done in this template, not in includers.  
+
+
+2006-11-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-50-test-08:
+	  Parallelized cflat-seu, cflat-sprs, and prs-dot tests.
+	  Only clean-up remains.  
+
+
+	* HACKT-00-01-04-main-00-80-50-test-07:
+	  Parallelized cflat-prs, cflat-lvs, and prsim-opt tests.  
+		LVS tests are now divided into pass/fails.  
+	  Unexpanded $(srcdir) references in auto-dependencies.  
+	  One more batch of parallelization, then clean-up.  
+
+
+	* HACKT-00-01-04-main-00-80-50-test-06:
+	  Parallelized prsimexpr tests and prsim-checkpoint tests.  
+	  Added new template test scripts:
+		prsimckpt-template.prsimrc, prsimckpt-load-template.prsimrc
+	  TODO: cleanup: test dependencies that reference a file
+		added by the auto-dependency generator need not 
+		be tested, e.g. .stderr files.  
+		They are an unnecessary safety measure.  
+	  TODO: maybe replace srcdir paths in autodepend's with
+		just '$(srcdir)' which is defined by the includer.  
+	  TODO: Make.test-tail getting to be unwieldly, split up
+		rules by group before branch is over.  
+
+
+2006-11-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-50-test-05:
+	  Parallelized prsim-tests (basic only).  
+
+
+	* HACKT-00-01-04-main-00-80-50-test-04:
+	  Parallelized alloc-tests.
+
+
+2006-11-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-50-test-02:
+	  Parallelized unroll-tests.  
+
+
+	* HACKT-00-01-04-main-00-80-50-test-01:
+	  Parallelized compile-tests.  
+
+
+2006-10-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-45:
+	  Make.test-tail: Now every test directory evaluates dependencies
+		for all test cases, so 'made' objects are correctly
+		re-built when dependent sources are updated.  
+		This reduced the number of false-positive errors reported
+		between updates.  
+	  TODO: restructure tests to use make for concurrency, 
+		and efficient and incremental re-test evaluation.  
+
+
+2006-10-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-42:
+	  Now uses srcdir_EXTRA_DIST variable to distribute test cases, 
+		to prevent accidentl building and dependence on generated
+		versions in the build-dir.  This now allows the test sub-tree
+		to be distributable *even under a VPATH build*.  
+	  Now recommend using EXTRA_DIST only for built targets that 
+		should be distributed.  
+
+
+2006-10-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-41:
+	  Make.test-tail: all hac object files in test suite now
+		depend on the executable, to force rebuilds after re-make.
+
+
+2006-10-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-29:
+	  test/lib: removing unroll/create/alloc tests because they
+		cause too much trouble.  Will re-instate later when 
+		test framework is revamped.  Not removing stderr
+		outputs from CVS until their fate is decided later.  
+
+
+2006-09-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-21:
+	  Made lib tests more rigorous by repeatedly running repeated
+		short test of stability initially coming out of reset.
+		This detected some errors not previously detected.  
+
+
+2006-09-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-03-instance-00-18-template-02:
+	  Temporarily disabled all tests except compile-tests.  
+	  Will re-enable once compile-time regressions have been addressed
+		and unroll-time features are ready for testing again.  
+
+
+2006-08-24	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-03:
+	  Added quarantine directory for bug test cases.
+	  Added .*test dummy targets to Make.test-tail.
+	  Cleaning bogus suffix-only targets.  
+
+
+2006-08-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-61:
+	  Added make-variable HACKT_PARSE_TEST_WARNINGS for tests
+		that pass, but expect a .stderr file containing warnings.
+		The .stderr automatically added to EXTRA_DIST by Make.test-tail.
+		Recommended practice: added this variable to both
+		HACKT_PARSE_TEST_SUBJECTS and HACKT_OBJ_TEST_SUBJECTS
+		in local Makefile.am's.
+
+
+2006-08-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-58:
+	  Added missing target for hackt-cflat-lvs-sh.in.
+	  Rewrote script targets for distribution.  
+
+
+2006-08-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-57:
+	  Modified cflat-lvs test support to take optional -t type argument
+		when the source .hac file contains a comment with 
+		the magic string @hflat-type@ <type>.  The 'type' is extracted
+		and passed to hackt cflat.  
+
+
+2006-08-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-54:
+	  Added support for cflat-lvs tests.  
+
+
+2006-07-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-40:
+	  Makefiles added support for graphviz figure generation.  
+	  Suffixes updated to be less confusing.  
+	  PostScript generation uses optimized dot source by default.  
+
+
+2006-07-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-39:
+	  test-series.sh.in: also run .hacktprsdottest where appropriate.
+
+
+	* HACKT-00-01-04-main-00-79-38:
+	  Added support for testing prsimexpr and dot generation of
+		all valid (alloc/prsimrc) test cases.  
+
+
+	* HACKT-00-01-04-main-00-79-37:
+	  Provisions for automatic dependence-tracking in .depend files
+		generated from .hac.haco suffix rules in Makefile.  
+	  TODO: consider a way of generating an -included depfile.  
+
+
+2006-07-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-29:
+	  Updated test-series.sh.in to allow for compile tests with warnings.  
+	  test.cvsignore and Make.test-tail account for *.nowarn.  
+
+
+2006-07-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-29:
+	  POM-header-filter.awk: ignore WARNING: lines from compiler.  
+	  hackt-obj-diff.sh.in: test for .haco instead of .test output.  
+
+
+2006-07-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-20-cow-03:
+	  Made rm <pattern> more robust when cleaning files, 
+		calls new $(top_srcdir)/script/rm_pattern.sh.
+
+
+2006-06-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-20-cow-02:
+	  Make.test-tail: clean target uses more patterns instead of 
+		auto-deduced CLEANFILES lists to avoid comand-line limit.
+		Extra clean patterns added to rm -rf to avoid 
+		directory listing spillage.  
+
+
+2006-05-31	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-09:
+	  parse-test-expect.sh.in: include flags are passed in by Makefile.am
+		using the HACO_FLAGS variable.  
+	  Makefile.am: introduced appendable HACO_FLAGS variable
+		for compiling against files in other directories.  
+
+
+2006-05-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-22-prsim-04-10:
+	  Added test support for verifying that prsim -O1 results in 
+		identical checkpoints as the default -O0.  
+
+
+2006-05-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-22-prsim-04-05:
+	  Added test support for verifying prsim checkpoint consistency.
+
+
+2006-04-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-22-prsim-04-02:
+	  prsimrc-random-time-filter.awk: account for cause diagnostics
+	  update-*.sh: maintainer scripts updated with getopt-ability
+		to take -s srcdir as argument, useful in VPATH builds.  
+
+
+2006-04-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-13-merged-spec-02-04:
+	  Branch merge.  
+
+
+2006-04-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-11-spec-02-03:
+	  Added support for testing SEU mode of cflatting to test
+		new special spec directives.  
+
+
+2006-04-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-11:
+	  hackt-expect-prs.sh.in: Exclude "weak" pattern from prsim tests 
+		because new attribute not supported by the legacy tool-chain.
+
+
+2006-04-03	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-08:
+	  Added additional filter to filter out random timestamps
+		in test cases that use random timing.  
+
+
+	* HACKT-00-01-04-main-00-78-07-merged-prsim-01-15:
+	  Branch merge, introducing prsim test suite.  
+
+
+2006-03-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-11:
+	  Added prsimrc-filter.awk for post-processing prsimrc output logs.
+	  Updated the way prsimrc tests are run, using the new filter, 
+		and passing -I$(srcdir) to enable checking of recursive
+		source scripts.  Should pass VPATH build checks.  :)
+
+
+2006-03-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05-prsim-01-06:
+	  Added preliminary support for prsim run-commands tests.
+
+
+2006-03-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-78-05:
+	  Enabled object consistency checks for create and alloc targets.
+	  Basically, they diff against the objects produced by various
+		partial compiles of intermediate objects and verify that
+		the contents produce identical object dumps.  
+
+
+2006-02-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-4-preal-01-09:
+	  Added support for sprs (sized PRS) generation and testing.  
+
+
+2006-02-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-4:
+	  Attempted to try consistency checking between create phase, 
+		using .haco (instead of .haco-u) as input, but resulted
+		in many differences, due to instability of reconstructing
+		alias rings (equivalent, but unordered).  
+	  TODO: decide when to overhaul connection structures, 
+		replace with union-find.  
+
+
+2006-01-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-2-fixdump-06:
+	  Removed archaic clean-test and subdir.not_a_test bogus targets
+		and no longer using test_report.txt.  Good riddance. 
+	  TODO: eliminate redundant make suffix rules to produces
+		various dumps -- just use one suffix rule.
+	  TODO: add test rule for generating intermediate objects in
+		different manners, skipping and fusing compile phases.  
+		This is badly needed to detect and correct a critical
+		inconsistency bug!
+
+
+2006-01-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-74-PRS-04-01:
+	  Added even more suffix rules for testing convenience.  
+		Just run 'make'!
+	  Added more echo- targets to make test updating (en masse) easy.
+
+
+2006-01-10	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-13:
+	  Added suffix rules for standard HACKT object files
+		and various other test output files.
+	  Now can build dot/ps visualizations of prsim expressions
+		with Makefile rules!
+
+
+2006-01-09	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-11:
+	  Added test support for prsim expression allocation dumps.  
+	  TODO: decide what to do about an expression optimization pass...
+		Add a command-line flag to enable/disable it.  
+
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-merged-rename-00-06:
+	  Trunk merge.  Massive renaming.  
+
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71-rename-00-05:
+	  MAJOR TEST RESTRUCTURING: script names, object file extensions, 
+		and Makefile macro variables have been expunged of
+		"art" and "ART", and replaced with more appropriate names.  
+	  The Object file naming convention we adopt now is:
+		.haco -- just compiled
+		.haco-u -- unrolled
+		.haco-c -- created
+		.haco-a -- allcoated
+
+
+2005-12-11	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71-rename-00-04:
+	  MAJOR FILE MOVE: All test .in files have been renamed to .hac.
+	  All affected test scripts and test outputs have been updated
+		to reflect this change.  
+
+
+2005-12-10	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71-rename-00-03:
+	  In this branch, we will be moving and renaming all test input
+		files from .in to .hac, and removing all traces of 
+		"ART" or "art".
+	  Forgot to rm *.sort in cleaner target.  
+	  Fixed EMPTY_CFLAT_PRS generation in Make.test-tail, 
+		which wasn't working properly for VPATH builds before.
+		(THough failure was not fatal, and nearly silent.)
+
+
+2005-11-09	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-65-parser-03-10:
+	  Updated compile test error filter script to handle
+		both state enumerations and vpath differences.  
+		The new hackt-parse-expect-filter.awk depends on the
+		old (library) state_enum_filter.awk and the new
+		vpath_file_filter.awk.
+	  Added -I $(srcdir) to all parse and compile tests which work
+		in vpath builds now.  
+
+
+2005-11-01	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-62-cflat-02-04:
+	  Enhanced hackt-cflat-test.sh.in to check and see if 
+		.prs differences are only a result of reordering.  
+
+
+2005-10-27	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-61-flow-01-04:
+	  Finally figured out how to redirect stderr+stdout without going 
+		through cat.  Just append file descriptor combiner at the end.
+		e.g. foo > log 2>&1.
+		Now test scripts don't have to execute same program twice
+		to get exit status and log files separately.  
+		I love Bourne shell (/bin/sh).  
+	  Updated *.sh.in test scripts accordingly.  
+
+
+2005-10-25	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-60-merged-PRS-02-11:
+	  Merge to trunk.  Includes some minor test template revisions.  
+
+
+2005-09-14	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-59-merged-unique-02-15:
+	  Branch merge.  
+
+
+2005-09-12	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-58-unique-02-07:
+	  Added test support for unique state allocation (alloc) phase.  
+	  Expected output format is only tentative, until a complete
+		implementation of objdump for state comes along (soon).  
+
+
+2005-09-04	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-56-merged-footprint-01-36:
+	  Merged revisions and enhancements from -footprint branch.
+	  Most notably the diff analysis scripts.  
+
+
+2005-08-25	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-24:
+	  Unroll and create test scripts now check for input file existence
+		and non-zero size before executing.  
+
+
+2005-08-15	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-06-merged-canonical-07:
+	  Merged test suite revisions from branch.  
+		Include test-analysis extensions.  
+	  Many tests themselves were updated because of new object binary.
+
+
+2005-08-14	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-55-footprint-01-05-canonical-03:
+	  This revision arrives after having spent considerable effort 
+		reworking the canonical type management in HACKT.
+		The information in the objects remains the same while 
+		the object binaries changed somewhat.  The new scripts
+		introduced aid in the analysis of these "insignficant"
+		differences.  
+	  New: POM-index-filter.awk: takes the output of POM-header-filter.awk
+		and filters out the indices of the object manager header. 
+		Useful for minimizing the differences between object binaries.  
+	  Extended unroll and create test script templates to
+		conditionally perform further analysis on object dump
+		differences, depending on whether or not non-header
+		differences (in the human readable section) were introduced.  
+	  analyze-dump-diff.awk: assess the nature of the object
+		dump's differences.  Takes a diff -u output as input.  
+	  Make.test-tail: updated to reflect script and test additions.  
+		Notable: added check-summaries target.
+
+
+2005-08-06	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-53-unique-01-06:
+	  Added automake macros and rules for hackt create tests.  
+		using .hacktcreatetest as generated test script, 
+		.hacktobjcreate as created object file, 
+		.create{dump,stderr,diff} as test outputs.  
+	  Added hackt-create-expect.sh.in configured test script.  
+	  Moved standard TESTS definition (+=) to Make.test-tail.
+	  TODO: eventually abandon the ART/art names and adopt HACKT/hackt.  
+
+
+2005-08-04	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-53-merged-configtest-03:
+	  Merged revisions from -configtest (-03) branch.
+
+
+2005-08-04	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-52-configtest-02:
+	  Made test shell scripts configure-generated, using the 
+		results of configure.  
+
+
+2005-07-24	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-51:
+	  Updated Make.test-tail to use new double-command form
+		of executable "hackt <command>".
+
+
+2005-07-22	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-49-maintainence-01:
+	  Reworked Makefile.am structure, replacing Make.test
+		with Make.test-head (include first) and Make.test-tail
+		(include last).
+
+
+2005-07-08	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-23:
+	  Made `cleaner' recursive in Make.test, inherited by other
+		Makefiles in subdirectories.  
+	  Changed artobjunroll test script!
+		We now store the *filtered* unrolldump in the the
+		repository's .stderr outputs, since there's no sense in
+		keeping the unfiltered version around for comparison.  
+		This will also dramatically reduce the size of the
+		patches everytime the binaries change size as a result
+		of individual objects changing size.  
+
+
+2005-07-07	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-48-connect-01-19:
+	  Enhanced Make.test to include a check.log target, which
+		saves the results of "make -k check" to log file, 
+		and dumps a quick failure summary.  This is usable
+		in the top test directory, and any of its subdirectories, 
+		thanks to automake.  Should've done this ages ago.  
+
+
+2005-06-18	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-42-CHP-01-22:
+	  "state_enum_filter.awk" handle case of bison grammar output
+		where a the LHS of a rule is abbreviated with just '|'
+		as a continuation of the previous line.  
+		(bison vs. yacc difference)
+
+
+2005-05-20	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-38:
+	  Added this ChangeLog.
+	  Added POM-header-filter.awk to reduces test expectation conflicts
+		due to trivial (insignificant) differences 
+		and path-related differences.
+	  artobj-diff.sh: added -d flag to art++2obj invocation
+		to cause textual dump.  
+	  	set up $filter command as pure pipe.
+	  artobjunroll-expect.sh: set up $filter command as pure pipe.
+
+

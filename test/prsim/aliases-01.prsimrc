@@ -1,0 +1,14 @@
+# "aliases-01.prsimrc"
+#	$Id: aliases-01.prsimrc,v 1.2 2010/04/06 00:04:11 fang Exp $
+# @haco@ inv.haco-c
+# testing user-defined alias commands
+
+help alias
+help aliases
+help unalias
+
+echo should fail: can't override existing command
+alias alias alias
+
+echo never reached
+

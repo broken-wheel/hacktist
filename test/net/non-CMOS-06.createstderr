@@ -1,0 +1,8 @@
+Error: internal node `a' is used in the wrong sense.
+Error in sub-expression 0.
+Error resolving production rule expression at:
+Error unrolling production rule guard: 
+	@foo::a & foo::x -> foo::_y-
+Instantiated from: foo<>
+Error encountered during module::create.
+ERROR in creating.  Aborting.

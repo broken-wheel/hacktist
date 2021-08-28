@@ -1,0 +1,141 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	dintplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	dintplch	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	8	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	9	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	10	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	11	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	12	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	13	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	14	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	15	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	16	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	17	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	18	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	19	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	20	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	21	##ADDR##	datadefn	0	#HEAD#	#TAIL#	68
+	22	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	24	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	25	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	26	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	27	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	28	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	29	##ADDR##	CHPdowhl	0	#HEAD#	#TAIL#	20
+	30	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	nrelatex	0	#HEAD#	#TAIL#	21
+	32	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	34	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	35	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	24
+	36	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	37	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	narithex	0	#HEAD#	#TAIL#	17
+	39	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	41	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	42	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	44	##ADDR##	CHPdowhl	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	46	##ADDR##	nrelatex	0	#HEAD#	#TAIL#	21
+	47	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	48	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	49	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	51	##ADDR##	narithex	0	#HEAD#	#TAIL#	17
+	52	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	53	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	54	##ADDR##	footprnt	0	#HEAD#	#TAIL#	486
+	55	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	56	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	57	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	58	##ADDR##	CHPdowhl	0	#HEAD#	#TAIL#	20
+	59	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	60	##ADDR##	CHPseqnc	0	#HEAD#	#TAIL#	24
+	61	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	24
+	62	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	63	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	64	##ADDR##	CHPdowhl	0	#HEAD#	#TAIL#	20
+	65	##ADDR##	CHPguard	0	#HEAD#	#TAIL#	16
+	66	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  4 instantiation-collections
+  0 sub-namespaces
+  0 definitions
+  0 typedefs
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    c = int<32> c
+    d = int<32> d
+}
+
+top-level chp:
+  concurrent: {
+    sequential: {
+      c := 0
+      *[
+        c<3 -> sequential: {
+          concurrent: {
+            c := c+1
+            d := 0
+          }
+          *[
+            d<2 -> d := d+1
+          ]
+        }
+      ]
+    }
+  }
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  c = int<32>^0 = c (1) 
+  d = int<32>^0 = d (2) 
+  Created state:
+  int instance pool: (0 ports, 2 local, 0 mapped)
+  1	c	
+  2	d	
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  resolved concurrent actions:
+    sequential: {
+      c := 0
+      *[
+        c<3 -> sequential: {
+          concurrent: {
+            c := c+1
+            d := 0
+          }
+          *[
+            d<2 -> d := d+1
+          ]
+        }
+      ]
+    }
+  chp events: {
+    event[0]: assign: c := 0, #pred: 1, succ: 8 
+    event[1]: null: null, #pred: 1, succ: 
+    event[2]: select: *[ d<2 -> ... ], #pred: 1, succ: 3 8 
+    event[3]: assign: d := d+1, #pred: 1, succ: 2 
+    event[4]: join: , #pred: 2, succ: 2 
+    event[5]: assign: c := c+1, #pred: 1, succ: 4 
+    event[6]: assign: d := 0, #pred: 1, succ: 4 
+    event[7]: fork: , #pred: 1, succ: 5 6 
+    event[8]: select: *[ c<3 -> ... ], #pred: 1, succ: 7 1 
+  }
+}

@@ -1,0 +1,16 @@
+// "080.hac"
+// copy-modified from "075.hac"
+// should pass : unrolling
+// create: will warn about dangling channels
+
+template <pint B>
+defproc send_me(chan!(int) b) {
+chp {
+	*[ b!(B) ]
+}
+}
+
+send_me<123> X;
+send_me<456> Y;
+send_me<789> Z;
+

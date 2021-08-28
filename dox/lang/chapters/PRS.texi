@@ -1,0 +1,536 @@
+@c "chapters/PRS.texi"
+@c $Id: PRS.texi,v 1.15 2010/09/01 22:14:17 fang Exp $
+
+@node PRS
+@chapter Production Rule Set (PRS)
+@cindex PRS
+
+This chapter describes the Production Rule Set (PRS) sub-language.  
+PRS operates strictly in the meta-language domain of @HAC{}, 
+meaning that all involved instance references and connections are resolved
+at compile-time, upon instantiation of each complete definition.  
+Production rules, like connections, may be programmed to depend
+on meta-language parameters.  
+
+@menu
+* PRS Basics::
+* PRS Attributes::
+* PRS Loops::
+* PRS Extensions::
+* PRS Options::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node PRS Basics
+@section Basics
+@cindex PRS
+
+Basic production rules are written as follows:
+
+@itemize
+@item @i{rule} : @i{PRS-expr} @prsrarrow{} @i{node} @i{dir}
+@end itemize
+
+(Reference to lines of grammar...)
+(Denotational semantics, type-inference later...)
+
+@cindex literal, PRS
+The @i{dir} is either @prsup{} (pull-up) or @prsdn{} (pull-down).  
+A @i{literal} is an occurence of a (@bool{}) @i{node} on the
+left-hand-side of a production rule.  
+A PRS @i{literal} and the right-hand-side node
+must be a refer to a single (scalar) @bool{} instance.  
+A @i{PRS-expr} may be any boolean expression using the 
+operators @prsnot{}, @prsand{}, @prsor{}, and literals.  
+(The unary @prsnot{} operator has the highest precedence, 
+and the @prsand{} operator has higher precedence than the @prsor{} operator.)
+
+@cindex shorthand PRS arrow
+@cindex arrow, PRS shorthand
+The rule arrow @prsrarrow{} can be substituted with one of its shorthand forms.
+The @prscarrow{} arrow automatically generates the complementary rule 
+(pulling on opposite direction) using the DeMorgan inverse of the guard.
+The @prsfarrow{} arrow mirrors the rule pulling in the opposite direction
+with the same topology but @emph{inverted} literals, mostly useful for
+writing C-elements.  For example:
+@example
+x & y & z    => w-
+x & y & z    #> c-
+@end example
+@noindent
+expands to
+@example
+x & y & z    -> w-
+~x | ~y | ~z -> w+
+x & y & z    -> c-
+~x & ~y & ~z -> c+
+@end example
+
+Rules involving internal nodes may only use the plain @prsrarrow{}
+notation @ref{PRS Internal Nodes}.
+
+@cindex CMOS-implementable PRS
+Since production rules are an abstract description of logic, 
+the rules themselves need not be CMOS-implementable.  
+Enforcement of CMOS-implementability can be introduced by later tools
+or compiler phases where desired.  
+(@strong{TODO}: write a CMOS checking pass.)
+
+@menu
+* PRS Sizing::
+* PRS Internal Nodes::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node PRS Sizing
+@subsection Sizing
+@cindex sizing of PRS
+
+We provide a way of specifying transistor widths for every literal.  
+Each literal on the LHS may be followed by an optional size argument:
+
+@itemize
+@item @i{literal} :
+	@i{node-reference} @{ @t{<} @i{float} @t{>} @}@math{_{opt}}
+@end itemize
+
+Ideas: Specify a width/strength on the RHS and automatically infer
+the sizes of the literals on the LHS (only for this rule).  
+
+Actually, literal parameters may be any generalized list of expressions.  
+
+@c ----------------------------------------------------------------------------
+@node PRS Internal Nodes
+@subsection Internal Nodes
+@cindex internal nodes
+
+A literal may be optionally prefixed with @samp{@@} to indicate that
+it is only an internal node, and is not declared as a normal bool.  
+Internal nodes are useful for specifying more general 
+circuit topologies that share common foot transistors.  
+Internal nodes may appear on the left-hand-side of production rules
+arbitrarily many times.  
+@cindex shared transistors
+@cindex shared nodes
+
+@example
+en -> @@_en_int-         @r{// defines an internal node}
+~@@_en_int & Ld -> _rd-  @r{// uses internal node as foot transistor}
+~@@_en_int & Hd -> _md-
+@end example
+
+Above, @t{_en_int} is not declared as a bool, but the first rule that
+drives it effectively declares it -- an implicit declaration.  
+An internal node may only be referenced as the leftmost literal
+of any conjunctive (and) term.  
+(@strong{TODO}: position is not yet checked, currently performs 
+straightforward expression substitution.)
+
+The effective production rules are obtained by substituting
+the internal nodes' associated expressions wherever they are used.
+With the above example, the effective production rules are:
+@example
+en & Ld -> _rd-
+en & Hd -> _md-
+@end example
+
+Internal nodes are implicitly declared in the scope of the enclosing 
+definition (or top-level) so their names cannot conflict with
+existing declarations.  
+Likewise, subsequent declarations cannot re-use names of existing
+internal nodes.  
+
+Internal nodes can also be used in arrays, where the dimensions are 
+implied by the indexing.  
+(@strong{Warning}: node arrays are not supported in ACT.)
+One can declare arrays of internal nodes in loops, for example:
+
+@example
+(:i:N:
+  en & x[i] -> @@_en_i[i]-
+  ~@@_en_i[i] & y[i] -> _z[i]-
+)
+@end example
+
+Each unique internal node may only be defined once in one direction, 
+pull-up or pull-down.  
+Using an internal node in the wrong sense constitutes an error, e.g.:
+
+@example
+x -> @@y-
+@@y & z -> w-
+@end example
+
+@noindent
+is an error because @t{@@y} is defined as a pull-down only expression, 
+but is being evaluated active-high in the rule for @t{w-}.  
+Negations of internal nodes are @emph{bound to the referenced node}
+and dictate the sense in which the node is pulled, 
+unlike regular boolean expressions.  
+
+The following is an erroroneous attempt to define the same
+internal node in two directions:
+@example
+x -> @@y-
+~x -> @@y+
+@end example
+
+Rules involving internal nodes may only use the plain @prsrarrow{} notation.  
+
+Since internal nodes just define re-usable subexpressions, 
+production rule attributes are not applicable to them; 
+they are simply ignored.  
+
+@strong{Status}: implemented and tested.
+
+@c ----------------------------------------------------------------------------
+@node PRS Attributes
+@section Attributes
+@cindex attributes, PRS
+
+We need a clean way to tag nodes and rules with attributes
+for various tools.  
+
+@menu
+* PRS Node attributes::
+* PRS Rule attributes::
+* PRS Literal attributes::
+* PRS Operator attributes::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node PRS Node attributes
+@subsection Node attributes
+@cindex node attributes
+@cindex attributes, node
+
+What happens when we connect nodes with conflicting attributes?
+
+Attributes from super-cells or sub-cells?
+
+@c ----------------------------------------------------------------------------
+@node PRS Rule attributes
+@subsection Rule attributes
+@cindex rule attributes
+@cindex attributes, rule
+
+We propose the following syntax for per-rule attributes:
+@itemize
+@item @i{rule-attrib-list} : @t{[} @i{rule-attrib} @t{;} ... @t{]}
+@item @i{rule-attrib} : @i{identifier} @t{=} @i{expr-list}
+@end itemize
+
+@i{Rule-attribs} are generalized as key-value(s) pairs, which permits
+the programmer to add arbitrary attributes to the language without
+adding more keywords to the language.  
+@i{Rule-attrib-list}s are just semicolon-delimited lists of one or more
+rule-attributes.  
+In the case of repeated attributes, the latter pair will override the former.  
+Rule-attribute-lists are optional prefixes to PRS-rules.  
+
+For now, the purpose of these attributes is to emit
+attribute lines suitable for consumption by another text-based tool, 
+such as old versions of @command{prsim}.  
+@cindex prsim
+
+Q: What happens when we OR-combine rules with different attributes?
+
+Some existing attributes:
+
+@include prs/attribute-after.texi
+@include prs/attribute-weak.texi
+@include prs/attribute-rule-sizing.texi
+@include prs/attribute-unstab.texi
+@include prs/attribute-comb.texi
+@include prs/attribute-iskeeper.texi
+@include prs/attribute-isckeeper.texi
+@include prs/attribute-diode.texi
+@include prs/attribute-res.texi
+@include prs/attribute-keeper.texi
+@include prs/attribute-vt.texi
+@include prs/attribute-output.texi
+@include prs/attribute-loadcap.texi
+@include prs/attribute-always_random.texi
+@include prs/attribute-reff.texi
+
+@c ----------------------------------------------------------------------------
+@node PRS Literal attributes
+@subsection Literal attributes
+@cindex literal attributes, PRS
+@cindex sizing of PRS
+@cindex transistor type override
+
+The literals of the rule expressions may have attributes.  
+Literal attribute are mostly for back-end tool-specific use.
+Literal attributes are written like other attributes
+@samp{key} or @samp{key=value}.  
+
+@itemize
+@item @i{literal} : @i{bool-ref}
+@item @i{literal} : @i{bool-ref} @t{<} @i{W} @t{>}
+@item @i{literal} : @i{bool-ref} @t{<} @i{W} @t{,} @i{L} @t{>}
+@item @i{literal} : @i{bool-ref} @t{<} @i{W} @t{,} @i{L} @t{;} @i{literal-attrib} @t{;} ... @t{>}
+@item @i{literal} : @i{bool-ref} @t{<} @i{W} @t{;} @i{literal-attrib} @t{;} ... @t{>}
+@item @i{literal} : @i{bool-ref} @t{<} @t{;} @i{literal-attrib} @t{;} ... @t{>}
+@end itemize
+
+@noindent
+The width @i{W} and length @i{L} and literal attributes are all optional.
+
+@include prs/literal-label.texi
+@include prs/literal-vt.texi
+
+
+Ideas:
+
+Instance-specific attributes?
+
+Applications:
+@itemize
+@item Procedural layout
+@item Automatic sizing
+@end itemize
+
+@c ----------------------------------------------------------------------------
+@node PRS Operator attributes
+@subsection Operator attributes
+@cindex operator attributes, PRS
+@cindex precharge
+
+The @prsand{} operator may take an optional suffix attribute
+to indicate that an internal node is precharged.  For example:
+
+@example
+en &@{+~en@} Ld & Ci -> _rd-
+@end example
+
+@noindent
+states that the internal node between gates @t{en} and @t{Ld} is
+precharged with a PFET gated with @t{~en}.  
+
+
+@strong{Status}: parsed, but ignored.
+Should this be done with @prsor{} as well?
+
+@c ----------------------------------------------------------------------------
+@node PRS Loops
+@section Loops
+@cindex loops (PRS)
+@cindex rule loop
+
+Loop syntax, unrolling, etc...
+
+Loops can appear in expressions and in rules in the PRS language.  
+A @i{rule-loop} can be written as:
+
+@itemize
+@item @t{(:} @i{loop-var} @t{:} @i{range} @t{:}
+	@i{rules} @t{)}
+@end itemize
+
+The @i{loop-var} is declared with a identifier, and may be referenced
+in the body rules.  
+The rule-loop is repeatedly expanded using the values spanned
+by the @i{range}.  
+(The range may be written implicitly or explicitly.)
+If the range evaluates empty, then the body is skipped during unrolling.  
+Rule-loops may be nested, i.e., they may contain other loops.  
+The current limit for the size of an expression is 65535 sub-expressions.
+
+An expression-loop is written as:
+@itemize
+@item @t{(} @i{op} @t{:} @i{loop-var} @t{:} @i{range} @t{:}
+	@i{PRS-expr} @t{)}
+@end itemize
+The @i{loop-var} and @i{range} have the same meanings as when used
+in rule-loops.  
+@i{op} may be @prsand{} or @prsor{}.  
+The body expression is repeatedly expanded with the @i{op} operator.  
+Expression-loops may be nested, i.e., they may contain other expression-loops.  
+If the range evaluates empty, ...
+@b{We need to specify these semantics}!
+
+Interpret the following:
+@itemize
+@item @code{(@prsand{}:i:0: x[i]) @prsrarrow{} y-}
+@item @code{(@prsor{}:i:0: x[i]) @prsrarrow{} y-}
+@item @code{z @prsand{} (@prsand{}:i:0: x[i]) @prsrarrow{} y-}
+@item @code{z @prsand{} (@prsor{}:i:0: x[i]) @prsrarrow{} y-}
+@item @code{z @prsor{} (@prsand{}:i:0: x[i]) @prsrarrow{} y-}
+@item @code{z @prsor{} (@prsor{}:i:0: x[i]) @prsrarrow{} y-}
+@end itemize
+
+@c ----------------------------------------------------------------------------
+@node PRS Extensions
+@section Extensions
+
+This section describes some of the recent extensions to the PRS language.  
+
+@menu
+* PRS Macros::
+* Pass-gates::
+* PRS Supply Overrides::
+* PRS Substrate Overrides::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node PRS Macros
+@subsection Macros
+@cindex PRS macros
+@cindex macros, PRS
+
+As an alternative to a PRS-rule, one may write a macro to represent
+some custom topology of a netlist or as shorthand for an expansion.  
+
+We propose the following syntax for macros:
+
+@itemize
+@item @i{PRS-macro} : @i{identifier} @t{<} @i{expr-list} @t{>} @t{(} @i{PRS-literal-list} @t{)}
+@item @i{PRS-macro} : @i{identifier} @t{(} @i{PRS-literal-list} @t{)}
+@end itemize
+
+We do not hard-code any built-in macros into the language with keywords, 
+rather we allow the programmer to define the meaning of each macro.  
+Macros can also take parameters inside angle-brackets, 
+where the @i{expr-list} is a list of comma-separated expressions.  
+The number of arguments for a macro may also be variable, 
+and is defined by the macro's implementation.  
+The macro mechanism can potentially be used to attach attributes
+to nodes and other subnets.  
+As the list of macros grows, they should be documented here.  
+
+Examples of macros one may wish to define:
+@itemize
+@item @t{passn} --- @i{<W,L>(g,s,d)} @math{W} is an optional transistor width, 
+	@math{L} is an optional length.  If only one parameter is passed, 
+	it is interpreted as the width.  @math{g, s, d} are the
+	gate, source, and drain, respectively.  
+	The pseudo production rule generated (@t{cflat prsim}) 
+	is @emph{uni-directional}, i.e. the drain is driven as the output.  
+@item @t{passp} --- analogous to @t{passn}
+@item @t{pass} --- full symmetric pass-gate
+@item @t{assert}
+@item @t{stat}
+@item @t{comb-fb}
+@end itemize
+
+The remaining sections discuss other extensions that have been proposed
+at other times.  
+See which ones could be folded into a general macro!
+
+Below are a list of macros documented in the source file
+@file{Object/lang/PRS_macro_registry.cc}.
+
+@include prs/macro-passn.texi
+@include prs/macro-passp.texi
+@include prs/macro-echo.texi
+
+@strong{New:} Pass-gate parameters may now take optional transistor type
+overrides (@samp{lvt, hvt}).  
+
+@c ----------------------------------------------------------------------------
+@node Pass-gates
+@subsection Pass-gates
+@cindex pass-gates
+
+True pass-gate logic was missing from the original CAST-PRS implementation.  
+A pass-gate could be emulated as a latch if the `direction' of operation was
+known at compile time.  
+Not having to support pass-gates greatly simplified other pieces of the 
+tool-chain, such as LVS and PRSIM.  
+
+We propose the following syntax for pass-gates:
+
+@enumerate
+@item @math{node_1} @t{<-} @math{node_2} @t{->} @math{node_3}
+denotes an NFET connecting @math{node_1} and @math{node_3} gated by @math{node_2}
+@item @math{node_1} @t{<+} @math{node_2} @t{+>} @math{node_3}
+denotes a PFET connecting @math{node_1} and @math{node_3} gated by @math{node_2}
+@ignore
+@item @math{node_1} @t{<=} @math{node_2} @t{=>} @math{node_3}
+denotes an NFET connecting @math{node_1} and @math{node_3} gated by @math{node_2}
+	with a PFET gated by @math{\overline{node_2}}
+@end ignore
+@end enumerate
+
+@ignore
+In all cases, @math{node_2} may be a literal node or its complement, 
+prefixed with a tilde.
+@end ignore
+@math{node_{1...3}} are production rule literals.  
+In case 1, when @math{node_2} is logic-1, the nodes on either side are connected.
+In case 2, when @math{node_2} is logic-0, the other terminals are connected.  
+@math{node_2} may be given an optional size to specify the 
+width of the transmission-gate.  
+In all cases, 
+if nodes on opposite sides are both driving in opposite directions, 
+then it is considered a short-circuit (error).  
+If neither side is driving, and the nodes' states are in opposition, 
+then both nodes will become unknown (X). 
+Otherwise, the one side that is being driven will flip the other side.  
+
+@math{node_2} may be given an optional @t{<size>} argument for specifying
+gate width.  
+
+Technically, one may use pass-gate to construct arbitrary transistor
+topologies.  
+
+Writing a production rule in terms of equivalent pass-gates
+will not produce sane digital behavior in simulation because
+of the unidirectional nature of the generated equivalent rule.  
+(They should, however, result in the same netlist in backends.)
+Hence, all standard logic should be writte as rules, not pass-gates.  
+
+@c ----------------------------------------------------------------------------
+@node PRS Supply Overrides
+@subsection PRS Supply Overrides
+@cindex supply overrides
+@cindex power supply
+
+Production rules assume that a pull-up rule is implicitly connected to
+some high power supply (often @t{Vdd}) and pull-down rules are rooted
+at some low supply (often @t{GND}).  
+The simulated interpretation of rules is agnostic to the actual supply used.  
+When left unspeciifed, rules by default connect to the implicit supplies
+for each process, @t{!Vdd} and @t{!GND}.  @xref{Implicit Ports}.
+For netlist back-ends, however, the way to override the supply nodes
+for a block of production rules is to pass in replacement supplies:
+
+@itemize
+@item @t{prs} @t{<} @i{Vdd} @t{>} @t{@{...@}}
+@item @t{prs} @t{<} @i{Vdd} @t{,} @i{GND} @t{>} @t{@{...@}}
+@end itemize
+
+@c ----------------------------------------------------------------------------
+@node PRS Substrate Overrides
+@subsection PRS Substrate Overrides
+@cindex substrate overrides
+@cindex body contacts
+
+By default, the @emph{supply} contact for a set of rules is also used to
+connect to the substrate (body) contacts for a given type of transistor.  
+There may be cases where one wants to use a different substrate connection
+than the corresponding supply, for instance with power-gating.  
+The substrate contacts of transistors for netlist back-ends can be overridden
+with an additional set of @t{prs} parameters:
+
+@itemize
+@item @t{prs} @t{<} ... @t{|} @i{BVdd} @t{>} @t{@{...@}}
+@item @t{prs} @t{<} ... @t{|} @i{BVdd} @t{,} @i{BGND} @t{>} @t{@{...@}}
+@end itemize
+
+All arguments are optional; the @t{prs} parameters always form a 
+4-tuple, which includes the default connections when left unspecified.  
+
+
+@c ----------------------------------------------------------------------------
+@node PRS Options
+@section Options
+
+Compiler warnings:
+
+CMOS-implementability (exceptions allowed for attribute).  
+(This happens to be implemented as an error condition in @command{hacknet}.)
+
+Staticizers?
+

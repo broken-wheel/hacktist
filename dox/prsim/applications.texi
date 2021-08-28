@@ -1,0 +1,2382 @@
+@c "hacprsim/intro.texi"
+@c $Id: intro.texi,v 1.1 2007/08/20 21:12:33 fang Exp $
+
+@node Applications
+@chapter Applications
+
+This chapter is devoted to giving examples of how to use
+@command{hacprsim}, with numerous examples of @HAC{} and simulation scripts.  
+This is arguably the most useful chapter for users.  
+
+@menu
+* Basic Demonstrations::
+* Simulation vs. Netlist::
+* Shared Internal Nodes::
+* Internal Precharges::
+* Custom Power Supplies::
+* Debugging::
+* Checkpointing and Tracing::
+* Diagnostic and Behavior Control::
+* Testing with Channels (synchronous)::
+* Testing with Channels (asynchronous)::
+* Defensive Design::
+* Workflow Examples::
+@end menu
+
+@c -----------------------------------------------------------------------------
+@node Basic Demonstrations
+@section Basic Demonstrations
+
+As every language has its "Hello, World!" example, so does @hacprsim{}.
+
+@menu
+* Basic Compile and Run::
+* Built-in Commands (a brief tour)::
+* Subcircuit Processes::
+@end menu
+
+@node Basic Compile and Run
+@subsection Basic Compile and Run
+To get started, write the following @HAC{} file:
+
+@example
+// "inv1.hac"
+bool a, b;
+prs @{
+   a -> b-
+  ~a -> b+
+@}
+@end example
+
+@noindent
+This declares two rules for the opposing pull networks
+that make an inverter.
+The order in which rules are written does not matter;
+everything is concurrent.
+
+Compile it into an object file.
+
+@example
+@shellkbd{haco inv1.hac inv1.haco}
+@end example
+
+@noindent
+Object files are the primary inputs to all back end tools.
+They consist of internal hierarchical representations of the 
+described circuit.
+
+Run it, by loading the object file.
+
+@example
+@shellkbd{hacprsim inv1.haco}
+@prsimkbd
+@end example
+
+@noindent
+You've succesfully loaded the simulation.
+The simulator awaits your command.
+
+@example
+@prsimkbd{time}
+time: 0
+@prsimkbd{watchall}
+@prsimkbd{get a}
+a : X
+@prsimkbd{get b}
+b : X
+@end example
+
+@noindent
+Every node is initially @t{X}, unknown value.
+
+@example
+@prsimkbd{set a 0}
+@prsimkbd{get a}
+a : X
+@end example
+
+@noindent
+Wait, but didn't we just set @var{a}?
+@example
+@prsimkbd{why-x a}
+a:X, pending event -> 0
+@prsimkbd{pending a}
+queue:  0       a : 0
+@prsimkbd{queue}
+event queue:
+        0       a : 0
+@end example
+
+@noindent
+The @command{set} command doesn't change the value right away, 
+it only @emph{schedules} it right away.  
+Above, the @command{why-x} command reports that a transition on a:0 is pending,
+in the event queue.
+@command{pending} reports whether a node has a pending transition in queue.
+@command{queue} prints the entire event queue.
+To advance the simulation, we need to @command{step} or
+@command{cycle} (run until no events remain in queue).
+
+@example
+@prsimkbd{cycle}
+        0       a : 0
+        10      b : 1   [by a:=0]
+@prsimkbd{assert b 1}
+@prsimkbd{queue}
+event queue:
+@prsimkbd{time}
+time: 10
+@prsimkbd{get a}
+a : 0
+@prsimkbd{get b}
+b : 1   [by a:=0]
+@end example
+
+With the @command{watchall} at the beginning,
+the simulator reports every node transition as it happens.
+The change on @var{a} triggered an event on @var{b}, which then executed, 
+leaving the event queue empty at time 10.
+The @command{get} command simply prints the current value of a node.
+At any time, we can @command{assert} that nodes have the values we expect.
+Should an @command{assert}ion fail, the simulator will halt.
+A failed @command{assert}ion (or similar fatal error) in a script
+will terminate the simulator and return a non-zero exit status.
+
+@example
+@prsimkbd{set a 1}
+@prsimkbd{cycle}
+        10      a : 1
+        20      b : 0   [by a:=1]
+@prsimkbd{assert b 0}
+@end example
+
+@noindent
+We can also query the connectivity of rules and nodes, 
+which look like the written production rules.
+
+@example
+@prsimkbd{fanout a}
+Fanouts of node `a':
+(to [top-level]):
+[after 10]      a -> b-
+[after 10]      ~a -> b+
+@prsimkbd{fanout-get a}
+Fanouts of node `a':
+(to [top-level]):
+[after 10]      a:1 -> b-:0
+[after 10]      ~a:1 -> b+:0
+@prsimkbd{fanin b}
+Fanins of node `b':
+(from [top-level]):
+[after 10]      ~a -> b+
+[after 10]      a -> b-
+@prsimkbd{fanin-get b}
+Fanins of node `b':
+(from [top-level]):
+[after 10]      ~a:1 -> b+:0
+[after 10]      a:1 -> b-:0
+@prsimkbd{fanin a}
+Fanins of node `a':
+@prsimkbd{fanout b}
+Fanouts of node `b':
+@end example
+
+@noindent
+The @command{-get} variants of these commands print the current value
+of each node, following a @t{:} (colon).
+
+Compile and run the the following example, a NAND gate.
+
+@example
+bool a, b, _c;
+prs @{
+  a & b   => _c-
+@}
+@end example
+
+The @command{fanin-get} and @command{fanout-get} commands
+print more information about the values of subexpressions.
+
+@example
+@prsimkbd{set a 1}
+@prsimkbd{set b 1}
+@prsimkbd{cycle}
+@prsimkbd{fanin-get _c}
+Fanins of node `_c':
+(from [top-level]):
+[after 10]      ~a:1 | ~b:1<0><0> -> _c+:0
+[after 10]      a:1 & b:1<1><1> -> _c-:0
+@end example
+
+@noindent
+Expressions like @t{<0>} denote the value of the subexpression
+immediately to its left.  The @t{<0>} after @t{~a:1 | ~b:1} comes from
+the evaluation of @t{0|0}.  The very last @t{<0>} on the same line
+is the OR-combined value of all expressions in all rules that pull @t{_c} up,
+which in this case, is just the value of the only guard expression.
+
+There is one optional compilation step that a user may wish to run:
+
+@example
+@shellkbd{haccreate inv1.haco inv1.haco-c}
+@end example
+
+@noindent
+@haccreate{} compiles the object file further by expanding
+instances in the hierarchy ('create') from the top-down, 
+and caching the expanded structures internally.  
+The result is a larger object file.  
+Many errors are not caught until this expansion is done, 
+for example, index-out-of-array-bounds errors.  
+It is advised to compile through the @haccreate{} phase
+in your workflow to catch errors as early as possible.
+All of @HACKT{}'s back-end tools like @hacprsim{} and @hacknet{}
+will accept either pre-created and post-created object files.
+The back-end tools will automatically invoke @haccreate{} (internally),
+before performing their function.
+
+@itemize
+@item @shellkbd{hacprsim inv1.haco}
+@item @shellkbd{hacprsim inv1.haco-c}
+@end itemize
+
+@noindent
+give the exact same behavior.
+
+@cindex scripting
+@cindex tab-completion
+Finally, all interactive commands can be written in scripts and 
+run with the @command{source} command, or by input redirection.
+Paste the above commands into a script, @file{test.prsimrc}, 
+and run it (you should be able to tab-complete filenames):
+
+@example
+@shellkbd{hacprsim inv1.haco-c}
+@prsimkbd{source test.prsimrc}
+... same things happen ...
+@end example
+
+@noindent
+or
+
+@example
+@shellkbd{hacprsim -b inv1.haco-c < test.prsimrc}
+@end example
+
+@noindent
+The @option{-b} option (batch mode) suppresses the @prsimkbd{} prompt.
+Scripts may also @command{source} other scripts.  
+
+You now know how to compile and run a circuit in @hacprsim{},
+set and query values, advance the simulation, and examine 
+the status of production rule fanin and fanout.  
+
+@c -----------------------------------------------------------------------------
+@node Built-in Commands (a brief tour)
+@subsection Built-in Commands (a brief tour)
+
+Let's take a minute to introduce the in-program help system, 
+along with other built-in commands.
+
+@example
+@prsimkbd{help}
+available categories: 
+        builtin --- built-in commands
+        channels --- channel commands
+        debug --- debugging internals
+        general --- general commands
+        info --- information about simulated circuit
+        modes --- timing model, error handling
+        simulation --- simulation commands
+        tracing --- trace and checkpoint commands
+        view --- instance to watch
+help: lists available commands and categories
+to get usage for a specific command or category, run: help <name>
+help all: lists all commands across all categories
+@end example
+
+@noindent
+Event the @command{help} command has a description.
+@example
+@prsimkbd{help help}
+help: lists available commands and categories
+to get usage for a specific command or category, run: help <name>
+help all: lists all commands across all categories
+@end example
+
+@noindent
+One can also list commands available by category (alphabetically):
+@example
+@prsimkbd{help builtin}
+Commands available in the 'builtin' category:
+        # -- comments are ignored
+        abort -- exits simulator with fatal status
+        alias -- defines alias to auto-expand by the interpreter
+        aliases -- show all registered command aliases
+        all -- show all commands
+        cd -- change current working instance/directory
+        comment -- comments are ignored
+        dirs -- print entire instance/directory stack
+        echo -- prints arguments back to stdout, space-delimited
+        ...
+@end example
+
+@noindent
+To see a comprehensive list of all commands (by category):
+@example
+@prsimkbd{help all}
+        ...
+@end example
+
+To see a history of commands we entered
+(useful for retracing your steps, or saving scripts):
+@example
+@prsimkbd{history}
+history[0..3]:
+0       help
+1       help help
+2       help builtin
+3       help all
+@end example
+
+@noindent
+In scripts, sometimes you just want to print a message
+@example
+@prsimkbd{echo ---- YOU ARE HERE ----}
+---- YOU ARE HERE ----
+@end example
+
+@noindent
+Scripts may contain comments, which are ignored by the interpreter
+@example
+@prsimkbd{# I am a very useful comment, really.}
+@end example
+
+@noindent
+Should you find some commands too long to type, you may create 
+short-hand aliases.
+@example
+@prsimkbd{alias ? help}
+@prsimkbd{alias e echo}
+@prsimkbd{alias h history}
+@prsimkbd{alias a alias}
+@prsimkbd{a r repeat}
+@prsimkbd{? time}
+time
+shows the current time
+@prsimkbd{e hello}
+hello
+@prsimkbd{? aliases}
+aliases
+lists all active defined command aliases
+@prsimkbd{aliases}
+Command aliases:
+        ? -> help 
+        a -> alias 
+        e -> echo 
+        h -> history 
+        r -> repeat 
+@end example
+
+@noindent
+The interpreter always expands aliases (recursively) in prefix position.
+Aliases can be cancelled with the @command{unalias} command.
+
+Any command can be @command{repeat}ed with:
+@example
+@prsimkbd{repeat 3 echo I love this!}
+I love this!
+I love this!
+I love this!
+@prsimkbd{r 3 e I love this even more!}
+I love this even more!
+I love this even more!
+I love this even more!
+@end example
+
+@noindent
+The interpreter also lets you run shell commands from within
+by prefixing with @code{!}:
+@example
+@prsimkbd{!rm -f messy-temporary-file.txt}
+@prsimkbd{!date -u}
+Sun Mar  7 05:22:35 UTC 2004
+@prsimkbd{!false}
+*** Exit 256
+@end example
+@c anyone care to guess the significance of that timestamp?
+
+@noindent
+A non-zero exit status from a system command (like the last one)
+will cause the script-interpreter to stop.
+
+Finally, the interactive environment can be exited with 
+@command{exit} or @command{quit} or Ctrl-D.
+
+@example
+@prsimkbd{exit}
+@shellkbd
+@end example
+
+@c -----------------------------------------------------------------------------
+@node Subcircuit Processes
+@subsection Subcircuit Processes
+
+More interesting systems will be designed as a hierarchy of subcircuits.  
+Let us define an inverter:
+
+@example
+// "inv.hac"
+defproc inv(bool? a; bool! b) @{
+  prs @{
+     a -> b-
+    ~a -> b+
+  @}
+@}
+@end example
+
+@noindent
+Note that we specify direction on ports @var{a} and @var{b}.
+This is helpful enabling connectivity diagnostics at compile time.  
+
+Next, instantiate it a few times:
+@example
+// "inv-test.hac"
+import "inv.hac";    @i{// include used definitions}
+bool x, y, z;
+inv I(x, y);         @i{// instantiate with port connections}
+inv J(y, z);
+@end example
+
+@noindent
+It helps to separate definitions from top-level instances, 
+so that common files contain only definitions.  
+Compile and run @file{inv-test.hac}.
+@example
+@shellkbd{haco inv-test.hac inv-test.haco}
+@shellkbd{hacprsim inv-test.haco}
+@prsimkbd{watchall}
+@end example
+
+@noindent
+Let us introduce some new information commands.
+When working with an unfamiliar circuit it helps to know what 
+a name refers to with the @command{what} command.
+
+@example
+@prsimkbd{what I}
+I refers to process-inst-ref inv<>
+@prsimkbd{what a}
+a refers to bool-inst-ref bool<>
+@end example
+
+@noindent
+During initialization or operation, we often want to 
+know what nodes still have unknown value.
+
+@example
+@prsimkbd{status X}
+X nodes:
+x y z
+@prsimkbd{status 0}
+0 nodes:
+!GND 
+@prsimkbd{status 1}
+1 nodes:
+!Vdd 
+@end example
+
+@noindent
+The @command{status} command lists all node with a particular value.
+@command{status-newline} reports the same information with each
+node on its own line.
+@t{!Vdd} and @t{!GND} are special implicit power supplies that
+are automatically connected through the hierarchy.
+
+We can query any node for its equivalent aliases with @command{who} or
+@command{who-newline}:
+@example
+@prsimkbd{who y}
+aliases of "y":
+I.b J.a y 
+@prsimkbd{who-newline y}
+aliases of "y":
+I.b
+J.a
+y
+@end example
+
+@cindex alias (node)
+@noindent
+Using any of these aliases in interactive commands will reference the
+same physical node.  
+
+@cindex directory view
+@cindex file-system view
+A very useful way of viewing the circuit hierarchy in
+the interpreter like a file system.
+Think of the top-level of the circuit like a "home directory."
+
+@example
+@prsimkbd{pwd}
+~
+@prsimkbd{ls}
+top-level instances: 
+Instances:
+  !GND = bool<> !GND
+  !Vdd = bool<> !Vdd
+  I = inv<> I
+  J = inv<> J
+  x = bool<> x
+  y = bool<> y
+  z = bool<> z
+@end example
+
+@noindent
+@bool{}s (or nodes) are like files, 
+and processes (subcircuits) are like directories.  
+You can get listings of names at any level of hierarchy using @command{ls}.
+
+@example
+@prsimkbd{ls I}
+I (type: inv<>) has members: 
+Instances:
+  !GND = bool
+  !Vdd = bool
+  a = bool
+  b = bool
+@end example
+
+@noindent
+The @command{rules} command shows what production rules belong to a process.
+@example
+@prsimkbd{rules .}
+[top-level]
+rules:
+@prsimkbd{rules J}
+J refers to process-inst-ref inv<>
+rules:
+[after 10]      y -> z-
+[after 10]      ~y -> z+
+@end example
+
+@noindent
+Note that @command{rules} prints nodes using their @emph{global} names,
+rather than their subcircuit-local names.  
+@command{rules-verbose} prints production rules annotated
+with nodes' current values.  
+
+@noindent
+One can descend into processes with directory commands.
+
+@example
+@prsimkbd{cd I}
+@prsimkbd{ls}
+I (type: inv<>) has members: 
+Instances:
+  !GND = bool
+  !Vdd = bool
+  a = bool
+  b = bool
+@prsimkbd{cd ..}
+@prsimkbd{pushd J}
+@prsimkbd{ls}
+J (type: inv<>) has members: 
+Instances:
+  !GND = bool
+  !Vdd = bool
+  a = bool
+  b = bool
+@prsimkbd{dirs}
+J ~ 
+@prsimkbd{cd ../I}
+@prsimkbd{dirs}
+I ~ 
+@prsimkbd{popd}
+@prsimkbd{pwd}
+~
+@end example
+
+@cindex tab-completion
+@b{Productivity tip:}
+If the tools were compiled @option{--with-readline},
+you can also tab-complete process and signal names on many commands, 
+much like file-name completion.  
+
+@b{Productivity tip:}
+If you have commands that apply to a subcircuit 
+(of which there may be many instances in the hierarchy), 
+you can write a script using references @emph{local} to that subcircuit, 
+and surround calls to @command{source}-ing that script
+with @command{pushd}-@command{popd} pairs.
+
+@example
+# "dump-inv.prsimrc"
+get a
+get b
+@end example
+
+@noindent
+The above script could be called at different sites:
+
+@example
+@prsimkbd{pushd I}
+@prsimkbd{source dump-inv.prsimrc}
+@prsimkbd{popd}
+@prsimkbd{pushd J}
+@prsimkbd{source dump-inv.prsimrc}
+@prsimkbd{popd}
+@end example
+
+Now we return to actually driving the circuit.
+@example
+@prsimkbd{set x 0}
+@prsimkbd{cycle}
+@end example
+
+@noindent
+Unless we enabled @command{watchall}, 
+we don't see any reports of transitions.
+We can still inspect the state of nodes:
+
+@example
+@prsimkbd{getlocal .}
+!GND : 0
+!Vdd : 1
+x : 0
+y : 1
+z : 0
+@end example
+
+@noindent
+The @command{getlocal} command reports the values of all nodes
+in the referenced scope (process).  Here, '.' refers to the current 
+working directory, which is the top-level.  
+We can also query a node for the series of recent events that
+led to its current value:
+
+@example
+@prsimkbd{backtrace z}
+event    : `z' : 0 @ 20
+caused by: `y' : 1 @ 10
+caused by: `x' : 0 @ 0
+(no cycle)
+@end example
+
+@noindent
+As the simulator executes events, it keeps track of the
+most recent event that @emph{caused} each transition to be scheduled.
+This forms a critical path causality chain.  
+This can be useful for debugging unexpected values
+or estimating delays on performance-critical paths.  
+@t{no cycle} means that the iterative query found no causing event,
+which is often the case with user-driven inputs.  
+The backtrace will report @t{cycle reached} if it encounters
+a transition a second time in the trace.  
+
+Now you have learned how to navigate the circuit hierarchy 
+in the simulator, and obtain more information about named
+nodes and subcircuits.  
+
+
+@c -----------------------------------------------------------------------------
+@c @node Simulation vs. Netlist
+@node Simulation vs. Netlist
+@section Simulation vs. Netlist
+
+The @HAC{} language was designed to allow a user to express
+circuit behavior and topology, however, there are instances when
+one needs to express equivalent circuits in different forms.
+In cases like these, the compilation of the @HAC{} will depend on the
+target backend tool.
+It is advised to minimize the number of places in a circuit description
+that diverge, as these are often error-prone and require thorough designer
+review.  
+
+@menu
+* Expression Ordering::
+* Tool Selection Headers::
+* Wire::
+* Transmission Gates::
+* Weak Rules::
+* Staticizers::
+* Combinational Feedback::
+* RAM Cell::
+* Ignored attributes::
+@end menu
+
+@node Expression Ordering
+@subsection Expression Ordering
+
+Production rules in @HAC{} serve two purposes: to specific digital logic
+behavior and transistor topology.
+It is important to understand how the production rules are 
+translated into netlists.
+
+@itemize
+@item The order in which instances are declared bears no consequence
+on logical behavior nor the spice netlist.
+@item The order in which rules are written also does not affect
+logical nor netlist behavior.
+@item The order of literals in guard expressions does not affect
+logical behavior, but it does affect the netlist.
+Series transistors start at the power supply and append
+towards the output node.
+In other words, the leftmost literal (in an AND expression)
+is closest to the supply, and the rightmost literal is closest
+to the output.  
+@end itemize
+
+@noindent
+Consider the following example, an OR-combination
+of two pull-down stacks:
+
+@example
+prs @{
+  a & b & c  -> o-
+  d & e & f  -> o-
+@}
+@end example
+
+@noindent
+The transistors gated by @var{a} and @var{d} have their
+sources connected to the ground supply.  
+The transistors gated by @var{c} and @var{f} have their
+drains connected to the output @var{o}.
+You can think of every @t{&}-operator as representing
+an unnamed internal node between two (or more) transistors.
+
+It is a good practice to mind transistor ordering when
+writing production rules.  
+
+@node Tool Selection Headers
+@subsection Tool Selection Headers
+
+Let's create two @HAC{} header files for the sake of tool selection.  
+
+@example
+// "tool-simulation.hac"
+pbool SIMULATION = true;
+pbool NETLIST = false;
+@end example
+
+@noindent
+and
+
+@example
+// "tool-netlist.hac"
+pbool SIMULATION = false;
+pbool NETLIST = true;
+@end example
+
+One of these files is to be passed to the @command{haco} compiler
+via the @option{-i} option, which prepends the named file before
+all input.  
+Instead of producing a generic @t{.haco} object file, 
+one should produce an object file for each back-end tool.
+
+@example
+@shellkbd{haco -i tool-simulation.hac circuit.hac circuit.haco-sim}
+@shellkbd{haco -i tool-netlist.hac circuit.hac circuit.haco-net}
+@end example
+
+@noindent
+This way it is clear which object file is intended for which tool.
+
+An alternative way of compiling is write a top-level source
+file that @t{import}s one of these header files, but most users
+find this more cumbersome than passing a single command-line option.  
+
+Note that @t{SIMULATION} and @t{NETLIST} are just variable names;
+they are not keywords with any special meaning to the compiler.  
+Another convention may choose to a single enumeral value instead
+of a set of boolean variables to specify the intended tool.  
+Follow the convention established in your project.  
+
+@c -----------------------------------------------------------------------------
+@node Wire
+@subsection Wire
+
+As an example, let's take a simple wire.
+
+@example
+defproc long_wire(bool? in; bool! out) @{
+  in = out;
+@}
+@end example
+
+If one wishes to model propagation delay on @t{long_wire} in simulation, 
+one could rewrite this as:
+
+@example
+defproc long_wire(bool? in; bool! out) @{
+[ NETLIST ->
+  in = out;
+[] SIMULATION ->
+  prs @{
+     in -> out+
+    ~in -> out-
+  @}
+]
+@}
+@end example
+
+In @hacprsim{}, there will be some delay between @var{in} and @var{out}, 
+as modeled by the non-inverting rule, but the spice netlist will still
+show them as different names for the same wire.  
+
+As a reminder, @hacknet{} would error out if it tried to emit a netlist
+for non-CMOS-implementable rules like the above.
+CMOS-implementability requires pull-up rules to contain only
+negated literals, and pull-down rules to contain only non-negated literals.
+
+@c -----------------------------------------------------------------------------
+@node Transmission Gates
+@subsection Transmission Gates
+@cindex transmission gates
+@cindex pass gates
+
+@HAC{}'s PRS language provides macros for describing transmission gates.  
+
+@example
+prs @{
+  passn(gate, source, drain)  @i{// NMOS transistor}
+  passp(gate, source, drain)  @i{// PMOS transistor}
+@}
+@end example
+
+@noindent
+Digitally, these are modeled by @hacprsim{} like:
+
+@example
+  ~source &  gate -> drain-   @i{// interpretation of passn}
+   source & ~gate -> drain+   @i{// interpretation of passp}
+@end example
+
+@noindent
+It is important to note that @t{passn} and @t{passp} only pull
+values in @emph{one direction}, which is not exactly how they would
+function electrically; they are only modeled as @emph{unidirectional}
+in simulation.  
+@hacprsim{} doesn't support bidirectional pass-gates, 
+but it can model bidirectional wires (with caution).  
+
+@noindent
+The @t{passn} and @t{passp} macros are also used to
+emit a single transistor in netlists.
+A full pass gate could be defined as follows:
+
+@example
+defproc full_pass(bool? in, en, en_; bool! out) @{
+  prs @{
+    passn(in,  en, out)
+    passp(in, en_, out)
+  @}
+@}
+@end example
+
+For netlist generation, you can pass sizing and device type parameters
+to these macros, just like with expression literals,
+@xref{Ignored attributes}.  
+These parameters do not affect simulation.  
+
+@example
+  prs @{
+    passn<20,2;lvt>(in,  en, out)
+    passp<20;hvt>(in, en_, out)
+  @}
+@end example
+
+@c -----------------------------------------------------------------------------
+@node Weak Rules
+@subsection Weak Rules
+
+Weak rules are productions rules with less than normal drive strength.
+They win against no opposing pull, and are overpowered by 
+normal strength pull (without diagnostic).
+Use of weak rules is @b{discouraged}; there is usually a better way to 
+get the desired effect, however they are supported for a reason.  
+
+@example
+prs @{
+         _out =>  out-   @i{// a forward inverter, standard strength}
+  [weak]  out => _out-   @i{// a feedback inverter}
+@}
+@end example
+
+@hacprsim{}, by default, does not simulate weak rules, it ignores them.  
+To explicitly enable them in simulation,
+
+@example
+@prsimkbd{weak-rules on}
+@end example
+
+The following section discusses staticizers.
+
+@c -----------------------------------------------------------------------------
+@node Staticizers
+@subsection Staticizers
+
+@cindex staticizer
+@cindex keeper
+@cindex dynamic logic
+One of @HAC{}'s features is the ability to easily express 
+dynamic logic with distinct pull-up and pull-down rules.
+Dynamic logic, however, requires staticizers (or keepers)
+to maintain state on a node that is not actively driven.  
+
+In @hacprsim{}, all nodes behave as if they are staticized, that is, 
+their last set value remains until it is actively driven to another value.
+The @HAC{} language requires that users write explicit staticizers
+in circuit definitions for them to appear in netlists produced by 
+@hacknet{}.  
+The easiest way to declare a rule as part of a staticizer is with the
+@t{iskeeper} rule attribute.
+
+@cindex C-element
+Consider the following example of a C-element:
+
+@example
+bool a, b, _c, c;
+prs @{
+         a &  b  -> _c-
+        ~a & ~b  -> _c+
+        _c       => c-
+  [iskeeper=1] c => _c-
+@}
+@end example
+
+@noindent
+In the above example, the last rule is the feedback inverter
+that holds the state of @var{_c} when it is not pulled in either direction.  
+
+Alternatively, you can also write @t{[iskeeper]} for short, 
+or write the pull-up and pull-down rules separately.  
+
+@example
+  [iskeeper] ~c -> _c+
+  [iskeeper]  c -> _c-
+@end example
+
+How do @hacprsim{} and @hacknet{} treat the @t{iskeeper} attribute?
+By default, @hacprsim{} ignores all rules marked with @t{iskeeper}
+because every node is already treated as if it were staticized
+@footnote{There is a @option{-f fast-weak-keepers} option that does
+model keepers as zero-delay weak rules, but its use is discouraged.}.
+@hacknet{} will emit devices for rules marked @t{iskeeper}, 
+but named in a way that makes its purpose obvious.
+Note that with @t{iskeeper}, there is no need to conditionalize
+the circuit definition on variables like @t{SIMULATION} and @t{NETLIST}.  
+
+At the time of writing there is no automatic insertion
+of staticizers into netlists.  
+(Other tools can be used to check for missing or incorrect staticizers.)
+
+@c -----------------------------------------------------------------------------
+@node Combinational Feedback
+@subsection Combinational Feedback
+@cindex combinational feedback
+
+Worth mentioning is a common technique to turn dynamic logic
+into static logic: combinational feedback.
+Generally, the state-holding feedback circuit only turns on
+when it needs to hold state, to avoid relying on ratioed sizing
+to overpower feedback.
+
+@cindex C-element
+Here is our C-element example re-written with combinational feedback:
+
+@example
+bool a, b, _c, c;
+prs @{
+         a &  b  -> _c-
+        ~a & ~b  -> _c+
+        _c       => c-
+   c & ( a |  b) -> _c-    @i{// combinational feedback}
+  ~c & (~a | ~b) -> _c+    @i{// combinational feedback}
+@}
+@end example
+
+@noindent
+Suppose the initial state is @var{a}:0 @var{b}:0
+@var{_c}:1 @var{c}:0.
+In this state, the feedback pull-down on @var{_c} is cut-off.
+When @var{b} goes to 1, the pull-up on @var{_c} turns on, 
+actively holding the state.
+When @var{a} goes to 1, the pull-up on @var{_c} turns off, 
+letting the pull-down win without a fight.  
+In no state is @var{_c} undriven, making this a combinational circuit.
+
+Explicit combination feedback doesn't require any special handling
+in @hacprsim{} or @hacknet{}.  
+However, it may help other tools that read netlists to flag
+rules as belonging to combinational feedback:
+
+@example
+prs @{
+  [isckeeper]  c & ( a |  b) -> _c-
+  [isckeeper] ~c & (~a | ~b) -> _c+
+@}
+@end example
+
+@noindent
+This adds extra annotations to affected device names in the spice netlist.
+
+@c -----------------------------------------------------------------------------
+@node RAM Cell
+@subsection RAM Cell
+
+Memory cells require special treatment in @HAC{}.
+Consider a common 6T SRAM cell, accessed by wordline and bitlines:
+
+@example
+defproc sram_cell(bool bl, _bl; bool? wl) @{
+  bool f, t;
+  @i{// rules for netlist generation}
+  prs @{
+    @i{// cross-coupled inverters}
+    ~f -> t+
+     f -> t-
+    ~t -> f+
+     t -> f-
+
+    @i{// access transistors}
+    passn(wl,  bl, t)
+    passn(wl, _bl, f)
+  @}
+@}
+@end example
+
+@noindent
+The above definition will produce a valid spice netlist, but
+will not simulate properly in @hacprsim{} for several reasons:
+1) the access transistors written as pass-gates work in only one direction, 
+but they need to work for both reading and writing, and
+2) on writing, there is a fight between the access transistor
+and the opposing pull-up of the feedback inverter.
+
+Thus, the simulation version of the definition must be adjusted.
+To address concern 1) we need to replace the pass-gates with rules
+that operate in both directions.
+@cindex combinational feedback
+To address concern 2) we use combinational feedback.
+
+@example
+@i{// rules for simulation}
+prs @{
+  @i{// writing}
+    wl & ~bl        -> t-
+    wl & ~_bl       -> f-
+
+  @i{// reading}
+    [weak=1] t & wl -> _bl-
+    [weak=1] f & wl ->  bl-
+
+  @i{// state-holding}
+                  f -> t-
+                  t -> f-
+
+  @i{// combination feedback}
+  ~(wl & ~bl ) & ~f -> t+
+  ~(wl & ~_bl) & ~t -> f+
+@}
+@end example
+
+@noindent
+On writing @var{f-}, wordline @var{wl} is 1, and the bitline @var{_bl} is
+actively driven to 0,
+the combinational feedback for @var{f}+
+turns off to let @var{f} pull down, which in turn, 
+turns on the feedback for @var{t}+.
+During a read, the bitlines @var{bl} and @var{_bl} are precharged
+to 1, but are in an undriven state, which allows a
+@emph{weak-rule} to pull a bitline to 0 without a fight.
+@cindex weak rule
+In essence, this is how bidirectional bitlines are simulated.
+@cindex bidirectional bitline
+A @emph{weak-rule} 
+Normally in @hacprsim{}, weak rules are disabled, so to properly simulate
+reading from this SRAM cell, you'll need to enable them with
+
+@example
+@prsimkbd{weak-rules on}
+@end example
+
+@noindent
+The complete definition for an sram_cell will look like:
+
+@example
+defproc sram_cell(bool bl, _bl; bool? wl) @{
+[ NETLIST ->
+  @i{// rules for netlist generation}
+  ...
+[] SIMULATION ->
+  @i{// rules for simulation}
+  ...
+]
+@}
+@end example
+
+@noindent
+Not shown is the circuit definition for the bitline driver and reader.
+
+@noindent
+Suggested exercises:
+@itemize
+@item Design the bitline driver and reader that takes a 
+	read/write control signal
+@item Design the circuitry that pulses the wordline during a read or write
+@item Write a @hacprsim{} script that writes and reads
+	sequences of 0s and 1s to a single SRAM cell
+@end itemize
+
+@noindent
+Further discussion topics:
+@itemize
+@item Design SRAM cell with separate bitlines for 
+	reading and writing
+@item Design a multi-read/multi-write ported register cell
+@end itemize
+
+@node Ignored attributes
+@subsection Ignored attributes
+
+The @HAC{} language allows specifying device attributes
+such as transistor sizes and threshold voltage.
+
+@example
+prs @{
+       a<20> & b<20>      -> c-
+  ~x<20;lvt> & ~y<20;lvt> -> z+
+@}
+@end example
+
+@noindent
+These are all ignored by @hacprsim{}.
+Only the @hacknet{} netlist generator will use these attributes.  
+As a design matures from purely digital to physical,
+more of these attributes will be used to fine-tune 
+the generated spice netlist (without affecting @hacprsim{} behavior).  
+
+
+@c -----------------------------------------------------------------------------
+@node Shared Internal Nodes
+@section Shared Internal Nodes
+
+@HAC{} also supports a syntax for describing shared internal nodes
+in tranistor networks.  
+This network description is syntactically translated by @hacknet{}, 
+but re-interpreted into equivalent production rules by @hacprsim{}.
+
+@subsection Footed Transistors
+
+The following example defines and uses a single internal node:
+
+@example
+prs @{
+  en & on       -> @@en_-  @i{// declares internal node, footed by @var{on}}
+  ~@@en_ & x & y -> a-     @i{// starts stack with internal node}
+  ~@@en_ & z & w -> b-     @i{// starts stack with internal node}
+@}
+@end example
+
+@noindent
+Internal nodes are declared and referenced with a prefix @t{@@} symbol.
+The resulting netlist has 6 transistors, with a common node shared
+betwen the transitors gated by @var{on}, @var{x}, and @var{z}.
+@hacprsim{} interprets the above by expanding the 
+shared nodes to their corresponding definition expressions:
+
+@example
+prs @{
+  @i{// equivalent rules}
+  en & on & x & y -> a-
+  en & on & z & w -> b-
+@}
+@end example
+
+@noindent
+The internal node features lets a designer express physical topology
+and logic in the same form, without resorting to 
+conditional compilation on tool variables.  
+
+@subsection Sum Logic in Adders
+
+@cindex sum logic
+@cindex parity logic
+The sum output of an adder is basically a parity operation
+on inputs.  Suppose our adder inputs come paired with their complements
+(as they would in dual-rail families):
+@var{a.t}, @var{a.f}, @var{b.t}, @var{b.f}, @var{ci.t}, @var{ci.f}.
+Let us also use a precharge family of logic, using @var{en}
+as the precharge/enable signal.
+Non-shared production rules simply follow the truth table:
+
+@example
+prs @{
+  en & (( a.f & b.f & ci.f ) |
+        ( a.f & b.t & ci.t ) |
+        ( a.t & b.f & ci.t ) |
+        ( a.t & b.t & ci.f ))  -> _s.f-
+  en & (( a.f & b.f & ci.t ) |
+        ( a.f & b.t & ci.f ) |
+        ( a.t & b.f & ci.f ) |
+        ( a.t & b.t & ci.t ))  -> _s.t-
+@end example
+
+@noindent
+This first version starts with 14 transistors.  
+The @var{_s} nodes are inverted into @var{s}, 
+which will remain the same throughout this example.
+
+@example
+prs @{
+  _s.f                         => s.f-
+  _s.t                         => s.t-
+@}
+@end example
+
+@noindent
+The first transformation we can apply is to share the (large) 
+transistor footed by @var{en}.
+
+@example
+prs @{
+  en                           -> @@en_-
+  ~@@en_ & (( a.f & b.f & ci.f ) |
+        ( a.f & b.t & ci.t ) |
+        ( a.t & b.f & ci.t ) |
+        ( a.t & b.t & ci.f ))  -> _s.f-
+  ~@@en_ & (( a.f & b.f & ci.t ) |
+        ( a.f & b.t & ci.f ) |
+        ( a.t & b.f & ci.f ) |
+        ( a.t & b.t & ci.t ))  -> _s.t-
+@}
+@end example
+
+@noindent
+This version has 13 transistors because @var{en} is shared.
+This is safe because the rest of the logic guarantees that there
+are no sneak paths between @var{_s.f} and @var{_s.t} through the 
+shared node network.
+Next, we can introduce pairs of partial-sum internal nodes 
+one input at a time.
+
+@example
+prs @{
+  en                            -> @@en_-
+  ~@@en_ & a.f                   -> @@p1f-
+  ~@@en_ & a.t                   -> @@p1t-
+  (~@@p1f & b.f) | (~@@p1t & b.t) -> @@p2f-
+  (~@@p1t & b.f) | (~@@p1f & b.t) -> @@p2t-
+  (~@@p2f & ci.f)|(~@@p2t & ci.t) -> _s.f-
+  (~@@p2t & ci.f)|(~@@p2f & ci.t) -> _s.t-
+@}
+@end example
+
+@noindent
+This final version has 11 transistors, 
+and is logically equivalent to the original version.
+
+@subsection Carry Logic in Adders
+
+@cindex carry-out logic
+@cindex majority logic
+@exercise{} Implement the carry-out (majority) function with dual-rail
+inputs on @var{a}, @var{b}, and @var{ci}, and dual-rail output @var{co}.
+
+
+@c -----------------------------------------------------------------------------
+@node Internal Precharges
+@section Internal Precharges
+
+@cindex charge sharing
+@cindex precharge
+A designer may wish to add precharges to a netlist as a means of 
+mitigating charge sharing, and other internal node effects.  
+@HAC{}'s PRS sublanguage supports a syntax for specifying precharges.
+Precharge annotations have no impact on logical behavior
+in @hacprsim{}; they only affect @hacknet{}'s spice netlists.
+A precharge expression can be attached to any @t{&}-operator, 
+which represents an internal node.
+
+@example
+bool en, x, y, zx, zy;
+prs @{
+  en &@{+~en@} x  -> zx-
+  en &@{+~en@} y  -> zy-
+@}
+@end example
+
+@noindent
+The above example shows two stacks, each with its own PMOS precharge.
+The following example, uses a shared foot transistor on @var{en}:
+
+@example
+bool en, x, y, zx, zy;
+prs @{
+  en                -> @@en_-
+  ~@@en_ &@{+~en@} x   -> zx-
+  ~@@en_ & y         -> zy-
+@}
+@end example
+
+@noindent
+Note that the precharge expression @t{@{+~en@}} is only attached
+to one of the stacks, but both stacks share the same internal
+node @t{@@en_} and thus, benefit from the shared precharge.
+
+@itemize
+@item Stacks may have an arbitrary number of precharges.
+@item Pull-up stacks may also contain precharges.
+@item Precharges can also be expressions, not just single literals.  
+@item Pull-up and pull-down precharges can be used in either
+	pull-up or pull-down rules.
+@end itemize
+
+@subsection Precharge Invariants
+
+@cindex invariants
+@hacprsim{} has a built-in safety check for precharges.
+Everywhere a precharge is used, the simulator produces an invariant
+asserting that the precharge on an internal node does not
+cause a short between supplies.  
+For every precharge expression @var{P} pulling up a node
+footed by expression @var{G},
+
+@example
+  G &@{+P@} & ... -> o-
+@end example
+
+@noindent
+the invariant expression @t{~(G & P)} must hold to prevent shorting, 
+because G pulls the internal node down, and P pulls the node up.  
+(Pull-down precharges are also allowed, denoted @t{-} instead of @t{+}.)
+The following example produces simulator invariant:
+
+@example
+bool _Reset, Re, Le, Ld, _rd;
+prs @{
+  _Reset & Re & Le          -> @@_in-
+  ~@@_in &@{+~Re & ~Le@} Ld    -> _rd-
+@}
+@end example
+
+@example
+@prsimkbd{invariants .}
+[top-level]
+invariants:
+$(~((~Re & ~Le) & (_Reset & Re & Le)), "[auto] precharge interference")
+@end example
+
+@c -----------------------------------------------------------------------------
+@node Custom Power Supplies
+@section Custom Power Supplies
+
+The default power supply model in @HAC{} and @hacprsim{} is very simple:
+all circuits are powered by a single, global supply and ground,
+named @var{!Vdd} and @var{!GND} at the top-level.
+However, the language and tools allow a designer to take full control
+over power supply connectivity everywhere in the hierarchy.  
+In @HAC{}, a designer can express explicit power-gating, 
+and separation of multiple power supplies.  
+
+@subsection Implicit Supplies
+
+Every process (defined by @t{defproc}) comes with two supply ports,
+@var{!Vdd} and @var{!GND}.
+By default, these are the supplies that are connected to 
+the netlist for the subcircuit (at both source and substrate terminals).  
+
+@subsection Overriding Supplies
+
+There are two ways of overriding supply connections.
+The first is to connect different supplies at the instance level:
+
+@example
+defproc inv(bool? in; bool! out) @{ ... @}
+
+bool myVdd, myGND, x, y;
+inv foo $(myVdd, myGND)(x, y);   @i{// override}
+@end example
+
+@noindent
+The @t{$(...)} list gives direct access to the @var{!Vdd} and @var{!GND} 
+ports of every process.
+When omitted, they simply connect to the current level's 
+implicit supplies @var{!Vdd} and @var{!GND}.
+
+The second way to override supplies is to provide custom supply ports
+and override the @t{prs} body.
+
+@example
+defproc inv(bool? V, G; bool? in; bool! out) @{
+  V @@[supply=1];
+  G @@[supply=0];
+  prs <V,G> @{ ... @}
+@}
+@end example
+
+@noindent
+@var{V} and @var{G} are declared as input ports and
+tagged with supply attributes.  (The attributes help the compiler
+check for misconnections between supplies and non-supplies.)
+The @t{<V,G>} tells the @hacknet{} to use the given nodes as supplies
+instead of @var{!Vdd} and @var{!GND}.
+In fact, unused ports @var{!Vdd} and @var{!GND} will be omitted
+from the subcircuit definition in the netlist.
+Users may prefer this style as it is more consistent
+with the rest of the language.
+
+A process definition may use multiple supplies in different @t{prs} blocks.
+
+@example
+  prs <V1,G1> @{ ... @}
+  prs <V2,G2> @{ ... @}
+  prs <V3,G3> @{ ... @}
+@end example
+
+In a few sections, we will discuss how these impact simulation.
+
+@subsection Overriding Substrate Contacts
+
+Substrate contacts can also be overridden, independently from the supply ports.
+
+@example
+prs <Vsrc, Gsrc | Vsub, Gsub> @{ ... @}
+@end example
+
+Anytime the substrate connections need to differ from the
+supply sources, the two implicit supply ports will not suffice --
+you will have to pass in extra explicit supply ports, 
+and override them using @code{prs<...|...>}.  
+
+Again, substrate connections only affect the netlist, 
+not digital simulator behavior.
+
+Definitions may be divided into multiple PRS blocks, each with
+different supply or substrate overrides.
+
+@example
+defproc foo(...) @{
+  @i{// default supplies and substrates, !Vdd and !GND}
+  prs @{ ... @}
+  @i{// default substrates, !Vdd and !GND}
+  prs <Vsrc1, Gsrc1> @{ ... @}
+  @i{// overriding all substrates and supplies}
+  prs <Vsrc2, Gsrc2 | Vsub, Gsub> @{ ... @}
+@}
+@end example
+
+@subsection Modeling Dynamic Power Supplies
+
+Even with supplies, override, @hacprsim{} simulates all circuits
+as if they share the same single global poewr supply unless you use
+the one or more of the following command-line options at startup.
+
+@itemize
+@item @option{-f dynamic-power-supply}
+@item @option{-f dynamic-ground-supply}
+@end itemize
+
+With these options on, production rules are expanded as if
+the supplies participate in the rules (conjunctively).
+For example with @option{-f dynamic-power-supply}, when 
+you query the fanin of a rule you will see @var{!Vdd}
+(or whatever supply you connected):
+
+@example
+@prsimkbd{fanin c}
+Fanins of node `c':
+(from J):
+[after 10]      ~b & !Vdd -> c+
+[after 10]      b -> c-
+@end example
+
+@noindent
+This allows a user to dynamically enable or disable entire supply domains, 
+by @command{set} commands or other power-gating logic.  
+
+@b{Caveat:} because of the state-holding nature of nodes in
+@hacprsim{}, turning off a power supply will not cause nodes
+under the supply's domain to go to @t{X}, they will continue to
+hold their old value.  
+This model does not seem honest and may change in the future.
+
+@c -----------------------------------------------------------------------------
+@node Debugging
+@section Debugging
+
+This section provides examples of debugging sessions featuring
+various encountered diagnostics and commands that helped find the root cause.
+
+@subsection Why X?
+
+When the user encounters an unexpected @t{X}-valued node, the first question
+is often: @emph{why?}
+A reasonable initial query might be @command{fanin-get} on that node,
+to see which of its fanins is @t{X}.  
+For every @t{X} input, the user would repeat the query, until
+a culprit is found.  
+The @command{why-x} command automates this repeated querying
+by recursively visiting @t{X} fanins.  
+
+Consider the following @HAC{} circuit:
+
+@c test/prsim/xor-tree.hac
+@example
+defproc xor_bare(bool? a, a_, b, b_; bool! o) @{
+  prs @{
+    ~a_ & ~b      -> o+
+     ~a & ~b_     -> o+
+     a_ &  b_     -> o-
+      a &  b      -> o-
+  @}
+@}
+
+defproc inv(bool? a; bool! b) @{
+  prs @{
+    a             => b-
+  @}
+@}
+
+@i{// recursive definition of a wide XOR}
+@i{// \param N must be power of 2}
+template <pint N>
+defproc xor(bool? a[N]; bool! o) @{
+[(N > 2) ->
+  pint H = N/2;
+  bool f[2];
+  xor<H> xs[2];
+  xs[0](a[0..H-1], f[0]);
+  xs[1](a[H..N-1], f[1]);
+  xor<2> y(f, o);
+[] else ->
+  bool a_[2];
+  inv ai[2];
+  (;j:2:
+    ai[j](a[j], a_[j]);
+  )
+  xor_bare xr(a[0], a_[0], a[1], a_[1], o);
+]
+@}
+
+@i{// instantiate a 16-input XOR to test}
+bool in[16];
+bool out;
+xor<16> test_xor(in, out);
+@end example
+
+@noindent
+Compile the example into an object file, and load it into @hacprsim{}
+interactively.
+
+@c test/prsim/xor-tree-01.prsimrc
+@example
+# set some inputs, but leave one as X
+@prsimkbd{set in[0..15] 0}
+@prsimkbd{cycle}
+@prsimkbd{set in[5..13] 1}
+@prsimkbd{cycle}
+@prsimkbd{set in[7..9] 0}
+@prsimkbd{cycle}
+@prsimkbd{set in[6] X}
+@prsimkbd{cycle}
+# expect to see some weak-interference warnings
+@prsimkbd{get out}
+out : X [by test_xor.y.a_[0]:=X]
+@prsimkbd{why-x-N out 12}
+out:X, pull up/dn are both X
+  test_xor.y.a_[0]:X, pull up/dn are both X
+    test_xor.f[0]:X, pull up/dn are both X
+      test_xor.xs[0].y.a_[1]:X, pull up/dn are both X
+        test_xor.xs[0].f[1]:X, pull up/dn are both X
+          test_xor.xs[0].xs[1].f[1]:X, pull up/dn are both X
+            test_xor.xs[0].xs[1].xs[1].a_[0]:X, pull up/dn are both X
+              in[6]:X, pull up/dn undriven, no fanin
+              in[6]:X, (visited before, see above)
+            test_xor.xs[0].xs[1].xs[1].a_[0]:X, (visited before, see above)
+          test_xor.xs[0].xs[1].f[1]:X, (visited before, see above)
+        test_xor.xs[0].f[1]:X, (visited before, see above)
+      test_xor.xs[0].y.a_[1]:X, (visited before, see above)
+    test_xor.f[0]:X, (visited before, see above)
+  test_xor.y.a_[0]:X, (visited before, see above)
+@end example
+
+Each level of indentation corresponds to a level of fanin.  
+We quickly see that the query traces back to the input that was deliberately
+set to @t{X}, @var{in[6]}.  
+To reach this conclusion manually would have taken 
+many more commands.  
+It is generally a good idea to use the @command{why-x-N} command variant
+to limit the recursion depth.  
+A somewhat more verbose version @command{why-x-N-verbose} prints
+additional annotations about the subexpression structures
+where the @t{X}s propagate (AND vs. OR vs. NOT).
+
+@example
+@prsimkbd{why-x-N-verbose out 12}
+out:X, pull up/dn are both X
++-+
++ |-+
++ | & ~test_xor.y.a_[0]:X, pull up/dn are both X
++ | & ~+ ~test_xor.f[0]:X, pull up/dn are both X
++ | & ~+ ~+-+
++ | & ~+ ~+ |-+
++ | & ~+ ~+ | & ~test_xor.xs[0].y.a_[1]:X, pull up/dn are both X
++ | & ~+ ~+ | & ~+ ~test_xor.xs[0].f[1]:X, pull up/dn are both X
++ | & ~+ ~+ | & ~+ ~+-+
++ | & ~+ ~+ | & ~+ ~+ |-+
++ | & ~+ ~+ | & ~+ ~+ | & ~test_xor.xs[0].xs[1].f[1]:X, pull up/dn are both X
++ | & ~+ ~+ | & ~+ ~+ | & ~+-+
++ | & ~+ ~+ | & ~+ ~+ | & ~+ |-+
++ | & ~+ ~+ | & ~+ ~+ | & ~+ | & ~test_xor.xs[0].xs[1].xs[1].a_[0]:X, pull up/dn are both X
++ | & ~+ ~+ | & ~+ ~+ | & ~+ | & ~+ ~in[6]:X, pull up/dn undriven, no fanin
++ | & ~+ ~+ | & ~+ ~+ | & ~+ | & ~- in[6]:X, (visited before, see above)
++ | & ~+ ~+ | & ~+ ~+ | & ~--+
++ | & ~+ ~+ | & ~+ ~+ | & ~- |-+
++ | & ~+ ~+ | & ~+ ~+ | & ~- | & test_xor.xs[0].xs[1].xs[1].a_[0]:X, (visited before, see above)
++ | & ~+ ~+ | & ~+ ~--+
++ | & ~+ ~+ | & ~+ ~- |-+
++ | & ~+ ~+ | & ~+ ~- | & test_xor.xs[0].xs[1].f[1]:X, (visited before, see above)
++ | & ~+ ~+ | & ~- test_xor.xs[0].f[1]:X, (visited before, see above)
++ | & ~+ ~--+
++ | & ~+ ~- |-+
++ | & ~+ ~- | & test_xor.xs[0].y.a_[1]:X, (visited before, see above)
++ | & ~- test_xor.f[0]:X, (visited before, see above)
+--+
+- |-+
+- | & test_xor.y.a_[0]:X, (visited before, see above)
+@end example
+
+@noindent
+Admittedly, reading the verbose output takes some getting used to.
+
+@subsection Interference
+
+@subsection Instability
+
+@subsection Deadlock
+
+@command{why-not}
+
+@subsection X Cycles
+
+@subsection Counting Transition Cycles
+
+Using @command{backtrace}
+
+@c -----------------------------------------------------------------------------
+@node Checkpointing and Tracing
+@section Checkpointing and Tracing
+
+@hacprsim{} supports checkpointing, the saving and restoring of simulator
+state. 
+The primary benefit of checkpointing is the ability to save away state 
+for later examination or continuation.
+With a checkpoint, one can immediately jump to a snapshot in time
+without having to re-run from the beginning.
+
+@subsection Manual Saving and Loading
+
+The @command{save} and @command{load} commands are used to create and restore 
+checkpoints and take a single file name argument.  
+
+@example
+# stuff happens ...
+@prsimkbd{save state1.prsimckpt}
+@end example
+
+@noindent
+After exiting @hacprsim{}, one can restart it (using the same object file), 
+and load the checkpoint:
+
+@example
+@prsimkbd{load state1.prsimckpt}
+# more stuff happens ...
+@end example
+
+@noindent
+and pick up exactly where it left off before.
+
+Perhaps obvious, but a particular checkpoint is only valid with the
+original object file from which the @hacprsim{} session was launched.  
+(There a few safety and sanity checks done at load time.)
+The majority of contents in the checkpoint is a flat array of node states,
+one for every unique node in the hierarchy, 
+no structural information is contained.
+The checkpoint file is relatively lightweight because it relies on the
+information in the associated object file for hierarchical mapping.
+
+There is no limit (other than space) on the number of checkpoints
+that can be saved.
+
+@example
+@prsimkbd{save pre-reset.prsimckpt}
+# apply resets and cycle
+@prsimkbd{save post-reset.prsimckpt}
+# load a configuration
+@prsimkbd{save post-configure.prsimckpt}
+# process a data packet
+@prsimkbd{save post-run-1.prsimckpt}
+# process another data packet
+@prsimkbd{save post-run-2.prsimckpt}
+...
+@end example
+
+@subsection Automatic Save-on-Exit
+
+One can rarely anticipate the times when a simulation checkpoint is desired,
+so a user can request for a checkpoint to be emitted on exiting @hacprsim{}.
+
+@example
+@prsimkbd{autosave on autosave.prsimckpt}
+# turn on maximum fatal diagnostics
+@prsimkbd{mode fatal}
+# do stuff with impunity ...
+@end example
+
+@noindent
+Alternatively, the auto-save checkpoint can be requested via the 
+@option{-a} command-line option, followed by any file name.
+
+@example
+@shellkbd{hacprsim -a saveme.prsimckpt test_device.haco}
+@end example
+
+@noindent
+Should the simulator terminate prematurely with an error status, 
+there will be a checkpoint saved at the time the error occurred.  
+The checkpoint can be loaded for post-mortem analysis, without having 
+to manually re-run.  
+
+@subsection Saving Trace
+
+@hacprsim{} supports a means of logging every event to a binary trace file.
+The trace file format is a compact format that only @hacprsim{} can read.
+Every entry in the trace contains:
+
+@itemize
+@item reference to node that changed (a global index)
+@item node's old value
+@item node's new value
+@item reference to last event that caused this node to change (if any)
+@end itemize
+
+@noindent
+Future plans for trace analysis intend to use this.
+
+@example
+@prsimkbd{trace record.prsimtrace}
+# normal interaction/script...
+@end example
+
+Normally, tracing continues until the simulator exits.
+To turn off tracing any time, use the @command{trace-close} command.
+
+@noindent
+To trace from the very beginning one can also use the @option{-r}
+command-line option:
+
+@example
+@shellkbd{hacprsim -r everything.prsimtrace test_device.haco}
+@end example
+
+@noindent
+A simulation can use both tracing and checkpointing.  
+
+@subsection Vector Change Dump
+
+Vector Change Dumps (or VCD) are an industry-standard format for 
+simulation traces.  
+To save a trace to VCD, use @command{vcd}.
+
+@example
+@prsimkbd{vcd record.prsimtrace}
+# normal interaction/script...
+@end example
+
+@noindent
+Currently, there is no command-line option to turn on vcd tracing
+at startup.
+Normally, VCD recording continues until the simulator exits.
+To VCD-tracing at any time, use the @command{vcd-close} command.
+
+Recording a @hacprsim{}-trace and VCD-trace at the same time is permitted.
+
+@c -----------------------------------------------------------------------------
+@node Diagnostic and Behavior Control
+@section Diagnostic and Behavior Control
+
+@hacprsim{} offers users the ability to control diagnostic-handling
+policies globally.
+
+@menu
+* Mode Commands::
+* Resetting and Weak-Interference::
+* Instabilities in Synchronous Circuits::
+@end menu
+
+@node Mode Commands
+@subsection Mode Commands
+
+See @command{help modes} for list.
+
+@node Resetting and Weak-Interference
+@subsection Resetting and Weak-Interference
+
+Most circuits have some notion of "reset," a way to initialize the circuit
+to a known state.  
+Resetting is often considered an atypical operation
+where one may be less concerned with transient states, 
+and only concerned with reaching the settled state.  
+
+@cindex weak interference
+@hacprsim{} initial state (upon loading an object file)
+has every node at @t{X}, which also means that every guard expression
+pulling on every node is pulling @t{X} up and down.  
+By definition, every node is in a state of @emph{weak interference}, 
+specifically with @t{X} vs @t{X} opposing pulls.
+One can confirm this by running @command{status-weak-interference}
+at the start of any simulation.  
+
+Reset usually begins when a user @command{set}s a signal (or group of signals)
+that triggers a chain of events that drive nodes to @t{0} or @t{1}.
+During reset propagation, however there may be situations where
+a node undergoes a @emph{transient} @t{1} vs. @t{X} pull fight, 
+which would be reported as weak interference.  
+To suppress this warning during reset, you could reset like the following:
+
+@example
+@prsimkbd{weak-interference ignore}
+# set various reset signals...
+@prsimkbd{cycle}
+@prsimkbd{assertn-queue}
+@prsimkbd{status-interference}
+@prsimkbd{status-weak-interference}
+@prsimkbd{weak-interference warn}
+# de-assert various reset signals...
+@prsimkbd{cycle}
+@prsimkbd{...}
+@end example
+
+@noindent
+The @command{assertn-queue} command asserts that the event queue
+is empty, which is what one would expect upon return from a @command{cycle}.
+@command{status-interference} and @command{status-weak-interference}
+are used interactively to make sure no nodes are undergoing interference
+in the settled reset state.  
+(I don't have an @command{assert-} variation of those commands yet,
+but it would be easy to add one.)
+A more inclusive pair of commands is @command{mode run} and 
+@command{mode reset}.  These affect other diagnostic policies.
+
+@example
+@prsimkbd{mode reset}
+# set various reset signals...
+@prsimkbd{cycle}
+@prsimkbd{status-interference}
+@prsimkbd{status-weak-interference}
+@prsimkbd{assertn-queue}
+@prsimkbd{mode run}
+# de-assert various reset signals...
+@prsimkbd{cycle}
+@prsimkbd{...}
+@end example
+
+@noindent
+@command{mode paranoid} turns additional (default) warnings into breaks,
+and @command{mode fatal} turns all diagnostic warnings into fatal errors.
+
+@node Instabilities in Synchronous Circuits
+@subsection Instabilities in Synchronous Circuits
+
+@cindex instability
+@hacprsim{} has its roots in asynchronous circuit development, 
+but is also well-suited for synchronous circuit design.
+Testing synchronous circuits with @hacprsim{} requires an understanding
+of instabilities.  
+
+Recall that an instability is when the guard for a production rule
+(whose output event is scheduled) becomes false before the 
+scheduled event executes.  
+This is forbidden in some families of asynchronous logic, 
+and the conservative behavior in such cases is to (after issuing a diagnostic)
+turn the affected output node to @t{X},  @emph{even if the new pull state
+of the node pulls it to 0 or 1},
+because the node value's stability is not guaranteed.  
+A glitch may or may not occur, due to timing variation -- 
+one cannot know without accurate timing.  
+This behavior in @hacprsim{} is made explicit by the commands:
+@example
+# for asynchronous circuits
+@prsimkbd{unstable break}
+@prsimkbd{unstable-unknown}
+@end example
+@noindent
+@command{unstable break} tells the simulator to interrupt event processing
+(from @command{cycle}) when an instability is encountered.
+@command{unstable-unknown} tells the simulator to turn the 
+output node to @t{X} on instability.  
+The intent of this behavior is to signal to the designer that
+this instability needs to be diagnosed and fixed before proceeding further.
+The @command{backtrace} and @command{why-}family of commands
+are vital instruments in debugging instabilities.  
+
+@cindex synchronous logic
+For synchronous circuits, we want to allow transient glitches and 
+instabilities because we only sample values on clock edges.  
+Use @command{unstable warn} or @command{unstable ignore} to downgrade the 
+diagnostic, allowing event processing to continue uninterrupted.
+Use @command{unstable dequeue} to simple dequeue an outstanding event in
+queue rather than marking the affected node as @t{X}, which effectively
+keeps the previous value on that node.  
+
+@example
+# for synchronous circuits
+@prsimkbd{unstable warn}
+@prsimkbd{unstable-dequeue}
+@end example
+
+@c -----------------------------------------------------------------------------
+@node Testing with Channels (synchronous)
+@section Testing with Channels (synchronous)
+
+This section provides some complete examples that demonstrate
+how to use clocked channel environments to test synchronous circuits.  
+Channel environments are a convenient way of driving a test circuit
+and checking its output values.
+
+@subsection Clocked Channels
+
+A clocked channel is simply a data bus or wire coupled to a
+clock signal.  
+The clock serves as a reference for when the data should change,
+or when the data should be sampled.  
+We define empty structures that pairs clock and data together:
+
+@example
+// "clocked_channel.hac"
+template <pint N>
+defchan cd <: chan(int<N>) (bool clk, d[N]) @{ @}
+defchan cd0 <: chan(int<1>) (bool clk, d) @{ @}
+@end example
+
+@noindent
+These definitions are also provided in the installed header,
+
+@noindent
+@file{$prefix/share/hackt/lib/channel_bd.hac}.
+
+@noindent
+However, the examples in this section can use just the above definitions.
+
+The first definition, @t{cd}, is parameterized with data width @var{N}.
+(For a complete description on parameterized definitions, 
+see the @HAClangref{} chapter on Templates.)
+The names of these structure definitions (like @t{cd}) are of no consequence, 
+but the names of the clock and data ports will be important
+when we bind these to @hacprsim{}'s channel environments.
+
+@subsection Testing Combinational Logic
+
+Consider the following prototype for a 4-to-1 MUX
+@example
+// "mux.hac"
+defproc mux4(bool? in[4], sel[2]; bool! out) @{
+  @i{// not CMOS implementable}
+  bool _out;
+  prs @{
+         in[0] & ~sel[0] & ~sel[1]      -> _out-
+        ~in[0] & ~sel[0] & ~sel[1]      -> _out+
+         in[1] & sel[0] & ~sel[1]       -> _out-
+        ~in[1] & sel[0] & ~sel[1]       -> _out+
+         in[2] & ~sel[0] & sel[1]       -> _out-
+        ~in[2] & ~sel[0] & sel[1]       -> _out+
+         in[3] & sel[0] & sel[1]        -> _out-
+        ~in[3] & sel[0] & sel[1]        -> _out+
+        _out                            => out-
+  @}
+@}
+@end example
+@c from test/prsim/channel-clocked-test-mux-a.hac
+
+@noindent
+and a test instantiation
+@example
+// "mux_test.hac"
+import "clocked_channel.hac";
+import "mux.hac";
+bool in[4], sel[2], out;
+mux4 M(in, sel, out);
+@end example
+
+@noindent
+Instead of using @command{set}, @command{cycle}, and @command{assert}
+commands (which can get tiresome), we will use clocked channels to
+drive and test.
+Append the following to @file{mux_test.hac}:
+
+@example
+@i{// --continued--}
+bool clk;
+cd<4> in_c(clk, in);
+cd<2> sel_c(clk, sel);
+cd0 out_c(clk, out);
+@end example
+
+@noindent
+We have declared a reference clock @var{clk}, and bound the input
+and output signals to the clock in channels.  
+This lets us refer to @var{in_c}, @var{sel_c}, and @var{out_c} as coherent 
+clock-data pairs in @hacprsim{}.
+The sole purpose for the clock signal is to signal when
+inputs should change and when outputs should be sampled.
+
+Load @file{mux_test.haco} into @hacprsim{}.
+
+@example
+@prsimkbd{clock-source clk:0 10}
+@prsimkbd{channel-timing clk after 100}
+@end example
+@noindent
+This declares that the environment will drive @var{clk}
+for 10 positive-edge cycles, one for every vector we will apply.
+On @command{channel-reset}, @var{clk} will be set to 0, initially.
+We have also configured the @emph{half-clock period} of @var{clk}
+to be 100, sufficient for logic to propagate and settle for this circuit.
+
+Next we describe the interpretation of our channel structures.  
+In this example, we will operate the circuit under test
+in a positive-edge clocked view:
+@example
+@prsimkbd{channel-clocked in_c clk:0 d:4}
+@prsimkbd{channel-clocked sel_c clk:0 d:2}
+@prsimkbd{channel-clocked out_c clk:0 d:0}
+@end example
+@noindent
+We intend to drive @var{in_c} and @var{sel_c} as input channels, 
+and even though @var{in_c.clk} and @var{sel_c.clk} are 
+interpreted as positive-edged, 
+as sources they will change at the @emph{opposite edge}
+(negative) in order to @emph{set up} to the positive edge. 
+In other words, clocked input and output channels operating on the same 
+clock domain get a half-clock period to propagate.  
+The @t{:0} after @t{clk} refers to an initial value, which is 
+irrelevant in this example, but needed syntactically.  
+The @var{d} in @t{d:N} refers to the name of member of type @t{cd<N>}
+that is interpreted as a bit-array of data.  
+@t{N} is the size of the data array, or 0 for a single bit wire (non-array).
+The LSB of integer values on these channels corresponds to bit @t{d[0]}.
+For negative-edged operation, we would have declared all channels
+with @code{~clk:1}, which would change inputs from channel sources 
+on the positive edge of @var{clk} to set up for negative-edge 
+sampling on @var{clk}.
+
+At this point, we've informed @hacprsim{} on the interpretation of 
+user-defined channel structures,
+and now we drive them with data.
+@example
+@prsimkbd{channel-source-args in_c 0xa 0xa 0x5 0x5 15 15 0 0 6 6}
+@prsimkbd{channel-source-args sel_c 0 1 2 3 0 1 2 3 0 1}
+@prsimkbd{channel-expect-args out_c 0 1 1 0 1 1 0 0 1 1}
+@end example
+@noindent
+We have given each channel ten values on the command-line.
+As seen in channel @var{in_c}, values can be in 
+decimal or hexadecimal (with a leading @t{0x}).
+On every cycle of @var{clk}, these channels will apply and advance
+one value.
+Channel values can also come from a file instead of the command-line, 
+using the @command{channel-source-file} and @command{channel-expect-file}
+command variants.  
+Since our input channels @var{in_c} and @var{sel_c} were configured
+as negative-edge sensitive, their data array will change
+value on the negative edge.
+The output channel @var{out_c} is configured to sample 
+values on the positive edge of @var{clk}.
+Once the value list is exhausted, a channel-source will remain at
+the last value until reconfigured, 
+and a channel-expect will stop checking values.
+
+Before we advance the simulation, it helps to set some options
+for synchronous circuit simulation and observe what is happening,
+see @ref{Instabilities in Synchronous Circuits}.
+
+@example
+# for simulating synchronous circuits
+@prsimkbd{unstable ignore}
+@prsimkbd{unstable-dequeue}
+# for informative feedback
+@prsimkbd{watchall}
+@prsimkbd{channel-watchall}
+@prsimkbd{confirm}
+@end example
+
+@noindent
+In @hacprsim{}, channel names live in their own namespace 
+and get their own @command{watchall} command.
+The @command{confirm} command prints a message every time a
+observed value matches its expected value on a @command{channel-expect},
+and with @command{assert}s.
+
+To initialize the state of channels, we could reset individual channels
+with @command{channel-reset} commands or in most cases, 
+just reset everything with
+
+@example
+@prsimkbd{channel-reset-all}
+@prsimkbd{cycle}
+        10      in[0] : 0
+        10      in[1] : 0
+        10      in[2] : 0
+        10      in[3] : 0
+        10      sel[0] : 0
+        10      sel[1] : 0
+        20      M._out : 1      [by sel[1]:=0]
+        30      out : 0 [by M._out:=1]
+        100     clk : 0
+@end example
+
+@noindent
+The @command{cycle} is important because @command{channel-reset-all}
+only schedules events in the queue.
+Note that the input channels all reset to the 0 value.
+After @command{channel-reset}, channels are in the @emph{stopped}
+state, i.e. they do not respond to any signal changes.  
+Finally, to start driving with our specified values,
+use @command{channel-release-all}:
+
+@example
+@prsimkbd{channel-release-all}
+@prsimkbd{cycle}
+        110     in[1] : 1
+        110     in[3] : 1
+channel in_c (.data) : 10
+channel sel_c (.data) : 0
+channel out_c (.data) : 0
+channel out_c has value 0, as expected.
+        200     clk : 1
+        300     clk : 0 [by clk:=0]
+        310     sel[0] : 1      [by clk:=0]
+        320     M._out : 0      [by sel[0]:=1]
+        330     out : 1 [by M._out:=0]
+channel in_c (.data) : 10
+channel sel_c (.data) : 1
+channel out_c (.data) : 1
+channel out_c has value 1, as expected.
+        400     clk : 1 [by clk:=1]
+        500     clk : 0 [by clk:=0]
+        510     in[0] : 1       [by clk:=0]
+        510     in[1] : 0       [by clk:=0]
+        510     in[2] : 1       [by clk:=0]
+        510     in[3] : 0       [by clk:=0]
+        510     sel[0] : 0      [by clk:=0]
+        510     sel[1] : 1      [by clk:=0]
+channel in_c (.data) : 5
+channel sel_c (.data) : 2
+channel out_c (.data) : 1
+channel out_c has value 1, as expected.
+        600     clk : 1 [by clk:=1]
+        700     clk : 0 [by clk:=0]
+        710     sel[0] : 1      [by clk:=0]
+        720     M._out : 1      [by sel[0]:=1]
+        730     out : 0 [by M._out:=1]
+channel in_c (.data) : 5
+channel sel_c (.data) : 3
+channel out_c (.data) : 0
+channel out_c has value 0, as expected.
+        800     clk : 1 [by clk:=1]
+        900     clk : 0 [by clk:=0]
+...
+@end example
+
+@noindent
+We were at time 100 during release, so the first rising clock edge
+on @var{clk} occurs after a half-clock period, at time 200.
+We only specified a limited number of cycles on @var{clk}, 
+so it should stop toggling when it has hit that number.
+
+Now you can test any synchronous circuit using the method demonstrated above.
+Note that the original circuit under test need not necessarily
+be clocked, in this case, we had pure combinational logic.
+We introduced a clock for the sake of testing, where the clock
+was fed into channels that we instructed @hacprsim{} to interpret and drive.
+A clocked circuit under test could connect to the same global clock
+that was used for testing.  
+
+@exercise{} Copy the above commands into a script and run it
+non-interactively, like:
+
+@shellkbd{hacprsim -b test_mux.haco < test.prsimrc}
+
+@exercise{} Repeat the above example, but replace one of the middle expected
+values on @var{out_c} with an incorrect value (in script), 
+or change one of the input values.  
+Replace @code{watchall} with just @code{watch clk}, to reduce 
+the amount of output.
+Re-run the script.  What happens?
+
+@exercise{} Use the @command{channel-source-file} and 
+@command{channel-expect-file} commands to obtain values from 
+separate files, rather than on the command-line.  
+
+@exercise{} Design a toggling flip-flop whose input is only 
+a clock, and output changes value on every positive edge.
+You will probably want to support a reset signal for initialization.
+Write a simulation script to test its operation.  
+
+[Other examples]
+
+Negative-edged clocking.
+
+Double-edged clocking.
+
+@c -----------------------------------------------------------------------------
+@node Testing with Channels (asynchronous)
+@section Testing with Channels (asynchronous)
+
+@subsection 4-phase Handshake Channels
+
+@subsection Bundled-Data Channels
+
+@subsection 2-phase Channels
+
+@subsection Level-Encoded Dual-Rail Channels
+
+@subsection Single-Track Channels
+
+@c -----------------------------------------------------------------------------
+@node Defensive Design
+@section Defensive Design
+
+Subcircuits are often designed with assumptions about their environment,
+or limitations of operation.  
+@HAC{} SPEC sublanguage supports a syntax for expressions
+@emph{invariants}, expressions that should @emph{always} evaluate true.
+Good designs should be annotated with invariants that can be
+checked by various tools.  
+
+@menu
+* Invariants::
+* Using Atomic Expressions::
+* Exclusion Rings::
+@end menu
+
+@node Invariants
+@subsection Invariants
+@cindex invariants
+
+The syntax for invariants inside a SPEC body is simply
+@itemize
+@item @code{$(prs-expr)}
+@item @code{$(prs-expr, "description")}
+@end itemize
+
+@noindent
+where @i{prs-expr} is any expression that can appear
+as a production rule guard.
+The following invariant asserts that @var{a} and @var{b} are never
+true at the same time:
+
+@example
+spec @{
+  $(~(a & b), "There can be only one.")
+@}
+@end example
+
+@noindent
+@exercise{} write an invariant that asserts that either 1 or 2 out of 3 
+signals @var{a}, @var{b}, and @var{c} must be high.  
+(Hint: consider the negated case.)
+
+When an invariant expression is evaluated to @t{X}, 
+@hacprsim{} will issue a warning (by default), reporting a
+@emph{possible invariant} violation.  
+The transition to the reset state will often trigger this
+diagnostic, so to suppress those warnings,
+
+@example
+@prsimkbd{invariant-unknown ignore}
+@end example
+
+@noindent
+or just use @command{mode reset}, which includes this setting.  
+
+@c Xs and invariants
+
+@node Using Atomic Expressions
+@subsection Using Atomic Expressions
+
+@cindex atomic expressions
+Invariants are often expressed in subexpressions that are
+used repeatedly.  To assist in constructing complex expressions,
+we can use @emph{atomic expressions} in the @HAC{} language.
+
+@cindex atomic variables
+Atomic bools represent boolean-valued expressions at run-time,
+but do not correspond to any physical node or wire.
+They are defined in the @t{rte} (run-time expression) language bodies,
+and can depend on atomic or non-atomic bools.  
+
+@example
+ebool is_enabled;
+ebool is_safe;
+rte @{
+  is_enabled = a || b || c;
+  is_safe = ~(x && y);
+@}
+spec @{
+  $(is_enabled | is_safe, "is safely enabled or off")
+@}
+@end example
+
+@noindent
+Atomic bool expressions can be re-used to contruct more
+complex expressions. 
+Atomic bools may participate in invariant expressions.
+
+@node Exclusion Rings
+@subsection Exclusion Rings
+
+@HAC{} provides a macro for specifying that no more than one
+signal in a group can be high or low.
+This is just a specialized invariant, as a convenient shorthand.  
+
+@example
+spec @{
+  exclhi(a, b, c)    @i{// there can be only one (high)}
+  excllo(d, e, f)    @i{// there can be only one (low)}
+@}
+@end example
+
+@noindent
+Nodes in the ring at value @t{X} are ignored, and not counted
+towards the number of `active' values.  
+Triggering an exclusion violation will look like:
+
+@example
+ERROR: exclhi violation detected!
+ring-state:
+        x : 1
+        y : 0
+        z : 0
+but node `y' tried to become 1.
+The simulator's excl-check-lock state is no longer coherent;
+do not bother trying to continue the simulation, but you may
+further inspect the state.
+You probably want to disable excl-checking with `nocheckexcl'
+if you wish to continue the simulation.
+@end example
+
+Exclusion rings are a good tool for asserting that
+shared resources are being accessed without conflict, 
+or that programmable circuits are configured legally.
+
+@c -----------------------------------------------------------------------------
+@node Workflow Examples
+@section Workflow Examples
+
+Examples in this chapter make use of some of the Makefile templates
+provided by the @HACKT{} project.
+

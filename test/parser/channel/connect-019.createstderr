@@ -1,0 +1,142 @@
+WARNING: channel senders<>::a lacks connection to a producer.
+Warnings found (1) while creating complete type senders<>.
+WARNING: channel z.a lacks connection to a producer.
+WARNING: channel z.a lacks connection to a consumer.
+Warnings found (2) while creating complete type <top-level>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procdefn	0	#HEAD#	#TAIL#	148
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	9	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	10	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	11	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	12	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	13	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	14	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	15	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	16	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	18	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	19	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	20	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	22	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	23	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	24	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	27	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	28	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	29	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	30	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	31	##ADDR##	chnalias	0	#HEAD#	#TAIL#	20
+	32	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	chnalias	0	#HEAD#	#TAIL#	20
+	35	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	36	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	37	##ADDR##	chnalias	0	#HEAD#	#TAIL#	20
+	38	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	footprnt	0	#HEAD#	#TAIL#	367
+	41	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	42	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	43	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	44	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	46	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	47	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	48	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	50	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	51	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	52	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	53	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	54	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	55	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	56	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	57	##ADDR##	footprnt	0	#HEAD#	#TAIL#	420
+	58	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    senders = process-definition (defined) senders(
+        bool<> !GND
+        bool<> !Vdd
+        chan!(bool<>) a
+      )
+      In definition "senders", we have: {
+      Instances:
+        !GND = bool<> senders::!GND
+        !Vdd = bool<> senders::!Vdd
+        a = chan!(bool<>) senders::a
+        x = chan(bool<>) senders::x
+        y = chan(bool<>) senders::y
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan!(bool<>) a
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        chan(bool<>) x
+        chan(bool<>) y
+        a = x;
+        a = y;
+        x = y;
+      footprint: {
+        !GND = bool^0 = senders<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = senders<>::!Vdd (2) @[ supply_high port-alias ] 
+        a = channel chan!(bool<>)^0 = senders<>::a (1) @[ port? ] 
+        x = channel chan(bool<>)^0 = senders<>::a (1) @[ port? ] 
+        y = channel chan(bool<>)^0 = senders<>::a (1) @[ port? ] 
+        Created state:
+        channel instance pool: (1 ports, 0 local, 0 mapped)
+        1	senders<>::a @[ port? ]	
+        bool instance pool: (2 ports, 0 local, 0 mapped)
+        1	senders<>::!GND @[ supply_low port-alias ]	
+        2	senders<>::!Vdd @[ supply_high port-alias ]	
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    z = senders<> z
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  z = process senders<>^0 = z (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    a = channel chan!(bool<>)^0 = z.a (1) 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	z	senders<>
+    channel: 1
+    bool: 1,2
+  channel instance pool: (0 ports, 1 local, 0 mapped)
+  1	z.a	
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

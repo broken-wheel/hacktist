@@ -1,0 +1,78 @@
+% "fangutil.tex"
+
+%	$Id: fangutil.tex,v 1.5 2006/11/26 21:16:33 fang Exp $
+
+\documentclass[12pt]{book}
+
+\usepackage{ifpdf}
+\usepackage{verbatim}
+\usepackage{makeidx}
+
+% COMPILE OPTIONS
+\ifpdf
+  \relax
+\else
+  \let\pdfoutput=\PDFoutput
+\fi
+
+\ifpdf
+\usepackage[
+	draft=false,
+	pdftitle={The ART++ Language}, 
+	pdfauthor={David Fang}, 
+	hyperfigures, 
+	hyperindex, 
+	bookmarks, 
+	colorlinks
+	]{hyperref}
+\fi
+
+\bibliographystyle{plain}
+
+\makeindex
+
+% PAGE FORMATTING
+\setlength{\oddsidemargin}{.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{0in}
+% \setlength{\topskip}{0in}
+% \setlength{\footskip}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\textheight}{8.5in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Fang's C++ Utility Belt}
+\author{David Fang}
+
+\ifpdf\pdfbookmark[0]{Title Page}{title}\fi
+\maketitle
+
+\ifpdf\pdfbookmark[0]{Table of Contents}{toc}\fi
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input chapters/pointers
+\input chapters/persistent
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifpdf\pdfbookmark[0]{Bibliography}{bibliography}\fi
+\bibliography{fangutil}
+
+\clearpage
+\ifpdf\pdfbookmark[0]{Index}{index}\fi
+\printindex
+
+\end{document}
+
+

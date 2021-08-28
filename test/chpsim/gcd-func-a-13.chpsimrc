@@ -1,0 +1,14 @@
+# "gcd-func-a-13.chpsimrc"
+#	$Id: gcd-func-a-13.chpsimrc,v 1.3 2010/04/06 00:01:05 fang Exp $
+# Yes, use THIS object file
+# @haco@ missing_func-a.haco-c
+# @module@ -L/nowhere/lib
+
+dlpaths
+dladdpath /down/south/lib
+dlpaths
+
+# opening module in script instead of on command-line
+dlopen gcd
+# @deps@ gcd.la
+

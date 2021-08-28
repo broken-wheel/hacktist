@@ -1,0 +1,15 @@
+# "init-source-sink-b-01.prsimrc"
+#	$Id: init-source-sink-b-01.prsimrc,v 1.2 2010/04/06 00:03:32 fang Exp $
+# @haco@ init-source-sink-b.haco-c
+# testing stability of source-sink pair
+
+echo leaving environment inputs X ...
+source initial-reset.prsimrc
+get L.d[0]
+get L.d[1]
+get L.e
+get R.d[0]
+get R.d[1]
+get R.e
+
+

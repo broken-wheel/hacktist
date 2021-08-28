@@ -1,0 +1,173 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	procdefn	0	#HEAD#	#TAIL#	138
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	10	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	11	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	13	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	14	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	15	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	18	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	19	##ADDR##	drnglst_	0	#HEAD#	#TAIL#	20
+	20	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	22	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	23	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	24	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	25	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	27	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	28	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	29	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	30	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	31	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	32	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	34	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	35	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	36	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	37	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	38	##ADDR##	SPCdloop	0	#HEAD#	#TAIL#	24
+	39	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	40	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	41	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	42	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	43	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	45	##ADDR##	SPCdrctv	0	#HEAD#	#TAIL#	37
+	46	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	47	##ADDR##	dindlst_	0	#HEAD#	#TAIL#	16
+	48	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	footprnt	0	#HEAD#	#TAIL#	541
+	50	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	51	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	52	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	53	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	54	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	55	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	56	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	57	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	58	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	59	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	60	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	61	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	62	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	63	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	64	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	65	##ADDR##	footprnt	0	#HEAD#	#TAIL#	514
+	66	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	16
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    spec_test = process-definition (defined) spec_test<
+      pint<> N
+      >(
+        bool<> !GND
+        bool<> !Vdd
+        bool<> x[0..N-1][0..2-1]
+      )
+      In definition "spec_test", we have: {
+      Parameters:
+        N = pint<> spec_test::N
+      Instances:
+        !GND = bool<> spec_test::!GND
+        !Vdd = bool<> spec_test::!Vdd
+        x = bool<> spec_test::x^2
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          bool<> x[0..N-1][0..2-1]
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      spec:
+        (:i:[0..N-1]:
+          mk_exclhi(x[$i])
+        )
+      footprint collection: {
+        <3> {
+          !GND = bool^0 = spec_test<3>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = spec_test<3>::!Vdd (2) @[ supply_high port-alias ] 
+          N = pint^0 value: 3
+          x = bool^2
+            {
+              [0][0] = spec_test<3>::x[0][0] (3) @[ port-alias ] 
+              [0][1] = spec_test<3>::x[0][1] (4) @[ port-alias ] 
+              [1][0] = spec_test<3>::x[1][0] (5) @[ port-alias ] 
+              [1][1] = spec_test<3>::x[1][1] (6) @[ port-alias ] 
+              [2][0] = spec_test<3>::x[2][0] (7) @[ port-alias ] 
+              [2][1] = spec_test<3>::x[2][1] (8) @[ port-alias ] 
+            }
+          Created state:
+          bool instance pool: (8 ports, 0 local, 0 mapped)
+          1	spec_test<3>::!GND @[ supply_low port-alias ]	
+          2	spec_test<3>::!Vdd @[ supply_high port-alias ]	
+          3	spec_test<3>::x[0][0] @[ port-alias ]	
+          4	spec_test<3>::x[0][1] @[ port-alias ]	
+          5	spec_test<3>::x[1][0] @[ port-alias ]	
+          6	spec_test<3>::x[1][1] @[ port-alias ]	
+          7	spec_test<3>::x[2][0] @[ port-alias ]	
+          8	spec_test<3>::x[2][1] @[ port-alias ]	
+          resolved specs:
+          mk_exclhi({x[0][0],x[0][1]})
+          mk_exclhi({x[1][0],x[1][1]})
+          mk_exclhi({x[2][0],x[2][1]})
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    X = spec_test<3> X
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  X = process spec_test<3>^0 = X (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    x = bool^2
+      {
+        [0][0] = X.x[0][0] (3) 
+        [0][1] = X.x[0][1] (4) 
+        [1][0] = X.x[1][0] (5) 
+        [1][1] = X.x[1][1] (6) 
+        [2][0] = X.x[2][0] (7) 
+        [2][1] = X.x[2][1] (8) 
+      }
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	X	spec_test<3>
+    bool: 1,2,3,4,5,6,7,8
+  bool instance pool: (0 ports, 8 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	X.x[0][0]	
+  4	X.x[0][1]	
+  5	X.x[1][0]	
+  6	X.x[1][1]	
+  7	X.x[2][0]	
+  8	X.x[2][1]	
+}

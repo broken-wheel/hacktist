@@ -1,0 +1,68 @@
+#!/bin/sh
+# "init_hackt.sh"
+#	$Id: init_hackt.sh.in,v 1.9 2009/09/28 06:56:55 fang Exp $
+#	vi: ft=sh
+# source this file to sets up environment variables
+# MAINTAINENCE: keep this consistent with its init_hackt.csh counterpart
+
+# define append_path and prepend_path (ripped from fink's)
+# add to end of path
+append_path()
+{
+  if ! eval test -z "\"\${$1##*:$2:*}\"" -o -z "\"\${$1%%*:$2}\"" -o -z "\"\${$1##$2:*}\"" -o -z "\"\${$1##$2}\"" ; then
+    eval "$1=\$$1:$2"
+  fi
+}
+
+# add to front of path
+prepend_path()
+{
+  if ! eval test -z "\"\${$1##*:$2:*}\"" -o -z "\"\${$1%%*:$2}\"" -o -z "\"\${$1##$2:*}\"" -o -z "\"\${$1##$2}\"" ; then
+    eval "$1=$2:\$$1"
+  fi
+}
+
+
+# or somehow set this using Makefile substitution?
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+datarootdir=@datarootdir@
+libdir=@libdir@
+datadir=@datadir@
+pkgdatadir=${datadir}/@PACKAGE@
+pkglibdir=${libdir}/@PACKAGE@
+infodir=@infodir@
+
+# TODO: possible setup PATH? right now we assume PATH already set
+
+# TODO: possibly push this into extension
+# should be consistent with scm/Makefile.am's scmdir definition.
+HACKT_GUILE_PATH=${pkgdatadir}/scm
+# should no longer need this now that paths are amended in wrapper scripts
+# if test -z "$GUILE_LOAD_PATH" ; then
+#	GUILE_LOAD_PATH=$HACKT_GUILE_PATH
+# else
+#	prepend_path GUILE_LOAD_PATH $HACKT_GUILE_PATH
+# fi
+# export GUILE_LOAD_PATH
+
+# setup hackt module library path (plug-ins)
+if test -z "$LTDL_LIBRARY_PATH" ; then
+	LTDL_LIBRARY_PATH=$pkglibdir
+else
+	prepend_path LTDL_LIBRARY_PATH $pkglibdir
+fi
+export LTDL_LIBRARY_PATH
+# do we need to do the same for DYLD_LIBRARY_PATH?
+
+# TODO: setup MANPATH (once we get man pages)
+
+if test -z "$INFOPATH" ; then
+	INFOPATH=${infodir}:/usr/share/info
+else
+	prepend_path INFOPATH ${infodir}
+fi
+export INFOPATH
+
+# TODO: per-extension initialization scripts
+

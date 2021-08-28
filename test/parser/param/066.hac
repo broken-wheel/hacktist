@@ -1,0 +1,18 @@
+// "066.hac"
+// should pass
+// reference to global parameter as rvalue
+
+namespace bar {
+pint Q;
+Q = 13;
+
+export
+defproc foo() {
+pint N[Q];	// reference to global parameter Q
+N[0] = 11;
+}
+
+}	// end namespace bar
+
+bar::foo f;
+

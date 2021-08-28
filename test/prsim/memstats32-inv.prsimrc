@@ -1,0 +1,6 @@
+# "memstats32-inv.prsimrc"
+# @haco@ inv.haco-c
+
+memstats
+# expect 32b architecture
+

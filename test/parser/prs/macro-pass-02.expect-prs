@@ -1,0 +1,20 @@
+after 0	"_n_.g" & ~"_n_.s" -> "_n_.d"-
+after 0	~"_p_.g" & "_p_.s" -> "_p_.d"+
+after 0	"_np_.g" & ~"_np_.s" -> "_np_.d"-
+after 0	~"_np_._g" & "_np_.s" -> "_np_.d"+
+= "!GND" "_n_.!GND"
+= "!GND" "_np_.!GND"
+= "!GND" "_np_.n.!GND"
+= "!GND" "_np_.p.!GND"
+= "!GND" "_p_.!GND"
+= "!Vdd" "_n_.!Vdd"
+= "!Vdd" "_np_.!Vdd"
+= "!Vdd" "_np_.n.!Vdd"
+= "!Vdd" "_np_.p.!Vdd"
+= "!Vdd" "_p_.!Vdd"
+= "_np_.g" "_np_.n.g"
+= "_np_._g" "_np_.p.g"
+= "_np_.s" "_np_.n.s"
+= "_np_.s" "_np_.p.s"
+= "_np_.d" "_np_.n.d"
+= "_np_.d" "_np_.p.d"

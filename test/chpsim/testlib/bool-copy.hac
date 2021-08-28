@@ -1,0 +1,49 @@
+// "bool-copy.hac"
+//	$Id: bool-copy.hac,v 1.4 2007/05/04 03:39:19 fang Exp $
+// copy processes
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// fanout-of-N copy
+template <pint N>
+defproc bool_copy (chan?(bool) A; chan!(bool) O[N]) {
+bool a;
+chp {
+*[ A?(a); {,i:N: O[i]!(a) } ]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Timed version with explicit forward/backward latencies.
+ */
+template <pint N; preal F, B>
+defproc timed_bool_copy (chan?(bool) A; chan!(bool) O[N]) {
+bool a;
+chp {
+*[ $(after=B) A?(a);
+   $(after=0.0) {,i:N: $(after=F) O[i]!(a) }
+]
+}
+}
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+defproc bool_copy_2 (chan?(bool) A; chan!(bool) O[2]) {
+bool a;
+chp {
+*[ A?(a); O[0]!(a), O[1]!(a) ]
+}
+}
+***/
+
+typedef	bool_copy<2>		bool_copy_2;
+typedef	bool_copy<3>		bool_copy_3;
+typedef	bool_copy<4>		bool_copy_4;
+
+template <preal F, B>
+typedef	timed_bool_copy<2, F, B>		timed_bool_copy_2;
+template <preal F, B>
+typedef	timed_bool_copy<3, F, B>		timed_bool_copy_3;
+template <preal F, B>
+typedef	timed_bool_copy<4, F, B>		timed_bool_copy_4;
+

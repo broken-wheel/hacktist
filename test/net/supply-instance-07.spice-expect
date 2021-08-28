@@ -1,0 +1,21 @@
+* channel or struct globals<> is omitted.
+
+.subckt inv<> !GND !Vdd x y
+My:dn:0 !GND x y !GND nch W=5u L=2u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
+.ends
+
+.subckt foo<> !GND !Vdd myVdd myGND in
+xa !GND !Vdd in a.y inv<>
+xb !GND !Vdd in b.y inv<>
+xc !GND !Vdd in c.y inv<>
+xd myGND !Vdd in d.y inv<>
+xd2 myGND !Vdd in d2.y inv<>
+xe myGND !Vdd in e.y inv<>
+xf !GND myVdd in f.y inv<>
+xf2 !GND myVdd in f2.y inv<>
+xg myGND myVdd in g.y inv<>
+.ends
+
+xbar !GND !Vdd gg.Vdd_1 gg.GND_1 x foo<>
+

@@ -1,0 +1,4 @@
+M@_int:dn:0 myGND en @_int myGND nch W=5u L=2u
+My:dn:0 @_int x y myGND nch W=5u L=2u
+My:up:0 myVdd en y myVdd pch W=5u L=2u
+

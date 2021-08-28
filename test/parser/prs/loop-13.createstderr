@@ -1,0 +1,8 @@
+Sorry, empty expression loops are not yet supported.  Currently waiting for resolution on language defect report.
+Error unrolling production rule guard: 
+	(|:j:[0..$i-1]: (&:k:[0..$j-1]: triangle::in[$i][$j][$k])) -> triangle::_out-
+Error resolving production rule in loop:
+$i = 0
+Instantiated from: triangle<3>
+Error encountered during module::create.
+ERROR in creating.  Aborting.

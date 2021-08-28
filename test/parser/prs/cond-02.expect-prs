@@ -1,0 +1,5 @@
+"y.x" -> "y.a"-
+= "!GND" "x.!GND"
+= "!GND" "y.!GND"
+= "!Vdd" "x.!Vdd"
+= "!Vdd" "y.!Vdd"

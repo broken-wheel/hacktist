@@ -1,0 +1,95 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	pintplch	0	#HEAD#	#TAIL#	31
+	6	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	7	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	8	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	9	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	10	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	11	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	12	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	13	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	14	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	15	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	16	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	17	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	18	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	19	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	20	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	22	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	24	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	26	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	28	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	30	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	32	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	34	##ADDR##	footprnt	0	#HEAD#	#TAIL#	682
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  1 parameter-collections
+  2 instantiation-collections
+  0 sub-namespaces
+  0 definitions
+  0 typedefs
+  Parameters:
+    foo = pint<> foo^1
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  foo = pint^1
+    unrolled index-value pairs: {
+      0 = ?
+      1 = ?
+      2 = ?
+      3 = ?
+      4 = ?
+      5 = ?
+      6 = ?
+      7 = ?
+      8 = ?
+      9 = ?
+      10 = ?
+      11 = ?
+      12 = ?
+      15 = ?
+      16 = ?
+      17 = ?
+      18 = ?
+      19 = ?
+      20 = ?
+      21 = ?
+      22 = ?
+      23 = ?
+      24 = ?
+      25 = ?
+      26 = ?
+      27 = ?
+      28 = ?
+      29 = ?
+      40 = ?
+      41 = ?
+      42 = ?
+    }
+  Created state:
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

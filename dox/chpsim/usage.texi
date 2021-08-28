@@ -1,0 +1,101 @@
+@c "usage.texi"
+@c $Id: usage.texi,v 1.9 2009/11/11 00:33:54 fang Exp $
+
+@node Usage
+@chapter Usage
+@cindex usage
+@cindex options
+@cindex command-line
+@cindex flags
+
+This chapter describes @command{chpsim}'s command-line options.  
+
+Usage:
+@samp{hacchpsim [@var{options}] @var{obj-file}}
+
+To pass a script to @command{hacchpsim}, use shell redirection or pipes.
+For example,
+@example
+$ @kbd{cat test.chpsimrc | hacchpsim -b test.haco}
+@end example
+
+or
+
+@example
+$ @kbd{hacchpsim -b test.haco < test.chpsimrc}
+@end example
+
+@menu
+* Option Summary:: Description of command-line arguments.
+* General Flags:: Flag descriptions.
+* Graph Generation:: Flag descriptions.
+@end menu
+
+@c ****************************************************************************
+@node Option Summary
+@section Option Summary
+@cindex options
+@cindex options, summary
+
+@c These might be better managed in the source file for ease of maintainence.
+For options that take an argument, the space between the flag
+and the argument is optional.  
+
+@defopt @r{@i{none}}
+With no arguments, just print a list of all command-line options, 
+much like what is summarized below.  
+@end defopt
+
+@include options/option-b.texi
+@include options/option-d.texi
+@include options/option-f.texi
+@include options/option-h.texi
+@include options/option-H-upper.texi
+@include options/option-i.texi
+@c DAMN case-insensitive file systems!!!
+@include options/option-I-upper.texi
+@include options/option-L-upper.texi
+@include options/option-l.texi
+@include options/option-c.texi
+@include options/option-C-upper.texi
+@include options/option-r.texi
+@include options/option-t.texi
+@include options/option-T-upper.texi
+@include options/option-v.texi
+
+@c ****************************************************************************
+@node General Flags
+@section General Flags
+@cindex flags, general
+
+For lack of better organization, many general purpose flags
+are folded into the @option{-f} option.
+Unless otherwise noted, 
+all @option{-f} options have a @option{no-} prefixed counterpart, 
+so @option{-f no-disassemble} is the intuitive negation
+of @option{-f disassemble}.  
+Later options always override earlier options.  
+
+@include options/check-structure.texi
+@include options/default.texi
+@include options/dump-graph-alloc.texi
+@include options/dump-dot-struct.texi
+@include options/run.texi
+@include options/ack-loaded-fns.texi
+
+@c ****************************************************************************
+@node Graph Generation
+@section Graph Generation
+@cindex flags, graph
+
+The following flags are relevant only with @option{-f dump-dot-struct}.
+All of these options are also negatable with @option{no-} prefixed.  
+Don't forget to pass @option{-f no-run} when not intending to run the 
+interpreter.  
+
+@include options/cluster-processes.texi
+@include options/show-channels.texi
+@include options/show-delays.texi
+@include options/show-event-index.texi
+@include options/show-instances.texi
+

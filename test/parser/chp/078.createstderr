@@ -1,0 +1,720 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procdefn	0	#HEAD#	#TAIL#	363
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	9	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	10	##ADDR##	drnglst_	0	#HEAD#	#TAIL#	16
+	11	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	12	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	13	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	14	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	15	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	16	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	17	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	18	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	19	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	20	##ADDR##	dintplch	0	#HEAD#	#TAIL#	25
+	21	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	22	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	23	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	24	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	25	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	26	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	27	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	28	##ADDR##	datadefn	0	#HEAD#	#TAIL#	68
+	29	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	31	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	32	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	35	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	36	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	37	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	39	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	41	##ADDR##	sdinref_	0	#HEAD#	#TAIL#	16
+	42	##ADDR##	spinref_	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	nindlist	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	spinref_	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	footprnt	0	#HEAD#	#TAIL#	400
+	46	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	47	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	32
+	48	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	49	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	51	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	52	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	53	##ADDR##	footprnt	0	#HEAD#	#TAIL#	400
+	54	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	55	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	32
+	56	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	57	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	58	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	60	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	61	##ADDR##	footprnt	0	#HEAD#	#TAIL#	412
+	62	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	63	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	36
+	64	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	65	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	66	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	67	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	68	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	69	##ADDR##	footprnt	0	#HEAD#	#TAIL#	412
+	70	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	71	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	36
+	72	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	73	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	74	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	75	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	76	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	77	##ADDR##	footprnt	0	#HEAD#	#TAIL#	412
+	78	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	79	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	36
+	80	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	81	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	82	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	83	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	84	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	85	##ADDR##	footprnt	0	#HEAD#	#TAIL#	448
+	86	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	87	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	48
+	88	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	89	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	90	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	91	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	92	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	93	##ADDR##	footprnt	0	#HEAD#	#TAIL#	448
+	94	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	95	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	48
+	96	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	97	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	98	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	99	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	100	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	101	##ADDR##	footprnt	0	#HEAD#	#TAIL#	448
+	102	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	103	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	48
+	104	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	105	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	106	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	107	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	108	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	109	##ADDR##	footprnt	0	#HEAD#	#TAIL#	448
+	110	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	111	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	48
+	112	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	113	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	114	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	115	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	116	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	117	##ADDR##	footprnt	0	#HEAD#	#TAIL#	448
+	118	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	119	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	48
+	120	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	121	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	122	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	123	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	124	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	125	##ADDR##	footprnt	0	#HEAD#	#TAIL#	448
+	126	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	127	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	48
+	128	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	129	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	130	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	131	##ADDR##	CHPassgn	0	#HEAD#	#TAIL#	20
+	132	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	133	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	134	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	135	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	136	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	137	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	138	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	139	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	140	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	141	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	142	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	143	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	144	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	145	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	146	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	147	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	148	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	149	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	150	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	151	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	152	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	153	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	154	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	155	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	156	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	157	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	158	##ADDR##	loopscop	0	#HEAD#	#TAIL#	24
+	159	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	160	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	161	##ADDR##	piassign	0	#HEAD#	#TAIL#	20
+	162	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	163	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	164	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	165	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	166	##ADDR##	dindlst_	0	#HEAD#	#TAIL#	16
+	167	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	168	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	169	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	170	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	171	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	172	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	173	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	174	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	175	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	176	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	177	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	178	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	179	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	180	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	181	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	182	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	183	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	184	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	185	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	186	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	187	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	188	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	189	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	190	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	191	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	192	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	193	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	194	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	195	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	196	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	197	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	198	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	199	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	200	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	201	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	202	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	203	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	204	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	205	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	206	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	207	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	208	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	209	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	210	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	211	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	212	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	213	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	214	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	215	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	216	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	217	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	218	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	219	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	220	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	24
+	221	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	222	##ADDR##	footprnt	0	#HEAD#	#TAIL#	1680
+	223	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	224	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	225	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	226	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	227	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	228	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	229	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	230	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	231	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	232	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+	233	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	24
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  1 parameter-collections
+  13 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Parameters:
+    x = pint<> x^1
+  Definitions:
+    compute_me = process-definition (defined) compute_me<
+      pint<> N
+      pint<> B[0..N-1]
+      pint<> M
+      >(
+        bool<> !GND
+        bool<> !Vdd
+        int<16> b
+      )
+      In definition "compute_me", we have: {
+      Parameters:
+        B = pint<> compute_me::B^1
+        M = pint<> compute_me::M
+        N = pint<> compute_me::N
+      Instances:
+        !GND = bool<> compute_me::!GND
+        !Vdd = bool<> compute_me::!Vdd
+        b = int<16> compute_me::b
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          int<16> b
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      chp:
+        concurrent: {
+          *[
+            b := B[M]
+          ]
+        }
+      footprint collection: {
+        <2, {0,1}, 0> {
+          !GND = bool^0 = compute_me<2, {0,1}, 0>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<2, {0,1}, 0>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+            }
+          M = pint^0 value: 0
+          N = pint^0 value: 2
+          b = int<16>^0 = compute_me<2, {0,1}, 0>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<2, {0,1}, 0>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<2, {0,1}, 0>::!GND @[ supply_low port-alias ]	
+          2	compute_me<2, {0,1}, 0>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 0
+            ]
+          chp events: {
+            event[0]: assign: b := 0, #pred: 1, succ: 0 
+          }
+        }
+        <2, {0,1}, 1> {
+          !GND = bool^0 = compute_me<2, {0,1}, 1>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<2, {0,1}, 1>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+            }
+          M = pint^0 value: 1
+          N = pint^0 value: 2
+          b = int<16>^0 = compute_me<2, {0,1}, 1>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<2, {0,1}, 1>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<2, {0,1}, 1>::!GND @[ supply_low port-alias ]	
+          2	compute_me<2, {0,1}, 1>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 1
+            ]
+          chp events: {
+            event[0]: assign: b := 1, #pred: 1, succ: 0 
+          }
+        }
+        <3, {4,9,16}, 0> {
+          !GND = bool^0 = compute_me<3, {4,9,16}, 0>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<3, {4,9,16}, 0>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 4
+              1 = 9
+              2 = 16
+            }
+          M = pint^0 value: 0
+          N = pint^0 value: 3
+          b = int<16>^0 = compute_me<3, {4,9,16}, 0>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<3, {4,9,16}, 0>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<3, {4,9,16}, 0>::!GND @[ supply_low port-alias ]	
+          2	compute_me<3, {4,9,16}, 0>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 4
+            ]
+          chp events: {
+            event[0]: assign: b := 4, #pred: 1, succ: 0 
+          }
+        }
+        <3, {4,9,16}, 1> {
+          !GND = bool^0 = compute_me<3, {4,9,16}, 1>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<3, {4,9,16}, 1>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 4
+              1 = 9
+              2 = 16
+            }
+          M = pint^0 value: 1
+          N = pint^0 value: 3
+          b = int<16>^0 = compute_me<3, {4,9,16}, 1>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<3, {4,9,16}, 1>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<3, {4,9,16}, 1>::!GND @[ supply_low port-alias ]	
+          2	compute_me<3, {4,9,16}, 1>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 9
+            ]
+          chp events: {
+            event[0]: assign: b := 9, #pred: 1, succ: 0 
+          }
+        }
+        <3, {4,9,16}, 2> {
+          !GND = bool^0 = compute_me<3, {4,9,16}, 2>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<3, {4,9,16}, 2>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 4
+              1 = 9
+              2 = 16
+            }
+          M = pint^0 value: 2
+          N = pint^0 value: 3
+          b = int<16>^0 = compute_me<3, {4,9,16}, 2>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<3, {4,9,16}, 2>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<3, {4,9,16}, 2>::!GND @[ supply_low port-alias ]	
+          2	compute_me<3, {4,9,16}, 2>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 16
+            ]
+          chp events: {
+            event[0]: assign: b := 16, #pred: 1, succ: 0 
+          }
+        }
+        <6, {0,1,4,9,16,25}, 0> {
+          !GND = bool^0 = compute_me<6, {0,1,4,9,16,25}, 0>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<6, {0,1,4,9,16,25}, 0>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+              2 = 4
+              3 = 9
+              4 = 16
+              5 = 25
+            }
+          M = pint^0 value: 0
+          N = pint^0 value: 6
+          b = int<16>^0 = compute_me<6, {0,1,4,9,16,25}, 0>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 0>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 0>::!GND @[ supply_low port-alias ]	
+          2	compute_me<6, {0,1,4,9,16,25}, 0>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 0
+            ]
+          chp events: {
+            event[0]: assign: b := 0, #pred: 1, succ: 0 
+          }
+        }
+        <6, {0,1,4,9,16,25}, 1> {
+          !GND = bool^0 = compute_me<6, {0,1,4,9,16,25}, 1>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<6, {0,1,4,9,16,25}, 1>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+              2 = 4
+              3 = 9
+              4 = 16
+              5 = 25
+            }
+          M = pint^0 value: 1
+          N = pint^0 value: 6
+          b = int<16>^0 = compute_me<6, {0,1,4,9,16,25}, 1>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 1>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 1>::!GND @[ supply_low port-alias ]	
+          2	compute_me<6, {0,1,4,9,16,25}, 1>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 1
+            ]
+          chp events: {
+            event[0]: assign: b := 1, #pred: 1, succ: 0 
+          }
+        }
+        <6, {0,1,4,9,16,25}, 2> {
+          !GND = bool^0 = compute_me<6, {0,1,4,9,16,25}, 2>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<6, {0,1,4,9,16,25}, 2>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+              2 = 4
+              3 = 9
+              4 = 16
+              5 = 25
+            }
+          M = pint^0 value: 2
+          N = pint^0 value: 6
+          b = int<16>^0 = compute_me<6, {0,1,4,9,16,25}, 2>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 2>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 2>::!GND @[ supply_low port-alias ]	
+          2	compute_me<6, {0,1,4,9,16,25}, 2>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 4
+            ]
+          chp events: {
+            event[0]: assign: b := 4, #pred: 1, succ: 0 
+          }
+        }
+        <6, {0,1,4,9,16,25}, 3> {
+          !GND = bool^0 = compute_me<6, {0,1,4,9,16,25}, 3>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<6, {0,1,4,9,16,25}, 3>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+              2 = 4
+              3 = 9
+              4 = 16
+              5 = 25
+            }
+          M = pint^0 value: 3
+          N = pint^0 value: 6
+          b = int<16>^0 = compute_me<6, {0,1,4,9,16,25}, 3>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 3>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 3>::!GND @[ supply_low port-alias ]	
+          2	compute_me<6, {0,1,4,9,16,25}, 3>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 9
+            ]
+          chp events: {
+            event[0]: assign: b := 9, #pred: 1, succ: 0 
+          }
+        }
+        <6, {0,1,4,9,16,25}, 4> {
+          !GND = bool^0 = compute_me<6, {0,1,4,9,16,25}, 4>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<6, {0,1,4,9,16,25}, 4>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+              2 = 4
+              3 = 9
+              4 = 16
+              5 = 25
+            }
+          M = pint^0 value: 4
+          N = pint^0 value: 6
+          b = int<16>^0 = compute_me<6, {0,1,4,9,16,25}, 4>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 4>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 4>::!GND @[ supply_low port-alias ]	
+          2	compute_me<6, {0,1,4,9,16,25}, 4>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 16
+            ]
+          chp events: {
+            event[0]: assign: b := 16, #pred: 1, succ: 0 
+          }
+        }
+        <6, {0,1,4,9,16,25}, 5> {
+          !GND = bool^0 = compute_me<6, {0,1,4,9,16,25}, 5>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = compute_me<6, {0,1,4,9,16,25}, 5>::!Vdd (2) @[ supply_high port-alias ] 
+          B = pint^1
+            unrolled index-value pairs: {
+              0 = 0
+              1 = 1
+              2 = 4
+              3 = 9
+              4 = 16
+              5 = 25
+            }
+          M = pint^0 value: 5
+          N = pint^0 value: 6
+          b = int<16>^0 = compute_me<6, {0,1,4,9,16,25}, 5>::b (1) 
+          Created state:
+          int instance pool: (1 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 5>::b	
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	compute_me<6, {0,1,4,9,16,25}, 5>::!GND @[ supply_low port-alias ]	
+          2	compute_me<6, {0,1,4,9,16,25}, 5>::!Vdd @[ supply_high port-alias ]	
+          resolved concurrent actions:
+            *[
+              b := 25
+            ]
+          chp events: {
+            event[0]: assign: b := 25, #pred: 1, succ: 0 
+          }
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    y2_0 = compute_me<2, x[0..1], 0> y2_0
+    y2_1 = compute_me<2, x[0..1], 1> y2_1
+    y3_0 = compute_me<3, x[2..4], 0> y3_0
+    y3_1 = compute_me<3, x[2..4], 1> y3_1
+    y3_2 = compute_me<3, x[2..4], 2> y3_2
+    y6_0 = compute_me<6, x, 0> y6_0
+    y6_1 = compute_me<6, x, 1> y6_1
+    y6_2 = compute_me<6, x, 2> y6_2
+    y6_3 = compute_me<6, x, 3> y6_3
+    y6_4 = compute_me<6, x, 4> y6_4
+    y6_5 = compute_me<6, x, 5> y6_5
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  x = pint^1
+    unrolled index-value pairs: {
+      0 = 0
+      1 = 1
+      2 = 4
+      3 = 9
+      4 = 16
+      5 = 25
+    }
+  y2_0 = process compute_me<2, {0,1}, 0>^0 = y2_0 (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y2_0.b (1) 
+  )
+  y2_1 = process compute_me<2, {0,1}, 1>^0 = y2_1 (2) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y2_1.b (2) 
+  )
+  y3_0 = process compute_me<3, {4,9,16}, 0>^0 = y3_0 (3) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y3_0.b (3) 
+  )
+  y3_1 = process compute_me<3, {4,9,16}, 1>^0 = y3_1 (4) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y3_1.b (4) 
+  )
+  y3_2 = process compute_me<3, {4,9,16}, 2>^0 = y3_2 (5) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y3_2.b (5) 
+  )
+  y6_0 = process compute_me<6, {0,1,4,9,16,25}, 0>^0 = y6_0 (6) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y6_0.b (6) 
+  )
+  y6_1 = process compute_me<6, {0,1,4,9,16,25}, 1>^0 = y6_1 (7) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y6_1.b (7) 
+  )
+  y6_2 = process compute_me<6, {0,1,4,9,16,25}, 2>^0 = y6_2 (8) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y6_2.b (8) 
+  )
+  y6_3 = process compute_me<6, {0,1,4,9,16,25}, 3>^0 = y6_3 (9) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y6_3.b (9) 
+  )
+  y6_4 = process compute_me<6, {0,1,4,9,16,25}, 4>^0 = y6_4 (10) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y6_4.b (10) 
+  )
+  y6_5 = process compute_me<6, {0,1,4,9,16,25}, 5>^0 = y6_5 (11) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    b = int<16>^0 = y6_5.b (11) 
+  )
+  Created state:
+  process instance pool: (0 ports, 11 local, 0 mapped)
+  1	y2_0	compute_me<2, {0,1}, 0>
+    int: 1
+    bool: 1,2
+  2	y2_1	compute_me<2, {0,1}, 1>
+    int: 2
+    bool: 1,2
+  3	y3_0	compute_me<3, {4,9,16}, 0>
+    int: 3
+    bool: 1,2
+  4	y3_1	compute_me<3, {4,9,16}, 1>
+    int: 4
+    bool: 1,2
+  5	y3_2	compute_me<3, {4,9,16}, 2>
+    int: 5
+    bool: 1,2
+  6	y6_0	compute_me<6, {0,1,4,9,16,25}, 0>
+    int: 6
+    bool: 1,2
+  7	y6_1	compute_me<6, {0,1,4,9,16,25}, 1>
+    int: 7
+    bool: 1,2
+  8	y6_2	compute_me<6, {0,1,4,9,16,25}, 2>
+    int: 8
+    bool: 1,2
+  9	y6_3	compute_me<6, {0,1,4,9,16,25}, 3>
+    int: 9
+    bool: 1,2
+  10	y6_4	compute_me<6, {0,1,4,9,16,25}, 4>
+    int: 10
+    bool: 1,2
+  11	y6_5	compute_me<6, {0,1,4,9,16,25}, 5>
+    int: 11
+    bool: 1,2
+  int instance pool: (0 ports, 11 local, 0 mapped)
+  1	y2_0.b	
+  2	y2_1.b	
+  3	y3_0.b	
+  4	y3_1.b	
+  5	y3_2.b	
+  6	y6_0.b	
+  7	y6_1.b	
+  8	y6_2.b	
+  9	y6_3.b	
+  10	y6_4.b	
+  11	y6_5.b	
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

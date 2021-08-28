@@ -1,0 +1,7 @@
+M_o:dn:0 !GND en1 #0 !GND nch W=5u L=2u
+M_o:dn:1 !GND en2 #0 !GND nch W=5u L=2u
+M_o:dn:2:pchg !Vdd en1 #1 !Vdd pch W=5u L=2u
+M_o:dn:3:pchg #1 en2 #0 !Vdd pch W=5u L=2u
+M_o:dn:4 #0 a #2 !GND nch W=5u L=2u
+M_o:dn:5 #2 b _o !GND nch W=5u L=2u
+

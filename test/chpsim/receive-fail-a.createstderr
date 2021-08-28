@@ -1,0 +1,113 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	8	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	9	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	10	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	11	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	12	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	13	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	14	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	15	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	16	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	17	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	18	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	19	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	20	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	21	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	22	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	23	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	24	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	25	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	26	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	28	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	31	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	32	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	sdbnref_	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	35	##ADDR##	CHPsend_	0	#HEAD#	#TAIL#	24
+	36	##ADDR##	cnvtpipr	0	#HEAD#	#TAIL#	12
+	37	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	38	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	40	##ADDR##	footprnt	0	#HEAD#	#TAIL#	429
+	41	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	42	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	43	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	28
+	44	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	46	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	47	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	25
+	48	##ADDR##	CHPloop_	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	CHPsend_	0	#HEAD#	#TAIL#	24
+	50	##ADDR##	cnstpr__	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  5 instantiation-collections
+  0 sub-namespaces
+  0 definitions
+  0 typedefs
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    X = chan(bool<>) X
+    x = bool<> x
+    y = bool<> y
+}
+
+top-level chp:
+  concurrent: {
+    *[
+      X?(x)
+    ]
+    *[
+      X?(y)
+    ]
+    *[
+      [after=preal(20)] X!(true)
+    ]
+  }
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  X = channel chan(bool<>)^0 = X (1) @[ chp! meta! chp? meta? ] 
+  x = bool^0 = x (3) 
+  y = bool^0 = y (4) 
+  Created state:
+  channel instance pool: (0 ports, 1 local, 0 mapped)
+  1	X @[ chp! meta! chp? meta? ]	
+  bool instance pool: (0 ports, 4 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	x	
+  4	y	
+  resolved concurrent actions:
+    *[
+      X?(x)
+    ]
+    *[
+      X?(y)
+    ]
+    *[
+      [after=20] X!(true)
+    ]
+  chp events: {
+    event[0]: fork: , #pred: 1, succ: 2 3 1 
+    event[1]: send: [after=20] X!(true), #pred: 1, succ: 1 
+    event[2]: receive: X?(x), #pred: 1, succ: 2 
+    event[3]: receive: X?(y), #pred: 1, succ: 3 
+  }
+}

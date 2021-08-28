@@ -1,0 +1,12 @@
+# "defaults-only.chpsimrc"
+#	$Id: defaults-only.chpsimrc,v 1.3 2010/04/06 00:00:56 fang Exp $
+# @haco@ defaults.haco-c
+
+queue
+assert-queue
+null-event-delay
+uniform-delay
+step
+echo event-queue should be empty
+queue
+

@@ -1,0 +1,14 @@
+# "aliases-06.prsimrc"
+#	$Id: aliases-06.prsimrc,v 1.2 2010/04/06 00:04:13 fang Exp $
+# @haco@ inv.haco-c
+# testing user-defined alias commands
+
+alias foo bar
+alias bar none
+alias none foo
+aliases
+echo any of these alias commands should fail with cyclic detection
+bar
+
+echo not reached
+

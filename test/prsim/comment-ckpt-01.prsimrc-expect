@@ -1,0 +1,43 @@
+header string: hackt-prsim-ckpt
+checkpoint version: 8
+seed48: 0 0 0
+Have 6 unique boolean nodes:
+	value	flags	cause	tcount	time(0,1,X)
+1	0	0x0	(0,0),(0,0),(0,0)	1	(0,-1,-1)
+2	1	0x0	(0,0),(0,0),(0,0)	1	(-1,0,-1)
+3	X	0x0	(0,0),(0,0),(0,0)	0	(-1,-1,-1)
+4	X	0x0	(0,0),(0,0),(0,0)	0	(-1,-1,-1)
+5	X	0x0	(0,0),(0,0),(0,0)	0	(-1,-1,-1)
+Have 0 events in queue:
+	node	cause-node	cause-rule	value
+current time: 0
+uniform delay: 10
+default after min: 0
+default after max: 0
+binary timing probability: 0.5
+flags: 0x48
+unstable policy: break
+weak-unstable policy: warn
+excl-unstable policy: break
+interference policy: break
+weak-interference policy: warn
+invariant-fail policy: break
+invariant-unknown policy: warn
+assert-fail (bool) policy: fatal
+channel-expect-fail policy: fatal
+exclusion-fail policy: fatal
+keeper-check policy: ignore
+timing mode: 1
+dump flags: {
+hide definition owner
+hide namespace owner
+hide leading scope
+process member separatorr: .
+struct member separatorr: .
+}
+time-fmt flags: { flags:0x1002, w:0, p:6 }
+setup-violation policy: warn
+hold-violation policy: break
+channels:
+
+footer string: hackt-prsim-ckpt

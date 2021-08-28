@@ -1,0 +1,102 @@
+\input texinfo	@c -*-texinfo-*-
+@c %**start of header
+@setfilename hackt.info
+@settitle HACKT Tutorials
+@c `on' is the default
+@setchapternewpage odd
+@c for two-sided book-style printing
+@c %**end of header
+
+@c "chpsim.texi"
+@c $Id: hackt.texi,v 1.5 2010/07/07 23:16:14 fang Exp $
+
+@dircategory Hierarchical Asynchronous Circuit Kompiler Toolkit (HACKT)
+@direntry
+* HACKT core programs: (hackt).    HACKT compiler tools tutorial.
+@end direntry
+
+@include hacmacros.texi
+
+@copying
+This manual describes the usage and operation of HACKT's tools.  
+
+This document can also be found online at @homepagesubref{hackt}.
+
+The main project home page is @homepageref{}.
+
+
+Copyright @copyright{} 2007 Cornell University
+
+@quotation
+Published by ...
+ 
+Permission is hereby granted to ...
+@end quotation
+@end copying
+
+@c Title page and Copyright
+@titlepage
+@title HACKT
+@subtitle Hierarchical Asynchronous Circuit Kompiler Toolkit
+@author David Fang
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c ****************************** contents ************************************
+@shortcontents
+@contents
+
+@ignore
+@iftex
+@node List of Figures
+@unnumbered List of Figures
+@listoffloats Figure
+@end iftex
+@end ignore
+
+@c ****************************** Top *****************************************
+@ifnottex
+@node Top
+@top HACKT Tools
+@insertcopying
+@end ifnottex
+
+@c @copying is recommended here as well
+@menu
+* Introduction::
+* Compiler::
+* Shell Interpreter::
+* Diagnostics::
+* Legacy Compatibility::
+* Support::
+* Command Index::
+* Variable Index::
+* Concept Index::
+@end menu
+
+@c ****************************** chapter *************************************
+@include hackt/intro.texi
+@include hackt/compiler.texi
+@include hackt/shell.texi
+@include hackt/diagnostics.texi
+@include hackt/legacy.texi
+@include hackt/support.texi
+
+@c ****************************** index ***************************************
+@node Command Index
+@unnumbered Command Index
+@printindex fn
+
+@node Variable Index
+@unnumbered Variable Index
+@printindex vr
+
+@node Concept Index
+@unnumbered Concept Index
+@printindex cp
+
+@c ****************************** finis ***************************************
+@bye
+

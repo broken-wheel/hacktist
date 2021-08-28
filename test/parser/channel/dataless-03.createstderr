@@ -1,0 +1,143 @@
+WARNING: channel boring<>::in lacks connection to a consumer.
+WARNING: channel boring<>::out lacks connection to a producer.
+WARNING: channel boring<>::peek lacks connection to a producer.
+WARNING: channel boring<>::peek lacks connection to a consumer.
+Warnings found (4) while creating complete type boring<>.
+WARNING: channel work.in lacks connection to a producer.
+WARNING: channel work.in lacks connection to a consumer.
+WARNING: channel work.out lacks connection to a producer.
+WARNING: channel work.out lacks connection to a consumer.
+WARNING: channel work.peek lacks connection to a producer.
+WARNING: channel work.peek lacks connection to a consumer.
+Warnings found (6) while creating complete type <top-level>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procdefn	0	#HEAD#	#TAIL#	135
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	chanplch	0	#HEAD#	#TAIL#	26
+	9	##ADDR##	chanplch	0	#HEAD#	#TAIL#	27
+	10	##ADDR##	chanplch	0	#HEAD#	#TAIL#	28
+	11	##ADDR##	portscop	0	#HEAD#	#TAIL#	32
+	12	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	13	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	14	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	15	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	16	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	21
+	18	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	19	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	21
+	20	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	21	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	21
+	22	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	23	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	24	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	26	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	27	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	28	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	30	##ADDR##	footprnt	0	#HEAD#	#TAIL#	367
+	31	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	12
+	32	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	33	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	34	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	35	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	36	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	37	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	40	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	41	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	42	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	44	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	46	##ADDR##	footprnt	0	#HEAD#	#TAIL#	478
+	47	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    boring = process-definition (defined) boring(
+        bool<> !GND
+        bool<> !Vdd
+        chan?() in
+        chan!() out
+        chan() peek
+      )
+      In definition "boring", we have: {
+      Instances:
+        !GND = bool<> boring::!GND
+        !Vdd = bool<> boring::!Vdd
+        in = chan?() boring::in
+        out = chan!() boring::out
+        peek = chan() boring::peek
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan?() in
+          chan!() out
+          chan() peek
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      footprint: {
+        !GND = bool^0 = boring<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = boring<>::!Vdd (2) @[ supply_high port-alias ] 
+        in = channel chan?()^0 = boring<>::in (1) @[ port! ] 
+        out = channel chan!()^0 = boring<>::out (2) @[ port? ] 
+        peek = channel chan()^0 = boring<>::peek (3) 
+        Created state:
+        channel instance pool: (3 ports, 0 local, 0 mapped)
+        1	boring<>::in @[ port! ]	
+        2	boring<>::out @[ port? ]	
+        3	boring<>::peek	
+        bool instance pool: (2 ports, 0 local, 0 mapped)
+        1	boring<>::!GND @[ supply_low port-alias ]	
+        2	boring<>::!Vdd @[ supply_high port-alias ]	
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    work = boring<> work
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  work = process boring<>^0 = work (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    in = channel chan?()^0 = work.in (1) 
+    out = channel chan!()^0 = work.out (2) 
+    peek = channel chan()^0 = work.peek (3) 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	work	boring<>
+    channel: 1,2,3
+    bool: 1,2
+  channel instance pool: (0 ports, 3 local, 0 mapped)
+  1	work.in	
+  2	work.out	
+  3	work.peek	
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

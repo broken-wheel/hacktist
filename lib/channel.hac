@@ -1,0 +1,289 @@
+/**
+	"channel.hac"
+	Standard channel definitions in HAC.  
+	Q: place these in some namespace?  std::channel?
+	$Id: channel.hac,v 1.12 2010/10/27 00:16:50 fang Exp $
+ */
+
+/*** e1of<N> definitions ********************************/
+
+/**
+	Data rails are d[]. 
+	Active-low acknowledge is e.  
+ */
+template <pint N>
+defchan e1of <: chan(int) (bool d[N], e)
+{
+spec {
+	exclhi(d)		// all nodes: d[0..N-1]
+}
+}
+
+typedef e1of<1> e1of1;
+typedef e1of<2> e1of2;
+typedef e1of<3> e1of3;
+typedef e1of<4> e1of4;
+typedef e1of<5> e1of5;
+typedef e1of<6> e1of6;
+typedef e1of<7> e1of7;
+typedef e1of<8> e1of8;
+
+/*** a1of<N> definitions ********************************/
+
+/**
+	Data rails are d[]. 
+	Active-high acknowledge is a.  
+ */
+template <pint N>
+defchan a1of <: chan(int) (bool d[N], a)
+{
+spec {
+	exclhi(d)		// all nodes: d[0..N-1]
+}
+}
+
+typedef a1of<1> a1of1;
+typedef a1of<2> a1of2;
+typedef a1of<3> a1of3;
+typedef a1of<4> a1of4;
+typedef a1of<5> a1of5;
+typedef a1of<6> a1of6;
+typedef a1of<7> a1of7;
+typedef a1of<8> a1of8;
+
+/*** 1of<N> definitions ********************************/
+
+/**
+	1-of-N rails.  Mutually exclusive high.  
+	'c' is for active-high channel.  
+ */
+template <pint N>
+deftype c1of <: int (bool d[N])
+{
+spec {
+	exclhi(d)		// all nodes: d[0..N-1]
+}
+}
+
+/**
+	1-of-N rails.  Mutually exclusive low.  
+	'_c' is for active-low channel.  
+ */
+template <pint N>
+deftype _c1of <: int (bool d[N])
+{
+spec {
+	excllo(d)		// all nodes: d[0..N-1]
+}
+}
+
+typedef c1of<1> c1of1;
+typedef c1of<2> c1of2;
+typedef c1of<3> c1of3;
+typedef c1of<4> c1of4;
+typedef c1of<5> c1of5;
+typedef c1of<6> c1of6;
+typedef c1of<7> c1of7;
+typedef c1of<8> c1of8;
+
+typedef _c1of<1> _c1of1;
+typedef _c1of<2> _c1of2;
+typedef _c1of<3> _c1of3;
+typedef _c1of<4> _c1of4;
+typedef _c1of<5> _c1of5;
+typedef _c1of<6> _c1of6;
+typedef _c1of<7> _c1of7;
+typedef _c1of<8> _c1of8;
+
+/*** _e1of<N> definitions **********************************/
+
+template <pint N>
+defchan _e1of <: chan(int) (bool d[N], e)
+{
+spec {
+	excllo(d)		// all nodes: d[0..N-1]
+}
+}
+
+typedef _e1of<1> _e1of1;
+typedef _e1of<2> _e1of2;
+typedef _e1of<3> _e1of3;
+typedef _e1of<4> _e1of4;
+typedef _e1of<5> _e1of5;
+typedef _e1of<6> _e1of6;
+typedef _e1of<7> _e1of7;
+typedef _e1of<8> _e1of8;
+
+/*** _a1of<N> definitions **********************************/
+
+template <pint N>
+defchan _a1of <: chan(int) (bool d[N], e)
+{
+spec {
+	excllo(d)		// all nodes: d[0..N-1]
+}
+}
+
+typedef _a1of<1> _a1of1;
+typedef _a1of<2> _a1of2;
+typedef _a1of<3> _a1of3;
+typedef _a1of<4> _a1of4;
+typedef _a1of<5> _a1of5;
+typedef _a1of<6> _a1of6;
+typedef _a1of<7> _a1of7;
+typedef _a1of<8> _a1of8;
+
+/*** shared-rail 1of<N> definitions ************************/
+/**
+	Data rails are d[]. 
+	Active-low acknowledge is e.  
+	Active-high request (completion) is v.
+ */
+template <pint N>
+defchan ev1of <: chan(int) (bool d[N], e, v)
+{
+spec {
+	exclhi(d)
+}
+}
+
+typedef	ev1of<1>	ev1of1;
+typedef	ev1of<2>	ev1of2;
+typedef	ev1of<3>	ev1of3;
+typedef	ev1of<4>	ev1of4;
+typedef	ev1of<5>	ev1of5;
+typedef	ev1of<6>	ev1of6;
+typedef	ev1of<7>	ev1of7;
+typedef	ev1of<8>	ev1of8;
+
+/**
+	Data rails are d[]. 
+	Active-low acknowledge is e.  
+	Active-low request (completion) is n.
+ */
+template <pint R>
+defchan en1of <: chan(int) (bool d[R], e, n)
+{
+spec {
+	exclhi(d)
+}
+}
+
+typedef	en1of<1>	en1of1;
+typedef	en1of<2>	en1of2;
+typedef	en1of<3>	en1of3;
+typedef	en1of<4>	en1of4;
+typedef	en1of<5>	en1of5;
+typedef	en1of<6>	en1of6;
+typedef	en1of<7>	en1of7;
+typedef	en1of<8>	en1of8;
+
+/**
+	Data rails are d[]. 
+	Active-high acknowledge is a.  
+	Active-high request (completion) is v.
+ */
+template <pint N>
+defchan av1of <: chan(int) (bool d[N], a, v)
+{
+spec {
+	exclhi(d)
+}
+}
+
+typedef	av1of<1>	av1of1;
+typedef	av1of<2>	av1of2;
+typedef	av1of<3>	av1of3;
+typedef	av1of<4>	av1of4;
+typedef	av1of<5>	av1of5;
+typedef	av1of<6>	av1of6;
+typedef	av1of<7>	av1of7;
+typedef	av1of<8>	av1of8;
+
+/**
+	Data rails are d[]. 
+	Active-high acknowledge is a.  
+	Active-low request (completion) is n.
+ */
+template <pint R>
+defchan an1of <: chan(int) (bool d[R], a, n)
+{
+spec {
+	exclhi(d)
+}
+}
+
+typedef	an1of<1>	an1of1;
+typedef	an1of<2>	an1of2;
+typedef	an1of<3>	an1of3;
+typedef	an1of<4>	an1of4;
+typedef	an1of<5>	an1of5;
+typedef	an1of<6>	an1of6;
+typedef	an1of<7>	an1of7;
+typedef	an1of<8>	an1of8;
+
+
+
+
+/*** <M>x1of<N> definitions ********************************/
+template <pint R,M>
+defchan eMx1ofN <: chan(int) (c1of<R> b[M]; bool e)
+{
+}
+
+template <pint R,M>
+defchan aMx1ofN <: chan(int) (c1of<R> b[M]; bool a)
+{
+}
+
+template <pint R,M>
+defchan evMx1ofN <: chan(int) (c1of<R> b[M]; bool e, v)
+{
+}
+
+template <pint R,M>
+defchan avMx1ofN <: chan(int) (c1of<R> b[M]; bool a, v)
+{
+}
+
+template <pint R,M>
+defchan enMx1ofN <: chan(int) (c1of<R> b[M]; bool e, n)
+{
+}
+
+template <pint R,M>
+defchan anMx1ofN <: chan(int) (c1of<R> b[M]; bool a, n)
+{
+}
+
+typedef eMx1ofN<2,2> e2x1of2;
+typedef aMx1ofN<2,2> a2x1of2;
+
+/*** 1of1 definitions ********************************/
+defchan e1of1d <: chan() (bool d, e)
+{
+}
+
+defchan a1of1d <: chan() (bool d, a)
+{
+}
+
+/*** 1of2 definitions *******************************/
+defchan e1of2tf <: chan(bool) (bool d[2]; bool z,o,t,f,e)
+{
+  z=d[0]=f;
+  o=d[1]=t;
+spec {
+	exclhi(d[0], d[1])
+}
+}
+
+defchan a1of2tf <: chan(bool) (bool d[2]; bool z,o,t,f,a)
+{
+  z=d[0]=f;
+  o=d[1]=t;
+spec {
+	exclhi(d[0], d[1])
+}
+}
+

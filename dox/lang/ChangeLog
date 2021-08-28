@@ -1,0 +1,154 @@
+"ChangeLog"
+
+2007-10-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-74-ACT-01-13:
+	  Documented PRS internal nodes.  
+
+
+2007-08-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-template-02-28:
+	  Started keyword and grammar documentation, partially source-extracted.
+
+
+2007-07-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-template-02-28:
+	  After having reworked relaxed template parameters on branch, 
+		I thought it'd be a good idea to document the 
+		revised syntax and semantics.  Still could use
+		more examples, as always.
+
+
+2006-12-07	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-63-chpsim-01-04:
+	  Documented some operational semantics of CHP in more detail, 
+		especially regarding events that may block and
+		when expressions should be re-evaluated.  
+
+
+2006-12-01	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-62-channel-02-08:
+	  Documented bunch of resolutions on channel connectivity.
+
+
+2006-11-17	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-54-channel-01-06:
+	  Wrote some more questions about channels and connectivity.  
+
+
+2006-11-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-54:
+	  Added notes about channels (connections and directions) 
+		and issues with booleans (type ambiguity).  
+
+
+2006-06-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-19:
+	  More documentation on channels, datatypes, CHP.   
+
+
+2006-06-02	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-16:
+	  Applied documentation patch contributed by 
+		Nathan Smith <nrs27@cornell.edu>, 
+		modifying "chapters/arrays.tex" with more description
+		and some examples.  
+
+
+2006-02-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-15:
+	  Updated documentation on aggregate references in chapters/arrays.tex.
+	  NOTE: the semantics changed from before (which were never used).  
+
+
+2006-02-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-76-9:
+	  Added blank chapter for SPEC directives.  
+
+
+2006-01-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-73-merged-prsim-00-34:
+	  Merge to trunk.
+
+
+2006-01-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-33-merged-PRS-03-02:
+	  Branch merge.  
+
+
+2006-01-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-PRS-03-02:
+	  chapters/PRS.tex: proposed attribute and macro extensions
+		to the PRS language.  
+
+
+2006-01-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-prsim-00-27:
+	  Long time no write!
+	  Added sections discussing template parameter lookup
+		in the templates chapter.  Argument for excluding
+		template formal parameters from member lookups.
+	  This is all relevant to the current development of 
+		member lookups w.r.t. typedefs.  
+
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-72-merged-rename-00-06:
+	  Merge from rename-00 branch.  
+
+
+2005-10-25	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-61-merged-PRS-02-11:
+	  Some notes on defect reports to resolve in the language.  
+
+
+2005-06-19	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-44:
+	  Added documentation for channel types, CHP and PRS.  
+	  Some useful macros were added to "artxx.tex".  
+
+
+2005-05-01	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-27-template-01-04:
+	  Added examples of using strict and relaxed parameters with arrays.  
+	  Outlined section on complex aggregate references in "arrays.tex".
+
+
+2005-04-28	David Fang		<fangism@users.sourceforge.net>
+
+	* Minor clarifications about types.  
+
+
+2005-04-19	David Fang		<fangism@users.sourceforge.net>
+
+	* More notes on template definitions, specializations.  
+
+
+2005-04-18	David Fang		<fangism@users.sourceforge.net>
+
+	* Added much discussion and notes on the issues with template
+	  specializations.  
+
+	* Added some notes about definitions regarding definition families
+	  and layout maps.  Templates, of course, complicate things.  
+
+	* This ChangeLog file was born.  
+

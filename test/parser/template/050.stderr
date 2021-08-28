@@ -1,0 +1,22 @@
+At: "050.hac":3:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	(null) 
+#STATE#	keyword: template [3:1..8]
+#STATE#	list<(template-formal-decl)>: ... [3:10..11]
+#STATE#	< [3:12]
+#STATE#	paramtype: pint [3:13..16]
+#STATE#	list<(template-formal-id)>: (template-formal-id): identifier: W ... [3:18]
+#STATE#	, [3:19]
+#STATE#	identifier: X [3:21]
+#STATE#	= [3:22]
+in state #STATE#, possible rules are:
+	template_formal_id_nodefault : ID . optional_dense_range_list  (#RULE#)
+	optional_dense_range_list : .  (#RULE#)
+acceptable tokens are: 
+	',' (reduce)
+	';' (reduce)
+	'>' (reduce)
+	'[' (shift)

@@ -1,0 +1,11 @@
+// "supply-instance-18.hac"
+// copy-modified from "supply-instance-16.hac"
+
+import "inv-01.hac";
+import "globals.hac";
+
+globals g;
+inv foo;
+foo $(g.Vdd_1, g.GND_1);	// cancelled out
+foo $(g.Vdd_2, g.GND_2);
+

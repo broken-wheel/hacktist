@@ -1,0 +1,26 @@
+"foo.y" -> "foo.x[0].b"-
+~"foo.y" -> "foo.x[0].b"+
+"foo.x[2].a" -> "foo.z"-
+~"foo.x[2].a" -> "foo.z"+
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+@ "foo.y" iscomb !autokeeper
+@ "foo.z" !autokeeper
+connect "!GND" "foo.!GND"
+connect "!GND" "foo.x[0].!GND"
+connect "!GND" "foo.x[1].!GND"
+connect "!GND" "foo.x[2].!GND"
+connect "!GND" "foo.x[3].!GND"
+connect "!Vdd" "foo.!Vdd"
+connect "!Vdd" "foo.x[0].!Vdd"
+connect "!Vdd" "foo.x[1].!Vdd"
+connect "!Vdd" "foo.x[2].!Vdd"
+connect "!Vdd" "foo.x[3].!Vdd"
+connect "foo.y" "foo.p"
+connect "foo.y" "foo.x[0].a"
+connect "foo.y" "foo.x[1].a"
+connect "foo.x[0].b" "foo.q"
+connect "foo.x[0].b" "foo.x[1].b"
+connect "foo.x[2].a" "foo.x[3].a"
+connect "foo.z" "foo.x[2].b"
+connect "foo.z" "foo.x[3].b"

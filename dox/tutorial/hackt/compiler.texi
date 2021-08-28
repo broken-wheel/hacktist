@@ -1,0 +1,168 @@
+@c "hackt/compiler.texi"
+@c $Id: compiler.texi,v 1.7 2010/04/05 23:59:37 fang Exp $
+
+@node Compiler
+@chapter Compiler
+@cindex compiler
+
+TODO: figure of compile flow and phases.
+
+@menu
+* Compile::
+* Preprocessor::
+* Create::
+* Allocate::
+* Instance Dump::
+* File Conventions::
+* Program Examples::
+@end menu
+
+@c ----------------------------------------------------------------------------
+@node Compile
+@section Compile
+@cindex compile
+
+The first compile phase produces a parsed and partially checked object
+file given an input text (source) file.  
+
+@deffn Program haco [options] source object
+Compile @HAC{} source to object file.
+@end deffn
+
+The source file is a text file in the @HAC{} language.  
+The object file, if given, is the result of the compile.  
+If the object file is omitted, the program just reports the result
+of complation without producing an object file.  
+
+Options:
+
+@include compile/option-h.texi
+@include compile/option-I-upper.texi
+@include compile/option-i.texi
+@include compile/option-d.texi
+@include compile/option-f.texi
+@include compile/option-M-upper.texi
+@include compile/option-o.texi
+@include compile/option-p.texi
+@include compile/option-v.texi
+
+@t{haco} is provided as a single-command alias to 
+@t{hackt compile}@footnote{Thus named because we use @t{.haco} 
+as the extension for compiled object files}.
+
+@strong{TODO:} quick explanation of parse errors.  
+
+@c ----------------------------------------------------------------------------
+@node Preprocessor
+@section Preprocessor
+@cindex preprocessor
+
+@t{hacpp} is a preprocessor that expands imports, much like @t{cpp} 
+expands @t{#include} and other preprocessor directives.  
+This can be convenient for flattening hierarchies of imported
+sources into a self-contained file.  
+
+One nice feature is that the output (by default) preserves precise
+information about which files were imported, so compiling a flattened
+source file should result in the same error messages as compiling the
+original source file.  
+
+@t{hacpp} understands most of the same command-line options
+as @t{haco}.
+
+@c ----------------------------------------------------------------------------
+@node Create
+@section Create
+@cindex create
+
+The create phase generates footprints for each complete type once, 
+so that instances of the same type may share the same footprint.  
+Each type's definition is sequentially unrolled and expanded 
+(instantiations and connections) recursively after substituting
+meta-parameter arguments.  
+The input object file is the result of @t{haco}.  
+
+@deffn Program haccreate [options] in-object out-object
+Further compiles an object file through the create phase.  
+@end deffn
+
+@t{haccreate} is provided as a single-command alias to @t{hackt create}.  
+
+All programs that normally expect object files as inputs can also
+invoke the compiler on a source file with the following options.
+
+@include compile/option-c.texi
+@include compile/option-C-upper.texi
+
+@c ----------------------------------------------------------------------------
+@node Allocate
+@section Allocate
+@cindex allocate
+
+@strong{This phase has been deprecated and is no longer relevant, 
+a @emph{created} object file is considered @emph{allocated}.}
+
+@command{hacalloc} is now installed as a script that prints a
+deprecation warning and links from the input to output object file.
+
+@c ----------------------------------------------------------------------------
+@node Instance Dump
+@section Instance Dump
+@cindex instance dump
+
+We provide a utility to print instance and type information, 
+which can be used by other programs for performing text-based queries.
+@t{hacinstdump} takes an object file and prints a table of
+all instances in the (flattened) hierarchy.  
+The table contains information about the type of each named instance.  
+The program takes an object file as an argument, and has no other options.
+
+@c ----------------------------------------------------------------------------
+@node File Conventions
+@section Conventions
+
+As a convention, we name our object files according to the last
+phase with which it was processed or produced.  
+The tools are actually extension agnostic; 
+you can use whatever file extensions you like for both
+source and object files.  
+
+@itemize
+@item @t{.haco} -- compiled only
+@item @t{.hacf} -- preprocessed source only
+@item @t{.haco-c} -- compiled and created
+@end itemize
+
+These suffices can be used to define @t{make} rules.  
+Examples of Makefile templates can be found in the distribution
+@t{lib/mk} or installed in @t{@i{prefix}/share/hackt/mk/hackt.mk}.
+
+@c ----------------------------------------------------------------------------
+@node Program Examples
+@section Examples
+
+In this section, we use the following source @file{inv.hac} 
+as our input example.  
+
+@example
+defproc inv(bool a, b) @{
+prs @{
+  a    -> b-
+  ~a   -> b+
+@}
+@}
+
+bool x, y;
+inv Z(x, y);
+@end example
+
+This defines an inverter process @t{inv} with public boolean ports
+@t{a} and @t{b}.  
+The top-level declares boolean nodes @t{x} and @t{y}, 
+which are connected to the ports of instantiated inverter @t{Z}.  
+
+A more comprehensive description of the language can be found built in
+@file{dox/lang/hac.pdf} or installed as 
+@file{/install/share/hackt/doc/pdf/hac.pdf}.  
+
+TODO: fill in uses of example

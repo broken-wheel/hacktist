@@ -1,0 +1,19 @@
+// "bool-or.hac"
+//	$Id: bool-or.hac,v 1.3 2007/02/08 02:11:25 fang Exp $
+// boolean logical OR
+
+defproc bool_or_2(chan?(bool) A, B; chan!(bool) O) {
+bool a, b;
+chp {
+*[A?(a),B?(b); O!(a || b)]
+}
+}
+
+template <pint N>
+defproc bool_or(chan?(bool) A[N]; chan!(bool) O) {
+bool a[N];
+chp {
+*[{,i:N: A[i]?(a[i])}; O!((||:i:N: a[i]))]
+}
+}
+

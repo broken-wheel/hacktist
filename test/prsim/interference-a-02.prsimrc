@@ -1,0 +1,37 @@
+# "interference-a-02.prsimrc"
+# @haco@ interference-a.haco-c
+# testing propagation of interference X's
+
+# echo-commands on
+interference warn
+watchall
+set b 1
+set a 1
+cycle
+assert c 0
+assert d 1
+status-interference
+status-weak-interference
+
+set b 0
+cycle
+
+set a 0
+advance 4
+echo expect c+ in queue
+pending c
+status-interference
+status-weak-interference
+
+set b 1
+step-event
+
+echo expect c -> X in queue
+pending c
+
+cycle
+assert c X
+assert d X
+status-interference
+status-weak-interference
+

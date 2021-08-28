@@ -1,0 +1,97 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	pboolplh	0	#HEAD#	#TAIL#	29
+	6	##ADDR##	pboolins	0	#HEAD#	#TAIL#	16
+	7	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	8	##ADDR##	pboolplh	0	#HEAD#	#TAIL#	29
+	9	##ADDR##	pboolins	0	#HEAD#	#TAIL#	16
+	10	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	20
+	11	##ADDR##	pboolplh	0	#HEAD#	#TAIL#	29
+	12	##ADDR##	pboolins	0	#HEAD#	#TAIL#	16
+	13	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	28
+	14	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	15	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	16	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	17	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	18	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	19	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	20	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	22	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	23	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	24	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	26	##ADDR##	pbassign	0	#HEAD#	#TAIL#	20
+	27	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	28	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	31	##ADDR##	pbassign	0	#HEAD#	#TAIL#	20
+	32	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	33	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	35	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	36	##ADDR##	pbassign	0	#HEAD#	#TAIL#	20
+	37	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	38	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	41	##ADDR##	pbassign	0	#HEAD#	#TAIL#	20
+	42	##ADDR##	cnstpb__	0	#HEAD#	#TAIL#	9
+	43	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	46	##ADDR##	pbassign	0	#HEAD#	#TAIL#	20
+	47	##ADDR##	apbmvref	0	#HEAD#	#TAIL#	21
+	48	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	50	##ADDR##	spbmvref	0	#HEAD#	#TAIL#	16
+	51	##ADDR##	footprnt	0	#HEAD#	#TAIL#	390
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  3 parameter-collections
+  2 instantiation-collections
+  0 sub-namespaces
+  0 definitions
+  0 typedefs
+  Parameters:
+    x = pbool<> x^1
+    y = pbool<> y^1
+    z = pbool<> z^2
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  x = pbool^1
+    unrolled index-value pairs: {
+      0 = 0
+      1 = 1
+    }
+  y = pbool^1
+    unrolled index-value pairs: {
+      0 = 1
+      1 = 0
+    }
+  z = pbool^2
+    unrolled index-value pairs: {
+      [0][0] = 0
+      [0][1] = 1
+      [1][0] = 1
+      [1][1] = 0
+    }
+  Created state:
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

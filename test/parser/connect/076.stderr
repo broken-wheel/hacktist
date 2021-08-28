@@ -1,0 +1,18 @@
+At: "076.hac":10:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	list<(root_item)>: (process-prototype) ... [3:1--8:7]
+#STATE#	(type-ref) [10:1..9]
+#STATE#	identifier: p [10:11]
+#STATE#	(null) 
+#STATE#	list<(range)>: (range) ... [10:13..16]
+#STATE#	( [10:18]
+in state #STATE#, possible rules are:
+	instance_id_item : ID optional_template_arguments_in_angles sparse_range_list .  (#RULE#)
+	sparse_range_list : sparse_range_list . bracketed_sparse_range  (#RULE#)
+acceptable tokens are: 
+	',' (reduce)
+	';' (reduce)
+	'[' (shift)

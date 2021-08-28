@@ -1,0 +1,3317 @@
+/**
+	\file "parser/hackt-parse.yy.in"
+	Yacc-generated parser source for the HAC language.  
+
+	ALERT: Make sure you are editing "parser/hackt-parse.yy.in"
+	and NOT the configure-generated "parser/hackt-parse.yy"
+	or else your changes will be clobbered during the next configure!
+
+	NOTE: this is not the same language as that found in lib/art.cy
+	but is very close.  Differences are mostly syntactic and not semantic.  
+
+	NOTE: ancient versions of yacc reject // end-of-line comments
+
+	$Id: hackt-parse.yy.in,v 1.61 2011/03/23 00:36:24 fang Exp $
+	This file was formerly known as:
+	Id: hackt-parse.yy,v 1.2 2005/11/10 02:13:09 fang Exp
+	Id: art++-parse.yy,v 1.25 2005/07/20 21:00:59 fang Exp
+	in previous lives.  
+ */
+
+%{
+#include <iostream>
+#include <iterator>
+#include <algorithm>
+
+#include "parser/yacc-config.h"
+#include "AST/AST.hh"		// should be first
+#include "parser/hackt-prefix.h"
+#include "parser/hackt-parse.output.hh"	// auto-generated state strings! :)
+#include "parser/hackt-parse-options.h"
+#include "parser/hackt-union.hh"
+#include "lexer/hackt-lex-options.h"
+#include "lexer/flex_lexer_state.hh"
+#include "util/using_ostream.hh"
+#include "lexer/file_manager.hh"
+#include "Object/devel_switches.hh"	// for DEFCHAN_LIKE_PROCESS
+#include "Object/traits/type_tag_enum.hh"	// for META_TYPE_*
+#include "AST/globals.hh"
+#include "util/convert.hh"
+
+#define	ENABLE_STACKTRACE		0
+#include "util/stacktrace.hh"
+
+using namespace HAC::lexer;
+using namespace HAC::parser;
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// global variables
+// may be changed when nesed files are opened
+extern FILE* yyin;
+
+// input stream manager, based in "lexer/hackt-lex.ll"
+extern file_manager
+hackt_parse_file_manager;
+
+// embedded file stack, based in "lexer/hackt-lex.ll"
+extern embedded_file_stack_type
+hackt_embedded_file_stack;
+
+/**
+	This is never used, libbogus.  
+ */
+#ifdef	LIBBOGUS
+static flex::lexer_state	_lexer_state;
+
+// only for debugging
+HAC::parser::root_body* global_hackt_lval;
+#endif
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/***
+// list macros (now inline functions in "AST/node_list.hh")
+WRAP_LIST
+DELETE_TOKEN
+APPEND_LIST
+APPEND_NULL
+CONCAT_LIST
+***/
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/**
+	Bogus namespace for documenting yacc's internal tables:
+	The extern declarations are needed so the compiler doesn't complain
+	about uninitialized values.  
+	They are actually defined in the same generated file y.tab.cc.
+	The definitions contained herein are not actually used.  
+ */
+namespace yacc {
+
+/**
+	The values of this table correspond to the reduction rule as
+	enumerated in order of appearance in the grammar file.  
+	The table is indexed by the production rule number.  
+ */
+extern const short yylhs[];
+
+/**
+	The value of this table correspond to the number of symbols
+	on the right-hand-side of a production.  
+	This number is used to determine the number of symbols to 
+	pop off of the yyss symbol stack.  
+	Tha table is indexed by the production rule number.  
+ */
+extern const short yylen[];
+
+/**
+	This table is used to determine whether the parser is in a state
+	to reduce (as the first action to check in yyloop).  
+	If the value is zero, then the parser continues without reducing, 
+	otherwise it jumps to yyreduce.  
+	This table is indexed by yystate, which is declared as a
+	local int in yyparse().  
+ */
+extern const short yydefred[];
+
+/**
+	Still figuring this one out...
+	the state to jump to if yyn is a valid state, 
+	This table is indexed by yym, yylhs[yyn].
+ */
+extern const short yydgoto[];
+
+/**
+	Values are used to determine whether parser is in a valid
+	state for shifting.  
+	This table is indexed by yystate and *yyssp (only for error recovery).  
+ */
+extern const short yysindex[];
+
+/**
+	Values are used to determine whether parser is in a valid 
+	state for reducing.  
+	This table is indexed by yystate.  
+ */
+extern const short yyrindex[];
+
+/**
+	Values are used to determine whether parser is in a valid 
+	state for goto.  
+	This table is indexed by yystate.  
+ */
+extern const short yygindex[];
+
+/**
+	State transition table for updating yyn, indexed by yyn.  
+ */
+extern const short yytable[];
+
+/**
+	Values correspond to enumerated tokens, 
+	indexed by yyn, and compared to yychar for consistency.  
+ */
+extern const short yycheck[];
+
+/**
+	The string names with which tokens, both terminal and nonterminal,
+	were defined.  The indices of the table correspond to either 
+	single characters' value or the automatic enumerations of 
+	token symbols, yychar.  
+	Value of NULL implies that no string is associated
+	with a particular index.  
+ */
+extern const char* const yyname[];
+
+/**
+	The string representations of the production rules, shown as
+	left-hand-side : right-hand-side.  
+	This table is indexed by the rule number, enumerated in the order
+	of appearance in the grammar file.  
+ */
+extern const char* const yyrule[];
+
+}	// end namespace yacc
+
+%}
+
+/**
+	NOTE: to use the following union definition, which will be
+	summarized in "hackt-parse-prefix.h" (generated), 
+	you will need to include "art_parser_fwd.h" first
+	(with using namespace HAC::parser;) to provide forward
+	declarations of the union-members' types.  
+ */
+%union {
+/***
+	THIS COMMENT IS OBSOLETE, but is kept here for historical reasons.
+	Use this universal symbol type for both lexer and parser.  
+	The reason we stick to a single abstract type as opposed to 
+	a union is so that in error handling, we don't have to keep track
+	of token tags to figure out which union member is actually in
+	a particular symbol stack entry when we dump the stack.  
+	(see yyerror() for details)
+	We leverage polymorphism for clean, modular error reporting.  
+	Since all return types are abstract nodes, 
+	a consequence of this choice is that we perform some run-time
+	sanity type checks in the constructors for the various classes.  
+	This keeps the art.yy grammar file as clean as possible.  
+	Let the constructors bear the burden.  
+***/
+
+/***
+	THIS COMMENT IS OBSOLETE, but is kept here for historical reasons.
+	It is not safe to refer to the node* n member of the union
+	even if all of the below members of the union are 
+	somehow derived from node, because their virtual tables differ.  
+	Instead one must write a wrapper to properly convert
+	pointers with their virtual tables.  
+	How do we know what union member it is?
+	A just question.  We walk the state stack pointer.  
+	This is done using yacc-union-type.awk.  
+***/
+/*	void*			_null;		// reserved for NULL */
+	terminal*		_terminal;
+	node_position*		_node_position;
+	keyword_position*	_keyword_position;
+/*	token_keyword*		_token_keyword;	*/
+/*	token_string*		_token_string;	*/
+/*	token_char*		_token_char;	*/
+	token_int*		_token_int;
+	token_bool*		_token_bool;
+	token_float*		_token_float;
+	token_identifier*	_token_identifier;
+	token_quoted_string*	_token_quoted_string;
+	token_datatype*		_token_datatype;
+	token_bool_type*	_token_bool_type;
+	token_int_type*		_token_int_type;
+	token_paramtype*	_token_paramtype;
+	token_pbool_type*	_token_pbool_type;
+	token_pint_type*	_token_pint_type;
+	token_preal_type*	_token_preal_type;
+	token_pstring_type*	_token_pstring_type;
+	token_else*		_token_else;
+
+	root_body*		_root_body;
+	root_item*		_root_item;
+	imported_root*		_imported_root;
+	imported_root_list*	_imported_root_list;
+	namespace_body*		_namespace_body;
+	using_namespace*	_using_namespace;
+	namespace_id*		_namespace_id;
+	typedef_alias*		_typedef_alias;
+	HAC::parser::definition*	_definition;
+	def_body_item*		_def_body_item;
+	language_body*		_language_body;
+	prototype*		_prototype;
+	process_prototype*	_process_prototype;
+	process_def*		_process_def;
+	type_base*		_type_base;
+	concrete_type_ref*	_concrete_type_ref;
+	generic_type_ref*	_generic_type_ref;
+	type_id*		_type_id;
+	port_formal_decl_list*	_port_formal_decl_list;
+	port_formal_decl*	_port_formal_decl;
+	port_formal_id_list*	_port_formal_id_list;
+	port_formal_id*		_port_formal_id;
+	template_formal_decl_list_pair*	_template_formal_decl_list_pair;
+	template_formal_decl_list*	_template_formal_decl_list;
+	template_formal_decl*	_template_formal_decl;
+	template_formal_id_list*	_template_formal_id_list;
+	template_formal_id*	_template_formal_id;
+/*	data_type_base*		_data_type_base;	*/
+	data_type_ref_list*	_data_type_ref_list;
+	user_data_type_prototype*	_user_data_type_prototype;
+	user_data_type_def*	_user_data_type_def;
+	enum_prototype*		_enum_prototype;
+	enum_member_list*	_enum_member_list;
+	enum_def*		_enum_def;
+	chan_type*		_chan_type;
+	user_chan_type_prototype*	_user_chan_type_prototype;
+	user_chan_type_def*	_user_chan_type_def;
+/***
+// superceded by generic port formals
+	data_param_id*		_data_param_id;
+	data_param_id_list*	_data_param_id_list;
+	data_param_decl*	_data_param_decl;
+	data_param_decl_list*	_data_param_decl_list;
+***/
+	instance_management*	_instance_management;
+	instance_base*		_instance_base;
+	HAC::parser::instance_array*	_instance_array;
+	instance_declaration*	_instance_declaration;
+	instance_id_list*	_instance_id_list;
+	definition_body*	_definition_body;
+	instance_management_list*	_instance_management_list;
+	loop_instantiation*	_loop_instantiation;
+	conditional_instantiation*	_conditional_instantiation;
+	guarded_instance_management_list*	_guarded_instance_management_list;
+	guarded_instance_management*	_guarded_instance_management;
+	instance_connection*	_instance_connection;
+	connection_statement*	_connection_statement;
+	statement*		_statement;
+	HAC::parser::instance_alias*	_instance_alias;
+	alias_list*		_alias_list;
+	generic_attribute*	_generic_attribute;
+	generic_attribute_list*	_generic_attribute_list;
+
+	expr*			_expr;
+	inst_ref_expr*		_inst_ref_expr;
+	qualified_id*		_qualified_id;
+	id_expr*		_id_expr;
+
+	HAC::parser::index_expr*	_index_expr;
+	member_expr*		_member_expr;
+/*** not needed
+	prefix_expr*		_prefix_expr;
+	arith_expr*		_arith_expr;
+	relational_expr*	_relational_expr;
+	logical_expr*		_logical_expr;
+***/
+	assign_stmt*		_assign_stmt;
+	incdec_stmt*		_incdec_stmt;
+	loop_operation*		_loop_operation;
+	expr_list*		_expr_list;
+	inst_ref_expr_list*	_inst_ref_expr_list;
+	extended_connection_actuals*	_extended_connection_actuals;
+	expr_attr_list*		_expr_attr_list;
+	template_argument_list_pair*	_template_argument_list_pair;
+/** not used
+	template_argument_list*	_template_argument_list;
+	connection_argument_list*	_connection_argument_list;
+**/
+	range*			_range;
+	range_list*		_range_list;
+	dense_range_list*	_dense_range_list;
+	array_concatenation*	_array_concatenation;
+	loop_concatenation*	_loop_concatenation;
+	array_construction*	_array_construction;
+	direction_statement*	_direction_statement;
+	type_completion_statement*	_type_completion_statement;
+	type_completion_connection_statement*	_type_completion_connection_statement;
+
+	CHP::body*		_chp_body;
+	CHP::stmt_list*		_chp_stmt_list;
+	CHP::statement*		_chp_stmt;
+	CHP::skip*		_chp_skip;
+/** deprecated **
+	CHP::log*		_chp_log;
+**/
+	CHP::loop*		_chp_loop;
+	CHP::do_until*		_chp_do_until;
+	CHP::wait*		_chp_wait;
+	CHP::selection*		_chp_selection;
+	CHP::nondet_selection*	_chp_nondet_selection;
+	CHP::det_selection*	_chp_det_selection;
+	CHP::metaloop_selection*	_chp_metaloop_selection;
+	CHP::metaloop_statement*	_chp_metaloop_statement;
+	CHP::guarded_command*	_chp_guarded_command;
+	CHP::else_clause*	_chp_else_clause;
+	CHP::communication*	_chp_communication;
+	CHP::send*		_chp_send;
+	CHP::receive*		_chp_receive;
+	CHP::binary_assignment*	_chp_binary_assignment;
+	CHP::bool_assignment*	_chp_bool_assignment;
+	CHP::function_call_expr*	_chp_func_expr;
+
+	HSE::body*		_hse_body;
+	HSE::statement*		_hse_stmt;
+	HSE::stmt_list*		_hse_stmt_list;
+	HSE::skip*		_hse_skip;
+	HSE::loop*		_hse_loop;
+	HSE::do_until*		_hse_do_until;
+	HSE::wait*		_hse_wait;
+	HSE::selection*		_hse_selection;
+	HSE::nondet_selection*	_hse_nondet_selection;
+	HSE::det_selection*	_hse_det_selection;
+	HSE::guarded_command*	_hse_guarded_command;
+	HSE::else_clause*	_hse_else_clause;
+	HSE::assignment*	_hse_assignment;
+
+	PRS::body*		_prs_body;
+	PRS::body_item*		_prs_body_item;
+	PRS::rule_list*		_prs_rule_list;
+	PRS::rule*		_prs_rule;
+	PRS::literal*		_prs_literal;
+	PRS::precharge*		_prs_precharge;
+	PRS::loop*		_prs_loop;
+	PRS::conditional*	_prs_conditional;
+	PRS::guarded_body*	_prs_guarded_body;
+	PRS::guarded_prs_list*	_prs_guarded_list;
+	PRS::macro*		_prs_macro;
+
+	RTE::body*		_rte_body;
+	RTE::body_item*		_rte_body_item;
+	RTE::assignment_list*	_rte_assignment_list;
+	RTE::assignment*	_rte_assignment;
+
+	SPEC::body*		_spec_body;
+	SPEC::directive_base*	_spec_directive_base;
+	SPEC::directive*	_spec_directive;
+	SPEC::invariant*	_spec_invariant;
+	SPEC::directive_list*	_spec_directive_list;
+}
+
+%{
+
+/* Had to move these declarations AFTER YYSTYPE (above union) was defined
+ * for a particular "yyerror_bison_hack.awk" to work.  
+ */
+// extern	int yylex(void);		// ancient compiler rejects
+extern	YY_DECL;			// something like the above
+
+static void yyerror(const char* msg);	// ancient compiler rejects
+
+/* automatically generated function to resolve parser symbol type
+	on the yy value stack, base on yy state stack transitions
+	TODO: these symbols may have to be renamed
+		to avoid conflicts in multiple parsers.  
+ */
+extern	ostream& yy_union_resolve_dump(const YYSTYPE&, const short, const short, ostream&);
+extern	void yy_union_resolve_delete(const YYSTYPE&, const short, const short);
+extern	ostream& yy_union_lookup_dump(const YYSTYPE&, const int, ostream&);
+extern	void yy_union_lookup_delete(const YYSTYPE&, const int);
+
+static
+void
+yyfreestacks(const short* yyss, const short* yyssp, 
+		const YYSTYPE* yyvs, const YYSTYPE* yyvsp, 
+		const YYSTYPE yylval, const int yychar,
+		const flex::lexer_state& _lexer_state);
+
+%}
+
+/*
+	The lexer returns newly allocated nodes FOR ALL TOKENS, 
+	even ones that are just symbols.  
+	If you don't want to use a returned symbol, delete it!
+	We are keeping the memory and performance overhead of the 
+	front-end for now, for the sake of precise error reporting.  
+	If performance is a concern, consider writing new allocators
+	(using memory pools) to replace the default.  
+
+	The following single characters are legitimate tokens:
+	][(){}<>*%/=:;|!?~&^.,#+-
+
+	(can just copy these into a lex declaration, enclosed in [])
+
+	note on character classes from grep's man page:
+		Most metacharacters  lose  their  special  meaning  inside
+		lists.  To include a literal ] place it first in the list.
+		Similarly, to include a literal ^ place  it  anywhere  but
+		first.  Finally, to include a literal - place it last.
+
+%token	<_token_char>	LBRACE RBRACE LPAREN RPAREN LBRACKET RBRACKET
+%token	<_token_char>	LT GT				// angle brackets
+%token	<_token_char>	SEMICOLON COMMA COLON MEMBER 
+%token	<_token_char>	ASSIGN
+%token	<_token_char>	PLUS MINUS STAR DIVIDE PERCENT
+%token	<_token_char>	BANG QUERY
+%token	<_token_char>	TILDE AND PIPE XOR
+*/
+/* change these to _node_position (was _token_char) */
+%type	<_node_position>	'{' '}' '[' ']' '(' ')'
+%type	<_node_position>	'<' '>'
+/* glue tokens: should never need their positions, consider no return type */
+%type	<_node_position>	',' '.' ';'
+%type	<_node_position>	':' '=' '#'
+	/* used as template list wrappers and as comparators */
+%type	<_node_position>	'+' '-' '*' '/' '%'
+%type	<_node_position>	'~' '&' '|' '^'
+%type	<_node_position>	'!' '?'
+%type	<_node_position>	'$' '@'
+
+/*
+	the following tokens are defined below because they consist of
+	2 or more characters
+*/
+
+%token	<_token_identifier>	ID
+%token	<_token_float>		FLOAT
+%token	<_token_int>		INT
+%token	<_token_quoted_string>	STRING
+%type	<_token_quoted_string>	string	/* for concatenated string */
+
+/* range and scope separators should never need position information... */
+%token	<_node_position>	SCOPE RANGE
+%token	<_node_position>	THICKBAR
+%token	<_node_position>	BEGINLOOP BEGINPROB ENDPROB
+%token	<_node_position>	BEGINFILE ENDFILE
+%token	<_node_position>	DEFINEOP
+
+/* _token_string */
+%token	<_node_position>	LE GE EQUAL NOTEQUAL
+%token	<_node_position>	IMPLIES RARROW HASH_ARROW
+%token	<_node_position>	LOGICAL_AND LOGICAL_OR
+%token	<_node_position>	INSERT EXTRACT
+%token	<_node_position>	PLUSPLUS MINUSMINUS
+%token	<_node_position>	ASSIGN
+%token	<_node_position>	DOLLARDOLLAR
+%type	<_node_position>	loop_assoc_op
+
+/* _token_keyword: convert most of these to _keyword_position */
+%token	<_keyword_position>	NAMESPACE
+%token	<_keyword_position>	OPEN
+%token	<_keyword_position>	AS
+%token	<_keyword_position>	CHP_LANG HSE_LANG PRS_LANG RTE_LANG SPEC_LANG
+%token	<_keyword_position>	TREE_LANG SUBCKT_LANG
+%token	<_keyword_position>	SKIP
+/* %token	<_keyword_position>	LOG	(deprecated) */
+%token	<_keyword_position>	DEFINE DEFPROC DEFCHAN DEFTYPE
+%token	<_keyword_position>	TYPEDEF
+%token	<_keyword_position>	SET GET SEND RECV
+%token	<_keyword_position>	CHANNEL
+%token	<_keyword_position>	TEMPLATE
+%token	<_keyword_position>	ENUM
+%token	<_imported_root>	IMPORT
+%token	<_imported_root>	EMBEDFILE
+
+/* linkage modifiers */
+%token	<_keyword_position>	EXTERN STATIC EXPORT
+
+%token	<_token_else>		ELSE
+
+%token	<_token_bool>		BOOL_TRUE BOOL_FALSE
+
+/* _token_type */
+%token	<_token_int_type>	INT_TYPE
+%token	<_token_bool_type>	BOOL_TYPE
+%token	<_token_int_type>	EINT_TYPE
+%token	<_token_bool_type>	EBOOL_TYPE
+%token	<_token_pint_type>	PINT_TYPE
+%token	<_token_pbool_type>	PBOOL_TYPE
+%token	<_token_preal_type>	PREAL_TYPE
+%token	<_token_pstring_type>	PSTRING_TYPE
+
+/* non-terminals */
+%type	<_root_body>	module
+%type	<_root_body>	embedded_module
+%type	<_imported_root_list>	imports imports_optional
+%type	<_imported_root>	import_item
+%type	<_root_body>	top_root body 
+%type	<_root_item>	body_item
+%type	<_root_item>	namespace_item
+%type	<_root_item>	namespace_management
+%type	<_namespace_id>	namespace_id
+%type	<_typedef_alias>	type_alias
+%type	<_definition>	definition
+%type	<_process_def>	defproc
+%type	<_keyword_position>	def_or_proc
+%type	<_keyword_position>	optional_export
+%type	<_prototype>	prototype_declaration
+%type	<_process_prototype>	declare_proc_proto
+/* for DEFTYPE_LIKE_PROCESS */
+%type	<_process_prototype>	declare_datatype_proto
+/* %type	<_user_data_type_prototype>	declare_datatype_proto */
+/* for DEFCHAN_LIKE_PROCESS */
+%type	<_process_prototype>	declare_chan_proto
+/* %type	<_user_chan_type_prototype>	declare_chan_proto */
+%type	<_template_formal_decl_list>	template_formal_decl_list_in_angles template_formal_decl_list
+%type	<_template_formal_decl_list>	template_formal_decl_list_optional_in_angles
+%type	<_template_formal_decl_list>	template_formal_decl_nodefault_list_in_angles template_formal_decl_nodefault_list
+%type	<_template_formal_decl_list_pair>	template_specification optional_template_specification
+%type	<_template_formal_decl>	template_formal_decl template_formal_decl_nodefault
+%type	<_template_formal_id_list>	template_formal_id_list template_formal_id_nodefault_list
+%type	<_template_formal_id>	template_formal_id
+%type	<_template_formal_id>	template_formal_id_default
+%type	<_template_formal_id>	template_formal_id_nodefault
+%type	<_port_formal_decl_list>	optional_port_formal_decl_list_in_parens port_formal_decl_list
+%type	<_port_formal_decl>	port_formal_decl
+%type	<_port_formal_id_list>	port_formal_id_list
+%type	<_port_formal_id>	port_formal_id
+%type	<_concrete_type_ref>	physical_type_ref port_physical_type_ref
+%type	<_generic_type_ref>	generic_type_ref port_generic_type_ref
+%type	<_generic_type_ref>	base_data_type_ref port_base_data_type_ref
+%type	<_concrete_type_ref>	data_type_ref
+%type	<_concrete_type_ref>	type_id
+/* %type	<_data_type_base>	base_param_type */
+%type	<_token_paramtype>	base_param_type
+%type	<_chan_type>	chan_or_port
+%type	<_chan_type>	base_chan_type port_base_chan_type
+%type	<_node_position>	optional_chan_dir chan_dir
+%type	<_data_type_ref_list>	data_type_ref_list_optional_in_parens
+%type	<_data_type_ref_list>	data_type_ref_list_optional data_type_ref_list
+%type	<_token_datatype>	base_data_type
+%type	<_enum_prototype>	declare_enum
+%type	<_enum_def>		defenum
+%type	<_enum_member_list>	enum_member_list
+/* for DEFTYPE_LIKE_PROCESS */
+%type	<_process_def>	defdatatype
+/* %type	<_user_data_type_def>	defdatatype */
+/* for DEFCHAN_LIKE_PROCESS */
+%type	<_process_def>	defchan
+/* %type	<_user_chan_type_def>	defchan	*/
+%type	<_chp_body>	set_body get_body send_body recv_body
+%type	<_chp_body>	send_body_optional recv_body_optional
+%type	<_chp_body>	set_body_optional get_body_optional
+/***
+%type	<_data_param_decl_list>	data_param_decl_list
+%type	<_data_param_decl_list>	data_param_decl_list_in_parens
+%type	<_data_param_decl>	data_param_decl
+%type	<_data_param_id_list>	data_param_id_list
+%type	<_data_param_id>	data_param_id
+***/
+%type	<_definition_body>	definition_body optional_definition_body
+%type	<_definition_body>	datatype_body optional_datatype_body
+%type	<_instance_management_list>	connection_body_optional
+%type	<_instance_management_list>	connection_body
+%type	<_instance_management_list>	instance_management_list
+%type	<_instance_management_list>	instance_management_list_optional
+%type	<_instance_management>	connection_body_item_base
+%type	<_instance_management>	connection_body_item
+%type	<_def_body_item>	definition_body_item
+%type	<_def_body_item>	datatype_body_item
+/* %type	<_def_body_item>	instance_item_extended	*/
+%type	<_instance_management>	instance_item_extended
+%type	<_instance_management>	instance_item
+%type	<_instance_declaration>	type_instance_declaration 
+%type	<_loop_instantiation>	loop_instantiation
+%type	<_conditional_instantiation>	conditional_instantiation
+%type	<_loop_instantiation>	loop_connections
+%type	<_conditional_instantiation>	conditional_connections
+%type	<_instance_id_list>	instance_id_list
+%type	<_instance_base>	instance_id_item
+%type	<_connection_statement>	connection_statement
+%type	<_direction_statement>	instance_direction_statement
+%type	<_type_completion_statement>	instance_type_completion_statement
+%type	<_type_completion_statement>	instance_attribute_statement
+%type	<_type_completion_connection_statement>	instance_type_completion_connection_statement
+%type	<_generic_attribute>	generic_attribute
+%type	<_generic_attribute_list>	generic_attribute_list
+%type	<_generic_attribute_list>	generic_attribute_list_in_brackets
+%type	<_generic_attribute_list>	generic_attribute_list_in_brackets_optional
+/* %type	<_instance_alias>	instance_alias	*/
+%type	<_alias_list>	alias_list nonempty_alias_list
+%type	<_expr_list>	connection_actuals_list
+/***
+// why not? because same syntax is used for function call arguments
+%type	<_inst_ref_expr_list>	connection_actuals_list
+***/
+%type	<_extended_connection_actuals>	extended_connection_actuals_list
+%type	<_guarded_instance_management_list>	guarded_instance_management_list
+%type	<_guarded_instance_management_list>	guarded_instance_management_list_unmatched
+%type	<_guarded_instance_management>	guarded_instance_management
+%type	<_guarded_instance_management>	instance_management_else_clause
+%type	<_guarded_instance_management_list>	guarded_connection_body
+%type	<_guarded_instance_management_list>	guarded_connection_body_unmatched
+%type	<_guarded_instance_management>	guarded_connection_body_clause
+%type	<_guarded_instance_management>	connection_body_else_clause
+%type	<_language_body>	language_body
+%type	<_chp_stmt_list>	chp_body chp_body_optional
+%type	<_chp_stmt_list>	full_chp_body_item_list
+%type	<_chp_stmt_list>	chp_concurrent_group
+%type	<_chp_stmt_list>	chp_sequence_group
+%type	<_chp_stmt>	full_chp_body_item chp_body_item
+%type	<_chp_stmt>	chp_statement
+%type	<_generic_attribute_list>	chp_statement_attributes
+%type	<_chp_stmt>	chp_concurrent_item
+%type	<_chp_stmt>	chp_body_or_skip
+%type	<_chp_loop>	chp_loop
+%type	<_chp_do_until>	chp_do_until
+%type	<_chp_selection>	chp_selection
+%type	<_chp_wait>	chp_wait
+%type	<_chp_nondet_selection>	chp_nondet_guarded_command_list
+%type	<_chp_det_selection>	chp_unmatched_det_guarded_command_list
+%type	<_chp_det_selection>	chp_matched_det_guarded_command_list
+%type	<_chp_metaloop_selection>	chp_metaloop_selection
+%type	<_chp_metaloop_statement>	chp_metaloop_statement
+%type	<_chp_guarded_command>	chp_guarded_command
+%type	<_chp_else_clause>	chp_else_clause
+%type	<_chp_binary_assignment>	chp_binary_assignment
+%type	<_chp_bool_assignment>	chp_bool_assignment
+%type	<_chp_send>	chp_send
+%type	<_chp_receive>	chp_recv
+%type	<_chp_receive>	chp_peek
+%type	<_expr>		chp_guard_expr
+%type	<_expr>		chp_unary_bool_expr chp_simple_bool_expr chp_unary_expr
+%type	<_expr>		chp_probe_expr
+%type	<_chp_func_expr>		function_call_expr
+%type	<_expr>		chp_mult_expr chp_add_expr chp_add_expr_only
+%type	<_expr>		chp_paren_add_expr chp_shift_expr chp_relational_expr
+%type	<_expr>		chp_logical_and_expr chp_logical_or_expr chp_not_expr
+/* %type	<_expr>		chp_xor_expr */
+%type	<_expr>		chp_bitwise_and_expr chp_bitwise_xor_expr
+%type	<_expr>		chp_bitwise_or_expr
+%type	<_hse_stmt_list>	hse_body_optional
+%type	<_hse_stmt_list>	hse_body
+%type	<_hse_stmt_list>	full_hse_body_item_list
+%type	<_hse_stmt>	full_hse_body_item hse_body_item
+%type	<_hse_loop>	hse_loop
+%type	<_hse_do_until>	hse_do_until
+%type	<_hse_selection>	hse_selection
+%type	<_hse_wait>	hse_wait
+%type	<_hse_guarded_command>	hse_guarded_command
+%type	<_hse_else_clause>	hse_else_clause
+%type	<_hse_nondet_selection>	hse_nondet_guarded_command_list
+%type	<_hse_det_selection>	hse_matched_det_guarded_command_list
+%type	<_hse_det_selection>	hse_unmatched_det_guarded_command_list
+%type	<_hse_assignment>	hse_assignment
+%type	<_prs_rule_list>	prs_body_optional
+%type	<_prs_rule_list>	prs_body
+%type	<_prs_body_item>	prs_body_item
+%type	<_prs_rule>	single_prs
+%type	<_prs_precharge>	prs_operator_attribute
+%type	<_prs_precharge>	prs_operator_attribute_optional
+%type	<_prs_loop>	prs_loop
+%type	<_prs_conditional>	prs_conditional
+%type	<_prs_guarded_list>	prs_guarded_list prs_guarded_list_unmatched
+%type	<_prs_guarded_body>	prs_guarded_body
+%type	<_prs_guarded_body>	prs_else_clause
+/* %type	<_prs_guarded_body>	prs_else_clause_optional	*/
+%type	<_prs_macro>	prs_macro
+%type	<_rte_assignment_list>	rte_body_optional
+%type	<_rte_assignment_list>	rte_body
+%type	<_rte_body_item>	rte_body_item
+%type	<_rte_assignment>	rte_assignment
+%type	<_expr>	prs_expr prs_paren_expr prs_unary_expr
+%type	<_expr> prs_not prs_and prs_or
+%type	<_expr> prs_and_loop prs_or_loop
+%type	<_expr> prs_literal_param
+%type	<_expr_attr_list> prs_literal_params prs_literal_params_optional
+%type	<_expr_attr_list> prs_literal_params_in_angles_optional
+%type	<_node_position>	prs_arrow
+%type	<_node_position>	dir
+%type	<_spec_body>		lang_spec
+%type	<_spec_directive_list>	spec_body_optional
+%type	<_spec_directive_list>	spec_body
+%type	<_spec_directive_base>	spec_item
+%type	<_spec_directive>	spec_directive
+%type	<_spec_invariant>	spec_invariant
+%type	<_expr>	paren_expr expr
+%type	<_expr>	literal
+%type	<_id_expr>	id_expr
+%type	<_qualified_id>	qualified_id absolute_id relative_id generic_id
+%type	<_inst_ref_expr_list>	member_index_expr_pair
+%type	<_inst_ref_expr_list>	member_index_expr_list
+%type	<_inst_ref_expr_list>	member_index_expr_list_in_parens
+%type	<_inst_ref_expr_list>	member_index_expr_list_in_parens_optional
+%type	<_inst_ref_expr_list>	member_index_expr_list_in_angles
+%type	<_inst_ref_expr_list>	member_index_expr_list_in_angles_optional
+%type	<_inst_ref_expr_list>	mandatory_member_index_expr_list
+%type	<_inst_ref_expr_list>	mandatory_member_index_expr_list_in_parens
+%type	<_inst_ref_expr_list>	implicit_global_connections
+%type	<_inst_ref_expr_list>	optional_implicit_global_connections
+%type	<_inst_ref_expr_list>	grouped_reference_list
+%type	<_inst_ref_expr_list>	grouped_reference_list_optional
+%type	<_inst_ref_expr_list>	grouped_reference_list_in_parens
+/* %type	<_expr_list>	complex_expr_list complex_expr_list_in_angles */
+%type	<_expr_list>	complex_expr_optional_list complex_expr_optional_list_in_angles
+%type	<_expr_list>	expr_list_in_angles
+%type	<_expr_list>	expr_list_in_angles_optional
+%type	<_inst_ref_expr>	optional_member_index_expr member_index_expr
+%type	<_inst_ref_expr>	relative_member_index_expr
+%type	<_inst_ref_expr>	grouped_reference
+/* %type	<_inst_ref_expr>	type_completion_reference */
+%type	<_prs_literal>	prs_literal_base
+%type	<_prs_literal>	prs_literal
+/* %type	<_node_position>	prs_internal_optional */
+%type	<_expr> simple_expr
+%type	<_expr>	unary_expr
+%type	<_member_expr>	member_expr local_member_expr
+%type	<_index_expr>	index_expr local_index_expr
+%type	<_expr>	multiplicative_expr additive_expr
+%type	<_expr> shift_expr optional_complex_expr
+%type	<_expr>	relational_equality_expr and_expr
+%type	<_node_position>	relational_op
+%type	<_node_position>	muldiv_op
+%type	<_expr>	exclusive_or_expr inclusive_or_expr
+%type	<_expr>	logical_and_expr logical_or_expr
+/* %type	<_statement>	assignment_stmt */
+/* %type	<_assign_stmt>	binary_assignment */
+%type	<_incdec_stmt>	unary_assignment
+%type	<_expr_list>	optional_template_arguments_in_angles
+%type	<_template_argument_list_pair>	strict_relaxed_template_arguments
+%type	<_expr_list>	expr_list
+/* %type	<_expr_list>	expr_list_in_parens	*/
+/* %type	<_range_list>	optional_range_list_in_brackets */
+/* %type	<_range_list>	range_list_in_brackets */
+/* %type	<_range_list>	range_list */
+%type	<_dense_range_list>	dense_range_list optional_dense_range_list
+%type	<_range_list>	sparse_range_list
+/* %type	<_range_list>	optional_sparse_range_list */
+%type	<_expr>		bracketed_dense_range
+%type	<_range>	bracketed_sparse_range
+%type	<_range>	range
+%type	<_expr>		complex_aggregate_reference
+%type	<_expr>		optional_complex_aggregate_reference
+%type	<_expr>		complex_expr_term
+%type	<_array_concatenation>		array_concatenation
+/* %type	<_loop_concatenation>		loop_concatenation	*/
+%type	<_array_construction>		array_construction
+%type	<_expr_list>	complex_aggregate_reference_list
+%type	<_expr_list>	mandatory_complex_aggregate_reference_list
+%type	<_loop_operation>		loop_expr
+
+%start	module
+
+/* YACC_PURE_PARSER: conditionally substituted by configure */
+@YACC_PURE_PARSER@
+%%
+/******************************************************************************
+//	Grammar -- re-written to be LALR(1)
+******************************************************************************/
+
+/* top level syntax */
+
+module
+	: embedded_module
+	{
+		// In the name of pure-parsing, 
+		// we've hacked yyparse's prototype to take a
+		// YYSTYPE& yylval as an argument, which must be
+		// passed up by the caller.  
+		$$ = $1;
+#ifdef	LIBBOGUS
+		global_hackt_lval = $1;
+#endif
+		// ... but yylval also holds the last offending token
+		// in the event of a syntax error!  
+		// Cannot just blindly clobber!
+	if (!yychar) {
+		yylval._root_body = $$;
+	}
+	}
+	;
+
+embedded_module
+	: imports_optional top_root
+	{
+		// AST_root = util::memory::excl_ptr<root_body>($2);
+		// corresponds to yyval[0]
+		$$ = $2;
+		$2->push_front($1);
+		// DO NOT CLOBBER yylval!
+	}
+	;
+
+imports_optional
+	: imports { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+imports
+	: imports import_item
+		{ $$ = $1; $1->push_back($2); }
+	| import_item
+		{ $$ = new imported_root_list($1); }
+	;
+
+import_item
+	: IMPORT {
+		if ($1) { $$ = $1; }
+		else {
+			// NULL means there was an error
+			static const char msg[] = "Error opening file.";
+			yyerror(msg);
+		}
+	}
+/***
+	The work for switching input files is actually done in the lexer!
+***/
+/***
+	The embedded file construct pastes an imported file in-line, 
+	as is done by the flattener (hacpp).  
+	This really shouldn't be used directly, but only what is produced
+	by the flattener, hacpp.
+***/
+	| EMBEDFILE BEGINFILE embedded_module ENDFILE
+	{
+		$$ = $1;
+		DELETE_TOKEN($2);
+		DELETE_TOKEN($4);
+		$$->attach_root($3);
+		// balance the embedded file stack by popping the
+		// fake imported file.  
+		INVARIANT(!hackt_embedded_file_stack.empty());
+		hackt_embedded_file_stack.pop();
+		++hackt_parse_file_manager.current_position().line;
+	}
+	;
+
+top_root
+	: body
+	/* allow empty file */
+	| 
+		{ $$ = new root_body(); }
+	;
+
+body
+	: body body_item
+		{ $$ = $1; $1->push_back($2); }
+	| body_item
+		{ $$ = new root_body($1); }
+	;
+
+body_item
+	: namespace_item { $$ = $1; }
+	| definition { $$ = $1; }
+	| prototype_declaration { $$ = $1; }
+	;
+
+namespace_item
+/* namespace_management already includes semicolon where needed */
+/* proposed change: forbid nested namespacs, only allow in root_item */
+	: namespace_management { $$ = $1; }
+/* instance_item already includes semicolon where needed */
+	| instance_item_extended { $$ = $1; }
+	| type_alias { $$ = $1; }
+/* new: top-level prs, chp, hse (moved to instance_item_extended)
+	| language_body { $$ = $1; }
+*/
+	;
+
+namespace_management
+	/* C++ style classes require semicolon, but not afer namespace */
+	/* really the NAMESPACE and OPEN keyword tokens may be discarded */
+	: NAMESPACE ID '{' top_root '}'
+		{ if (!$4)
+			$4 = new root_body(NULL);
+		  WRAP_LIST($3, $4, $5);
+		  $$ = new namespace_body($1, $2, $4); }
+	/* or C++ style: using namespace blah; */
+	/* | OPEN namespace_id AS ID ';' */
+	| OPEN namespace_id RARROW ID ';'
+		{ $$ = new using_namespace($1, $2, $4);
+		  DELETE_TOKEN($3); DELETE_TOKEN($5); }
+	| OPEN namespace_id ';'
+		{ $$ = new using_namespace($1, $2);
+		  DELETE_TOKEN($3); }
+	/* ever close namespace? */
+	;
+
+namespace_id
+	: relative_id
+		{ $$ = new namespace_id($1); }
+	;
+
+/* Process, datatype, and channel definition. */
+definition
+	: defproc { $$ = $1; }
+	| defdatatype { $$ = $1; }
+	| defchan { $$ = $1; }
+	| defenum { $$ = $1; }
+	;
+
+/* declaration prototypes, like forward declarations */
+prototype_declaration
+	: declare_proc_proto ';' { $$ = $1; DELETE_TOKEN($2); }
+	| declare_datatype_proto ';' { $$ = $1; DELETE_TOKEN($2); }
+	| declare_chan_proto ';' { $$ = $1; DELETE_TOKEN($2); }
+	| declare_enum ';' { $$ = $1; DELETE_TOKEN($2); }
+	;
+
+/** type_id is either physical_type_ref or base_param_type */
+type_alias
+/* C-style typedef, but allowing templates */
+/* export is ignored for typedefs, added here to simplify grammar */
+	: optional_export
+	  optional_template_specification TYPEDEF physical_type_ref ID ';'
+		{ $$ = new typedef_alias($2, $3, $4, $5);
+		  if ($1) {
+			cerr <<
+			"Warning: \'export\' has no effect on typedefs; "
+			"the canonical definition is respected." << endl;
+			DELETE_TOKEN($1);
+		  }
+		  DELETE_TOKEN($6); }
+/*	other proposal, use {deftype,defchan,defproc} new<> = old<> */
+	;
+
+template_specification
+	: TEMPLATE template_formal_decl_list_in_angles
+		/* too damn lazy to keep around keyword... */
+		{ DELETE_TOKEN($1);
+		  $$ = new template_formal_decl_list_pair($2, NULL); }
+	| TEMPLATE template_formal_decl_list_optional_in_angles
+	  template_formal_decl_nodefault_list_in_angles
+		/* second set of formals is for relaxed parameters */
+		{ DELETE_TOKEN($1);
+		  $$ = new template_formal_decl_list_pair($2, $3); }
+	;
+
+/* to avoid some S/R conflicts on optional_export, prefix some rules with it */
+optional_template_specification
+	: template_specification
+	| { $$ = NULL; }
+	;
+
+optional_export
+	: EXPORT { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/*** later...
+optional_linkage_specification
+	: EXTERN
+	| STATIC
+	| EXPORT
+	|		{ $$ = NULL; }
+	;
+***/
+
+/******************************************************************************
+//	Process
+******************************************************************************/
+
+def_or_proc
+	: DEFINE
+	| DEFPROC
+	;
+
+declare_proc_proto
+	/* C++ style template declaration */
+	: optional_export
+	  optional_template_specification def_or_proc ID
+	  optional_port_formal_decl_list_in_parens
+		{
+			$5->push_front(get_implicit_ports());
+			$$ = new process_prototype($1, $2, $3, $4, $5,
+			HAC::entity::META_TYPE_PROCESS); }
+	;
+
+defproc
+	: declare_proc_proto
+	  '{' optional_definition_body '}'
+	/* optional_definition_body will always be valid, sometimes empty */
+		{
+		  WRAP_LIST($2, $3, $4);
+		  $3->push_front(get_Vdd_attributes());
+		  $3->push_front(get_GND_attributes());
+		  $$ = new process_def(*$1, $3, HAC::entity::META_TYPE_PROCESS);
+		  DELETE_TOKEN($1);	/* transferred ownership */
+		}
+	;
+
+optional_port_formal_decl_list_in_parens
+	/* note: the parens are NOT optional! */
+	: '(' port_formal_decl_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	| '(' ')'
+		{ $$ = new port_formal_decl_list(); WRAP_LIST($1, $$, $2); }
+		/* empty, but wrapped */
+	;
+
+/***
+// already captured by physical_type_ref
+concrete_type_ref
+	: type_id optional_template_arguments_in_angles
+		{ $$ = new concrete_type_ref($1, $2); }
+	;
+***/
+
+/******** Meta (template) language parameters ********/
+
+template_formal_decl_list_in_angles
+	: '<' template_formal_decl_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+template_formal_decl_nodefault_list_in_angles
+	: '<' template_formal_decl_nodefault_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+template_formal_decl_list_optional_in_angles
+	: template_formal_decl_list_in_angles
+		{ $$ = $1; }
+	| '<' '>'
+		{ $$ = new template_formal_decl_list();
+		  WRAP_LIST($1, $$, $2); }
+	;
+
+/**
+template_formal_decl_nodefault_list_optional_in_angles
+	: template_formal_decl_nodefault_list_in_angles
+		{ $$ = $1; }
+	| '<' '>'
+		{ $$ = new template_formal_decl_list();
+		  WRAP_LIST($1, $$, $2); }
+	;
+**/
+
+template_formal_decl_list
+	: template_formal_decl_list ';' template_formal_decl
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| template_formal_decl
+		{ $$ = new template_formal_decl_list($1); }
+	;
+
+template_formal_decl_nodefault_list
+	: template_formal_decl_nodefault_list ';' template_formal_decl_nodefault
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| template_formal_decl_nodefault
+		{ $$ = new template_formal_decl_list($1); }
+	;
+
+template_formal_decl
+/* changing to C-style formal parameters, allowing comma-lists
+	is there any need for user-defined types in template argument? */
+	: base_param_type template_formal_id_list
+		{ $$ = new template_formal_decl($1, $2); }
+	;
+
+template_formal_decl_nodefault
+	: base_param_type template_formal_id_nodefault_list
+		{ $$ = new template_formal_decl($1, $2); }
+	;
+
+template_formal_id_list
+	: template_formal_id_list ',' template_formal_id
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| template_formal_id
+		{ $$ = new template_formal_id_list($1); }
+	;
+
+template_formal_id_nodefault_list
+	: template_formal_id_nodefault_list ',' template_formal_id_nodefault
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| template_formal_id_nodefault
+		{ $$ = new template_formal_id_list($1); }
+	;
+
+template_formal_id_default
+/**
+	from http://www.computing.surrey.ac.uk/research/dsrg/fog/CxxGrammar.y:
+	The potential shift-reduce conflict on > is resolved by
+	flattening part of the expression grammar to know when the 
+	next > is template end or arithmetic >.
+	We choose to force the user to disambiguate by placing parentheses
+	around relational expressions, which covers arithmetic use of '>'.
+	Notice that below, shift_expr is the highest expression
+	before relational_expr.  
+	UPDATE: we've rewritten relational_equality_expr to only require
+		parenthesis around '<' and '>' expressions, to 'localize'
+		the parenthesization requirement.  
+**/
+	: ID optional_dense_range_list '=' expr
+		{ $$ = new template_formal_id($1, $2, $3, $4); }
+	;
+
+template_formal_id_nodefault
+	: ID optional_dense_range_list
+		{ $$ = new template_formal_id($1, $2); }
+	;
+
+template_formal_id
+	/** update formal declarations: only allow dense arrays, no ranges **/
+	/** no relaxed parameters: never used in template formals **/
+	: template_formal_id_default { $$ = $1; }
+	| template_formal_id_nodefault { $$ = $1; }
+	;
+
+port_formal_decl_list
+	/* would rather use ','-delimiter, but wth... */
+	: port_formal_decl_list ';' port_formal_decl
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| port_formal_decl
+		{ $$ = new port_formal_decl_list($1); }
+	;
+
+port_formal_decl
+	/* must switch to C-style formals, eliminate id_list */
+	: port_physical_type_ref port_formal_id_list
+		{ $$ = new port_formal_decl($1, $2); }
+	;
+
+port_formal_id_list
+	: port_formal_id_list ',' port_formal_id
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| port_formal_id
+		{ $$ = new port_formal_id_list($1); }
+	;
+
+port_formal_id
+	/** update port formals: only dense arrays allowed, no sparse ranges */
+	/** forbid use of relaxed template arguments in port formals list? **/
+	: ID optional_dense_range_list generic_attribute_list_in_brackets_optional
+		{ $$ = new port_formal_id($1, $2, $3); }
+	;
+
+port_generic_type_ref
+	: generic_type_ref optional_chan_dir
+		{ $$ = $1; $$->set_chan_dir($2); }
+	;
+
+generic_type_ref
+	: generic_id strict_relaxed_template_arguments
+		{ $$ = new generic_type_ref(new type_id($1), $2); }
+		/* for userdef or chan type, and templating */
+/*
+	: generic_id complex_expr_optional_list_in_angles
+		optional_template_arguments_in_angles
+		{ $$ = new generic_type_ref(new type_id($1), 
+			new template_argument_list_pair($2, $3)); }
+*/
+	;
+
+optional_chan_dir
+	: chan_dir
+	| { $$ = NULL; }
+	;
+
+chan_dir
+	: '?'
+	| '!'
+	/* new: explicit shared channel annotation */
+	| '?' '?' { $$ = $1; $$->text[1] = $2->text[0]; DELETE_TOKEN($2); }
+	| '!' '!' { $$ = $1; $$->text[1] = $2->text[0]; DELETE_TOKEN($2); }
+	;
+
+/* allow direction annotations on ports only */
+port_physical_type_ref
+	: port_generic_type_ref { $$ = $1; }
+	| port_base_chan_type
+		{ $$ = $1; }
+	| port_base_data_type_ref
+		{ $$ = $1; }
+	;
+physical_type_ref
+	: generic_type_ref { $$ = $1; }
+	| base_chan_type
+		/* what would template (base) channel type ref look like? */
+		/* { $$ = new concrete_type_ref($1, NULL); } */
+		{ $$ = $1; }
+	| base_data_type_ref
+		{ $$ = $1; }
+	;
+
+port_base_data_type_ref
+	: base_data_type_ref optional_chan_dir
+		{ $$ = $1; $$->set_chan_dir($2); }
+	;
+
+base_data_type_ref
+	: base_data_type strict_relaxed_template_arguments
+		{ $$ = new generic_type_ref($1, $2); }
+	;
+
+/** because general data types may be user-defined **/
+data_type_ref
+	: base_data_type_ref { $$ = $1; }
+	| generic_type_ref { $$ = $1; }
+	;
+
+type_id
+	: physical_type_ref { $$ = $1; }
+	| base_param_type
+		{ $$ = $1; }
+		/* { $$ = new generic_type_ref($1); } */
+		/* should parameter declarations be allowed 
+			in loops and conditionals? rather not */
+	;
+
+/******************************************************************************
+//	base types
+******************************************************************************/
+
+base_param_type
+	: PINT_TYPE 		/* integer parameter */
+		{ $$ = $1; }
+	| PBOOL_TYPE		/* boolean parameter */
+		{ $$ = $1; }
+	| PREAL_TYPE		/* real-valued parameter */
+		{ $$ = $1; }
+	| PSTRING_TYPE		/* string parameter */
+		{ $$ = $1; }
+	;
+
+port_base_chan_type
+	/* eliminate defaulting? (to int?), use <template> style? */
+	: chan_or_port data_type_ref_list_optional_in_parens
+		{ $$ = $1; $$->attach_data_types($2); }
+	;
+
+/* channel type: channel, inport, outport, and data types */
+base_chan_type
+	/* eliminate defaulting? (to int?), use <template> style? */
+	: CHANNEL data_type_ref_list_optional_in_parens
+		{ $$ = new chan_type($1, NULL); $$->attach_data_types($2); }
+	;
+
+/* NOTE: now directions are only allowed to be associated with ports, 
+	and forbidden in scope-local declarations (check in AST) */
+chan_or_port
+	: CHANNEL optional_chan_dir		/* a channel, input or output */
+		{ $$ = new chan_type($1, $2); }
+	;
+
+data_type_ref_list_optional_in_parens
+	: '(' data_type_ref_list_optional ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+data_type_ref_list_optional
+	: data_type_ref_list
+	| { $$ = new data_type_ref_list(); }
+	;
+
+/* why only base data types? why not user-defined ones? */
+data_type_ref_list
+/*	: data_type_ref_list ',' base_data_type	*/
+	: data_type_ref_list ',' data_type_ref
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+/*	| base_data_type	*/
+	| data_type_ref
+		{ $$ = new data_type_ref_list($1); }
+	;
+
+/* actual data: int<width> or bool */
+base_data_type
+/* ever need user-defined types? eventually...
+	optional parens get confused with template-parameters
+	going to use angle brackets <> in the template-fashion */
+	: INT_TYPE
+		{ $$ = $1; }
+	| BOOL_TYPE
+		{ $$ = $1; }
+	| EINT_TYPE
+		{ $$ = $1; }
+	| EBOOL_TYPE
+		{ $$ = $1; }
+	;
+
+/* definition types */
+declare_datatype_proto
+	: optional_export
+	  optional_template_specification DEFTYPE ID DEFINEOP
+/*	  base_data_type */
+	  data_type_ref		/* base? */
+	/* DEFTYPE_LIKE_PROCESS */
+	  optional_port_formal_decl_list_in_parens
+/*	  data_param_decl_list_in_parens ';'	*/
+		{
+#if DEFTYPE_LIKE_PROCESS
+		$$ = new process_prototype($1, $2, $3, $4, $7, 
+			HAC::entity::META_TYPE_STRUCT);
+		  DELETE_TOKEN($5); DELETE_TOKEN($6);
+		/* eventually use data_type_ref */
+#else
+		$$ = new user_data_type_prototype($1, $2, $3, $4, $5, $6, $7);
+#endif
+		}
+	;
+
+defdatatype
+	: declare_datatype_proto
+	  '{' optional_datatype_body set_body_optional get_body_optional '}'
+		{
+#if DEFTYPE_LIKE_PROCESS
+		WRAP_LIST($2, $3, $6);
+		$$ = new process_def(*$1, $3, HAC::entity::META_TYPE_STRUCT);
+		if ($4) { DELETE_TOKEN($4); }
+		if ($5) { DELETE_TOKEN($5); }
+#else
+		$$ = new user_data_type_def($1, $2, $3, $4, $5);
+#endif
+		}
+	;
+
+set_body_optional
+	: set_body { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+get_body_optional
+	: get_body { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+set_body
+	: SET '{' chp_body_optional '}'
+		{ WRAP_LIST($2, $3, $4);
+		  $$ = new CHP::body($1, $3); }
+	;
+
+get_body
+	: GET '{' chp_body_optional '}'
+		{ WRAP_LIST($2, $3, $4);
+		  $$ = new CHP::body($1, $3); }
+	;
+
+declare_enum
+	: ENUM ID
+		{ $$ = new enum_prototype($1, $2); }
+	;
+
+defenum
+	: ENUM ID '{' enum_member_list '}'
+		{ WRAP_LIST($3, $4, $5);
+		  $$ = new enum_def($1, $2, $4); }
+	;
+
+enum_member_list
+	: enum_member_list ',' ID
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| ID
+		{ $$ = new enum_member_list($1); }
+	;
+
+/** 
+	CHANNELS
+**/
+
+declare_chan_proto
+	: optional_export
+	  optional_template_specification DEFCHAN ID DEFINEOP base_chan_type 
+	/* for DEFCHAN_LIKE_PROCESS */
+	  optional_port_formal_decl_list_in_parens
+/*	  data_param_decl_list_in_parens ';'	*/
+		{
+#if DEFCHAN_LIKE_PROCESS
+		$$ = new process_prototype($1, $2, $3, $4, $7, 
+			HAC::entity::META_TYPE_CHANNEL);
+		  DELETE_TOKEN($5); DELETE_TOKEN($6);
+#else
+		$$ = new user_chan_type_prototype($1, $2, $3, $4, $5, $6, $7);
+#endif
+		}
+	;
+	
+defchan
+	: declare_chan_proto
+	  '{' optional_datatype_body send_body_optional recv_body_optional '}'
+		{
+#if DEFCHAN_LIKE_PROCESS
+		WRAP_LIST($2, $3, $6);
+		$$ = new process_def(*$1, $3, HAC::entity::META_TYPE_CHANNEL);
+		if ($4) { DELETE_TOKEN($4); }
+		if ($5) { DELETE_TOKEN($5); }
+#else
+		$$ = new user_chan_type_def($1, $2, $3, $4, $5, $6);
+#endif
+		}
+	;
+
+send_body_optional
+	: send_body { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+recv_body_optional
+	: recv_body { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+send_body
+	: SEND '{' chp_body_optional '}'
+		{ WRAP_LIST($2, $3, $4);
+		  $$ = new CHP::body($1, $3); }
+	;
+
+recv_body
+	: RECV '{' chp_body_optional '}'
+		{ WRAP_LIST($2, $3, $4);
+		  $$ = new CHP::body($1, $3); }
+	;
+
+/***
+// unused since channels and datatypes resemble processes
+data_param_decl_list_in_parens
+	: '(' data_param_decl_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+data_param_decl_list
+// like declarations in formals list
+//	consider using ';', similar to C-style...
+	: data_param_decl_list ';' data_param_decl
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| data_param_decl
+		{ $$ = new data_param_decl_list($1); }
+	;
+
+data_param_decl
+//	forseen problem: array brackets are with data_type
+//	but to follow C-style, we want the arrays to go with identifiers
+//	thinking of forbidding list, restricting to single
+//	semicolon-delimited declarations
+	: data_type_ref data_param_id_list
+		{ $$ = new data_param_decl($1, $2); }
+	;
+
+data_param_id_list
+	: data_param_id_list ',' data_param_id
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| data_param_id
+		{ $$ = new data_param_id_list($1); }
+	;
+
+data_param_id
+	// really, this should be formal
+	: ID optional_dense_range_list
+		{ $$ = new data_param_id($1, $2); }
+	;
+***/
+
+/* --- definition_body --- */
+definition_body
+	: definition_body definition_body_item
+		{ $$ = $1; $$->push_back($2); }
+	| definition_body_item
+		{ $$ = new definition_body($1); }
+	;
+
+definition_body_item
+	: instance_item_extended { $$ = $1; }
+	| type_alias { $$ = $1; }
+	;
+
+optional_definition_body
+	: definition_body
+	| { $$ = new definition_body(); }
+		/* returns empty definition body instead of NULL
+			because it needs to be wrapped in braces */
+	;
+
+optional_datatype_body
+	: datatype_body { $$ = $1; }
+	| { $$ = new definition_body(); }
+	;
+
+datatype_body
+	: datatype_body datatype_body_item
+		{ $$ = $1; $$->push_back($2); }
+	| datatype_body_item
+		{ $$ = new definition_body($1); }
+	;
+
+datatype_body_item
+/***
+	: connection_body
+		{ $$ = new definition_body();
+		  std::transform($1->begin(), $1->end(), 
+			std::back_inserter(*$$), 
+			util::auto_converter<definition_body::value_type>()
+		  );
+		  DELETE_TOKEN($1);
+		}
+***/
+	: connection_body_item { $$ = $1; }
+	| lang_spec { $$ = $1; }
+	;
+
+connection_body_optional
+	: connection_body { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+connection_body
+	: connection_body connection_body_item
+		{ $$ = $1; $$->push_back($2); }
+	| connection_body_item
+		{ $$ = new instance_management_list($1); }
+	;
+
+/* connection_body_item is a limited item, confined to connection statements */
+connection_body_item_base
+	: connection_statement { $$ = $1; }	/* connection of ports */
+	/* covers alias connection and parameter assignments */
+	| nonempty_alias_list ';'
+		{ $$ = $1; DELETE_TOKEN($2); }
+	| instance_direction_statement { $$ = $1; }
+	| instance_type_completion_statement { $$ = $1; }
+	| instance_type_completion_connection_statement { $$ = $1; }
+	| instance_attribute_statement { $$ = $1; }
+	;
+
+connection_body_item
+	: connection_body_item_base { $$ = $1; }
+	| loop_connections { $$ = $1; }
+	| conditional_connections { $$ = $1; }
+	;
+
+instance_management_list_optional
+	: instance_management_list { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/* subset of definition body items allowed inside loop/conditional scopes
+ * Type-wise, this is identical to definition_body.  
+ * new: upgraded to instance_item_extended to support language bodies
+ * inside instance_management_lists
+ */
+instance_management_list
+	: instance_management_list instance_item_extended
+		{ $$ = $1; $$->push_back($2); }
+	| instance_item_extended
+		{ $$ = new instance_management_list($1); }
+	;
+
+/*
+// considering splitting declarations from connection, e.g.
+//		// declare first
+// myprocesstype<template-params> foo[N,M];	// may be ranges as well
+// foo[i,j](port-actuals);	// inside some for-loop, presumably
+//		// then sparse instantiation connects and assigns
+//
+// myprocesstype bar(port-actuals);		// for single instance and decl
+// myprocesstype<X,Y> foo;			// declare without connection
+// foo(port-actuals);				// then connect
+*/
+
+instance_item_extended
+	: instance_item { $$ = $1; }
+	| language_body { $$ = $1; }
+	;
+
+instance_item
+	: type_instance_declaration { $$ = $1; }	/* single or array */
+	| connection_body_item_base { $$ = $1; }
+	| loop_instantiation { $$ = $1; }
+	| conditional_instantiation { $$ = $1; }
+	;
+
+loop_instantiation
+	: '(' ';' ID ':' range ':' instance_management_list ')'
+		{ $$ = new loop_instantiation($1, $3, $5, $7, $8);
+		  DELETE_TOKEN($2); DELETE_TOKEN($4); DELETE_TOKEN($6); }
+	;
+
+conditional_instantiation
+	: '[' guarded_instance_management_list ']'
+		{ WRAP_LIST($1, $2, $3);
+		  $$ = new conditional_instantiation($2); }
+	;
+loop_connections
+	: '(' ';' ID ':' range ':' connection_body ')'
+		{ $$ = new loop_instantiation($1, $3, $5, $7, $8);
+		  DELETE_TOKEN($2); DELETE_TOKEN($4); DELETE_TOKEN($6); }
+	;
+
+conditional_connections
+	: '[' guarded_connection_body ']'
+		{ WRAP_LIST($1, $2, $3);
+		  $$ = new conditional_instantiation($2); }
+	;
+
+type_instance_declaration
+	/* type template is included in type_id, and is part of the type */
+	: type_id instance_id_list ';'
+		{ $$ = new instance_declaration($1, $2);
+		  DELETE_TOKEN($3); }
+	;
+
+instance_id_list
+	: instance_id_list ',' instance_id_item
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| instance_id_item
+		{ $$ = new instance_id_list($1); }
+	;
+
+instance_id_item
+	/** NEW: relaxed template arguments */
+	/* array declaration: forbid connection, must connect later */
+	: ID optional_template_arguments_in_angles sparse_range_list
+		{ $$ = new instance_array($1, $2, $3); }
+	/* single instance declaration without connection */
+	| ID optional_template_arguments_in_angles
+		{ $$ = new instance_base($1, $2); }
+	/* single instance declaration with connection */
+	| ID optional_template_arguments_in_angles
+			extended_connection_actuals_list
+		{ $$ = new instance_connection($1, $2, $3); }
+	/* instance alias or parameter assignment */
+	| ID optional_template_arguments_in_angles '=' alias_list
+		{ WRAP_LIST($3, $4, NULL);
+		  $$ = new instance_alias($1, $2, $4); }
+	;
+
+connection_statement
+/* taking a declared array or single instance and connecting ports
+	are brackets part of the array/membership chain? */
+	: member_index_expr extended_connection_actuals_list ';'
+		/* can this first id be scoped and/or membered? */
+		{ $$ = new connection_statement($1, $2);
+		  DELETE_TOKEN($3); }
+	;
+
+extended_connection_actuals_list
+	: optional_implicit_global_connections connection_actuals_list
+		{ $$ = new extended_connection_actuals($1, $2); }
+	| implicit_global_connections
+		{ $$ = new extended_connection_actuals($1, NULL); }
+	;
+
+optional_implicit_global_connections
+	: implicit_global_connections { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+// currently only two implicit globals, respectively, !GND, !Vdd
+implicit_global_connections
+	: '$' member_index_expr_list_in_parens
+		/* list elements are optional */
+		{ DELETE_TOKEN($1); $$ = $2; }
+	;
+
+// key-value pair
+generic_attribute
+	: ID '=' expr_list
+		{ $$ = new generic_attribute($1, $3); DELETE_TOKEN($2); }
+	| ID
+		{ $$ = new generic_attribute($1, NULL);  }
+	/**
+		if an ID is used to reference a string, then you must use 
+		label=string_id to disambiguate.
+	**/
+	| string
+		{ $$ = new generic_attribute(NULL, new expr_list($1));  }
+	;
+
+generic_attribute_list
+	: generic_attribute_list ';' generic_attribute
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| generic_attribute
+		{ $$ = new generic_attribute_list($1); }
+	;
+
+generic_attribute_list_in_brackets
+	: '[' generic_attribute_list ']'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+generic_attribute_list_in_brackets_optional
+	: '@' generic_attribute_list_in_brackets
+		{ DELETE_TOKEN($1); $$ = $2; }
+	| { $$ = NULL; }
+	;
+
+/* note: lvalue excludes member references, thus restricting to local scope */
+/* completing the relaxed template arguments of an instance */
+/* now also used to attach attributes */
+instance_type_completion_statement
+	: index_expr complex_expr_optional_list_in_angles ';'
+		{ $$ = new type_completion_statement($1, $2);
+		  DELETE_TOKEN($3); }
+	| generic_id complex_expr_optional_list_in_angles ';'
+		{ $$ = new type_completion_statement(new id_expr($1), $2);
+		  DELETE_TOKEN($3); }
+	;
+
+instance_direction_statement
+	: member_index_expr chan_dir ';'
+		{ $$ = new direction_statement($1, $2); DELETE_TOKEN($3); }
+/**
+	: index_expr chan_dir ';'
+		{ $$ = new direction_statement(new id_expr($1), $2);
+		  DELETE_TOKEN($3); }
+	| generic_id chan_dir ';'
+		{ $$ = new direction_statement($1, $2); DELETE_TOKEN($3); }
+**/
+	;
+
+/* note: lvalue allows member references */
+instance_attribute_statement
+	: member_index_expr '@' generic_attribute_list_in_brackets  ';'
+		{ $$ = new type_completion_statement($1, NULL, $3);
+		  DELETE_TOKEN($2); DELETE_TOKEN($4); }
+	;
+
+/* want to use type_completion_reference, but conflicts
+   because (generic_id '<' ...) can look like type ref. or instance ref.
+ */
+instance_type_completion_connection_statement
+	: index_expr complex_expr_optional_list_in_angles
+		extended_connection_actuals_list ';'
+		{ $$ = new type_completion_connection_statement($1, $2, $3);
+		  DELETE_TOKEN($4); }
+	| generic_id complex_expr_optional_list_in_angles
+		extended_connection_actuals_list ';'
+		{ $$ = new type_completion_connection_statement(
+			new id_expr($1), $2, $3);
+			DELETE_TOKEN($4); }
+	;
+
+/**
+type_completion_reference
+	: index_expr
+	| generic_id { $$ = new id_expr($1); }
+	;
+**/
+
+/* minimum of LHS and RHS */
+nonempty_alias_list
+	: nonempty_alias_list '=' complex_aggregate_reference
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| complex_aggregate_reference '=' complex_aggregate_reference
+		{ $$ = new alias_list($1); APPEND_LIST($$, $2, $3); }
+	;
+
+/* aliasing syntax, or data types is value assignment (general expr?)
+	type check this, of course */
+alias_list
+	: alias_list '=' complex_aggregate_reference
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	/* to type-check: first term must contain only rvalues */
+	| complex_aggregate_reference
+		{ $$ = new alias_list($1); }
+	;
+/* used to be member_index_expr */
+
+/* allowed to be missing actuals */
+connection_actuals_list
+	: '(' complex_aggregate_reference_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+guarded_instance_management_list
+	: guarded_instance_management_list_unmatched THICKBAR instance_management_else_clause
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| guarded_instance_management_list_unmatched
+		{ $$ = $1; }
+	;
+
+guarded_instance_management_list_unmatched
+	: guarded_instance_management_list_unmatched
+		THICKBAR guarded_instance_management
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| guarded_instance_management
+		{ $$ = new guarded_instance_management_list($1); }
+	;
+
+/* semantics: must guards be mutually exclusive? */
+/* sequential else-if semantics? */
+guarded_instance_management
+	: expr RARROW instance_management_list_optional
+		{ $$ = new guarded_instance_management($1, $2, $3); }
+	;
+
+instance_management_else_clause
+	: ELSE RARROW instance_management_list_optional
+		{ $$ = new guarded_instance_management($1, $2, $3); }
+	;
+
+/* connection lists */
+guarded_connection_body
+	: guarded_connection_body_unmatched THICKBAR connection_body_else_clause
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| guarded_connection_body_unmatched
+		{ $$ = $1; }
+	;
+
+guarded_connection_body_unmatched
+	: guarded_connection_body_unmatched
+		THICKBAR guarded_connection_body_clause
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| guarded_connection_body_clause
+		{ $$ = new guarded_instance_management_list($1); }
+	;
+
+guarded_connection_body_clause
+	: expr RARROW connection_body_optional
+		{ $$ = new guarded_instance_management($1, $2, $3); }
+	;
+
+connection_body_else_clause
+	: ELSE RARROW connection_body_optional
+		{ $$ = new guarded_instance_management($1, $2, $3); }
+	;
+
+
+/******************************************************************************
+//	Supported Languages
+******************************************************************************/
+
+language_body
+	: CHP_LANG '{' chp_body_optional '}'
+		{ WRAP_LIST($2, $3, $4); $$ = new CHP::body($1, $3); }
+	| HSE_LANG '{' hse_body_optional '}'
+		{ WRAP_LIST($2, $3, $4); $$ = new HSE::body($1, $3); }
+	/**
+		PRS: optional parameters are Vdd and GND replacements.
+		They won't be conventional template parameters, since
+		they reference bool instances, rather than values.
+	**/
+	| PRS_LANG member_index_expr_list_in_angles_optional 
+		'{' prs_body_optional '}'
+		{ WRAP_LIST($3, $4, $5); $$ = new PRS::body($1, $2, $4); }
+	| RTE_LANG '{' rte_body_optional '}'
+		{ WRAP_LIST($2, $3, $4); $$ = new RTE::body($1, $3); }
+	| lang_spec { $$ = $1; }
+	;
+
+/* also accepted in datatype definitions */
+lang_spec
+	: SPEC_LANG '{' spec_body_optional '}'
+		{ WRAP_LIST($2, $3, $4); $$ = new SPEC::body($1, $3); }
+	;
+
+/* --- Language: CHP --- */
+
+chp_body
+	: full_chp_body_item_list { $$ = $1; }
+	;
+
+chp_body_optional
+	: chp_body { $$ = $1; }
+	| { $$ = new CHP::stmt_list(); }
+	;
+
+chp_body_or_skip
+	: chp_body { $$ = $1; }
+	| SKIP { $$ = new CHP::skip($1); }
+	;
+
+
+/* need braces to group b/c paren wrapping causes S/R conflict on '+','-' */
+chp_sequence_group
+	: '{' full_chp_body_item_list '}'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+full_chp_body_item_list
+	: full_chp_body_item_list ';' full_chp_body_item
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| full_chp_body_item
+		{ $$ = new CHP::stmt_list($1); }
+	;
+
+/*
+// make _this_ string together the pieces, rather than having the item
+// add itself to a global list. If we do that, then everything will be
+// properly scoped and the walk stack will store the correct state...
+*/
+
+full_chp_body_item
+	/* expr_in_braces are assertions (disabled for now) */
+	: chp_concurrent_group { $$ = $1; }
+	;
+
+chp_body_item
+	: chp_statement_attributes chp_statement
+		{ $$ = $2; $$->prepend_attributes($1); }
+	| chp_statement { $$ = $1; }
+	;
+
+/* attributes are optionally prefixed to statements */
+// e.g.: after=10, assert=expr
+chp_statement_attributes
+	: '$' '(' generic_attribute_list ')'
+		{ DELETE_TOKEN($2); WRAP_LIST($1, $3, $4); $$ = $3; }
+	;
+
+chp_statement
+	: chp_loop { $$ = $1; }
+	| chp_do_until { $$ = $1; }
+	| chp_selection { $$ = $1; }
+	| chp_wait { $$ = $1; }
+	| chp_binary_assignment { $$ = $1; }
+	| chp_bool_assignment { $$ = $1; }
+	| chp_send { $$ = $1; }
+	| chp_recv { $$ = $1; }
+	| chp_peek { $$ = $1; }
+	/* log() is likely to be deprecated */
+/** deprecated **
+	| LOG expr_list_in_parens
+		{ $$ = new CHP::log($1, $2); }
+**/
+	| chp_metaloop_selection { $$ = $1; }
+	| chp_metaloop_statement { $$ = $1; }
+	| function_call_expr { $$ = $1; }
+	;
+
+chp_loop
+	/* do-forever loop */
+	: BEGINLOOP chp_body ']'
+		{ WRAP_LIST($1, $2, $3); $$ = new CHP::loop($2); }
+	;
+
+chp_do_until
+	/* do-until-all-guards-false */
+	/* else-clause not allowed in do-until, hence unmatched list */
+	: BEGINLOOP chp_unmatched_det_guarded_command_list ']'
+		{ WRAP_LIST($1, $2, $3); $$ = new CHP::do_until($2); }
+	;
+
+chp_wait
+	/* wait for expr to become true */
+	: '[' chp_guard_expr ']'
+		{ $$ = new CHP::wait($2);
+		  DELETE_TOKEN($1); DELETE_TOKEN($3); }
+	;
+
+chp_selection
+	: '[' chp_matched_det_guarded_command_list ']'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	| '[' chp_nondet_guarded_command_list ']'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+/*
+// wtf is this?... probalistic selection for FT
+//	| "%[" { chp_guarded_command ":" }** "]%"
+//	| BEGINPROB chp_nondet_guarded_command_list ENDPROB
+*/
+	;
+
+/**
+	Here we drop the extra first ':' to disambiguate.  
+ */
+chp_metaloop_selection
+	: '[' ':' ID ':' range ':' chp_guarded_command ']'
+		{ $$ = new CHP::metaloop_selection($1, $2, $3, $5, $7, $8);
+			DELETE_TOKEN($4); DELETE_TOKEN($6);
+		}
+	| '[' THICKBAR ID ':' range ':' chp_guarded_command ']'
+		{ $$ = new CHP::metaloop_selection($1, $2, $3, $5, $7, $8);
+			DELETE_TOKEN($4); DELETE_TOKEN($6);
+		}
+	;
+
+/**
+	Here we drop the extra first ':' to disambiguate.  
+ */
+chp_metaloop_statement
+	: '{' ',' ID ':' range ':' chp_body '}'
+		{ $$ = new CHP::metaloop_statement($1, $2, $3, $5, $7, $8);
+			DELETE_TOKEN($4); DELETE_TOKEN($6);
+		}
+	| '{' ';' ID ':' range ':' chp_body '}'
+		{ $$ = new CHP::metaloop_statement($1, $2, $3, $5, $7, $8);
+			DELETE_TOKEN($4); DELETE_TOKEN($6);
+		}
+	;
+
+/*
+note: these lists must have at least 2 clauses, will have to fix with "else"
+*/
+chp_nondet_guarded_command_list
+	: chp_nondet_guarded_command_list ':' chp_guarded_command
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| chp_guarded_command ':' chp_guarded_command
+	/* can't have else clause in non-deterministic selection? */
+		{ $$ = new CHP::nondet_selection($1);
+		  APPEND_LIST($$, $2, $3); }
+	;
+
+chp_matched_det_guarded_command_list
+	: chp_unmatched_det_guarded_command_list THICKBAR chp_else_clause
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| chp_unmatched_det_guarded_command_list
+	;
+
+chp_unmatched_det_guarded_command_list
+	: chp_unmatched_det_guarded_command_list THICKBAR chp_guarded_command
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| chp_guarded_command
+		{ $$ = new CHP::det_selection($1); }
+	;
+
+chp_guarded_command
+	: chp_guard_expr RARROW chp_body_or_skip
+		{ $$ = new CHP::guarded_command($1, $2, $3); }
+	;
+
+/* must be boolean, literals must not be aggregates */
+chp_guard_expr
+	: chp_logical_or_expr
+	;
+
+chp_unary_bool_expr
+	: chp_simple_bool_expr
+	| chp_not_expr
+	| '(' chp_logical_or_expr ')'
+		{ DELETE_TOKEN($1); DELETE_TOKEN($3); $$ = $2; }
+	| chp_probe_expr
+	| function_call_expr { $$ = $1; }
+	;
+
+chp_probe_expr
+	: '#' member_index_expr
+		{ $$ = new CHP::probe_expr($1, $2); }
+	;
+
+chp_simple_bool_expr
+	: member_index_expr { $$ = $1; }
+	| BOOL_TRUE { $$ = $1; }
+	| BOOL_FALSE { $$ = $1; }
+	;
+
+chp_unary_expr
+	: '-' chp_unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	| chp_unary_bool_expr	/* include all paren exprs */
+	| loop_expr { $$ = $1; }
+	| INT	{ $$ = $1; }
+	| FLOAT	{ $$ = $1; }
+	;
+
+chp_mult_expr
+	: chp_unary_expr
+	| chp_mult_expr muldiv_op chp_unary_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+chp_add_expr
+	: chp_mult_expr
+	| chp_add_expr_only
+	;
+
+/**
+	This was factored out to allow the shorthand ID '+' notation
+	for setting booleans without introducing grammar conflicts.  
+ */
+chp_add_expr_only
+	: chp_add_expr '+' chp_mult_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	| chp_add_expr '-' chp_mult_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+/* requiring parens around add/sub expressions to eliminate
+	shift-reduce conflict with boolean assignment using '+' '-' */
+chp_paren_add_expr
+	: '(' chp_add_expr_only ')'
+		{ DELETE_TOKEN($1); DELETE_TOKEN($3); $$ = $2; }
+	| chp_mult_expr
+	;
+
+/* reduction must not have unparenthesized +/- */
+chp_shift_expr
+	: chp_paren_add_expr	/* reduction */
+	| chp_shift_expr EXTRACT chp_add_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	| chp_shift_expr INSERT chp_add_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+/* HERE do same transformation as meta_expr */
+chp_relational_expr
+	: chp_shift_expr relational_op chp_shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+/*	| chp_shift_expr	*/
+	| chp_paren_add_expr
+	;
+
+chp_bitwise_and_expr
+	: chp_relational_expr
+	| chp_bitwise_and_expr '&' chp_relational_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+chp_bitwise_xor_expr
+	: chp_bitwise_and_expr
+	| chp_bitwise_xor_expr '^' chp_bitwise_and_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+chp_bitwise_or_expr
+	: chp_bitwise_xor_expr
+	| chp_bitwise_or_expr '|' chp_bitwise_xor_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+/* uses '&' and '|' for logical operations (not C-style) */
+chp_logical_and_expr
+	: chp_bitwise_or_expr
+	| chp_logical_and_expr LOGICAL_AND chp_bitwise_or_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+
+/**
+ * use != as boolean logical xor
+chp_xor_expr
+	: chp_logical_and_expr
+	| chp_xor_expr '^' chp_logical_and_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+**/
+
+chp_logical_or_expr
+	: chp_logical_and_expr
+	| chp_logical_or_expr LOGICAL_OR chp_logical_and_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+
+/* negation is overloaded for both bool and ints (bitwise) */
+chp_not_expr
+	: '~' chp_unary_bool_expr
+		{ $$ = new prefix_expr($1, $2); }
+	;
+
+chp_else_clause
+	: ELSE RARROW chp_body_or_skip
+		{ $$ = new CHP::else_clause($1, $2, $3); }
+	;
+
+/*
+// consider replacing with c-style statements and type-checking for chp
+// if top-of-language-stack == chp, forbid x-type of statement/expression
+*/
+chp_binary_assignment
+	: member_index_expr ASSIGN expr
+		{ DELETE_TOKEN($2);
+		  $$ = new CHP::binary_assignment($1, $3); }
+	;
+
+chp_bool_assignment
+	/* using '+' '-' creates shift-reduce conflicts on:
+		member_index_expr . ['+']
+		between assignment and guard_expr
+		To eliminate: require parens around add_expr
+	 */
+	: member_index_expr '+'
+		{ $$ = new CHP::bool_assignment($1, $2); }
+	| member_index_expr '-'
+		{ $$ = new CHP::bool_assignment($1, $2); }
+	/* could borrow from prs: dir */
+	;
+
+chp_concurrent_item
+	: chp_body_item { $$ = $1; }
+	| chp_sequence_group { $$ = $1; }
+	;
+
+/* require concurrent list to have at least two items? */
+chp_concurrent_group
+	: chp_concurrent_group ',' chp_concurrent_item
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| chp_concurrent_item
+
+		{ $$ = new CHP::stmt_list($1); $$->set_concurrent(true); }
+	;
+
+chp_send
+	/* parens are now required where there are arguments */
+/*	: member_index_expr '!' expr_list_in_parens	*/
+	/* simplify grammar by re-using connection_actuals_list for args
+	 * syntactically, arguments are optional, 
+	 * but we require them semantically -- type-checked
+	 * sending a null value is undefined
+	 */
+	: member_index_expr '!' connection_actuals_list
+		{ $$ = new CHP::send($1, $2, $3); }
+	/* for dataless communications only */
+	| member_index_expr '!'
+		{ $$ = new CHP::send($1, $2, NULL); }
+	;
+
+chp_recv
+	/* parens are now required */
+	/* arguments are scalar lvalues */
+	: member_index_expr '?' member_index_expr_list_in_parens_optional
+		{ $$ = new CHP::receive($1, $2, $3); }
+	;
+
+chp_peek
+	/* parens are now required */
+	/* the lvalue arguments could be optional too */
+	: member_index_expr '#' member_index_expr_list_in_parens
+		{ $$ = new CHP::receive($1, $2, $3, true); }
+	;
+
+/* --- Language: HSE --- */
+
+hse_body_optional
+	: hse_body { $$ = $1; }
+	| { $$ = new HSE::stmt_list(); }
+	;
+
+hse_body
+	: full_hse_body_item_list { $$ = $1; }
+	;
+
+full_hse_body_item_list
+	: full_hse_body_item_list ';' full_hse_body_item
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| full_hse_body_item
+		{ $$ = new HSE::stmt_list($1); }
+	;
+
+full_hse_body_item
+	: hse_body_item
+	;
+
+hse_body_item
+	/* returns an HSE::statement */
+	: hse_loop { $$ = $1; }
+	| hse_do_until { $$ = $1; }
+	| hse_wait { $$ = $1; }
+	| hse_selection { $$ = $1; }
+	| hse_assignment { $$ = $1; }
+	| SKIP { $$ = new HSE::skip($1); }
+	;
+
+hse_loop
+	: BEGINLOOP hse_body ']'
+		{ WRAP_LIST($1, $2, $3); $$ = new HSE::loop($2); }
+	;
+
+hse_do_until
+	/* keep entering loop until all guards false */
+	: BEGINLOOP hse_matched_det_guarded_command_list ']'
+		{ WRAP_LIST($1, $2, $3); $$ = new HSE::do_until($2); }
+	;
+
+hse_wait
+	: '[' expr ']'
+		{ $$ = new HSE::wait($2);
+		  DELETE_TOKEN($1); DELETE_TOKEN($3); }
+	;
+
+hse_selection
+	: '[' hse_matched_det_guarded_command_list ']'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	| '[' hse_nondet_guarded_command_list ']'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+hse_guarded_command
+	: expr RARROW hse_body 
+		{ $$ = new HSE::guarded_command($1, $2, $3); }
+	;
+
+hse_else_clause
+	: ELSE RARROW hse_body
+		{ $$ = new HSE::else_clause($1, $2, $3); }
+	;
+
+hse_nondet_guarded_command_list
+	: hse_nondet_guarded_command_list ':' hse_guarded_command
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| hse_guarded_command ':' hse_guarded_command
+		{ $$ = new HSE::nondet_selection($1);
+			APPEND_LIST($$, $2, $3); }
+	;
+
+hse_matched_det_guarded_command_list
+	: hse_unmatched_det_guarded_command_list THICKBAR hse_else_clause
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| hse_unmatched_det_guarded_command_list
+	;
+
+hse_unmatched_det_guarded_command_list
+	: hse_unmatched_det_guarded_command_list THICKBAR hse_guarded_command
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| hse_guarded_command
+		{ $$ = new HSE::det_selection($1); }
+	;
+
+hse_assignment
+/*
+//	: assignment_stmt
+// only allow ++ and -- assignments
+*/
+	: unary_assignment
+		{ $$ = new HSE::assignment(
+			IS_A(HAC::parser::incdec_stmt*, $1)); }
+	;
+/* will there be a leak if dynamic cast fails? */
+
+/*
+//--- Language: PRS ---
+*/
+
+prs_body_optional
+	: prs_body { $$ = $1; }
+	| { $$ = new PRS::rule_list(); }
+	;
+
+prs_body
+	: prs_body prs_body_item
+		{ $$ = $1; $$->push_back($2); }
+	| prs_body_item
+		{ $$ = new PRS::rule_list($1); }
+	;
+
+prs_body_item
+	: single_prs { $$ = $1; }
+	| prs_loop { $$ = $1; }
+	| prs_conditional { $$ = $1; }
+	| prs_macro { $$ = $1; }
+	/* extensions requested by Clint for forked tool-chain */
+	/* actions here are provisional dummy actions, not real impl. */
+	| TREE_LANG optional_template_arguments_in_angles '{' prs_body_optional '}'
+		{ DELETE_TOKEN($2);
+		  WRAP_LIST($3, $4, $5); $$ = new PRS::body($1, NULL, $4); }
+	| SUBCKT_LANG optional_template_arguments_in_angles '{' prs_body_optional '}'
+		{ WRAP_LIST($3, $4, $5); $$ = new PRS::subcircuit($1, $2, $4); }
+	;
+
+/* looks like a function call */
+/* macros arguments are restricted to instance references for now */
+/* the argument list must also be non-empty */
+prs_macro
+	/* : ID expr_list_in_angles_optional
+		mandatory_member_index_expr_list_in_parens
+		{ $$ = new PRS::macro($1, $3); DELETE_TOKEN($2); }
+	*/
+	/* hack: to suppress a conflict on ID . '<' between macro and sized
+		literal, we relax the rule for the macro name by reusing
+		the sized (generalized) prs_literal, but then check that
+		the literal is a simple ID instance_reference by extraction.  
+	*/
+	: prs_literal mandatory_member_index_expr_list_in_parens
+		{
+		/*
+		 * can't figure out how to gracefully yyerror out safely
+		 * has to do with the current parser state skipping a 
+		 * reduction step.  
+		 */
+			/* do parse-checking during next pass */
+			$$ = new PRS::macro(NULL, $1, $2);
+		}
+	/* optional, generic rule attributes tentatively ignored */
+	| generic_attribute_list_in_brackets
+	  prs_literal mandatory_member_index_expr_list_in_parens
+		{ $$ = new PRS::macro($1, $2, $3); }
+	;
+
+prs_loop
+	: '(' ':' ID ':' range ':' prs_body ')'
+		{ $$ = new PRS::loop($1, $3, $5, $7, $8);
+		  DELETE_TOKEN($2); DELETE_TOKEN($4); DELETE_TOKEN($6); }
+	;
+
+prs_conditional
+	: '[' prs_guarded_list ']'
+		{ WRAP_LIST($1, $2, $3);
+		  $$ = new PRS::conditional($2); }
+	;
+
+prs_guarded_list
+	: prs_guarded_list_unmatched THICKBAR prs_else_clause
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| prs_guarded_list_unmatched
+		{ $$ = $1; }
+	;
+
+prs_guarded_list_unmatched
+	: prs_guarded_list_unmatched THICKBAR prs_guarded_body
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| prs_guarded_body
+		{ $$ = new PRS::guarded_prs_list($1); }
+	;
+
+prs_guarded_body
+	: expr RARROW prs_body_optional
+		{ $$ = new PRS::guarded_body($1, $2, $3); }
+	;
+
+prs_else_clause
+	: ELSE RARROW prs_body_optional
+		{ $$ = new PRS::guarded_body($1, $2, $3); }
+	;
+
+single_prs
+	/* note: type-check prs_expr as boolean return type */
+	/* conflict: expr can end ID, and prs_expr can start ID, S/R on :: */
+	: generic_attribute_list_in_brackets
+		prs_expr prs_arrow prs_literal_base dir
+		{ $$ = new PRS::rule($1, $2, $3, $4, $5); }
+	| prs_expr prs_arrow prs_literal_base dir
+		{ $$ = new PRS::rule(NULL, $1, $2, $3, $4); }
+	;
+
+prs_arrow
+	: RARROW 
+	/* generates combinatorial inverse */
+	| IMPLIES
+	/* flips sense of all literals (mostly for C-elements) */
+	| HASH_ARROW
+	;
+
+dir
+	: '+' 
+	| '-' 
+	;
+
+
+/* want prs expr to be only ~, & and | expressions */
+prs_expr
+	: prs_or { $$ = $1; }
+/*	used to be just "expr"		 */
+	;
+
+prs_paren_expr
+	: '(' prs_expr ')'
+		{ $$ = $2; DELETE_TOKEN($1); DELETE_TOKEN($3); }
+	;
+
+/* internal node annotation, just parsed and ignored for now */
+prs_literal_base
+/***
+	: prs_internal_optional relative_member_index_expr
+		{ $$ = new PRS::literal($2); 
+		  if ($1) {
+			$$->mark_internal();
+			DELETE_TOKEN($1);
+		  }
+		}
+***/
+	: relative_member_index_expr
+		{ $$ = new PRS::literal($1); }
+	| '@' ID optional_dense_range_list
+		{ if ($3) {
+			$$ = new PRS::literal(
+				new index_expr($2, new range_list(*$3)));
+			DELETE_TOKEN($3);
+		  } else {
+			$$ = new PRS::literal(
+				new id_expr(new qualified_id($2)));
+		  }
+		  if ($1) {
+			$$->mark_internal();
+			DELETE_TOKEN($1);
+		  }
+		}
+	;
+
+/* the optional expr-list are transistor sizes */
+prs_literal
+	: prs_literal_base prs_literal_params_in_angles_optional
+		{ $$ = $1; $$->attach_parameters($2); }
+	;
+
+prs_literal_params_in_angles_optional
+	: '<' prs_literal_params_optional ';' generic_attribute_list '>'
+		{ if (!$2) { $2 = new expr_attr_list(); }
+			$$ = $2;
+			WRAP_LIST($1, $2, $5); DELETE_TOKEN($3);
+			$2->attach_attributes($4); }
+	| '<' prs_literal_params '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	| { $$ = NULL; }
+	;
+
+prs_literal_params_optional
+	: prs_literal_params
+		{ $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+prs_literal_params
+	: prs_literal_params ',' prs_literal_param
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| prs_literal_param
+		{ $$ = new expr_attr_list($1); }
+	;
+
+prs_literal_param
+	: expr
+	;
+
+/***
+prs_internal_optional
+	: '@' { $$ = $1; }
+	| { $$ = NULL; }
+	;
+***/
+
+prs_unary_expr
+	/* TODO: process optional size arguments */
+	: prs_literal { $$ = $1; }
+	| prs_paren_expr { $$ = $1; }
+	| prs_and_loop { $$ = $1; }
+	| prs_or_loop { $$ = $1; }
+	;
+
+prs_not
+	: '~' prs_unary_expr { $$ = new prefix_expr($1, $2); }
+	| prs_unary_expr { $$ = $1; }
+	;
+
+/* only allow precharge notation on & operator -- Clint */
+prs_and
+	: prs_and '&' prs_operator_attribute_optional prs_not
+		{ $$ = new logical_attr_expr($1, $2, $3, $4); }
+	| prs_not { $$ = $1; }
+	;
+
+prs_or
+	: prs_or '|' prs_and
+		{ $$ = new logical_expr($1, $2, $3); }
+	| prs_and { $$ = $1; }
+	;
+
+/* even the operators get attributes now... no token left behind! */
+/* TODO: save away these precharge expressions */
+prs_operator_attribute
+	: '{' dir prs_expr '}'
+		{ DELETE_TOKEN($1);
+			$$ = new PRS::precharge($2, $3);
+			DELETE_TOKEN($4); }
+	;
+
+/* for now, no return type yet */
+prs_operator_attribute_optional
+	: prs_operator_attribute { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/* non-short-circuit AND */
+prs_and_loop
+	: '(' '&' ':' ID ':' range ':' prs_expr ')'
+		{ $$ = new PRS::op_loop($1, $2, $4, $6, $8, $9);
+		  DELETE_TOKEN($3); DELETE_TOKEN($5); DELETE_TOKEN($7); }
+	;
+
+/* non-short-circuit OR */
+prs_or_loop
+	: '(' '|' ':' ID ':' range ':' prs_expr ')'
+		{ $$ = new PRS::op_loop($1, $2, $4, $6, $8, $9);
+		  DELETE_TOKEN($3); DELETE_TOKEN($5); DELETE_TOKEN($7); }
+	;
+
+/* end of PRS language */
+
+spec_body_optional
+	: spec_body { $$ = $1; }
+	| { $$ = new SPEC::directive_list(); }
+	;
+
+spec_body
+	: spec_body spec_item
+		{ $$ = $1; $$->push_back($2); }
+	| spec_item
+		{ $$ = new SPEC::directive_list($1); }
+	;
+
+spec_item
+	: spec_directive { $$ = $1; }
+	| spec_invariant { $$ = $1; }
+	;
+
+spec_invariant
+	: '$' '(' prs_expr ')'
+		{ $$ = new SPEC::invariant($3, NULL); 
+		DELETE_TOKEN($1); DELETE_TOKEN($2); DELETE_TOKEN($4); }
+	/* does string ever need to be a more general string expr? */
+	| '$' '(' prs_expr ',' string ')'
+		{ $$ = new SPEC::invariant($3, $5); 
+		DELETE_TOKEN($1); DELETE_TOKEN($2); DELETE_TOKEN($4);
+		DELETE_TOKEN($6); }
+	| DOLLARDOLLAR '(' expr ')'
+		{ $$ = new SPEC::invariant($3, NULL, true); 
+		DELETE_TOKEN($1); DELETE_TOKEN($2); DELETE_TOKEN($4); }
+	| DOLLARDOLLAR '(' expr ',' string ')'
+		{ $$ = new SPEC::invariant($3, $5, true); 
+		DELETE_TOKEN($1); DELETE_TOKEN($2); DELETE_TOKEN($4);
+		DELETE_TOKEN($6); }
+	;
+
+/* identical to prs_macro, but we call it a directive */
+spec_directive
+	: ID expr_list_in_angles_optional
+		grouped_reference_list_in_parens
+		{ $$ = new SPEC::directive($1, $2, $3); }
+	;
+
+grouped_reference_list_in_parens
+	: '(' grouped_reference_list_optional ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+grouped_reference_list_optional
+	: grouped_reference_list { $$ = $1; }
+	| { $$ = new inst_ref_expr_list(); }
+	;
+
+grouped_reference_list
+	: grouped_reference_list ',' grouped_reference
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| grouped_reference
+		{ $$ = new inst_ref_expr_list($1); }
+	;
+
+grouped_reference
+	: '{' mandatory_member_index_expr_list '}'
+		{ $$ = new reference_group_construction($1, $2, $3); }
+	| member_index_expr
+		{ $$ = $1; }
+	;
+
+/*
+//--- Language: RTE ---
+*/
+
+rte_body_optional
+	: rte_body { $$ = $1; }
+	| { $$ = new RTE::assignment_list(); }
+	;
+
+rte_body
+	: rte_body rte_body_item
+		{ $$ = $1; $$->push_back($2); }
+	| rte_body_item
+		{ $$ = new RTE::assignment_list($1); }
+	;
+
+rte_body_item
+	: rte_assignment { $$ = $1; }
+/*
+	| rte_loop { $$ = $1; }
+	| rte_conditional { $$ = $1; }
+*/
+	;
+
+rte_assignment
+	: member_index_expr '=' expr ';'
+		{ $$ = new RTE::assignment($1, $3);
+			DELETE_TOKEN($2);
+			DELETE_TOKEN($4);
+		}
+	;
+
+/******************************************************************************
+// Expressions, expressions, expressions
+// mostly ripped from ANSI C++ grammar
+******************************************************************************/
+paren_expr
+	: '(' expr ')'
+		{ $$ = $2; DELETE_TOKEN($1); DELETE_TOKEN($3); }
+	;
+
+literal
+	/* all default actions, all are expr subclasses */
+	: INT { $$ = $1; }
+	| FLOAT { $$ = $1; }
+	| string { $$ = $1; }
+	| BOOL_TRUE { $$ = $1; }
+	| BOOL_FALSE { $$ = $1; }
+	;
+
+/* split strings are automatically concatenated */
+string
+	: string STRING
+		{ $$ = $1; *$1 += *$2; DELETE_TOKEN($2); }
+	| STRING { $$ = $1; }
+	;
+
+id_expr
+		/* for identfiers that need to be searched upwards */
+	: generic_id { $$ = new id_expr($1); }
+		/* for specifying unambiguous type from global scope */
+	;
+
+generic_id
+	: relative_id
+	| absolute_id
+	;
+
+absolute_id
+	: SCOPE relative_id
+		{ $$ = $2->force_absolute($1); }
+	;
+
+relative_id
+	: qualified_id
+	| ID
+		/* wrap in qualified_id */
+		{ $$ = new qualified_id($1); }
+	;
+
+qualified_id
+	: qualified_id SCOPE ID
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| ID SCOPE ID
+		{ $$ = new qualified_id($1);
+		  APPEND_LIST($$, $2, $3); }
+	;
+
+mandatory_member_index_expr_list_in_parens
+	: '(' mandatory_member_index_expr_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+mandatory_member_index_expr_list
+	: mandatory_member_index_expr_list ',' member_index_expr
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| member_index_expr { $$ = new inst_ref_expr_list($1); }
+	;
+
+/** was mandatory, but is now optional, blank items are allowed! */
+member_index_expr_list
+	: member_index_expr_list ',' optional_member_index_expr
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| optional_member_index_expr { $$ = new inst_ref_expr_list($1); }
+	;
+
+member_index_expr_pair
+	: optional_member_index_expr ',' optional_member_index_expr
+		{ $$ = new inst_ref_expr_list($1);
+			APPEND_LIST($$, $2, $3); }
+	/** always make a pair, even from a singleton **/
+	| optional_member_index_expr
+		{ $$ = new inst_ref_expr_list($1);
+			APPEND_NULL($$); }
+	;
+
+optional_member_index_expr
+	: member_index_expr
+	| { $$ = NULL; }
+	;
+
+/* this is what we want for expression arguments, without operators */
+member_index_expr
+/*	: primary_expr */
+	: id_expr { $$ = $1; }
+	/* array index: should forbid C-style id[N][M]? current allows... */
+	| index_expr { $$ = $1; }
+	| member_expr { $$ = $1; }
+	/*			or id_expr? */
+	/* no function calls in expressions... yet */
+	;
+
+/* same as member_index_expr, but disallowing absolute_id's, 
+	thus restricting to local lookups, useful for grammar diambiguation */
+relative_member_index_expr
+/*	: relative_id { $$ = new id_expr($1); }	*/
+	: ID { $$ = new id_expr(new qualified_id($1)); }
+	| local_index_expr { $$ = $1; }
+	| local_member_expr { $$ = $1; }
+	;
+
+local_index_expr
+	: local_member_expr sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	| ID sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	;
+
+local_member_expr
+	: local_index_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| local_member_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| ID '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	;
+
+/** This removes S/R conflict between (a[i])[j] and (a[i][j]) */
+index_expr
+	: member_expr sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	| id_expr sparse_range_list
+		{ $$ = new index_expr($1, $2); }
+	;
+
+member_expr
+	: index_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| member_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	| id_expr '.' ID
+		{ $$ = new member_expr($1, $3); DELETE_TOKEN($2); }
+	;
+
+/* single term */
+simple_expr
+	: member_index_expr { $$ = $1; }
+	| literal { $$ = $1; }
+	;
+
+unary_expr
+	: simple_expr { $$ = $1; }
+	| function_call_expr { $$ = $1; }	/* conflicts */
+	| paren_expr { $$ = $1; }
+	| loop_expr { $$ = $1; }
+	/* no prefix operations, moved to assignment */
+	| '-' unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	| '!' unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	| '~' unary_expr
+		{ $$ = new prefix_expr($1, $2); }
+	;
+
+function_call_expr
+	/* prefix dismbiguator? */
+/**
+	: '$' id_expr expr_list_in_parens
+		{ $$ = new CHP::function_call_expr($2, $3);
+			DELETE_TOKEN($1); }
+**/
+/**
+	: id_expr expr_list_in_parens
+		{ $$ = new CHP::function_call_expr($1, $2); }
+**/
+	/* function_call is grammatic subset of connection_statement
+	 * copied from connection_statement to disambiguate 
+	 * let type checking further restrict the member_index_expr to id_expr
+	 * Likewise, implicit_global_connections do not apply, should be NULL.
+	 * This construction may throw.  
+	 */
+	: member_index_expr optional_implicit_global_connections
+		connection_actuals_list
+		{ 
+			// TODO: should really error out if ($2)
+			DELETE_TOKEN($2);
+			const id_expr* fname = IS_A(const id_expr*, $1);
+			if (!fname) {
+				cerr << "Parse error: base reference of function call "
+					"must be an id_expr, but got: ";
+				$1->what(cerr) << " at " << where(*$1) << endl;
+				DELETE_TOKEN($1);
+//				YYERROR;
+//				yyerror("Error parsing function-call-expr.");
+			}
+			// recover from this error during next pass
+			$$ = new CHP::function_call_expr(fname, $3); 
+		}
+	;
+
+multiplicative_expr
+	: unary_expr
+	| multiplicative_expr muldiv_op unary_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+muldiv_op
+	: '*'
+	| '/'
+	| '%'
+	;
+
+additive_expr
+	: multiplicative_expr
+	| additive_expr '+' multiplicative_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	| additive_expr '-' multiplicative_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+
+shift_expr
+	: additive_expr
+	| shift_expr EXTRACT additive_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	| shift_expr INSERT additive_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+relational_equality_expr
+	: shift_expr
+	/* parenthesis requires as a template disambiguator */
+	| '(' relational_equality_expr '<' shift_expr ')'
+		{ $$ = new relational_expr($2, $3, $4);
+			DELETE_TOKEN($1); DELETE_TOKEN($5); }
+	| '(' relational_equality_expr '>' shift_expr ')'
+		{ $$ = new relational_expr($2, $3, $4);
+			DELETE_TOKEN($1); DELETE_TOKEN($5); }
+	| relational_equality_expr LE shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	| relational_equality_expr GE shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	| relational_equality_expr EQUAL shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	| relational_equality_expr NOTEQUAL shift_expr
+		{ $$ = new relational_expr($1, $2, $3); }
+	/* extension: allow deprecated '=' for comparison, only with parens */
+	| '(' relational_equality_expr '=' shift_expr ')'
+		{ $$ = new relational_expr($2, $3, $4);
+			$3->text[1] = '=';	/* fudge it */
+			DELETE_TOKEN($1); DELETE_TOKEN($5); }
+/*
+// can't cascade relational_expr
+//	| relational_expr GE shift_expr
+*/
+	;
+
+/* phase out */
+relational_op
+	: '<'
+	| '>'
+	| LE
+	| GE
+	| EQUAL
+	| NOTEQUAL
+	;
+
+/* bit-wise and is arithmetic */
+and_expr
+	: relational_equality_expr
+	| and_expr '&' relational_equality_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+/* bit-wise xor is arithmetic */
+exclusive_or_expr
+	: and_expr
+	| exclusive_or_expr '^' and_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+/* bit-wise or is arithmetic */
+inclusive_or_expr
+	: exclusive_or_expr
+	| inclusive_or_expr '|' exclusive_or_expr
+		{ $$ = new arith_expr($1, $2, $3); }
+	;
+
+/* short-circuit AND ? no, is commutative */
+logical_and_expr
+	: inclusive_or_expr
+	| logical_and_expr LOGICAL_AND inclusive_or_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+
+/* short-circuit OR ? no, is commutative */
+logical_or_expr
+	: logical_and_expr
+	| logical_or_expr LOGICAL_OR logical_and_expr
+		{ $$ = new logical_expr($1, $2, $3); }
+	;
+
+/* no logical XOR, use !=(bool, bool) instead */
+
+/** forget conditional expressions for now
+conditional_expr
+	: logical_or_expr
+	| logical_or_expr '?' expr ':' conditional_expr
+	;
+**/
+
+/**
+assignment_stmt
+	: binary_assignment { $$ = $1; }
+	| unary_assignment { $$ = $1; }
+	;
+**/
+
+/*
+binary_assignment
+//	: conditional_expr		// not supported
+//	: logical_or_expr		// not supported
+	: member_index_expr '=' expr
+		{ $$ = new assign_stmt($1, $2, $3); }
+*/
+
+/*
+//	| member_index_expr STARASSIGN expr
+//	| member_index_expr DIVIDEASSIGN expr
+//	| member_index_expr PLUSASSIGN expr
+//	| member_index_expr MINUSASSIGN expr
+//	| member_index_expr PERCENTASSIGN expr
+//	| member_index_expr RIGHTSHIFTASSIGN expr
+//	| member_index_expr LEFTSHIFTASSIGN expr
+//	| member_index_expr ANDMASK expr
+//	| member_index_expr ORMASK expr
+//	| member_index_expr XORMASK expr
+	;
+*/
+
+unary_assignment
+	: member_index_expr PLUSPLUS
+		{ $$ = new incdec_stmt($1, $2); }
+	| member_index_expr MINUSMINUS
+		{ $$ = new incdec_stmt($1, $2); }
+	;
+
+/*
+// for simplicity, forbid the use of assignments as expressions, 
+//	reserve them as statements only
+*/
+
+/**
+	Here we use the extra first ':' to disambiguate '+' ID.  
+ */
+loop_expr
+	: '(' loop_assoc_op ':' ID ':' range ':' expr ')'
+		{ $$ = new loop_operation($1, $2, $4, $6, $8, $9);
+		  DELETE_TOKEN($3); DELETE_TOKEN($5); DELETE_TOKEN($7); }
+	;
+
+/**
+	For now, we restrict to associative and commutative operators.  
+	Maybe specific left-right associativity in semantics for others.  
+ */
+loop_assoc_op
+	: '+'
+	| '*'
+	| '&'
+	| '|'
+	| '^'
+	| LOGICAL_AND 
+	| LOGICAL_OR
+	;
+
+/* THE BASIC EXPRESSION */
+expr
+/*
+//	: conditional_expr		// not supported
+*/
+	: logical_or_expr
+	;
+
+/** temporarily not needed
+optional_expr_in_braces
+	: '{' expr '}'
+	|
+	;
+**/
+
+strict_relaxed_template_arguments
+	: complex_expr_optional_list_in_angles
+	  optional_template_arguments_in_angles
+		{ $$ = new template_argument_list_pair($1, $2); }
+	|	{ $$ = NULL; }
+	;
+
+/**
+ * list elements should not be optional b/c they are relaxed parameters,
+ * but we may have to be more liberal and check post-parsing to simplify
+ * grammar and avoid conflicts.  
+ */
+optional_template_arguments_in_angles
+/*	replaced with complex_expr_optional_list to eliminate S/R on '>' */
+/*	: complex_expr_list_in_angles	*/
+	: complex_expr_optional_list_in_angles
+/*
+	if angles are given, then expressions are required because
+	relaxed template formals are forbidden from having default values.  
+*/
+		{ $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/* used for paramterized macros and PRS literals */
+expr_list_in_angles_optional
+	: expr_list_in_angles { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/* now only used in PRS, SPEC, and PRS-macros */
+expr_list_in_angles
+	/* : '<' shift_expr_list '>' */
+	: '<' expr_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+complex_expr_optional_list_in_angles
+	: '<' complex_expr_optional_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+complex_expr_optional_list
+	: complex_expr_optional_list ',' optional_complex_expr 
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| optional_complex_expr { $$ = new expr_list($1); }
+	;
+
+/**
+complex_expr_list_in_angles
+	: '<' complex_expr_list '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+complex_expr_list
+	: complex_expr_list ',' array_concatenation
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| array_concatenation { $$ = new expr_list($1); }
+	;
+**/
+
+/* now we allow aggregate expressions */
+optional_complex_expr
+/*	: shift_expr { $$ = $1; }	*/
+/*	: complex_expr_term { $$ = $1; }	*/
+	: array_concatenation { $$ = $1; }
+/* already covers shift_expr, defined below */
+	| { $$ = NULL; }
+	;
+
+/** so far, this is only used following PRS_LANG **/
+member_index_expr_list_in_parens_optional
+	: member_index_expr_list_in_parens { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+member_index_expr_list_in_parens
+	: '(' member_index_expr_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+
+member_index_expr_list_in_angles_optional
+	: member_index_expr_list_in_angles { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+/** so far, this is only used following PRS_LANG **/
+member_index_expr_list_in_angles
+	/** really, only want two **/
+	: '<' member_index_expr_pair '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	/** optional: overriding of substrate contacts **/
+	| '<' member_index_expr_pair '|' member_index_expr_pair '>'
+		{ $$ = $2; WRAP_LIST($1, $2, $5); 
+		  CONCAT_LIST($$, $4);
+		  DELETE_TOKEN($3);
+		  DELETE_TOKEN($4); }
+	;
+
+/**
+expr_list_in_parens
+	: '(' expr_list ')'
+		{ $$ = $2; WRAP_LIST($1, $2, $3); }
+	;
+**/
+
+expr_list
+	: expr_list ',' expr 
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| expr { $$ = new expr_list($1); }
+	;
+
+/* --- array declaration syntax ------------------------------------------- */
+/** giving up CAST-style for C-style arrays */
+
+range
+	: expr RANGE expr 
+		{ $$ = new range($1, $3); DELETE_TOKEN($2); }
+	| expr { $$ = new range($1); }
+	;
+
+optional_dense_range_list
+	: dense_range_list
+		{ $$ = $1; }
+	|	{ $$ = NULL; }
+	;
+
+dense_range_list
+	: dense_range_list bracketed_dense_range
+		{ $$ = $1; $$->push_back($2); }
+	| bracketed_dense_range
+		{ $$ = new dense_range_list($1); }
+	;
+
+sparse_range_list
+	: sparse_range_list bracketed_sparse_range
+		{ $$ = $1; $$->push_back($2); }
+	| bracketed_sparse_range
+		{ $$ = new range_list($1); }
+	;
+
+/** array declarations in template and port formals can only be dense */
+bracketed_dense_range
+	: '[' expr ']'
+		{ DELETE_TOKEN($1); $$ = $2; DELETE_TOKEN($3); }
+	;
+
+/** array instantiations and references elsewhere may be sparse */
+bracketed_sparse_range
+	: '[' range ']'
+		{ DELETE_TOKEN($1); $$ = $2; DELETE_TOKEN($3); }
+	;
+
+/* ----end array ---------------------------------------------------------- */
+/* ---- complex expressions ----------------------------------------------- */
+
+complex_aggregate_reference
+	: array_concatenation { $$ = $1; }
+	;
+
+/* pasting arrays together */
+array_concatenation
+	: array_concatenation '#' complex_expr_term
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| complex_expr_term
+		{ $$ = new array_concatenation($1); }
+	;
+
+complex_expr_term
+	: array_construction { $$ = $1; }
+/*	| loop_concatenation { $$ = $1; }	*/
+	| expr { $$ = $1; }		/* S/R conflict on '<' fixed */
+	;
+
+/* building up to higher-dimensions */
+array_construction
+	: '{' mandatory_complex_aggregate_reference_list '}'
+		{ $$ = new array_construction($1, $2, $3); }
+	;
+
+/**
+	Later, introduces loop concatenations?
+	Don't always know number of terms statically...
+	For now, add to grammar, but don't implement for a while.  
+loop_concatenation
+	: '(' '#' ':' ID ':' range ':' complex_expr_term ')'
+		{ $$ = new loop_concatenation($1, $4, $6, $8, $9);
+		  DELETE_TOKEN($2); DELETE_TOKEN($3);
+		  DELETE_TOKEN($5); DELETE_TOKEN($7);
+		}
+	;
+**/
+
+optional_complex_aggregate_reference
+	: complex_aggregate_reference { $$ = $1; }
+	| { $$ = NULL; }
+	;
+
+mandatory_complex_aggregate_reference_list
+	: mandatory_complex_aggregate_reference_list ','
+		complex_aggregate_reference
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| complex_aggregate_reference
+		{ $$ = new expr_list($1); }
+	;
+
+/* ---- end complex expressions ------------------------------------------- */
+
+/** items are optional! */
+complex_aggregate_reference_list
+	: complex_aggregate_reference_list ',' optional_complex_aggregate_reference
+		{ $$ = $1; APPEND_LIST($1, $2, $3); }
+	| optional_complex_aggregate_reference
+		{ $$ = new expr_list($1); }
+	;
+
+/* ---- end complex expressions ------------------------------------------- */
+%%
+
+#include "parser/yyfreestacks.cc"		// we've moved!
+#include "parser/yyerror.cc"			// we've moved!
+
+/*---------------------------------------------------------------------------*/
+
+// following prototype MUST appear as is (after "static") for awk hack...
+static
+void yyerror(const char* msg) { 	// ancient compiler rejects
+	STACKTRACE_VERBOSE;
+	// msg is going to be "syntax error" from y.tab.cc
+	//	very useless in general
+	hackt_parse_file_manager.dump_file_stack(cerr);
+	__yyerror(msg);
+	// or throw exception
+	THROW_EXIT;
+}	// end yyerror(...)
+

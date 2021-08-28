@@ -1,0 +1,190 @@
+# "select-nested-loop-a-01.chpsimrc"
+#	$Id: select-nested-loop-a-01.chpsimrc,v 1.4 2010/04/06 00:01:26 fang Exp $
+# @haco@ select-nested-loop-a.haco-c
+
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+echo executing selection
+step
+echo executing selection
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+step
+queue
+get a
+get b
+time
+assert-queue
+

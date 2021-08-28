@@ -1,0 +1,105 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procplch	0	#HEAD#	#TAIL#	26
+	6	##ADDR##	namespc_	0	#HEAD#	#TAIL#	27
+	7	##ADDR##	procdefn	0	#HEAD#	#TAIL#	108
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	10	##ADDR##	portscop	0	#HEAD#	#TAIL#	20
+	11	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	12	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	13	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	14	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	15	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	16	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	17	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	18	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	19	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	20	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	22	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	23	##ADDR##	footprnt	0	#HEAD#	#TAIL#	298
+	24	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	25	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	26	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	27	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	28	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	31	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	32	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	33	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	35	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	36	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	37	##ADDR##	footprnt	0	#HEAD#	#TAIL#	391
+	38	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  1 sub-namespaces
+  0 definitions
+  0 typedefs
+  Namespaces:
+    foo =     In namespace "foo", we have: {
+      0 parameter-collections
+      0 instantiation-collections
+      0 sub-namespaces
+      1 definitions
+      0 typedefs
+      Definitions:
+        bar = process-definition (defined) bar(
+            bool<> !GND
+            bool<> !Vdd
+          )
+          In definition "bar", we have: {
+          Instances:
+            !GND = bool<> foo::bar::!GND
+            !Vdd = bool<> foo::bar::!Vdd
+          unroll sequence: 
+            ports: (
+              bool<> !GND
+              bool<> !Vdd
+            )
+            !GND@[supply=0]
+            !Vdd@[supply=1]
+          footprint: {
+            !GND = bool^0 = foo::bar<>::!GND (1) @[ supply_low port-alias ] 
+            !Vdd = bool^0 = foo::bar<>::!Vdd (2) @[ supply_high port-alias ] 
+            Created state:
+            bool instance pool: (2 ports, 0 local, 0 mapped)
+            1	foo::bar<>::!GND @[ supply_low port-alias ]	
+            2	foo::bar<>::!Vdd @[ supply_high port-alias ]	
+          }
+          }
+
+    }
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    BQ = foo::bar<> BQ
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  BQ = process foo::bar<>^0 = BQ (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	BQ	foo::bar<>
+    bool: 1,2
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

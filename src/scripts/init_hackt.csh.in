@@ -1,0 +1,70 @@
+#!/bin/sh
+# "init_hackt.csh"
+#	$Id: init_hackt.csh.in,v 1.11 2009/09/28 06:56:55 fang Exp $
+#	vi: ft=csh
+# source this file to sets up environment variables
+# MAINTAINENCE: keep this consistent with its init_hackt.sh counterpart
+
+# define append_path and prepend_path (ripped from fink)
+# add to end of path
+alias append_path 'if ( $\!:1 !~ \!:2\:* && $\!:1 !~ *\:\!:2\:* && $\!:1 !~ *\:\!:2 && $\!:1 !~ \!:2 ) setenv \!:1 ${\!:1}\:\!:2'
+
+# add to front of path (needs sed in PATH)
+alias prepend_path 'if ( $\!:1 !~ \!:2\:* && $\!:1 !~ *\:\!:2\:* && $\!:1 !~ *\:\!:2 && $\!:1 !~ \!:2 ) setenv \!:1 \!:2\:${\!:1}; if ( $\!:1 !~ \!:2\:* ) setenv \!:1 \!:2`echo \:${\!:1} | @SED@ -e s%^\!:2\:%% -e s%:\!:2\:%:%g -e s%:\!:2\$%%`'
+
+
+
+
+
+
+
+
+
+
+# or somehow set this using Makefile substitution?
+set prefix=@prefix@
+set exec_prefix=@exec_prefix@
+set libdir=@libdir@
+set datarootdir=@datarootdir@
+set datadir=@datadir@
+set pkgdatadir=${datadir}/@PACKAGE@
+set pkglibdir=${libdir}/@PACKAGE@
+set infodir=@infodir@
+
+# TODO: possibly setup PATH? right now we assume PATH is already set
+
+# TODO: posible push this into an extension startup script
+# should be consistent with scm/Makefile.am's scmdir definition.
+set HACKT_GUILE_PATH=$pkgdatadir/scm
+# should no longer need this now that paths are amended in wrapper scripts
+# if ( $?GUILE_LOAD_PATH ) then
+#	prepend_path GUILE_LOAD_PATH ${HACKT_GUILE_PATH}
+# else
+#	setenv GUILE_LOAD_PATH ${HACKT_GUILE_PATH}
+# endif
+
+
+# setup hackt module library path (plug-ins)
+if ( $?LTDL_LIBRARY_PATH ) then
+	prepend_path LTDL_LIBRARY_PATH ${pkglibdir}
+else
+	setenv LTDL_LIBRARY_PATH ${pkglibdir}
+endif
+# do we need to do the same for DYLD_LIBRARY_PATH?
+
+
+# TODO: setup MANPATH (once we get man pages)
+
+if ( $?INFOPATH ) then
+	prepend_path INFOPATH ${infodir}
+else
+	setenv INFOPATH ${infodir}:/usr/share/info
+endif
+
+
+# TODO: per-extension initialization scripts
+
+unset prefix
+unset pkgdatadir
+unset HACKT_GUILE_PATH
+

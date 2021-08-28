@@ -1,0 +1,3 @@
+Error: Post-mangled node name `B' collides with another node `b'.
+Instantiated from -TOP-: 
+Caught exception during netlist generation.

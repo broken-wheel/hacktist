@@ -1,0 +1,12 @@
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+@ "w" !autokeeper
+@ "y" !autokeeper
+@ "a" !autokeeper
+@ "c" !autokeeper
+@ "e" !autokeeper
+connect "w" "x"
+connect "y" "z"
+connect "a" "b"
+connect "c" "d"
+connect "e" "f"

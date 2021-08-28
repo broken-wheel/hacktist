@@ -1,0 +1,74 @@
+"all trivial-events:"
+(0 . #<raw-chpsim-event-node: fork: null, #pred: 0, succ: 1 2 6 16 17 18 19 
+>)
+(6 . #<raw-chpsim-event-node: fork: , pid: 3, #pred: 1, succ: 14 15 
+>)
+(7 . #<raw-chpsim-event-node: null: null, pid: 3, #pred: 1, succ: 6 
+>)
+(13 . #<raw-chpsim-event-node: join: , pid: 3, #pred: 2, succ: 12 
+>)
+
+"all fork-events:"
+(0 . #<raw-chpsim-event-node: fork: null, #pred: 0, succ: 1 2 6 16 17 18 19 
+>)
+(6 . #<raw-chpsim-event-node: fork: , pid: 3, #pred: 1, succ: 14 15 
+>)
+
+"all wait-events"
+
+"all assign-events:"
+
+"all send-events:"
+(1 . #<raw-chpsim-event-node: send: src.S!(true), pid: 1, #pred: 1, succ: 1 
+channel deps: 1 
+>)
+(2 . #<raw-chpsim-event-node: send: c.S!(0), pid: 2, #pred: 1, succ: 5 
+channel deps: 2 
+>)
+(3 . #<raw-chpsim-event-node: send: c.S!(3), pid: 2, #pred: 1, succ: 2 
+channel deps: 2 
+>)
+(4 . #<raw-chpsim-event-node: send: c.S!(2), pid: 2, #pred: 1, succ: 3 
+channel deps: 2 
+>)
+(5 . #<raw-chpsim-event-node: send: c.S!(1), pid: 2, #pred: 1, succ: 4 
+channel deps: 2 
+>)
+(8 . #<raw-chpsim-event-node: send: split.O[0]!(split.x), pid: 3, #pred: 1, succ: 7 
+channel deps: 3 
+>)
+(9 . #<raw-chpsim-event-node: send: split.O[1]!(split.x), pid: 3, #pred: 1, succ: 7 
+channel deps: 4 
+>)
+(10 . #<raw-chpsim-event-node: send: split.O[2]!(split.x), pid: 3, #pred: 1, succ: 7 
+channel deps: 5 
+>)
+(11 . #<raw-chpsim-event-node: send: split.O[3]!(split.x), pid: 3, #pred: 1, succ: 7 
+channel deps: 6 
+>)
+
+"all receive-events:"
+(14 . #<raw-chpsim-event-node: receive: split.C?(split.c), pid: 3, #pred: 1, succ: 13 
+channel deps: 2 
+>)
+(15 . #<raw-chpsim-event-node: receive: split.I?(split.x), pid: 3, #pred: 1, succ: 13 
+channel deps: 1 
+>)
+(16 . #<raw-chpsim-event-node: receive: snk[0].B?(snk[0].b), pid: 4, #pred: 1, succ: 16 
+channel deps: 3 
+>)
+(17 . #<raw-chpsim-event-node: receive: snk[1].B?(snk[1].b), pid: 5, #pred: 1, succ: 17 
+channel deps: 4 
+>)
+(18 . #<raw-chpsim-event-node: receive: snk[2].B?(snk[2].b), pid: 6, #pred: 1, succ: 18 
+channel deps: 5 
+>)
+(19 . #<raw-chpsim-event-node: receive: snk[3].B?(snk[3].b), pid: 7, #pred: 1, succ: 19 
+channel deps: 6 
+>)
+
+"all select-events:"
+(12 . #<raw-chpsim-event-node: select: [ split.c==0 -> ... [] split.c==1 -> ... [] split.c==2 -> ... [] split.c==3 -> ... ], pid: 3, #pred: 1, succ: 8 9 10 11 
+int deps: 1 
+>)
+

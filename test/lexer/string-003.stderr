@@ -1,0 +1,41 @@
+At: "string-003.hac":6:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	string: "abcdef... "Quote" 'quote' the end is near!\\" [4:53]
+#STATE#	end-of-file
+in state #STATE#, possible rules are:
+	literal : string .  (#RULE#)
+	string : string . STRING  (#RULE#)
+acceptable tokens are: 
+	'#' (reduce)
+	'%' (reduce)
+	'&' (reduce)
+	')' (reduce)
+	'*' (reduce)
+	'+' (reduce)
+	',' (reduce)
+	'-' (reduce)
+	'/' (reduce)
+	':' (reduce)
+	';' (reduce)
+	'<' (reduce)
+	'=' (reduce)
+	'>' (reduce)
+	']' (reduce)
+	'^' (reduce)
+	'|' (reduce)
+	'}' (reduce)
+	STRING (shift)
+	RANGE (reduce)
+	THICKBAR (reduce)
+	LE (reduce)
+	GE (reduce)
+	EQUAL (reduce)
+	NOTEQUAL (reduce)
+	RARROW (reduce)
+	LOGICAL_AND (reduce)
+	LOGICAL_OR (reduce)
+	INSERT (reduce)
+	EXTRACT (reduce)

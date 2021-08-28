@@ -1,0 +1,217 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procdefn	0	#HEAD#	#TAIL#	120
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	9	##ADDR##	portscop	0	#HEAD#	#TAIL#	20
+	10	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	11	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	12	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	13	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	14	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	15	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	16	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	17	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	18	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	19	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	20	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	21	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	22	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	23	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	24	##ADDR##	procdefn	0	#HEAD#	#TAIL#	120
+	25	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	26	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	27	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	25
+	28	##ADDR##	portscop	0	#HEAD#	#TAIL#	20
+	29	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	30	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	31	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	32	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	33	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	35	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	36	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	37	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	40	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	41	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	42	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	28
+	43	##ADDR##	dbalias_	0	#HEAD#	#TAIL#	20
+	44	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	20
+	46	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	47	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	48	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	49	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	51	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	52	##ADDR##	footprnt	0	#HEAD#	#TAIL#	410
+	53	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	28
+	54	##ADDR##	prcalias	0	#HEAD#	#TAIL#	20
+	55	##ADDR##	sprcmref	0	#HEAD#	#TAIL#	16
+	56	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	20
+	57	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	58	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	59	##ADDR##	sprcmref	0	#HEAD#	#TAIL#	16
+	60	##ADDR##	cindlst_	0	#HEAD#	#TAIL#	20
+	61	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	62	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	63	##ADDR##	footprnt	0	#HEAD#	#TAIL#	683
+	64	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	65	##ADDR##	procplch	0	#HEAD#	#TAIL#	27
+	66	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	67	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	68	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	69	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	70	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	71	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	72	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	73	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	74	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	75	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	76	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	77	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	78	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	79	##ADDR##	footprnt	0	#HEAD#	#TAIL#	391
+	80	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  2 definitions
+  0 typedefs
+  Definitions:
+    bar = process-definition (defined) bar(
+        bool<> !GND
+        bool<> !Vdd
+      )
+      In definition "bar", we have: {
+      Instances:
+        !GND = bool<> bar::!GND
+        !Vdd = bool<> bar::!Vdd
+        x = foo<> bar::x^2
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        foo<> x[0..1][0..1]
+        x[0][1] = x[1][0];
+      footprint: {
+        !GND = bool^0 = bar<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = bar<>::!Vdd (2) @[ supply_high port-alias ] 
+        x = process foo<>^2
+          {
+            [0][0] = bar<>::x[0][0] (1) (
+              !GND = bool^0 = bar<>::!GND (1) @[ supply_low port-alias ] 
+              !Vdd = bool^0 = bar<>::!Vdd (2) @[ supply_high port-alias ] 
+            )
+            [0][1] = bar<>::x[0][1] (2) (
+              !GND = bool^0 = bar<>::!GND (1) @[ supply_low port-alias ] 
+              !Vdd = bool^0 = bar<>::!Vdd (2) @[ supply_high port-alias ] 
+            )
+            [1][0] = bar<>::x[0][1] (2) (
+              !GND = bool^0 = bar<>::!GND (1) @[ supply_low port-alias ] 
+              !Vdd = bool^0 = bar<>::!Vdd (2) @[ supply_high port-alias ] 
+            )
+            [1][1] = bar<>::x[1][1] (3) (
+              !GND = bool^0 = bar<>::!GND (1) @[ supply_low port-alias ] 
+              !Vdd = bool^0 = bar<>::!Vdd (2) @[ supply_high port-alias ] 
+            )
+          }
+        Created state:
+        process instance pool: (0 ports, 3 local, 0 mapped)
+        1	bar<>::x[0][0]	foo<>
+          bool: 1,2
+        2	bar<>::x[0][1]	foo<>
+          bool: 1,2
+        3	bar<>::x[1][1]	foo<>
+          bool: 1,2
+        bool instance pool: (2 ports, 0 local, 9 mapped)
+        1	bar<>::!GND @[ supply_low port-alias ]	
+        2	bar<>::!Vdd @[ supply_high port-alias ]	
+        private sub-bool index map:
+          (1 -> 0)
+          (2 -> 3)
+          (3 -> 6)
+          (4 -> 9)
+      }
+      }
+
+    foo = process-definition (defined) foo(
+        bool<> !GND
+        bool<> !Vdd
+      )
+      In definition "foo", we have: {
+      Instances:
+        !GND = bool<> foo::!GND
+        !Vdd = bool<> foo::!Vdd
+        a = bool<> foo::a^2
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        bool<> a[0..1][0..1]
+        a[0][0] = a[1][1];
+      footprint: {
+        !GND = bool^0 = foo<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = foo<>::!Vdd (2) @[ supply_high port-alias ] 
+        a = bool^2
+          {
+            [0][0] = foo<>::a[0][0] (3) 
+            [0][1] = foo<>::a[0][1] (4) 
+            [1][0] = foo<>::a[1][0] (5) 
+            [1][1] = foo<>::a[0][0] (3) 
+          }
+        Created state:
+        bool instance pool: (2 ports, 3 local, 0 mapped)
+        1	foo<>::!GND @[ supply_low port-alias ]	
+        2	foo<>::!Vdd @[ supply_high port-alias ]	
+        3	foo<>::a[0][0]	
+        4	foo<>::a[0][1]	
+        5	foo<>::a[1][0]	
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    poo = bar<> poo
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  poo = process bar<>^0 = poo (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 3 mapped)
+  1	poo	bar<>
+    bool: 1,2
+  private sub-process index map:
+    (1 -> 0)
+    (2 -> 3)
+  bool instance pool: (0 ports, 2 local, 9 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  private sub-bool index map:
+    (1 -> 0)
+    (2 -> 9)
+}

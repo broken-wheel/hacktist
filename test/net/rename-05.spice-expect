@@ -1,0 +1,5 @@
+Error: transistor name "OHAI" was already used, and cannot be re-used.
+ERROR in production rule.
+	~x & ~y<;label="OHAI"> -> _z+
+Instantiated from -TOP-: 
+Caught exception during netlist generation.

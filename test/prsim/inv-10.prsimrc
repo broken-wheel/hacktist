@@ -1,0 +1,14 @@
+# "inv-10.prsimrc"
+# @haco@ inv.haco-c
+#	$Id: inv-10.prsimrc,v 1.4 2010/04/06 00:06:48 fang Exp $
+
+
+
+watchall
+set a 0
+advance 5
+queue
+
+set b 1
+echo should be ignored, causing exit on error
+

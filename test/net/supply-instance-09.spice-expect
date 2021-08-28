@@ -1,0 +1,19 @@
+.subckt inv<> !GND !Vdd x y
+My:dn:0 !GND x y !GND nch W=5u L=2u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
+.ends
+
+.subckt foo<> myVdd myGND in out
+xa myGND myVdd in out inv<>
+.ends
+
+.subckt bar<> a b
+xf f.myVdd f.myGND a b foo<>
+.ends
+
+xbq bq.a bq.b bar<>
+
+* --- WARNINGS ---
+Warning: node f.myVdd is used but not driven!
+Warning: node f.myGND is used but not driven!
+... in subcircuit bar<>

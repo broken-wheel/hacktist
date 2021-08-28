@@ -1,0 +1,97 @@
+# "dox/Make.dox-head"
+#	$Id: Make.dox-head,v 1.15 2009/05/29 15:13:16 fang Exp $
+#	vi: ft=automake
+# To be included first by Makefiles in subdirectories
+# The complement is "dox/Make.dox-tail" which includes "dox/mk/Make.latex".
+
+# Define the following before including this file:
+# PDFS = <list of pdf's>
+# PSS = <list of ps's>
+
+include $(top_srcdir)/Make.stddef
+include $(top_srcdir)/installdirs.mk
+
+# commented definitions are set by configure
+# DVIPS = dvips
+# PSNUP = psnup
+# LATEX = latex
+# PDFLATEX = pdflatex
+# BIBTEX = bibtex
+# MAKEINDEX = makeindex
+
+# MAKETEXDEPEND s now obsolete
+# MAKETEXDEPEND = $(AWK) -f $(top_srcdir)/dox/mk/maketexdepend.awk \
+#	-v script=$(top_srcdir)/dox/mk/maketexdepend.awk -v srcdir=$(srcdir) \
+#	-v readable=1 -v extensions="pdf dvi depend" -v touch=0
+
+SUFFIXES =
+
+# define as empty and append, to force subdir's automakes to use texinfos.am
+info_TEXINFOS =
+AUTOPDFS = 
+AUTOPSS = 
+
+if ENABLE_DOCS
+if HAVE_LATEX
+AUTOPSS += $(PSS)
+endif
+
+if HAVE_PDFLATEX
+AUTOPDFS += $(PDFS)
+endif
+endif
+
+# Can always explicitly try to build pdf/ps with "make pdf ps", 
+# regardless of configuration
+pdf-local: $(PDFS)
+ps-local: $(PSS)
+
+# The documents are only built by default if configure had docs enabled by
+# default and the right latex programs were found.  
+dist_pdf_DATA = $(AUTOPDFS)
+dist_ps_DATA = $(AUTOPSS)
+noinst_DATA =
+
+# Add html directories here to install directories properly
+# Actions defined in install-hooks in Make.dox-tail
+HTML_HOOKS =
+
+# extract texinfo documentation into $(srcdir)
+# For use with Makefile rules, 
+# works for rules with single or multiple dependencies
+# EXTRACT_TEXINFO_IN_SRCDIR defined in $(top_srcdir)/Make.stddef
+# want to be "for s in $?", but leaves false deps...
+EXTRACT_TEXINFO_SRCDIR_BATCH_SCRIPT = \
+	(cd $(srcdir) && \
+	for s in $^ ; do \
+	  f="$(top_builddir)"`$(ECHO) $$s | $(SED) 's|$(top_srcdir)||'` ; \
+	  if (test -f $$f && test -r $$f) ; then \
+	    $(ECHO) "Extracting Texinfo from $$f ..." ; \
+	    $(EXTRACT_TEXINFO_IN_SRCDIR) $$f ; \
+	  fi ; \
+	done )
+
+# Pipe for extracting @includes from .texi sources
+EXTRACT_TEXI_INCLUDES = $(GREP) "^@include" | $(CUT) -d\  -f2 | \
+	$(AWK) '{printf(" \\\n\t$$(srcdir)/" $$1);}'
+#	$(AWK) '{printf(" \\\n\t" $$1);}'
+# need $(srcdir) to force it to look there w/o relying on VPATH
+
+GITIGNORE_TEXI_SCRIPT = $(mkdir_p) `dirname $@` && cp $< $@
+
+# cumulative variables:
+# auto-generated Makefile snippets
+AUTO_TEXINFO_DEPS =
+# used by clean-texi target
+TEXI_CLEANFILES =
+# distribute dvi files
+EXTRA_DIST += $(DVIS)
+# distribute generated texi files
+EXTRA_DIST += $(AUTO_TEXINFO_DEPS)
+# CVS ignore generated texi files
+AUTO_IGNORE += $(AUTO_TEXINFO_DEPS)
+MAINTAINERCLEANFILES = $(AUTO_TEXINFO_DEPS)
+MAINTAINERCLEANFILES += $(TEXI_CLEANFILES)
+# EXTRA_DIST += $(TEXI_CLEANFILES)
+
+

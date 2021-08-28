@@ -1,0 +1,72 @@
+.subckt inv<> !GND !Vdd x y
+* BEGIN node caps
+* 	!GND [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	!Vdd [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	y [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	x [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=20p, gate_terms=2, wire_area=0p]
+* END node caps
+My:dn:0 !GND x y !GND nch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+My:up:0 !Vdd x y !Vdd pch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+.ends
+
+.subckt inv_c<>::first !GND !Vdd a x1 _x
+* BEGIN node caps
+* 	!GND [ndiff_perim=44u, ndiff_area=60p, ndrain_terms=2, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	!Vdd [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=44u, pdiff_area=60p, pdrain_terms=2, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	a [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=20p, gate_terms=2, wire_area=0p]
+* 	x1 [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	_x [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=20p, gate_terms=2, wire_area=0p]
+* END node caps
+M_x:dn:0 !GND a _x !GND nch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+M_x:up:0 !Vdd a _x !Vdd pch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+Mx1:dn:0 !GND _x x1 !GND nch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+Mx1:up:0 !Vdd _x x1 !Vdd pch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+.ends
+.subckt inv_c<>::second !GND !Vdd x2 b _y
+* BEGIN node caps
+* 	!GND [ndiff_perim=44u, ndiff_area=60p, ndrain_terms=2, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	!Vdd [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=44u, pdiff_area=60p, pdrain_terms=2, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	x2 [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=20p, gate_terms=2, wire_area=0p]
+* 	b [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	_y [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=20p, gate_terms=2, wire_area=0p]
+* END node caps
+M_y:dn:0 !GND x2 _y !GND nch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+M_y:up:0 !Vdd x2 _y !Vdd pch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+Mb:dn:0 !GND _y b !GND nch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+Mb:up:0 !Vdd _y b !Vdd pch W=5u L=2u
++ AS=30p PS=22u AD=30p PD=22u
+.ends
+.subckt inv_c<> !GND !Vdd a b
+* BEGIN node caps
+* 	!GND [ndiff_perim=132u, ndiff_area=180p, ndrain_terms=6, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	!Vdd [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=132u, pdiff_area=180p, pdrain_terms=6, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	a [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=40p, gate_terms=4, wire_area=0p]
+* 	x2 [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=20p, gate_terms=2, wire_area=0p]
+* 	x1 [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=20p, gate_terms=2, wire_area=0p]
+* 	b [ndiff_perim=44u, ndiff_area=60p, ndrain_terms=2, pdiff_perim=44u, pdiff_area=60p, pdrain_terms=2, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	_x [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=20p, gate_terms=2, wire_area=0p]
+* 	_y [ndiff_perim=22u, ndiff_area=30p, ndrain_terms=1, pdiff_perim=22u, pdiff_area=30p, pdrain_terms=1, gate_area=20p, gate_terms=2, wire_area=0p]
+* END node caps
+xK1 !GND !Vdd a x2 inv<>
+xK2 !GND !Vdd x1 b inv<>
+xfirst:inst !GND !Vdd a x1 _x inv_c<>::first
+xsecond:inst !GND !Vdd x2 b _y inv_c<>::second
+.ends
+
+* BEGIN node caps
+* 	!GND [ndiff_perim=132u, ndiff_area=180p, ndrain_terms=6, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	!Vdd [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=132u, pdiff_area=180p, pdrain_terms=6, gate_area=0p, gate_terms=0, wire_area=0p]
+* 	foo.a [ndiff_perim=0u, ndiff_area=0p, ndrain_terms=0, pdiff_perim=0u, pdiff_area=0p, pdrain_terms=0, gate_area=40p, gate_terms=4, wire_area=0p]
+* 	foo.b [ndiff_perim=44u, ndiff_area=60p, ndrain_terms=2, pdiff_perim=44u, pdiff_area=60p, pdrain_terms=2, gate_area=0p, gate_terms=0, wire_area=0p]
+* END node caps
+xfoo !GND !Vdd foo.a foo.b inv_c<>
+

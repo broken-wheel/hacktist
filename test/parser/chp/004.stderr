@@ -1,0 +1,23 @@
+At: "004.hac":5:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	(process-prototype) [3:1..43]
+#STATE#	{ [3:45]
+#STATE#	keyword: chp [4:1..3]
+#STATE#	{ [4:5]
+#STATE#	(id-expr): R [5:2]
+#STATE#	! [5:3]
+#STATE#	bool: false [5:4..8]
+in state #STATE#, possible rules are:
+	chp_send : member_index_expr '!' . connection_actuals_list  (#RULE#)
+	chp_send : member_index_expr '!' .  (#RULE#)
+acceptable tokens are: 
+	'(' (shift)
+	',' (reduce)
+	':' (reduce)
+	';' (reduce)
+	']' (reduce)
+	'}' (reduce)
+	THICKBAR (reduce)

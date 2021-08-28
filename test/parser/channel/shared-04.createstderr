@@ -1,0 +1,153 @@
+WARNING: channel B lacks connection to a producer.
+Warnings found (1) while creating complete type <top-level>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	6	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	7	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	8	##ADDR##	procdefn	0	#HEAD#	#TAIL#	121
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	10	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	11	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	12	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	13	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	14	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	15	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	18	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	19	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	20	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	21	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	22	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	24	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	25	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	28	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	29	##ADDR##	schnnref	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	footprnt	0	#HEAD#	#TAIL#	333
+	31	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	32	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	33	##ADDR##	CHPconcr	0	#HEAD#	#TAIL#	20
+	34	##ADDR##	CHPrecv_	0	#HEAD#	#TAIL#	21
+	35	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	36	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	37	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	38	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	39	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	41	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	42	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	43	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	44	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	46	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	47	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	48	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	49	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	51	##ADDR##	prcprtcn	0	#HEAD#	#TAIL#	28
+	52	##ADDR##	sprcmref	0	#HEAD#	#TAIL#	16
+	53	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	54	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	55	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	56	##ADDR##	prcprtcn	0	#HEAD#	#TAIL#	28
+	57	##ADDR##	sprcmref	0	#HEAD#	#TAIL#	16
+	58	##ADDR##	schnmref	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	footprnt	0	#HEAD#	#TAIL#	565
+	60	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	61	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  5 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    sink = process-definition (defined) sink(
+        bool<> !GND
+        bool<> !Vdd
+        chan??(bool<>) X
+      )
+      In definition "sink", we have: {
+      Instances:
+        !GND = bool<> sink::!GND
+        !Vdd = bool<> sink::!Vdd
+        X = chan??(bool<>) sink::X
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan??(bool<>) X
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      chp:
+        concurrent: {
+          X?
+        }
+      footprint: {
+        !GND = bool^0 = sink<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = sink<>::!Vdd (2) @[ supply_high port-alias ] 
+        X = channel chan??(bool<>)^0 = sink<>::X (1) @[ port! !! chp? meta? ] 
+        Created state:
+        channel instance pool: (1 ports, 0 local, 0 mapped)
+        1	sink<>::X @[ port! !! chp? meta? ]	
+        bool instance pool: (2 ports, 0 local, 0 mapped)
+        1	sink<>::!GND @[ supply_low port-alias ]	
+        2	sink<>::!Vdd @[ supply_high port-alias ]	
+        resolved concurrent actions:
+          X?
+        chp events: {
+          event[0]: receive: X?, #pred: 1, succ: 
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    B = chan(bool<>) B
+    Y = sink<> Y
+    Z = sink<> Z
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  B = channel chan(bool<>)^0 = B (1) @[ ?? sub? chp? meta? ] 
+  Y = process sink<>^0 = Y (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    X = channel chan??(bool<>)^0 = B (1) @[ ?? sub? chp? meta? ] 
+  )
+  Z = process sink<>^0 = Z (2) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    X = channel chan??(bool<>)^0 = B (1) @[ ?? sub? chp? meta? ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 2 local, 0 mapped)
+  1	Y	sink<>
+    channel: 1
+    bool: 1,2
+  2	Z	sink<>
+    channel: 1
+    bool: 1,2
+  channel instance pool: (0 ports, 1 local, 0 mapped)
+  1	B @[ ?? sub? chp? meta? ]	
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

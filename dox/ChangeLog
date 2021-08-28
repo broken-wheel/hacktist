@@ -1,0 +1,363 @@
+# "dox/ChangeLog"
+#	$Id: ChangeLog,v 1.42 2011/05/03 19:20:33 fang Exp $
+
+2011-06-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-78c:
+	  .cvsignores copied over to .gitignores
+
+
+2011-04-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-84-64-pr-01-19:
+	  Added ipple directory for documentation, texinfo.
+
+
+2009-11-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-53:
+	  chpsim: added quick tutorial chapter for getting started
+
+
+2009-09-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-29-supply-01-09:
+	  Documented language extensions for overriding PRS supplies
+		and per-instance implicit supplies.  
+
+
+2009-08-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-27-netlist-01-22:
+	  Added hacknet texinfo documentation.
+
+
+2009-05-28	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-21:
+	  Distribute documentation so user need not build it, 
+		which removes some dependencies on doc tools.
+
+
+2009-02-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-04:
+	  prsim/commands.texi: new getports and getlocal commands.
+
+
+2009-02-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-83-03+:
+	  mk/Make.fig: if dot is missing, just copy a dummy placeholder
+		figure (common/missing-dot.fig) instead of error-ing out.
+
+
+2008-11-27	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-66+:
+	  Added URL links to homepage in copyright notices in 
+		texinfo documents.  
+
+
+2008-10-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-48:
+	  prsim documentation on hierarchical co-simulation and
+		basic VPI function calls to vpihacprsim.so.
+
+
+2008-03-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-09-merged-parser-06-07:
+	  Branch merge.
+
+
+2008-03-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-05-parser-06-07:
+	  mk/Make.* templates: use POSIX method of formatted printing, 
+		printf over echo -n (which doesn't always work).
+
+
+2008-02-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-38-prsim-09-08:
+	  prsim/commands.texi: new section on channel commands.
+
+
+2008-01-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-82-02-ACT-03-01-prsim-08-19:
+	  prsim/commands.texi: include cmd/weak-rules.texi (generated)
+
+
+2007-10-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-83:
+	  Minor install fix in Make.dox-tail (install-html)
+
+
+	* HACKT-00-01-04-main-00-81-82:
+	  Added directory entries for .texi (info) files.  
+
+
+2007-09-13	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-74:
+	  Removed most obsolete latex sources, superceded by texinfo sources.
+	  Texinfo dvi and pdf cannot be built in parallel because 
+		auxiliary file collide.
+
+
+2007-08-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-65:
+	  chpsim:/stdchpfn.texi: documented bit-manip functions.
+
+
+2007-08-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61-chpsim-08-03:
+	  chpsim:/ Updated standard function library documentation.
+		Updated types and macro documentation. 
+	  mk/scantexdepend.awk: exclude more shell patterns from search
+
+
+2007-08-21	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-61:
+	  tutorial:/ documentation migrated to texinfo.
+
+
+2007-08-20	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-60:
+	  PRS macro and spec directives' documentation for hac.texi
+		now extracted from source.  
+
+
+	* HACKT-00-01-04-main-00-81-59:
+	  prsim documentation added, just describes usage and commands.
+
+
+2007-08-19	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-58:
+	  Migrated HAC language dox to texinfo, old ones still retained.
+		Very minimal modifications in port.  
+
+
+2007-08-16	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-54:
+	  Moved cast2hac docs to Texinfo.
+
+
+2007-08-15	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-52:
+	  chpsim/usage.texi: disambiguate file clashes from case-insensitivity
+	  Makefile.am: installcheck the .info file, using init_hack.sh
+
+
+	* HACKT-00-01-04-main-00-81-50:
+	  Make.dox-head: provide script to cd $(srcdir) and extract texinfo
+		documentation in the $(srcdir) of documentation, 
+		no longer in $(builddir) because distribution needs 
+		auto-generated .texi files to suppress rebuild of .info, 
+		which is distributed by default.  Crucial for
+		distcheck, which uses non-writable $(srcdir).  
+		Mostly affects chpsim/Makefile.am, will be applicable to others.
+		Also had to dist-hook-touch subdir files to maintain
+		dependency-ordered timestamps so user need not regenerate
+		info files. 
+
+
+2007-08-14	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-08:
+	  chpsim/: documented standard library usage, other feedback fixes.
+
+
+2007-08-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-06:
+	  chpsim/: Now extract documentation from module library functions
+		in lib/libchpfn/*.cc, included by stdchpfn.texi.
+	  mk/scantexdepend.awk: reject strings that cannot be file names,
+		because they contain special shell characters
+
+
+2007-08-11	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-46-chpsim-07-05:
+	  chpsim/: options and commands documentation relocated
+		to source code and extracted for ease of maintainence.
+
+
+2007-08-08	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-45:
+	  Make.dox-tail: .NOTPARALLEL: ps pdf removed, 
+		in favor of explicit non-phony targets.
+		subdir Makefile.am's updated accordingly.
+	  chpsim/extending.texi: More notes on compiling modules.  
+
+
+	* HACKT-00-01-04-main-00-81-44:
+	  Make.dox-head: use installdirs.mk
+
+
+2007-07-31	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-26:
+	  Completed first draft of CHPSIM manual in Texinfo.
+	  End of branch, merge to trunk.
+
+
+2007-07-30	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-25:
+	  chpsim/extending.texi: wrote most of chapter on dl-module usage.
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-24:
+	  Stripped out use of @float, @caption because Texinfo 4.6 doesn't
+		support it.  WTF!?  (And I couldn't think of a workaround.)
+	  [curses in perl]
+
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-23:
+	  Much work on chpsim texinfo documentation, 
+		mostly usage options and interpreter commands.  
+	  chpsim: Moved chpsim.texi to hacchpsim.tex to avoid potential
+		confusion with old chpsim (if documents exist?)
+	  Make.dox-head: definitions moved to Make.stddef.
+
+
+2007-07-29	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-39-chpsim-06-22:
+	  Make.dox-head: PSNUP is now Makefile variable
+		Define htmldir, pdfdir, psdir.
+		doc_DATA split into pdf_DATA and ps_DATA.
+	  Make.dox-tail: clean-fig target relocated here from subdir Makefiles.
+	  mk/Make.latex: .dvi.ps rule is now provided by texinfos.am
+	  local.cvsignore: ignore texinfo generated extensions.
+	  chpsim/*: now use texinfo as primary documentation generator.
+		Moved chpsim.tex to chpsim-tex.tex, added chpsim.texi, 
+			intro.texi, execution.texi, test.texi.
+		Resorted to using an install-hook for html directory 
+		installation to workaround install script shortcoming.
+		NOTE: texi2pdf is not using fig2dev-fused .pdftex_t figures.
+	  TODO: continue documenting new (and old) chpsim features.
+
+
+2007-06-18	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-38:
+	  mk/Make.fig: support older fig2dev
+
+
+2007-06-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-81-25-chpsim-05-01:
+	  Added fig -> tex support, including updatefig.awk.
+		Figure generation done by fig2dev, 
+		splitting out specially formatted LaTeX text.  
+	  chpsim: updated execution description, with new figure.
+
+
+2007-02-06	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-73:
+	  mk/Make.latex: moved SUFFIXES there.
+	  mk/Make.fig: xfig, dot and output format support
+	  chpsim: Added new figure depicting event execution, 
+		includes basic figure support.  
+
+
+2007-01-23	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-68:
+	  scantexdepend.awk: more robust for when dependent file names
+		wrap around to next line in the .log file, try again...  
+	  mk/Make.latex: only make .ind if .idx exists
+	  Moved lang/hac.bib to common/hac.bib as shared biblio.
+	  Added placeholder prsim/chpsim documents (empty)
+	  Added CHP comments in cast2hac/CHP.tex and lang/CHP.tex
+
+
+2006-11-26	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-59:
+	  Removed traces of maketexdepend, leaving only scantexdepend.
+	  Still sits in CVS, but no longer distributed or mentioned.  
+
+
+2006-11-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-80-58:
+	  Replaced old maketexdepend system with new scantexdepend.awk.
+	  Added: mk/scantexdepend.awk
+		This post-processes the .log file to produces a dependency
+		list suitable for Makefiles.  
+		Unlike its maketexdepend predecessor, this runs post-compile, 
+		so there is expected to be a depend file (may be empty dummy)
+		existing, or one may be created during the first invocation.
+		Script is much simpler, shorter, with but few exceptions. 
+	  TODO: remove all references to maketexdepend permanently, 
+		and remove from distribution.  
+
+
+2006-05-25	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-79-05:
+	  Created common/ directory for useful macros and packages.
+	  mk/Make.latex: pointer TEXINPUTS to dox/{common,mk}
+	  mk/maketexdepend.{awk,tex}: added a ignorepattern command.
+	  mk/Makefile.am: no longer copy maketexdepend.tex to builddir.
+	  Added cast2hac directory -- about CAST migration.  
+
+
+2006-02-05	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77-2:
+	  */Makefile.am: now configurable with --disable docs to suppress
+		default building of documents.  
+
+
+2006-02-04	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-77:
+	  Makefile improvements: latex documents are now VPATH buildable
+		after some reworking of mk/Make.latex.  Hallelujah!
+	  Built documents have been added to the installation DATA targets.  
+
+
+2006-01-22	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-73-merged-prsim-00-34:
+	  Merge.  Includes -PRS-03 and -prsim-00 branches.
+	  A little documentation was added to the lang directory.  
+
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* HACKT-00-01-04-main-00-71-merged-rename-00-06:
+	  Trunk merge.  
+
+
+2005-12-12	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71-rename-00-06:
+	  Documentation updated to reflect official name change to HACKT.  
+
+
+2005-12-09	David Fang		<fangism@users.sourceforge.net>
+
+	* ARTXX-00-01-04-main-00-71:
+	  Birth of this ChangeLog.
+	  Updated mk/maketexdepend.awk for POSIX correctness
+		in use of regular expressions.  
+

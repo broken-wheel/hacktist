@@ -1,0 +1,849 @@
+# "NOTES"
+#	$Id: NOTES,v 1.21 2009/10/02 01:56:24 fang Exp $
+
+Developer's Notes (transcripts of fangism muttering to himself...)
+
+//=============================================================================
+2009-09-14:
+	implementing implicit supply nodes that are overrideable
+	(figure out semantics first before worrying about syntax)
+	all defproc will have implicit unnamed supply nodes representing
+		the primary Vdd and GND.  Unless specified otherwise, 
+		these are use to supply the prs { } devices.  
+		I think the easiest way to do this is to automatically
+		declare implicit bool Vdd! and GND! (! here means automatic)
+		so that they cannot possible be referenced by normal means, 
+		nor accidentally aliased.  Declared secondary supply
+		ports, however may require further checks.  
+	Footprint/connections/allocation:
+		Should uses be allowed to reference these implicit nodes
+			for instance connections?  (inclined to say no.)
+			Don't want to be able to connect it to other
+			aliases arbitrarily.  
+		Should these be treated as bool (meta-type)?
+			If so, then restrictions are needed.
+			Also, secondary supplies can be passed in as 
+			regular bools, but connections to those are yet
+			unrestricted.  
+		prs <> arguments should be restricted to supply bools only.
+			those with attribute Vdd, and attribute GND.
+		Perhaps restrictions can be added with attributes?  
+			But we want to make aliases to them when convenient.
+		Allocation: best to leave this automatic by virtue
+			of existing infrastructure.
+	Need to anticipate future scalability restructuring work.
+	Syntax and annotation:
+		node @ [supply], or for new attribute
+	Q: should top-module definition also get Vdd/GND ports?
+	Implicit supply connections:
+		each process instance needs to automatically connect
+		is supply ports to some other nodes in the parent process, 
+		usually the parent's implicit supplies.  
+		The difficulty, deciding when to do this automatically:
+		*after* sequential scope unrolling (which will have
+		processed supply override directives).
+		But must be *before* assigning local footprint IDs.
+		Automatic conditional connections.  
+		algo:
+			for each local process instance p (not subinstances)
+			if p.Vdd->next() == p.Vdd (unconnected)
+				then alias p.Vdd -> Vdd
+				(direction matters because of union-find)
+			[same for GND, or any other implicit globals]
+	grammar supply override directives: should only be allowed to
+		refer to non-member process instances.
+
+//=============================================================================
+2008-08-01:
+	prsim data structures: in the process of restructuring expressions 
+		hierarchically to avoid replicating structures unnecessarily
+		for improved scalability.
+		Instances sharing the same type will lookup the same
+		process footprint for local rule/expression structures.  
+	issue: OR-combination rules for nodes
+		to support process hierarchy and structure re-use, 
+			process subgraphs cannot contain OR-combination 
+			expressions of rules; they must go in a different
+			auxiliary process (not the top-level), or be 
+			folded into the nodes' fanin.  
+		Instead of including expr structures, use simpler arrays.
+		For state, maintain countdown and number of unknowns.  
+		Might be simpler to make a special subgraph for OR combinations
+		in an auxiliary process...
+	difficulty: as each unique_process is processed, there is no
+		global context information, thus each unique subgraph will
+		need to summmarize local fanins, to translate to global
+		fanin per process instance.  
+	memory: weak-rules are exceptional, 
+		rules with multiple fanin and single fanin are both common,
+		but don't want to pay memory for both, consider a union?
+		Want to compact and be efficient where only one rule
+			pulls a node (common), and for OR-combination.  
+	rule-attributes (strength):
+		currently, the strength of a rule is encoded at the node, 
+			by attaching the root expression to the weak or
+			strong group (indexed).  
+		propose to store information in rule-struct flags to be shared
+		
+
+//=============================================================================
+2007-07-10:
+	on relaxed template types: discussion
+	Q: should relaxed template types be allowed in port declarations?
+		In other-words, can the type of a port alias be delayed
+		from the top-down?
+	A: No.  There is a fundamental problem with delaying the type binding
+		on public ports.  
+		Since each complete type needs to define a fixed footprint, 
+		the types of the ports cannot be further delayed.  
+		Connections: delaying type completion of ports would
+			result in a mutual dependence between levels of
+			hierarchy.  
+		We will, however, allow relaxed typed ports whose parameters
+			are bound by the definition (internals).  
+		Thus, ports, like any internal subinstances must be fully 
+			type-bound in well-formed definitions.  
+		Note that this means, we never need member expressions as 
+			references in type-completion declarations, since
+			subinstances of hierarchical types are guaranteed
+			to have complete type.  Nifty.  
+
+	Phase ordering between relaxed type-binding and aliasing:
+		presents difficulties in instantiations and connections
+		since instantiations can now happen *after* aliases
+		are formed.  Resort to hackish patches to address.  :(
+
+//=============================================================================
+2006-11-14:
+	more on channels:
+	can directional (send-only, receive-only) channels be declared
+		in any scope or only in ports?  Doesn't make sense for
+		ports to have direction in scope, since channels
+		cannot dangle, must eventually connect up.  
+		Proposal: reject scope-local directional channel decls.  
+
+	Defect report: original grammar never allowed arrays in channel's
+		data type specifiers, e.g. chan(bool[2]) rejected. 
+		This was accidental, and arrays should be allowed.
+	enqueue TODO list.  
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2006-11-14:
+	channels: for now, enforce 1-to-1 sender-receiver connectivity
+		and reject shared sending/receiving, and dangling channels.
+	Future: provisions for shared channels (requiring use to 
+		guarantee exclusive use)
+		semantics: allow multiple senders to connect iff all
+		participating senders (aware) agree to share.
+		Connecting to a non-sharing terminal is rejected.
+	Syntax proposal: something like ?? and !!
+
+	connection checking: a channel send-only port are considered produced
+		if it appears as a sent-literal in some CHP action
+		in the CHP body.  In other words, the CHP body is like a
+		process whose interface is given in the way channels
+		are referenced (send vs. receive).  Connection checking
+		should account for the CHP definition.  
+
+	CHP: should there be a top-level CHP body?  Currently, syntax 
+		forbids, but internal representation allows. 
+
+//=============================================================================
+2006-11-12:
+	CHP: bool vs. bool (discussion with Rajit)
+	Q: need to distinguish betwen physical 'bool' and abstract datatype
+		bool, which is synonymous with int<1>.  
+		e.g. ambiguity of "defproc blah(bool a) ..."
+	Considering a 'dbool' typedef to int<1>.  
+	However, would like CHP to evaluate expressions and manipulate
+		physical bools directly, since there's no interface-to-
+		implementation mechanism in-place yet.  Eventually, will be 
+		able to "deftype dual_rail <: bool" to describe 
+		physical implementations.  
+	Semantics for CHP operations on physical bools is as expected,
+		nothing tricky.  
+	Rationale: want to punt implementation/interface work, but still
+		allow CHP to handle physical bools directly.  
+
+//=============================================================================
+2006-05-14:
+	CHP footprint implementation:
+	is it mostly a copy of the source representation?
+		Yes, so we use same class hierarchy, but unrolling
+		results in substituting meta-values with constants.  
+	Does CHP have any parameter dependents that aren't already 
+		taken care of in type-unrolling and object-instantiation?
+		Proposed a metaloop-selection, which could be expanded, 
+		but would rather punt on it.
+	The purpose of such footprint unrolling is to finish compile-time
+		evaluation of meta-parameter dependents to fixed constants.  
+		e.g. x[i].  'i' could be a meta parameter (constant).  
+	Status: done (2006-06-25)
+
+//=============================================================================
+2006-05-11:
+	Re: Global parameter value lookup
+	Temporary workaround to allow global meta parameters to be looked
+		up during unroll value resolution.
+	But what namespace is chosen as the start for parent lookups!?
+	Currently, the namespace that is parent of the TYPE being
+		instantiated is looked up, NOT the namespace in which
+		the type is INSTANTIATED.  
+		See implementation in 
+		process_definition::unroll_complete_type and 
+		::create_complete_type.
+	Read that last statement one more time.  
+	This resembles argument-dependent lookup, a.k.a. ADL.  
+	The underlying problem is that unroll_context doesn't really
+		support namespace lookup yet.  
+	TODO: need well-defined lookup semantics and bindings.  
+
+//=============================================================================
+2006-05-10:
+	Brief discussion about supporting nonmeta subscripts in CHP.
+	Conclusion: must have nonmeta-value (int<>) subscripts.
+		subscripts are an implicit decode (one-of-many).
+	Status: CHP sublanguage current constrains instances references
+		to be meta-references (compile-time only).
+	However, CHP intermediate representation might be more restrictive,
+		and may benefit from having static selection graphs.  
+	Strategies: internal expansion of nonmeta selections
+		into meta-selection equivalents.  How?
+	Concerns: range checking
+	Update (2006-06-xx): no longer restricted to meta indices!
+
+//=============================================================================
+// forgot about this file for several months...
+//=============================================================================
+2005-09-01: ARTXX-00-01-04-main-00-55-footprint-01-32:
+	Notes on algorithm for replaying internal port aliases:
+	had: detect whether or not instance in question is a 
+		a direct member of a port, and if so, replay the connection.
+		(in instance_alias_info::replay_internal_aliases)
+		WRONG: this misses *aliases* of ports.  
+	then: tried to replace with instance_alias_info::retrace_port_alias, 
+		if the instance in question (or any of its parents)
+		are aliased to a port, then replay its connection.
+		WRONG: this only finds the first port connection, 
+			but an instance may be a public port to *multiple*
+			types, and thus ALL port-aliases must be replayed.  
+	SOLUTION: replay all port-aliases at all levels of instance 
+		hierarchy, i.e. given x.y.z, replay aliases
+		of the .z level and those of the .y, and then the .x level.  
+		Is upward recursive in hierarchy.  
+	Q: is there a top-down only solution, since replay already traverses
+		top-down?  it sucks to have to inspect upward...
+		A top-down solution would involve playing aliases
+		between subinstances of aliases explicitly because
+		x.y (x port) could alias to z.y (z internal), which
+		could then alias to another port -- only discovered 
+		by upward inspection.  
+	TODO: save a compact record of internal aliases for each
+		complete type and replay from that without having
+		to check the same hierarchies over and over.  
+		(like instance reference connections)
+	UPDATE (2005-09-02):
+		above is STILL insufficient.
+		consider w.x.y whose formal alias is W::x.y 
+		and aliased to port W::p,
+		X (y, z) has X::y = X::z, and W contains
+		X x,a,b; with x.z = a.y, a.z = b.z;
+		W::q = W::b.y;
+		Then p is alias to q, but only discovered through
+		visiting up and down aliases...
+		Thus we need a traversal to visit ALL equivalent aliases
+		that walks both up and down hierarchies because
+		connections are not flattened.  
+
+//=============================================================================
+2005-08-25:
+	In final phase of creation checking:
+		every unique instance whose collection type is relaxed
+		must have relaxed actuals.  
+		Definitions however are allowed to defer this because
+		relaxed actuals may be passed in from the public ports.  
+		Top-level instances however, MUST meet this criterion.  
+		Intelligent: if instance placeholder is not aliased
+		to a public port, and it is missing, then can complain.  
+
+
+//=============================================================================
+2005-08-20:
+	Considerations for unrolling, in the grand scheme of things.  
+	Top-level unrolling alters the top-level instance_collections
+		that are scattered throughout the namespace hierarchy.  
+	Definition-level unrolling CANNOT alter the instance_collections
+		that reside in the definition's scopespace because they may be 
+		shared by types with different template parameters.  
+	Each definition contains a map of footprints.  
+		Unrolling should work with instance_collections that belong to
+		a particular footprint.  
+		This means, we need to replicate the instance collections
+		in each footprint??  (The ones in the definitions are
+		really skeletal placeholders for unrolling.)
+		But what about the top-level?  It references globally 
+		accessible instances, that are NOT in the same namespace.  
+	Now it seems we may need to extend *unroll_context* to point 
+		to the correct footprint-scope:
+		if NULL, then we are at the global scope, no further 
+		resolution is needed.  
+		otherwise, we are in some definition scope, so
+		all instance_references to the base definition's 
+		instance_collections must be resolved to the 
+		particular complete_type's footprint instance_collection.  
+		The top-level (modules) footprint will just have an 
+		empty instance_collection map.  
+	Will need to modify simple_met_instance_reference::unroll_*
+		their inst_collection_ref member (instance_base reference)
+		will need one additional level of translation.  
+	NOTE: this idea was noted in the comments of class footprint
+		some revisions ago, though I don't recall having written it.  
+		Already contains an instance_collection_map_type
+		for the purpose just described.  
+	LATER: what about references to global instances in local scopes?
+
+
+//=============================================================================
+2005-08-16:
+	extension of 2005-08-07 entry:
+	We're ready to unroll and create types encountered during hierarchical
+		creation and allocation.  
+	Some issues stand in the way:
+		Relaxed template actuals may only exist in one place in the
+		connection hierarchy, and may not even be in the same alias
+		ring.  
+		We need to guarantee that: one of the equivalent aliases
+		(and only one) contributes relaxed alias actuals
+		to the allocated instance.  We *must* detect conflicts
+		across the hierarchy.  (This will get complicated once we
+		glue instances and ports.)
+	Proposal: process/chan/struct instance state will contain an optional
+		relaxed const_param_expr_list ptr set from alias_actuals.  
+		Need one pass over all instances with the same ID to collect 
+		these relaxed actuals and check for equivalence and conflicts.  
+		(even replace equivalent pointers as an opt.!)
+		(No need to back-copy the established pointers to the 
+		alias, the alias will just reference the state's
+		actual parameters once its state ID is set.  
+		No need to clobber the pointer either, it's just a reference
+		count that doesn't take any additional storage.)
+		(get_type: if ID set, use actuals if exists, else use own)
+		Note: at each level of the hierarchy, psuedo-allocated 
+		(placeholder) instances are allowed
+		to be missing relaxed actuals, because they may be connected
+		to another instance in a different level.  
+		TODO: run this check first.
+		Need one final check that combines the hierarchical
+		footprints into flat global footprint.  
+		At THAT point should we guarantee that every instance
+		as satisfied (exactly once) unique relaxed actual values.  
+	Hierarchical complications: additional aliases may occur due to 
+		internal connections of the instantiated type --
+		those checks must be deferred.  
+		At each level of the hierarchy, just check for conflicts.  
+		Call this from canonical_type and module,
+			passing in the footprint&.  
+	First, add relaxed actuals pointer to process/chan/struct
+		state instances.  
+	Q: if/when should relaxed actuals be propagated around
+		rings of aliases?
+	A: Earliest possible time is during 
+		instance_reference_connection::unroll.
+		The lastest point should be when state is allocated
+		during the creation phase.  How to do this efficiently?
+
+	Important comment (as if the others aren't):
+		When comparing and propagating actuals during connections:
+		if the two entities being compared have NULL actuals
+		(where they are eventually needed, as required by the type), 
+		then we should merge the two NULL-actual alias rings together.
+		Even if they are connected elsewhere hierarchically.  
+		WHY?  Because when we discover hierarchical connections, 
+		we need to propagate known actuals to all known aliases.  
+		If 'connected' null-actual-rings were kept separate, 
+		then when they are merged with known actuals, 
+		they will not propagate maximally; there will be isolated
+		rings of NULL actuals that should NOT be so.  
+		See CRITICAL comment in "Object/inst/alias_actuals.tcc":
+		instance_alias_info_actuals::__symmetric_synchronize.
+
+//=============================================================================
+2005-08-08:
+	In creating unique state, need to process the definition
+	of the thing being instantiated to determine internal connections.
+	Each complete type will have a pseudo state template
+		used to check internal connections when creating
+		external state.  
+
+	CFLAT format notes:
+	cflat -connect:
+		"x" "y"
+		where x != y, and x is the canonical name
+		quotes requires to be safe.  
+	cflat -prsim:
+		adds production rules, literals also quoted
+		parenthesization optional
+
+//=============================================================================
+2005-08-07:
+	KNOWN ISSUE: need to check that all connected aliases (during or after
+		unique-creation phase) have valid and equivalent
+		relaxed template actuals.  Unrolling is insufficient to
+		catch errors, mismatches that occur across the hierarchy.  
+	TODO: fix crash when loading empty object file (easy).
+
+//=============================================================================
+2005-08-05:
+	Unique creation: allocating unique state to aliases.  
+	Considerations of implementation:
+	Want state to be persistent (save/restorable)
+		yet don't want each state instance to be managed
+		by persistent object manager (each entry is costly).  
+		Resolution: use a list_vector as an indexed pool of state
+			(per type).
+	Instead of keeping a reference count pointer per alias, 
+		just keep an index into the pool of the appropriate type.  
+		Instance-entries still have back-reference to canonical
+		hierarchical instance alias.  
+		(Reserve 0 as 'uninitialized')
+	But who owns these state pools?
+		Shouldn't be global UNLESS there is a way to
+			save and restore all the state through module.  
+			list_vectors (and their) instances are
+			copy-constructible, so this is feasible.  
+		Could belong to the module, since that needs to be 
+			kept persistent.  Create a 'state' member.  
+		Could belong to particular definition, since those
+			must outlive their instances.  
+		Each type could have its own pool.  
+			relaxed or strict?
+		pool could be public static member of instance_type
+			and referenced by the module class.  
+		Clear pool upon expiration of module?
+	Tentative resolution: global static member pools of instance_types.  
+
+//=============================================================================
+2005-07-18:
+	Minutes of meeting.
+	cflat (backwards compatibility) has some constraints:
+		some programs require prior canonicalization of
+		unique instances, must use the same name to refer
+		to same node.  
+		Name canonicalization may only occur after unique
+		creation (instantiation).  
+		Therefore, creation must be done first.  
+	For unique creation, need to play back instantiations
+		after connection pass (unroll).  
+		Visit each top-level instance and check whether state 
+		has been created/allocated.  If not, then allocate.
+		Then recursively do for all ports and members.  
+		When check finds already created, establish
+		the pointer to the same memory.  
+
+//=============================================================================
+2005-07-17:
+	BUG to fix:
+	Passing template parameters down to ports:
+	e.g. process/059,060.in
+	TERMINATED. (2005-07-18)
+
+//=============================================================================
+2005-07-14:
+	Do built-in channel types have ports?  Should they be expanded
+		recursively like other structured types?
+
+//=============================================================================
+RESOLUTIONS (minutes of 2005-07-12 meeting):
+	(addressing  2005-07-11 entry)
+UNROLL (connect) phase:
+	Queries:
+	Are x and y connected? (somewhere in hierarchy)
+		Lemma: If super instances a, and b are explicitly aliased, 
+			and subinstances a....x, b....y are somehow
+			connected, then then all intermediate types
+			from top to bottom must match.  
+		Result: checking for connection requires upward checking
+			of x and y (and their aliases') parents WHILE
+			their types match.  As soon as parents' types
+			mismatch, can deduce non-connectivity.  
+	What is x connected to (all aliases)?
+		print aliases of itself and all parents' aliases.
+		(potentially multiplicative in size)
+	Graph connectivity: are two instances connected by anything?
+		Are any public ports of the two instances connected?
+		(recursive in public ports)
+	Subinstance implementation:
+		Upon instantiation, can recursively expand sub-instances
+		of ports down to leaf types, or defer until
+		member is actually referenced (or ports connected), 
+		a mere demand-driven optimization.
+		Should be able to expand ports recursively regardless
+		of relaxed template actuals because no ports may depend
+		on relaxed actuals.  
+		Private internal instances will not come into play until
+		unique creation.  
+	Any need to "play" local internal connections in this phase?
+		NO.  Only needed during unique creation.  
+
+cflat: will be purely text dump traversal, as originally planned.  
+
+UNIQUE (create) phase:
+	NOTE: will probably need one final type check for references
+		and aliases that involve relaxed actual parameters
+		because some checks are deferred during the unroll stage.  
+	Recursive traversal of aliases to establish object uniqueness, 
+		can be identified by e.g. a memory address of residence.  
+	Allocation of memory for state information. 
+
+SIMULATE operations and issues:
+	Establish fan-in and fan-out relationships.  
+	Don't want to replicate expression objects, instead have unique
+		instance reference expression of definitions.
+	(prsim) expression memoization
+	expression templates for prs in definitions
+		each production rule will map literals to 
+		positions to be used in the...
+	translation tables from local references to global unique IDs:
+		unique instances will point to (OR-combination)
+		of expression templates.
+	
+//-----------------------------------------------------------------------------
+2005-07-11:
+	Instance alias connection considerations:
+	Suppose type A has public members b and c.
+		A x, y;
+		If b and c are connected (internally), then what exactly 
+		happens when x = y?
+	How to determine whether or not two instances are connected?
+		Two instances referenced may be deep in the subinstance
+		hierarchy, and they connect if *any* of their parents 
+		are aliases.  But what an efficient way (<O(N^2)) of 
+		checking for aliasing parents?
+	WHEN are sub-instances expanded?
+		Do they require type to be complete?
+			(Theoretically, no, because instances should not 
+			depend on relaxed actual parameters.)
+		Sometimes types are never completed because they are 
+			merely relaxed-typed aliases (in arrays, e.g.).  
+		Create upon instantiation (regardless of relaxed actuals)?
+		Expand public ports only? Defer private and internals?
+	cflat -- want it to flatten connections in the hierarchy?
+		Or just some sort of hierarchical traversal to 
+		dump connections in some format?
+	Preventing mutual recursion/inclusion between types requires
+		some partial ordering between definitions.  
+		Or simply require definition before use/instance declaration.  
+	Procedure: check definition for existing type
+
+
+//=============================================================================
+2005-07-05:
+	Enforcing that things that shouldn't depend on relaxed formal
+		parameters... don't depend.  
+	Difficulty: what if dependence is established through
+		expression assignment? e.g. pint x = y, where y is relaxed.
+	Difficulty: what if is done through arrays and collectives?
+		(don't worry until complex aggregate expressions)
+	Proposal: need mechanism for tracking origin... for EVERY
+		value that may exist!  That could get expensive fast...
+		Store extra 'poison' bit with each const_param, yuck???
+		What about const-collection? pair<value_type, bool>?
+		That's going to f*** up the binary format once more...
+		But this will make room for more value attributes.  
+
+
+//=============================================================================
+2005-07-01:
+	resolved CHP questions, answers inlined in the 2005-06-11 entry.
+
+//=============================================================================
+2005-06-27:
+	TODO: clearly define standard lookup and name resolution rules.  
+	Shadow warnings:
+		If a template/port/loop parameter shadows another
+		available identifier, issue warning (compiler option)?
+	What about enum member names?  need special lookup rules?
+		(application: CHP enum equality comparison)
+		If id_expr used as an expression, then look-up as
+		an expression or enum...
+
+
+//=============================================================================
+2005-06-23:
+	Major goal: port and member instance connections (unroll-time)
+	RESOLUTION (2005-07-01):
+		use single unified pass, 
+		don't worry about multifile instance linking, 
+			we may drop support for that idea completely
+	requires (meta) member_instance_reference unrolling, which
+	requires complete-type reference/definition unrolling, which
+	requires principle definitions to keep track of what template
+		parameters have been used to complete type-references.
+		(type-reference need non-const definition handles)
+		Propose to keep some sort of map/repository of unrolled
+		types and their substructure layouts.  
+		Repeated instantations of same type should be able to
+		trivially initialize with the same 'footprint'.
+		(Far Future: each complete type should back-point to the 
+		template (general, or specialized) used to generate it. 
+		This is especially important for checking partial-order
+		specialization consistency.)
+	Substructure_manager / offset_map:
+		(see also 2005-04-28 entry)
+		map of member name to some index/offset.
+		mapped type is some pointer to what?
+		e.g.: how should "x.y.z" be resolved?
+			lookup top-level instance x, 
+			lookup member y, obtain offset to y.
+			Use y's offset to get reference to the actual 
+				sub-instance x.y.
+			lookup member z of y, obtain offset in y.
+			resolve instance z of y.  
+		Need to have a public (port) section, 
+			and a private internal section.  
+			Basic meta language restricted to public ports,
+			whereas tool-specific languages *may* use private.  (?)
+			(Everything in top-level is default public.)
+			e.g. params cannot be in ports, thus must be private
+		entries of map contain pointers to index_maps for arrays.
+		Index_maps are are similar to the implementation of the
+			instance_array sparse collection class.  
+			instance_array is currently constructed on the fly, 
+				where offsets are not established.  
+			Index maps will have established indices after
+				a complete unroll of the instantiation
+				statements in the scope.  
+		Keep around reverse offset <-> key-index map?
+		What kind of pointers?  count_ptr?
+	Unrolling revisited: proposing 3-pass approach:
+		1) meta evaluation only -- instantiation and value assignment
+			of local meta parameters only.  Since meta-parameters
+			may depend on other meta parameters, both instantiation
+			and assignments have to be integrated into the 
+			same evaluation pass.  Need to distinguish value
+			instantiation statements from physical instantiations.  
+		2) meta instantiation only -- creation of physical instances
+			or sub-instances.  During this phase, meta types
+			and values have been completed, so only
+			completed types remain.  Recall, each 'type' refers
+			back to a principle definition base with 
+			template actuals.  The first time a specific
+			type is instantiated, the completed definition
+			goes through a definition-unroll to generate the
+			substructure map (for the given set of parameters).  
+			Subsequent instantiations of the same type will
+			reuse those maps for fast instance creation.  
+		3) meta connections only -- establishes physical connections
+			between created instances.  
+		advantages: can create static sparse collection map
+			to translate offsets.  Provides static offset
+			translation maps to the connection phase.  
+		disadvantage: makes tracking proper instantiation before use
+			more difficult because of decoupling.  
+			(Should we not consider them errors?
+			out-of-order declaration-uses?)
+			Consider re-specifying language?
+	What if type is relaxed, like a relaxed array (port) declaration?
+		Technically, type is incomplete, unless we constrain
+		relaxed types (in same family) to have same public ports.  
+		But then their private internal members may be completely 
+			different.  Tools that use private member references
+			will require a separate instance checking phase...
+
+//=============================================================================
+2005-06-11:
+	Integer types: implicitly UNSIGNED.  
+	Assignment semantics: x := y;
+		impose the lvalue's type on y, i.e. infer what y's type
+		should be.  
+		This should take care of widths of integer constants
+		in rvalues.  
+		(What about constant indices?)
+	Need well-defined semantics of data (int, bool) operators
+		in the CHP context.  
+		e.g. what does int<X> + int<X> return?
+			whatever is being expected on the left.  
+			TODO: optional warnings of truncation.  
+		what does int<X> + int<Y> return?
+			the max width, implicitly 0-padded because unsigned.  
+		what does int<X> * int<X> return?
+		Gut feeling: for now types must match, and return same type
+			for arithmetic operators.
+		What about comparisons?  operands must match?
+			No, just pad to the wider.  
+		Provide sign-extensions definition?  built-in?
+			Since ints are unsigned, pad with 0's.
+		Truncation operations?
+			Possible warning.  
+	Do pints implicitly have width 32?  (For now assume yes.)
+		Moot.  Width is inferred from lvalue.  
+		How is it possible for them to mix with other widths?
+	"bits" type, bit fields of integers (not the same as bool).  
+		Proposal: implement as public ports of the int built-in
+			intrinsic definition, like:
+			deftype int <: (bits b[W]);
+		Resolution: Accepted.
+	Logical and bitwise operations:
+		overload '&' and '|' for both bools (logical) and 
+		ints (bitwise) operations.  
+	For data-ranges [x..y] where x,y are run-time values, 
+		do we place any restrictions on the type (width) of x,y?
+		must x <= y?
+		Don't feel good about have size of expression be unknown...
+			very ugly semantics, tons of run-time checks...
+		Resolution: Reject range expressions in CHP.  
+	Non-scalar data/expression references in CHP context?
+		Currently, not allowed.  
+		Resolution: agreed, not allowed.  
+		Need to extend type-references (of built-in channel type)
+			to include (unnamed) packed arrays.
+		Not difficult, just low priority for now.  
+	Support for dataless communications?  X!, Y? ?  just 'X'?
+		Resolution: accepted, also be able to declare
+			empty chan() types, allow dropping parens? ()
+	CHP language:
+		',' and ';'
+		Can we allow ',' between actions other than communications?
+			Currently grammar doesn't support it.  
+		Resolution: accept generalized compositions, 
+			and parenthesize precedence.  
+	Grammar:
+		dark corner: guard expressions starting with a + or - b
+			must be wrapped in parens, after a transformation
+			to eliminate the s/r conflict on x+.
+
+//=============================================================================
+2005-04-29:
+	We had a VLSI group meeting on "the big picture of tools."
+	Concern: certain synthesis-class tools will want to 
+	automatically generate or modify definition and instance objects.  
+	How will templates complicate things?
+	Think about the hooks...
+
+//=============================================================================
+2005-04-28:
+	Tackling structure definition layout:
+	Definition-identifiers are really references to
+	concrete definition collections (in the case of templates), 
+	corresponding to content layout.  
+	Regarding specializations:
+		I think it would be best if we avoid specializations
+		at this point.  However, to plan for them in the future, 
+		we should make sure that the shortcut we choose does
+		not preclude partial and full specializations of definitions.  
+	Regarding the hash_map of identifiers local to a definition:
+		For now, without specialization is ok as is.
+		Later, each specialization definition will need its own map.  
+	Note however, that instantiation may be conditional, so
+		each concrete definition should have its own layout map.  
+	Generate these layout maps on-demand during unroll/instantiation.  
+	When considering template actual parameters, 
+		strict and relaxed parameters are considered equal
+		and part of the distinction process.  
+		It is possible for relaxed parameters to affect the
+		layout of a concrete definition.  
+		Consequence: many redundant and identical layouts kept...
+			(this is unavoidable for semanctic correctness)
+	TODO soon: update parser to accommodate relaxed and strict parameters.
+
+//=============================================================================
+2005-04-10:
+	front-end:
+	parser: multiple-parsers, possibly multiple-lexers
+		use .yy.m4 or (cpp) for grammar snippets
+	modular parser-functors
+	import vs. include? support cpp directives such as #file line?
+		file stacks
+
+//=============================================================================
+2005-02-17:
+	TODO
+	Target: 0.1.5
+	After improving parser... (after second convergence -00-01-04-main-01)
+	Must re-do object stack for type-checking!
+		Make one stack for values and parameters, 
+		another stack for physical instances, 
+		and let the context restrict which one may be used!
+	{chan, proc, bool, int, enum, struct, param}
+	port-like connections require a generic stack, though...
+	3 classes: alias, port, assign (expression)
+		their uses should never mix!
+	During alias-parse/type-checking, one type of list
+		should "lock-out" the use of the others.  
+	This will eliminate the need for any generic object list!
+		And perhaps generic "objects" in general!
+	In general, context interface could be more like stacktrace 
+		interface: automatic stack-like management upon destruction.
+
+
+
+//=============================================================================
+2005-01-05:
+CRITICAL BUG: util/memory/pointer_classes:
+	some destructors (excl_ptr) use release instead of reset, 
+	should be reset, HOWEVER, changing to reset() causes type-check
+	phase (perhaps others) to die horrible deaths.  
+Currently, leave it incorrect as release(), because in the middle of 
+	other modifications (need isolation).  
+	Meanwhile, littered with debug code...
+
+Added FIX_DEBUG predefine-style switch to pointer_classes.h, 
+	need to isolate the problem.  
+	gdb stacktrace shows functions called with an impossible call stack!
+	lookup_namespace inside check_null_template_arguments !?!?
+	memory corruption?
+	Worst case, may need to trace EVERY pointer_class object...
+	FIXED: is safe to remove this conditional macro (2005-01-11)
+	Even if ONLY sticky_ptr is fixed, there is still problem!
+	Problem was failed ownership transfer leading to 
+		premature deallocation, and implicit default copy-constructor, 
+		which gives wrong behavior.  
+	Produce (emulate) test cases?
+
+Time to use stacktrace!
+
+Auto-configure debug mode vs. develop mode vs. release mode
+
+test suit intended for develop mode or release mode
+
+//=============================================================================
+2004-12-12: Regarding unroll-time parameter resolution.
+
+Dependencies: unroll-time type-resolution, with templates, 
+	simple example being built-in datatype int<width>
+
+Issues: need to resolve into constants, or detect error
+	What kind of parameter objects do template arguments need?
+	Something that can hold list of arbitrary collections, 
+		guaranteed to be densely packed, but need not be implemented so.
+	Currently, const_param_expr_list can only hold scalars.  
+	Need an abstract placeholder besides const_param, 
+		perhaps const_param_collection?
+	However, we already have param_instance_collections, 
+		as sparse multidimensional maps.  
+	Would seem a waste to implement yet another set of arrays...
+
+Observations:
+	Assignment was already implemented as passing around flattened 
+		lists of values while retaining dimensions requirements.  
+		Seemed like a quick short cut to get things to work.
+		We might be able to reuse this idea when "assigning"
+		type parameters.  
+
+Prerequisites: (what do I need to do...)
+	For typedefs, may need a parameter value context stack.
+
+Idea:
+	An extension to passing around lists, we can implement as a
+	dense vector that's arithmetically addressed, and will be 
+	extensible to any number of dimensions.
+	Indexed with any multikey.
+	Also make a reference-array for indirection.  
+
+//=============================================================================
+regarding multikey_qmap:
+
+	Instead of deriving in diamond-inheritance, 
+	specialize multikey_qmap as a special case of multikey_map.  
+
+//=============================================================================

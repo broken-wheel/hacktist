@@ -1,0 +1,179 @@
+WARNING: channel boring<>::B lacks connection to a producer.
+WARNING: channel boring<>::B lacks connection to a consumer.
+Warnings found (2) while creating complete type boring<>.
+WARNING: channel classroom<>::lecture.B lacks connection to a producer.
+WARNING: channel classroom<>::lecture.B lacks connection to a consumer.
+Warnings found (2) while creating complete type classroom<>.
+---- END CREATE WARNINGS ---
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procdefn	0	#HEAD#	#TAIL#	119
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	chanplch	0	#HEAD#	#TAIL#	25
+	9	##ADDR##	portscop	0	#HEAD#	#TAIL#	24
+	10	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	11	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	12	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	13	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	14	##ADDR##	chaninst	0	#HEAD#	#TAIL#	20
+	15	##ADDR##	bchntprf	0	#HEAD#	#TAIL#	25
+	16	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	17	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	18	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	19	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	20	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	21	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	22	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	24	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	25	##ADDR##	footprnt	0	#HEAD#	#TAIL#	321
+	26	##ADDR##	fndchntp	0	#HEAD#	#TAIL#	21
+	27	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	28	##ADDR##	procdefn	0	#HEAD#	#TAIL#	122
+	29	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	30	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	31	##ADDR##	procplch	0	#HEAD#	#TAIL#	31
+	32	##ADDR##	portscop	0	#HEAD#	#TAIL#	20
+	33	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	34	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	35	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	36	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	37	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	38	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	40	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	41	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	42	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	44	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	46	##ADDR##	footprnt	0	#HEAD#	#TAIL#	420
+	47	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+	48	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	49	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	51	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	52	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	53	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	54	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	55	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	56	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	57	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	58	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	60	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	61	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	62	##ADDR##	footprnt	0	#HEAD#	#TAIL#	391
+	63	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  2 definitions
+  0 typedefs
+  Definitions:
+    boring = process-definition (defined) boring(
+        bool<> !GND
+        bool<> !Vdd
+        chan(bool<>) B
+      )
+      In definition "boring", we have: {
+      Instances:
+        !GND = bool<> boring::!GND
+        !Vdd = bool<> boring::!Vdd
+        B = chan(bool<>) boring::B
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          chan(bool<>) B
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      footprint: {
+        !GND = bool^0 = boring<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = boring<>::!Vdd (2) @[ supply_high port-alias ] 
+        B = channel chan(bool<>)^0 = boring<>::B (1) 
+        Created state:
+        channel instance pool: (1 ports, 0 local, 0 mapped)
+        1	boring<>::B	
+        bool instance pool: (2 ports, 0 local, 0 mapped)
+        1	boring<>::!GND @[ supply_low port-alias ]	
+        2	boring<>::!Vdd @[ supply_high port-alias ]	
+      }
+      }
+
+    classroom = process-definition (defined) classroom(
+        bool<> !GND
+        bool<> !Vdd
+      )
+      In definition "classroom", we have: {
+      Instances:
+        !GND = bool<> classroom::!GND
+        !Vdd = bool<> classroom::!Vdd
+        lecture = boring<> classroom::lecture
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        boring<> lecture
+      footprint: {
+        !GND = bool^0 = classroom<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = classroom<>::!Vdd (2) @[ supply_high port-alias ] 
+        lecture = process boring<>^0 = classroom<>::lecture (1) (
+          !GND = bool^0 = classroom<>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = classroom<>::!Vdd (2) @[ supply_high port-alias ] 
+          B = channel chan(bool<>)^0 = classroom<>::lecture.B (1) 
+        )
+        Created state:
+        process instance pool: (0 ports, 1 local, 0 mapped)
+        1	classroom<>::lecture	boring<>
+          channel: 1
+          bool: 1,2
+        channel instance pool: (0 ports, 1 local, 0 mapped)
+        1	classroom<>::lecture.B	
+        bool instance pool: (2 ports, 0 local, 0 mapped)
+        1	classroom<>::!GND @[ supply_low port-alias ]	
+        2	classroom<>::!Vdd @[ supply_high port-alias ]	
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    hall = classroom<> hall
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  hall = process classroom<>^0 = hall (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 1 mapped)
+  1	hall	classroom<>
+    bool: 1,2
+  private sub-process index map:
+    (1 -> 0)
+    (2 -> 1)
+  private sub-channel index map:
+    (1 -> 0)
+    (2 -> 1)
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

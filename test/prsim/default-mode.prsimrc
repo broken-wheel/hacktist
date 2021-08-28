@@ -1,0 +1,8 @@
+# "default-mode.prsimrc"
+# @haco@ inv.haco-c
+
+mode
+timing
+# seed48
+# omit seed because not all systems start with same seed
+

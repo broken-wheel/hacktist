@@ -1,0 +1,8 @@
+M@_int:dn:0 !GND en @_int !GND nch W=5u L=2u
+My:dn:0 @_int x y myGND nch W=5u L=2u
+My:up:0 myVdd en y myVdd pch W=5u L=2u
+
+* --- WARNINGS ---
+* Warning: in subcircuit <top-level>:
+* GND supply of internal node differs between definition and use: @_int
+* Warnings found in producing netlist for <top-level>.

@@ -1,0 +1,30 @@
+time: 0
+setting 'a-' and letting propagate 
+	0	a : 0
+	10	b : 1	[by a:=0]
+	20	c : 0	[by b:=1]
+time: 20
+introduce a low pulse on 'a' 
+	20	a : 1
+expect instability on b- because of a- 
+WARNING: unstable `b'-
+rule: [after 10]	a:0 -> b-:1
+>> cause: `a' (val: 0)
+	25	a : 0
+but no X's, just dequeued and requeued unstable events 
+time: 25
+bring back to known states 
+	25	a : 1
+	35	b : 0	[by a:=1]
+	45	c : 1	[by b:=0]
+time: 45
+introduce a high pulse on 'a' 
+	45	a : 0
+expect instability on b+ because of a+ 
+WARNING: unstable `b'+
+rule: [after 10]	~a:1 -> b+:0
+>> cause: `a' (val: 1)
+	50	a : 1
+no other vacuous events were generated 
+event queue:
+empty queue 

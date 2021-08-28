@@ -1,0 +1,11 @@
+@ "foo.bar.in.a.e" iscomb
+@ "!GND" supply_low
+@ "!Vdd" supply_high
+= "!GND" "foo.!GND"
+= "!GND" "foo.bar.!GND"
+= "!Vdd" "foo.!Vdd"
+= "!Vdd" "foo.bar.!Vdd"
+= "!GND" "foo.bar.ma.!GND"
+= "!Vdd" "foo.bar.ma.!Vdd"
+= "foo.bar.in.a.e" "foo.bar.in_a"
+= "foo.bar.in.a.e" "foo.bar.ma.l"

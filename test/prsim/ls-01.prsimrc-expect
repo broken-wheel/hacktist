@@ -1,0 +1,23 @@
+top-level instances: 
+Instances:
+  !GND = bool<> !GND
+  !Vdd = bool<> !Vdd
+  I = inv<> I
+  J = inv<> J
+  a = bool<> a
+  b = bool<> b
+  c = bool<> c
+a (type: bool<>) has members: 
+I (type: inv<>) has members: 
+Instances:
+  !GND = bool
+  !Vdd = bool
+  a = bool
+  b = bool
+J (type: inv<>) has members: 
+Instances:
+  !GND = bool
+  !Vdd = bool
+  a = bool
+  b = bool
+I.a (type: bool<>) has members: 

@@ -1,0 +1,71 @@
+@c "chapters/SPEC.texi"
+@c $Id: SPEC.texi,v 1.7 2010/09/29 00:13:34 fang Exp $
+
+@node SPEC Directives
+@chapter SPEC Directives
+@cindex SPEC directives
+
+This chapter describes the various directives available
+in the @t{spec} sub-language.  
+The following documentation is extracted from source file
+@file{Object/lang/SPEC_registry.cc}.  
+
+@strong{NEW:} SPEC directives allow references to instances deep in the 
+subinstance hierarchy, not just through public ports, 
+but through private members as well.
+
+@ignore
+@itemize
+@item @t{exclhi} --- specifies that group of nodes are 
+	mutually exclusive high, i.e. only one member of he group can be
+	logic high at @emph{any} time.  For simulators, this produces
+	a run-time check directive.  For verifiers, like @command{lvs}, 
+	this may help with worst-case charge-sharing analysis.  
+@item @t{excllo} --- analogous to @t{exclhi} but for logic low
+@item @t{mk_exclhi} --- coercively forces (in simulation) only
+	one node of the set to be high at a time.  If a member of the
+	set is already high, then it blocks the others.  
+	This is useful for arbitration.  
+@item @t{mk_excllo} --- analogous to @t{mk_exclhi}
+@item @t{cross-coupled}
+@end itemize
+@end ignore
+
+@include spec/unaliased.texi
+@include spec/assert.texi
+@include spec/exclhi.texi
+@include spec/excllo.texi
+@include spec/order.texi
+@include spec/unstaticized.texi
+@include spec/cross_coupled_inverters.texi
+@include spec/mk_exclhi.texi
+@include spec/mk_excllo.texi
+@include spec/min_sep.texi
+@include spec/runmodestatic.texi
+
+Another class of specification directives is @emph{invariants}.
+Invariants are conditions which should always hold true.
+Invariants are useful for telling other tools what assumptions can
+be made about circuits.  
+@t{exclhi} and @t{excllo} are examples of invariants that use 
+the normal directive syntax.  
+
+@deffn Directive $ PRS-expr [message]
+This declares a run-time invariant expression that is emits
+invariant directives to back-end tools and also tells 
+simulators to check and report violations of violations, 
+similar to @t{exclhi} and @t{excllo}. 
+@var{PRS-expr} is a production rule guard that should @emph{always} be true.  
+Invariants also accept an optional argument after the expression
+for a more informative description string.  
+These strings can be printed by back-end tools that understand invariants.
+@example
+spec @{
+  $(~(x & y))
+  $(~(x & y), "at least one of these should be false at all times")
+@}
+@end example
+@noindent
+is equivalent to @t{exclhi(x, y)}.
+@end deffn
+

@@ -1,0 +1,46 @@
+# "Make.test-head"
+# include this first in every subdirectory's Makefile.am
+#	$Id: Make.test-head,v 1.37 2009/10/27 18:21:51 fang Exp $
+#	vi: ft=automake
+
+include $(top_srcdir)/Make.stddef
+
+# suffixes used by all test directories' Makefiles
+# automake will convert these into .SUFFIXES:
+# (these can really be distributed across Makefiles...)
+SUFFIXES = .hac .depend
+
+# if suffix substitutions ever result in target names with just the suffix
+# then just touch empty files with name.
+# NOTE: built test script should not be named here, as then need to be
+# chmod-ed to be executable.  
+BOGUS_SUFFIX_TARGETS = .hac .depend
+# accumulate this variable over other Makefiles
+
+if HAVE_CFLAT
+SUFFIXES += .cast .castprs
+BOGUS_SUFFIX_TARGETS += .cast .castprs
+endif
+
+$(BOGUS_SUFFIX_TARGETS):
+	@$(TOUCH) $@
+
+CLEANFILES += $(BOGUS_SUFFIX_TARGETS)
+
+# for compile include paths
+HACPP_FLAGS =
+HACO_FLAGS =
+# usually:
+# HACO_FLAGS += $(HACPP_FLAGS)
+
+# the {in,out,create,alloc}dump suffixes are just for testing convenience.  
+# They follow the procedures in the test scripts.  
+
+
+# names of test cases (without extension) whose compile error output
+# differs when using bison vs. yacc (result of different state-machines)
+BISON_OUTPUTS =
+
+# tests expecting empty .prs outputs
+EMPTY_CFLAT_PRS_TESTS =
+

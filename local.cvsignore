@@ -1,0 +1,15 @@
+*.core
+core.*
+*.swp
+*.tar.gz
+*.tar.bz2
+flatsrc
+configure_with_ccache.sh
+*.doxygen.log
+hackt-*.*.*
+*.hchk
+stamp-h*
+hackt-config
+bootstrap.*
+*.build
+*-builds

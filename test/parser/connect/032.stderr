@@ -1,0 +1,23 @@
+At: "032.hac":7:
+parse error: syntax error
+parser stacks:
+state	value
+#STATE#	(null) 
+#STATE#	list<(root_item)>: (process-prototype) ... [3:1--5:33]
+#STATE#	(type-ref) [7:1..6]
+#STATE#	identifier: load [7:8..11]
+#STATE#	. [7:12]
+in state #STATE#, possible rules are:
+	instance_id_item : ID . optional_template_arguments_in_angles sparse_range_list  (#RULE#)
+	instance_id_item : ID . optional_template_arguments_in_angles  (#RULE#)
+	instance_id_item : ID . optional_template_arguments_in_angles extended_connection_actuals_list  (#RULE#)
+	instance_id_item : ID . optional_template_arguments_in_angles '=' alias_list  (#RULE#)
+	optional_template_arguments_in_angles : .  (#RULE#)
+acceptable tokens are: 
+	'$' (reduce)
+	'(' (reduce)
+	',' (reduce)
+	';' (reduce)
+	'<' (shift)
+	'=' (reduce)
+	'[' (reduce)

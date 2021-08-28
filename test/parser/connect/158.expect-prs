@@ -1,0 +1,12 @@
+"foo.O.e" -> "foo.c._o"-
+~"foo.O.e" -> "foo.c._o"+
+"foo.c._o" -> "foo.I.e"-
+~"foo.c._o" -> "foo.I.e"+
+= "!GND" "foo.!GND"
+= "!GND" "foo.c.!GND"
+= "!Vdd" "foo.!Vdd"
+= "!Vdd" "foo.c.!Vdd"
+= "foo.I.d" "foo.O.d"
+= "foo.I.e" "foo.c.o"
+= "foo.O.e" "foo.c.i"
+= "foo.O.e" "foo.re"

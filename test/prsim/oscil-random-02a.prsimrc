@@ -1,0 +1,10 @@
+# "oscil-random-02a.prsimrc"
+#	$Id: oscil-random-02a.prsimrc,v 1.3 2010/04/06 00:07:41 fang Exp $
+# @haco@ oscillator.haco-c
+# Testing random seeding
+
+source oscil-random-02.prsimrc
+# step some more
+watchall
+step 40
+

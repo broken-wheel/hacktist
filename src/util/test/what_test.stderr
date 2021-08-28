@@ -1,0 +1,54 @@
+3Foo
+ick
+yum
+yum const
+yum*
+yum&
+yum**
+yum*&
+yum const*
+yum const*
+yum* const
+yum const* const
+yum const* const
+yum const&
+yum const&
+
+yum const**
+yum* const*
+yum** const
+yum const* const*
+yum const** const
+yum* const* const
+yum const* const* const
+
+3BarI3FooE
+Bar<Ick>
+3BarI3YumE
+3Foo
+ick
+yum
+Reserved 3Foo chunk of size 8*1 starting at 0x1800478
+Reserved ick chunk of size 8*1 starting at 0x18011e0
+Reserved yum chunk of size 8*1 starting at 0x18011e8
+Reserved 3BarI3FooE chunk of size 8*1 starting at 0x18011f0
+Reserved Bar<Ick> chunk of size 8*1 starting at 0x18011f8
+Reserved 3BarI3YumE chunk of size 8*1 starting at 0x1801200
+~list_vector_pool<3BarI3YumE>() at 0xbffff680
+	1 chunks of 8*1 3BarI3YumE allocated.
+	Peak usage: 0 elements, free-list has 0 remaining.
+~list_vector_pool<Bar<Ick>>() at 0xbffff640
+	1 chunks of 8*1 Bar<Ick> allocated.
+	Peak usage: 0 elements, free-list has 0 remaining.
+~list_vector_pool<3BarI3FooE>() at 0xbffff600
+	1 chunks of 8*1 3BarI3FooE allocated.
+	Peak usage: 0 elements, free-list has 0 remaining.
+~list_vector_pool<yum>() at 0xbffff5c0
+	1 chunks of 8*1 yum allocated.
+	Peak usage: 0 elements, free-list has 0 remaining.
+~list_vector_pool<ick>() at 0xbffff580
+	1 chunks of 8*1 ick allocated.
+	Peak usage: 0 elements, free-list has 0 remaining.
+~list_vector_pool<3Foo>() at 0xbffff540
+	1 chunks of 8*1 3Foo allocated.
+	Peak usage: 0 elements, free-list has 0 remaining.

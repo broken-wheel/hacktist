@@ -1,0 +1,20 @@
+// "connect-034.hac"
+// copy-modified from "nonmeta-bool-split.hac" (definition only)
+// referencing an array of channels with nonmeta-index
+//	also referencing with meta-index
+// RESOLUTION: mixing nonmeta and meta indices should be rejected
+// should fail creating
+
+defproc split(chan!(bool) B[2]; chan?(int<1>) S) {
+int<1> s;
+chp {
+	*[ S?(s); B[s]!(true);
+	   B[0]!(false); B[1]!(true)
+	]
+}
+}
+
+split hairs;
+
+// only top-level channels are dangling
+

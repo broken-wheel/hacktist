@@ -1,0 +1,221 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procplch	0	#HEAD#	#TAIL#	27
+	6	##ADDR##	procdefn	0	#HEAD#	#TAIL#	137
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	9	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	26
+	10	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	26
+	11	##ADDR##	portscop	0	#HEAD#	#TAIL#	28
+	12	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	13	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	14	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	15	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	16	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	17	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	18	##ADDR##	crnglst_	0	#HEAD#	#TAIL#	28
+	19	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	20	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	21	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	22	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	23	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	24	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	25	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	26	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	27	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	28	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	29	##ADDR##	PRSrnest	0	#HEAD#	#TAIL#	36
+	30	##ADDR##	PRSpuldn	0	#HEAD#	#TAIL#	21
+	31	##ADDR##	PRSorlp_	0	#HEAD#	#TAIL#	20
+	32	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	33	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	34	##ADDR##	PRSandlp	0	#HEAD#	#TAIL#	20
+	35	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	36	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	37	##ADDR##	PRSlitrl	0	#HEAD#	#TAIL#	20
+	38	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	39	##ADDR##	dindlst_	0	#HEAD#	#TAIL#	20
+	40	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	41	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	42	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	43	##ADDR##	PRSpulup	0	#HEAD#	#TAIL#	21
+	44	##ADDR##	PRSandlp	0	#HEAD#	#TAIL#	20
+	45	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	46	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	47	##ADDR##	PRSorlp_	0	#HEAD#	#TAIL#	20
+	48	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	49	##ADDR##	cnstrng_	0	#HEAD#	#TAIL#	16
+	50	##ADDR##	PRSnot__	0	#HEAD#	#TAIL#	12
+	51	##ADDR##	PRSlitrl	0	#HEAD#	#TAIL#	20
+	52	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	53	##ADDR##	dindlst_	0	#HEAD#	#TAIL#	20
+	54	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	55	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	56	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	57	##ADDR##	footprnt	0	#HEAD#	#TAIL#	1632
+	58	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	59	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	60	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	61	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	62	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	63	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	64	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	65	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	66	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	67	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	68	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	69	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	70	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	71	##ADDR##	footprnt	0	#HEAD#	#TAIL#	723
+	72	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	12
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  1 definitions
+  0 typedefs
+  Definitions:
+    matrix_array = process-definition (defined) matrix_array(
+        bool<> !GND
+        bool<> !Vdd
+        bool<> in[0..3][0..3]
+        bool<> _o
+      )
+      In definition "matrix_array", we have: {
+      Instances:
+        !GND = bool<> matrix_array::!GND
+        !Vdd = bool<> matrix_array::!Vdd
+        _o = bool<> matrix_array::_o
+        in = bool<> matrix_array::in^2
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+          bool<> in[0..3][0..3]
+          bool<> _o
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      prs:
+        {
+        (|:i:[0..3]: (&:j:[0..3]: in[0][$j])) -> _o-
+        (&:i:[0..3]: (|:j:[0..3]: ~in[0][$j])) -> _o+
+        }
+      footprint: {
+        !GND = bool^0 = matrix_array<>::!GND (1) @[ supply_low port-alias ] 
+        !Vdd = bool^0 = matrix_array<>::!Vdd (2) @[ supply_high port-alias ] 
+        _o = bool^0 = matrix_array<>::_o (3) @[ port-alias loc-FI- loc-FI+ ] 
+        in = bool^2
+          {
+            [0][0] = matrix_array<>::in[0][0] (4) @[ port-alias loc-FO- loc-FO+ ] 
+            [0][1] = matrix_array<>::in[0][1] (5) @[ port-alias loc-FO- loc-FO+ ] 
+            [0][2] = matrix_array<>::in[0][2] (6) @[ port-alias loc-FO- loc-FO+ ] 
+            [0][3] = matrix_array<>::in[0][3] (7) @[ port-alias loc-FO- loc-FO+ ] 
+            [1][0] = matrix_array<>::in[1][0] (8) @[ port-alias ] 
+            [1][1] = matrix_array<>::in[1][1] (9) @[ port-alias ] 
+            [1][2] = matrix_array<>::in[1][2] (10) @[ port-alias ] 
+            [1][3] = matrix_array<>::in[1][3] (11) @[ port-alias ] 
+            [2][0] = matrix_array<>::in[2][0] (12) @[ port-alias ] 
+            [2][1] = matrix_array<>::in[2][1] (13) @[ port-alias ] 
+            [2][2] = matrix_array<>::in[2][2] (14) @[ port-alias ] 
+            [2][3] = matrix_array<>::in[2][3] (15) @[ port-alias ] 
+            [3][0] = matrix_array<>::in[3][0] (16) @[ port-alias ] 
+            [3][1] = matrix_array<>::in[3][1] (17) @[ port-alias ] 
+            [3][2] = matrix_array<>::in[3][2] (18) @[ port-alias ] 
+            [3][3] = matrix_array<>::in[3][3] (19) @[ port-alias ] 
+          }
+        Created state:
+        bool instance pool: (19 ports, 0 local, 0 mapped)
+        1	matrix_array<>::!GND @[ supply_low port-alias ]	
+        2	matrix_array<>::!Vdd @[ supply_high port-alias ]	
+        3	matrix_array<>::_o @[ port-alias loc-FI- loc-FI+ ]	
+        4	matrix_array<>::in[0][0] @[ port-alias loc-FO- loc-FO+ ]	
+        5	matrix_array<>::in[0][1] @[ port-alias loc-FO- loc-FO+ ]	
+        6	matrix_array<>::in[0][2] @[ port-alias loc-FO- loc-FO+ ]	
+        7	matrix_array<>::in[0][3] @[ port-alias loc-FO- loc-FO+ ]	
+        8	matrix_array<>::in[1][0] @[ port-alias ]	
+        9	matrix_array<>::in[1][1] @[ port-alias ]	
+        10	matrix_array<>::in[1][2] @[ port-alias ]	
+        11	matrix_array<>::in[1][3] @[ port-alias ]	
+        12	matrix_array<>::in[2][0] @[ port-alias ]	
+        13	matrix_array<>::in[2][1] @[ port-alias ]	
+        14	matrix_array<>::in[2][2] @[ port-alias ]	
+        15	matrix_array<>::in[2][3] @[ port-alias ]	
+        16	matrix_array<>::in[3][0] @[ port-alias ]	
+        17	matrix_array<>::in[3][1] @[ port-alias ]	
+        18	matrix_array<>::in[3][2] @[ port-alias ]	
+        19	matrix_array<>::in[3][3] @[ port-alias ]	
+        resolved prs:
+        (in[0][0] & in[0][1] & in[0][2] & in[0][3]) | (in[0][0] & in[0][1] & in[0][2] & in[0][3]) | (in[0][0] & in[0][1] & in[0][2] & in[0][3]) | (in[0][0] & in[0][1] & in[0][2] & in[0][3]) -> _o-
+        (~in[0][0] | ~in[0][1] | ~in[0][2] | ~in[0][3]) & (~in[0][0] | ~in[0][1] | ~in[0][2] | ~in[0][3]) & (~in[0][0] | ~in[0][1] | ~in[0][2] | ~in[0][3]) & (~in[0][0] | ~in[0][1] | ~in[0][2] | ~in[0][3]) -> _o+
+        rule supply map: (rules, macros, @nodes : Vdd, GND)
+        0..1 none none : 2, 1 | 2, 1
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    foo = matrix_array<> foo
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  foo = process matrix_array<>^0 = foo (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+    in = bool^2
+      {
+        [0][0] = foo.in[0][0] (3) @[ sub-FO- sub-FO+ ] 
+        [0][1] = foo.in[0][1] (4) @[ sub-FO- sub-FO+ ] 
+        [0][2] = foo.in[0][2] (5) @[ sub-FO- sub-FO+ ] 
+        [0][3] = foo.in[0][3] (6) @[ sub-FO- sub-FO+ ] 
+        [1][0] = foo.in[1][0] (7) 
+        [1][1] = foo.in[1][1] (8) 
+        [1][2] = foo.in[1][2] (9) 
+        [1][3] = foo.in[1][3] (10) 
+        [2][0] = foo.in[2][0] (11) 
+        [2][1] = foo.in[2][1] (12) 
+        [2][2] = foo.in[2][2] (13) 
+        [2][3] = foo.in[2][3] (14) 
+        [3][0] = foo.in[3][0] (15) 
+        [3][1] = foo.in[3][1] (16) 
+        [3][2] = foo.in[3][2] (17) 
+        [3][3] = foo.in[3][3] (18) 
+      }
+    _o = bool^0 = foo._o (19) @[ sub-FI- sub-FI+ ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 0 mapped)
+  1	foo	matrix_array<>
+    bool: 1,2,19,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+  bool instance pool: (0 ports, 19 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+  3	foo.in[0][0] @[ sub-FO- sub-FO+ ]	
+  4	foo.in[0][1] @[ sub-FO- sub-FO+ ]	
+  5	foo.in[0][2] @[ sub-FO- sub-FO+ ]	
+  6	foo.in[0][3] @[ sub-FO- sub-FO+ ]	
+  7	foo.in[1][0]	
+  8	foo.in[1][1]	
+  9	foo.in[1][2]	
+  10	foo.in[1][3]	
+  11	foo.in[2][0]	
+  12	foo.in[2][1]	
+  13	foo.in[2][2]	
+  14	foo.in[2][3]	
+  15	foo.in[3][0]	
+  16	foo.in[3][1]	
+  17	foo.in[3][2]	
+  18	foo.in[3][3]	
+  19	foo._o @[ sub-FI- sub-FI+ ]	
+}

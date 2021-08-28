@@ -1,0 +1,22 @@
+All subnodes of 'x':
+!GND : 0
+!Vdd : 1
+x.f : X
+x.t : X
+enqueued:	0	g.Vdd : 1
+enqueued:	0	g.GND : 0
+enqueued:	0	x.t : 0
+enqueued:	0	x.f : 0
+event queue:
+	0	x.t : 0
+	0	x.f : 0
+WARNING: unstable `x.f'-
+>> cause: `x.t' (val: 0)
+killed  :	0	x.f : 0	[from x.t:=0]
+yikes! instability on pull-down, not from rule! 
+event queue:
+All subnodes of 'x':
+!GND : 0
+!Vdd : 1
+x.f : X
+x.t : 0

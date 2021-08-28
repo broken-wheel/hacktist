@@ -1,0 +1,40 @@
+# "inv-07.prsimrc"
+# @haco@ inv.haco-c
+#	$Id: inv-07.prsimrc,v 1.4 2010/04/06 00:06:46 fang Exp $
+# just testing the 'what' and 'who' command features
+
+
+echo help what:
+help what
+echo help who:
+help who
+
+what I
+who I
+
+what J
+who J
+
+what a
+who a
+who-newline a
+
+what b
+who-newline b
+
+what c
+who-newline c
+
+what I.a
+who I.a
+
+what I.b
+who I.b
+
+what J.a
+who J.a
+
+what J.b
+who J.b
+
+

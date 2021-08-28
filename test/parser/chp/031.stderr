@@ -1,0 +1,21 @@
+Type mismatch in expression 1 of send expression list.  
+	got: int<12>
+	expected: int<32>
+At least one type error in expr-list in [6:4..10]
+Type mismatch in expression 1 of send expression list.  
+	got: int<12>
+	expected: int<32>
+At least one type error in expr-list in [7:4..10]
+Type mismatch in expression 1 of send expression list.  
+	got: int<12>
+	expected: int<32>
+At least one type error in expr-list in [8:4..10]
+Type mismatch in expression 1 of send expression list.  
+	got: int<12>
+	expected: int<32>
+At least one type error in expr-list in [9:4..10]
+Type mismatch in expression 1 of send expression list.  
+	got: int<12>
+	expected: int<32>
+At least one type error in expr-list in [10:4..10]
+ERROR: at least one error in CHP body.

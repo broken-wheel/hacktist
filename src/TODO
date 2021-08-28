@@ -1,0 +1,409 @@
+"TODO"
+#	$Id: TODO,v 1.60 2008/10/03 02:04:23 fang Exp $
+
+===============================================================================
+NOTE: see util/TODO for library-related TODO
+NOTE: see also sim/prsim/TODO
+NOTE: see also sim/chpsim/TODO
+
+===============================================================================
+Implementation clean-up of attributes and language extensions:
+	these shuold be compiled/linked through some extensible interface
+		such as plug-ins, so others can easily add their 
+		own attributes without touching source code
+
+===============================================================================
+ACT-compatibility:
+	option to reject processes in ports in ACT-mode (don't agree)
+	PRS: transistor type arguments (needs resolution)
+	port qualifiers for non-channels: (everything may read)
+		'?' for read-only
+		<blank> for may-write
+		'!' for must-write
+		* need to resolve aliases semantics ...
+		?? What about structures, and bool members?
+	shadow identifier conflict checking and diagnostics
+
+===============================================================================
+language expression related tasks:
+	support reals (floating-point) on nonmeta language, CHP
+	support strings (done for nonmeta language)
+
+===============================================================================
+sized PRS tools:
+prs2spice replacement
+	a way to manually size prs, using separate annotation file...
+		* be able to label rules and reference literals of rule
+		* be able to reference and resize rules of a particular def.
+		* be able to resize rules of referenced *instances* (override)
+		* be able to size rules semi-automatically depending on fanout
+	far future: sprsim (sizing simulator, with self-sizing!)
+		constraint solving...
+	see Rajit's netgen for reference behavior
+
+rule attributes (proposed):
+	weak feedback (cross-coupled interference case)
+
+enhancement:
+	macro/spec/attribute strings need to be compressed or stored in some 
+	dictionary to avoid writing identical strings out, wasting memory.
+	In general, a dictionary might be appropriate for all 
+		recurring strings.  Embed into persistent object manager?
+		yes, give each unique string ID number.  
+		Must be replayable on all platforms, so use ordered map?
+		Just first-come-first-serve, construct map in object header.  
+	unroll-resolving: use copy-on-write pattern for
+		ALL meta-language unrolling (currently done for nonmeta)
+
+===============================================================================
+conditional instance management: (BUG, easy)
+	guards need to be evaluated in sequential else-if
+		(currently does NOT work)
+	with sequential else-if evaluation 
+		token_else should return a pbool_const(true) 
+		for simplicity and avoid special casing.
+	grammar guarantees that else clause may only trail
+	also implement same semantics for PRS conditionals
+
+===============================================================================
+MEMORY HOG (FIXED: 00-01-04-main-00-80-45-instance-02 branch)
+Summary:
+	instance collection were split into placeholders
+	used dense collections in addition to sparse collections
+	port actual collections back-referenced port-formal collections.  
+	collections are all pool-allocated PER footprint.
+
+diagnostic statistics: (low priority TODO)
+	memory self-profiling statistics from pooled-allocators, etc.
+
+===============================================================================
+preprocessor:
+	Status: begun, subprogram called flatten to process imports.  
+	Should accept some preprocessor compile options...
+	Unfortunately, allows import declarations anywhere, not just
+		beginning of the file as specified by the HAC language.  
+	equivalent of compile -E with conventional compilers
+	using -I include paths
+	flatten the input into one file, just echoing contents recursively
+	implementation: recursive reentrant lexer, 
+		using unique file-manager again.
+	Doesn't check grammar, just echoes input to stdout.  
+	support #line directives, perhaps just // comments? (enter/leave)
+	Just write a script that passes through cpp, after munging
+		imports to includes and passing include flags.  
+
+===============================================================================
+PRS
+
+production rule templates and macro types
+	be able to define functions and patterns of rules for
+		simple construction of buffered functions.  
+	likewise be able to define and pass these trivial variations
+		as compile-time arguments, macro-meta-programming.  
+		template PRS can be defined in terms of these macros
+		which are substituted upon instantiation.  
+		e.g. celeminv_n(a,b) : a & b
+			celeminv_p(a,b) : ~a & ~b
+		makes for combination composition...
+	need notion of unit (true) and null (false) constants.
+
+interpret the @node semantics (whose syntax came from -PRS-07 branch)
+	for internal nodes
+
+static checking:
+	nodes with no fanin, but with fanout should be propagated to
+		ports as an alias (warning, per process definition)
+
+===============================================================================
+pie-in-the-sky:
+	be able to define prs-macros for use in being able to 
+		pass in functions into template handshaking expansions.
+	INTERFACE concept, and being able to piece implementations
+		together combinatorially.  (template madness)
+	Be able to express compositions in terms of interfaces
+		and automatically yield exponential combinations of 
+		implementations.  
+	Most of this is geared towards library development.  
+	Already library is starting to suffer from combinational explosion. 
+	One example: whether or not state-holding logic is 
+		implemented with combinational feedback.  
+	Language support for processes implementing interfaces, 
+		and telescopic refinement.  
+
+===============================================================================
+unroll_references:
+	all methods to date unroll packed references into a dense collection.
+	also useful would be a way to unroll sparse or sloppy reference 
+		or alias collections (e.g. prsim::getall)
+
+value-references:
+	what ever happened to mixed aggregate rvalue expressions?
+	we have const_collection, and aggregate_meta_lvalue_references...
+
+===============================================================================
+command interface:
+	add a "-c" command-line option to all executables 
+	to use source file directly as input, instead of object file.  
+
+===============================================================================
+enums and structs
+	need compile time constant meta-values
+	propose: enum_const, struct_const
+	using value_types: char, class datastruct_value_type
+	introduce pstruct keyword to refer to meta-values?
+		use as a type-prefix?
+
+===============================================================================
+channels:
+built-in channel types
+	implement as some kind of variadic template, with
+		variable number of type arguments.  
+	Maintain footprint collection of each type mentioned.  
+	Is there a way to name a channel's structural member, since
+		formals are not named???
+built-in type footprints for allocation and tool referencing
+language defect: intended to support size-types in channel declarations,
+	such as "chan(bool[2])", but this was inadvertently overlooked
+	in the original art grammar.  Add it back.  
+	Priority: low-medium
+typedefs: channel typedefs don't carry directions [!?]
+
+===============================================================================
+loop development:
+
+lookup and value resolution:
+	needs consistent resolution (currently not maintainable, copy-pasted)
+	needs to check the following:
+		1) is loop variable?
+		2) is reference to template formal?
+		3) is definition/scope-local variable (need footprint)
+
+===============================================================================
+
+footprint pointer persistence may be complicated in footprint_frame.
+	(partially done, for top-level state)
+	possibly simplify by having each footprint contain back-reference?
+	(not critical, can do later...)
+
+creation: reject unique instances that are missing relaxed actuals
+	(that should have them), only after complete hierarchical merge.
+	can be classified as known bug.  
+	[priority bump: medium -- being used/requested]
+
+===============================================================================
+Lookup semantics: (clarifications)
+	Inspired by new documentation
+	lookup-member:
+		always excludes the template parameters.  
+		One may, however, create a value copy (alias)
+			member that is equivalent to a parameter.
+			*that* member should be globally visible.  
+			(Enter template meta programming.)
+		Although within a definition references to template
+			parameters should be legal.  
+
+	Distinction between x.y, x::y
+		x.y requires x to be an instance whose type has a scope.
+		x::y requires x to be a namespace or definition with scope
+		(we already accomplish this, look at the test cases'
+			create dumps to see where this distinction is clear.)
+
+	lookups rooted at typedefs:
+		Always use the canonical type's members.  
+
+===============================================================================
+big stuff:
+
+*** global and out-of-scope references? ***
+	Or should we restrict to passing everything explicitly?
+	Suggest creating global 'structs' with relevant signals 
+		and passing those.  
+	Rationale: for design automation tools, all signals are treated
+		as ports, be they global or local.
+	Proposal: need way to detect, make implicit global ports?
+
+CFLAT:
+
+compare memory usage between using flattened production rule arrays
+	vs. arrays of definitions (like logic gates).
+
+in general check memory usage of large arrays of things
+	make benchmarks directory.
+
+===============================================================================
+CODE HYGIENE:
+	(added 20060118)
+	definition classes and type-reference classes need to be
+		re-implemented using class_traits.
+	The current state is a pain in the a** to maintain.  
+	sketch of definition traits:
+		has_port_formals (port_formals_parent_type) (boolean)
+		has_own_scopespace (scopespace_parent_type)
+		typedef_alias_type
+		is_built_in
+		is_templateable
+	type-reference traits: (don't expect to be many)
+		base_definition_type
+
+===============================================================================
+object serialization:
+	preserve source line number information for select tokens, 
+	this is necessary for error reporting in later compile phases.
+
+	Tag object files with hackt version information (signature).
+	(Pass a generic header/tagging function to persistent object manager.)
+
+endianness:
+	update IO_utils' write_value and read_value specializations
+		for basic types to use endianness mode to change reading.
+		Writing should be in native endianness.  
+	Will need to read/write a header to set the endian mode.  
+
+hackt diff (or objdiff):
+	a program to detail the differences between two object files
+	differences can be structural, 
+	or source-code based (debug line numbers)
+	or phase differences.  
+	missing objects, 
+	unrolling/creating state differences, etc...
+
+	this would be useful in determining whether or not a source
+	file has changed "non-trivially."
+
+	the crude substitute for now would be to look at the 
+	differences in the textual objdump.  
+
+	also consider implementing this as a script in combination
+		with executable.  
+		run unix diff first, etc...
+
+REWORK:
+	give developers option whether or not to
+	derive classes safely from a common 'persistent' base?
+	Is there an alternative to remove this level of inheritance? of course.
+	Eventually replace current scheme with single-pass 
+	serialization without having to load entire binary in memory...
+	Will save considerable memory.
+
+dictionaries:
+	for strings and common value compression.  
+
+(200601--)
+Need consistency checking between different ways of generating
+		intermediate object files!
+	This is now possible after reworking the connection
+		data structure with precisely reconstructible union-finds.  
+
+===============================================================================
+Interactive shell:
+	the hackt shell
+	be able to run tool commands, flow control, launch simulations, etc.
+		load/mount object files, run system commands via !
+
+===============================================================================
+compile (module):
+	-fdump-* flags
+
+===============================================================================
+translators:
+	compile source to AST and produce sources in other languages
+		such as CAST, C++ (for doxygenation) (VHDL?)
+
+===============================================================================
+HACKT template stuff:
+	In the case of redeclarations, 
+	how do default parameter values translate from
+	forward declaration to full prototype to definition?
+
+===============================================================================
+enhancements:
+
+Diagnostics:
+	assigning already assigned variables could have more precise msg:
+		(see parser/param/048.in case)
+
+===============================================================================
+parser:
+	Later, check for existence of precompiled object and use that.  
+	Also, need to include source information with each module,
+		so later compile phases can report error's w.r.t. source.  
+	Much error handling testing to be done...
+
+	missing feature of yacc/bison-union-type.awk:
+		doesn't support goto actions in the middle of grammar yet...
+		will take some time to reverse-reverse-engineer my scripts...
+
+	MEDIUM PRIORITY:
+	factor out boilerplate code generated by *-union-types.awk, 
+		need not be in awk source...
+		Consider additional namespace scoping.  
+		Can even use template.  
+
+	Error reporting:
+		Add error to context, and accumulate in a tree-like fashion.
+		In general should pass error stream objects, etc...
+
+	MEDIUM PRIORITY:
+	replace the use of lexyacc_prefix.awk with a generated #define 
+		substitution header.  Include that instead of transforming
+		source file.  This will be needed for multi-parse/multi-lex
+		compilation, and avoiding conflicts in libbogus.  
+
+	HIGH PRIORITY: [Status: complete 20051112]
+	convert generated lexers into classes:
+		automatically find static table and function declarations and 
+			generate a class definition!
+
+	LOW PRIORTY: C/C++ parser to construct and manipulate syntax trees
+		rather than text... more of a fun (?) side project.
+
+	LOW PRIORITY:
+		Piece together grammar snippets m4-style?
+
+	LOW PRIORITY: (easy)
+		lexical token '__TYPE__' for a type string (nonmeta?)
+		token '__PID__' tor process-ID integer (nonmeta-only)
+
+===============================================================================
+LANGUAGES:
+	Is there any need to support the addition of languages
+		with something like @LANG { ... }?
+
+SPEC:
+	support for 'inline' attribute to flatten subinstances into 
+		current definition scope (and give equivalent aliases)
+
+PRS:
+	(Virantha)
+	literal attributes, like transistor sizing, but also generalized
+		to key-value pairs to give transistor attributes.
+		Currently, literals support expr-list arguments, 
+		would need to update grammar and support in IR.  
+	internal node '@' notation declare pull-down/ups
+		and expansion in cflat, and other tools.  
+
+===============================================================================
+Expression resolutions:
+	consider writing covariant member functions for
+		many methods that implement a pure virtual base function.  
+	caveat: covariant return types were not properly implemented
+		until g++-3.4.x, therefore we'd have to check for
+		covariant correctness during configure and work-around.
+		Too much effort for now... just screw it.  
+
+===============================================================================
+DEFECT REPORTS:
+to resolve: how to interpret negative indices, 
+	whether or not they should be allowed, 
+	along with empty expression-loops in PRS.  
+	(affects several test cases in parser/prs)
+
+interleaving of instantiations and PRS:
+	prs and instances are maintained in separate structures
+	Semantically, all instances are unrolled first before anything 
+	is done with PRS.  Thus, there may be code that looks wrong 
+	(reference before instantiation) but will not be rejected in the 
+	later compile-phases.  Is this a major issue?
+	Related: flow control containing PRS bodies will need to
+		"duplicate" the flow control stack in PRS for proper replay.  
+

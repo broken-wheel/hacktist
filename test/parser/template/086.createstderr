@@ -1,0 +1,209 @@
+
+Persistent Object Manager text dump: 
+	i	addr		type		arg	head	tail	size
+	0	##ADDR##	________	0	#HEAD#	#TAIL#	0
+	1	##ADDR##	module__	0	#HEAD#	#TAIL#	##SIZE##
+	2	##ADDR##	namespc_	0	#HEAD#	#TAIL#	20
+	3	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	4	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	5	##ADDR##	procdefn	0	#HEAD#	#TAIL#	137
+	6	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	7	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	8	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	9	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	10	##ADDR##	drnglst_	0	#HEAD#	#TAIL#	16
+	11	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	12	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	13	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	14	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	15	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	16	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	17	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	18	##ADDR##	portscop	0	#HEAD#	#TAIL#	20
+	19	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	20	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	21	##ADDR##	datadefn	0	#HEAD#	#TAIL#	69
+	22	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	23	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	24	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	25	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	26	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	27	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	28	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	29	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	30	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	31	##ADDR##	footprnt	0	#HEAD#	#TAIL#	338
+	32	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	33	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	28
+	34	##ADDR##	procplch	0	#HEAD#	#TAIL#	28
+	35	##ADDR##	procdefn	0	#HEAD#	#TAIL#	151
+	36	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	37	##ADDR##	dboolplh	0	#HEAD#	#TAIL#	28
+	38	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	39	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	40	##ADDR##	drnglst_	0	#HEAD#	#TAIL#	16
+	41	##ADDR##	dynrng__	0	#HEAD#	#TAIL#	16
+	42	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	43	##ADDR##	piarthex	0	#HEAD#	#TAIL#	17
+	44	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	45	##ADDR##	pintplch	0	#HEAD#	#TAIL#	29
+	46	##ADDR##	pintinst	0	#HEAD#	#TAIL#	16
+	47	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	48	##ADDR##	procplch	0	#HEAD#	#TAIL#	25
+	49	##ADDR##	portscop	0	#HEAD#	#TAIL#	20
+	50	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	51	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	52	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	53	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	54	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	55	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	56	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	57	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	58	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	59	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	60	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	61	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	62	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	63	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	20
+	64	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	65	##ADDR##	spimvref	0	#HEAD#	#TAIL#	16
+	66	##ADDR##	footprnt	0	#HEAD#	#TAIL#	431
+	67	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	68	##ADDR##	cnstpic_	1	#HEAD#	#TAIL#	28
+	69	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	20
+	70	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	71	##ADDR##	datatprf	0	#HEAD#	#TAIL#	21
+	72	##ADDR##	datainst	0	#HEAD#	#TAIL#	20
+	73	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	74	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	75	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	76	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	77	##ADDR##	dboolatt	0	#HEAD#	#TAIL#	30
+	78	##ADDR##	sdbmiref	0	#HEAD#	#TAIL#	16
+	79	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	16
+	80	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	81	##ADDR##	procinst	0	#HEAD#	#TAIL#	20
+	82	##ADDR##	proctprf	0	#HEAD#	#TAIL#	21
+	83	##ADDR##	dprmlst_	0	#HEAD#	#TAIL#	20
+	84	##ADDR##	apimvref	0	#HEAD#	#TAIL#	17
+	85	##ADDR##	cnstpi__	0	#HEAD#	#TAIL#	12
+	86	##ADDR##	footprnt	0	#HEAD#	#TAIL#	391
+	87	##ADDR##	cprmlst_	0	#HEAD#	#TAIL#	20
+
+In module created from: ##FILE## (unrolled) (created)
+In namespace "", we have: {
+  0 parameter-collections
+  3 instantiation-collections
+  0 sub-namespaces
+  2 definitions
+  0 typedefs
+  Definitions:
+    internal = process-definition (defined) internal<
+      pint<> N
+      pint<> A[0..N-1]
+      >(
+        bool<> !GND
+        bool<> !Vdd
+      )
+      In definition "internal", we have: {
+      Parameters:
+        A = pint<> internal::A^1
+        N = pint<> internal::N
+      Instances:
+        !GND = bool<> internal::!GND
+        !Vdd = bool<> internal::!Vdd
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+      footprint collection: {
+        <1, {1}> {
+          !GND = bool^0 = internal<1, {1}>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = internal<1, {1}>::!Vdd (2) @[ supply_high port-alias ] 
+          A = pint^1
+            unrolled index-value pairs: {
+              0 = 1
+            }
+          N = pint^0 value: 1
+          Created state:
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	internal<1, {1}>::!GND @[ supply_low port-alias ]	
+          2	internal<1, {1}>::!Vdd @[ supply_high port-alias ]	
+        }
+      }
+      }
+
+    use_the_source = process-definition (defined) use_the_source<
+      pint<> N
+      pint<> A[0..N-1]
+      >(
+        bool<> !GND
+        bool<> !Vdd
+      )
+      In definition "use_the_source", we have: {
+      Parameters:
+        A = pint<> use_the_source::A^1
+        N = pint<> use_the_source::N
+      Instances:
+        !GND = bool<> use_the_source::!GND
+        !Vdd = bool<> use_the_source::!Vdd
+        s = internal<use_the_source::N, use_the_source::A> use_the_source::s
+      unroll sequence: 
+        ports: (
+          bool<> !GND
+          bool<> !Vdd
+        )
+        !GND@[supply=0]
+        !Vdd@[supply=1]
+        internal<use_the_source::N, use_the_source::A> s
+      footprint collection: {
+        <1, {1}> {
+          !GND = bool^0 = use_the_source<1, {1}>::!GND (1) @[ supply_low port-alias ] 
+          !Vdd = bool^0 = use_the_source<1, {1}>::!Vdd (2) @[ supply_high port-alias ] 
+          A = pint^1
+            unrolled index-value pairs: {
+              0 = 1
+            }
+          N = pint^0 value: 1
+          s = process internal<1, {1}>^0 = use_the_source<1, {1}>::s (1) (
+            !GND = bool^0 = use_the_source<1, {1}>::!GND (1) @[ supply_low port-alias ] 
+            !Vdd = bool^0 = use_the_source<1, {1}>::!Vdd (2) @[ supply_high port-alias ] 
+          )
+          Created state:
+          process instance pool: (0 ports, 1 local, 0 mapped)
+          1	use_the_source<1, {1}>::s	internal<1, {1}>
+            bool: 1,2
+          bool instance pool: (2 ports, 0 local, 0 mapped)
+          1	use_the_source<1, {1}>::!GND @[ supply_low port-alias ]	
+          2	use_the_source<1, {1}>::!Vdd @[ supply_high port-alias ]	
+        }
+      }
+      }
+
+  Instances:
+    !GND = bool<> !GND
+    !Vdd = bool<> !Vdd
+    luke = use_the_source<1, { 1 }> luke
+}
+
+footprint: {
+  !GND = bool^0 = !GND (1) @[ supply_low ] 
+  !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  luke = process use_the_source<1, {1}>^0 = luke (1) (
+    !GND = bool^0 = !GND (1) @[ supply_low ] 
+    !Vdd = bool^0 = !Vdd (2) @[ supply_high ] 
+  )
+  Created state:
+  process instance pool: (0 ports, 1 local, 1 mapped)
+  1	luke	use_the_source<1, {1}>
+    bool: 1,2
+  private sub-process index map:
+    (1 -> 0)
+    (2 -> 1)
+  bool instance pool: (0 ports, 2 local, 0 mapped)
+  1	!GND @[ supply_low ]	
+  2	!Vdd @[ supply_high ]	
+}

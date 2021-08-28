@@ -1,0 +1,23 @@
+# "dirs-07.prsimrc"
+# @haco@ inv.haco-c
+
+# echo-commands on
+pwd
+dirs
+cd I
+pwd
+dirs
+cd
+echo should be same dir
+pwd
+dirs
+echo there's no place like home
+
+pushd ::J
+pwd
+dirs
+popd
+pwd
+dirs
+echo the stack is back!
+

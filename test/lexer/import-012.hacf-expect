@@ -1,0 +1,7 @@
+// "import-012.hac"
+// imports valid empty file, duplicate of "import-004.hac"
+#FILE "empty.hac" %{
+// "empty.hac" -- empty
+
+%}	// #FILE "empty.hac"
+

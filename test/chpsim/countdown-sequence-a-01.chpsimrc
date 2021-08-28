@@ -1,0 +1,83 @@
+# "countdown-sequence-a-01.chpsimrc"
+#	$Id: countdown-sequence-a-01.chpsimrc,v 1.3 2010/04/06 00:00:55 fang Exp $
+# @haco@ countdown-sequence-a.haco-c
+
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+step
+queue
+get c
+time
+

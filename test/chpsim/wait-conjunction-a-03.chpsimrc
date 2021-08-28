@@ -1,0 +1,6 @@
+# "wait-conjunction-a-03.chpsimrc"
+#	$Id: wait-conjunction-a-03.chpsimrc,v 1.3 2010/04/06 00:01:55 fang Exp $
+# @haco@ wait-conjunction-a.haco-c
+
+dump-all-event-source
+

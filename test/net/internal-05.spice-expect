@@ -1,0 +1,10 @@
+.subckt share<> !GND !Vdd en x1 x2 _y1 _y2
+M@p:dn:0 !GND en @p !GND nch W=5u L=2u
+M_y1:dn:0 @p x1 _y1 !GND nch W=5u L=2u
+M_y2:dn:0 @p x2 _y2 !GND nch W=5u L=2u
+M_y1:up:0 !Vdd en _y1 !Vdd pch W=5u L=2u
+M_y2:up:0 !Vdd en _y2 !Vdd pch W=5u L=2u
+.ends
+
+xme !GND !Vdd me.en me.x1 me.x2 me._y1 me._y2 share<>
+

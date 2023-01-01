@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 from ACT import inspect
 
 LOGGER = logging.getLogger(__name__)
+WINDOW_OFFSET = 1.0
 
 
 def plot_transitions(process: str):
@@ -22,7 +23,7 @@ def plot_transitions(process: str):
     num_r = len(s)
     cmap = mpl.cm.get_cmap("viridis", num_r)
 
-    f1, axes = plt.subplots(num_r, 1, sharex=True)
+    f1, axes = plt.subplots(num_r, 1, sharex="all")
     f2 = plt.figure()
     for _idx, (_s, _t) in enumerate(ts.items()):
         # Separate
@@ -60,11 +61,15 @@ def plot_transitions(process: str):
     LOGGER.info(f"Saved {process}.overlaid.png")
 
 
-def animate_transitions(process: str):
+def animate_transitions(process: str, window: float | None = None):
     """
     :param process: name of the top-level process as described in `{process}.hac`
+    :param window: time window to show the events. If _not_ `None`, only show `t_last - window`
+                   where `t_last` is the time corresponding to the latest event shown.
     """
     res = inspect.parse_state_transition(f"{process}.out.events", f"{process}.out.states", f"{process}.out.map")
+    if window is not None:
+        window = float(window)
 
     t = res["transitions"]
     s = res["signals"]
@@ -74,7 +79,7 @@ def animate_transitions(process: str):
     num_r = len(s)
     cmap = mpl.cm.get_cmap("viridis", num_r)
 
-    f1, axes = plt.subplots(num_r, 1, sharex=True)
+    f1, axes = plt.subplots(num_r, 1, sharex="all")
 
     def animate(event_id):
         events = t.iloc[:event_id]
@@ -94,7 +99,17 @@ def animate_transitions(process: str):
                 alpha=0.6,
                 label=sig_name,
             )
+            ax.set_yticks([0.0, 1.0])
             plt.ylabel(r"sig: $\bf{" + sig_name + r"}$")
+
+        if isinstance(window, float):
+            x_min = e_edge - window - WINDOW_OFFSET
+            x_max = e_edge + WINDOW_OFFSET
+            if x_min < -WINDOW_OFFSET:
+                x_min = -WINDOW_OFFSET
+                x_max = window + WINDOW_OFFSET
+            plt.xlim([x_min, x_max])
+        plt.xlabel("Time (ns)")
 
     min_idx = 3
     config = {"event_id": min_idx}

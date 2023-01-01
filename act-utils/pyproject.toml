@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "act-utils"
+version = "1.0.0"
+description = ""
+authors = ["Samsara Apathika <bhinnachakra@gmail.com>"]
+license = "MIT"
+packages = [
+    {include = "ACT"},
+]
+
+[tool.poetry.scripts]
+act = 'ACT.main:main'
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+numpy = "^1.24.1"
+pandas = "^1.5.2"
+matplotlib = "^3.6.2"
+tornado = "^6.2"
+
+[tool.poetry.dev-dependencies]
+
+[tool.black]
+line-length = 120
+target-version = ['py37']
+extend-exclude = '''
+(\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\.venv|_build|buck-out|build|dist|node_modules|.*_pb2.py|.*_pb2_grpc.py)
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

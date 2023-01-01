@@ -62,6 +62,7 @@ def plot_transitions(process: str):
 
 
 def animate_transitions(process: str, window: float | None = None):
+    mpl.use("webagg")
     """
     :param process: name of the top-level process as described in `{process}.hac`
     :param window: time window to show the events. If _not_ `None`, only show `t_last - window`

@@ -81,7 +81,7 @@ def animate_transitions(process: str, window: float | None = None):
     num_r = len(s)
     cmap = mpl.cm.get_cmap("viridis", num_r)
 
-    f1, axes = plt.subplots(num_r, 1, sharex="all")
+    f1, axes = plt.subplots(num_r, 1, sharex="all", figsize=(4.267, 2.4), dpi=300)
 
     def animate(event_id):
         events = t.iloc[:event_id]
@@ -133,6 +133,7 @@ def animate_transitions(process: str, window: float | None = None):
         plt.draw()
 
     animate(config["event_id"])
+    plt.tight_layout()
     plt.draw()
 
     f1.canvas.mpl_connect("key_press_event", on_keyboard)

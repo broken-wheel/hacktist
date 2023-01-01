@@ -13,7 +13,7 @@ LOGGER = logging.getLogger(__name__)
 def main():
     parser = argparse.ArgumentParser(
         description="Plot or step through events",
-        usage='use "python -m ACT --help" for more information',
+        usage='use "%(prog)s --help" for more information',
         formatter_class=argparse.RawTextHelpFormatter,
     )
     parser.add_argument(

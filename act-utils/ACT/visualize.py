@@ -62,6 +62,7 @@ def plot_transitions(process: str):
 
 
 def animate_transitions(process: str, window: float | None = None):
+    mpl.rcParams["webagg.address"] = "0.0.0.0"
     mpl.use("webagg")
     """
     :param process: name of the top-level process as described in `{process}.hac`
@@ -110,7 +111,7 @@ def animate_transitions(process: str, window: float | None = None):
                 x_min = -WINDOW_OFFSET
                 x_max = window + WINDOW_OFFSET
             plt.xlim([x_min, x_max])
-        plt.xlabel("Time (ns)")
+        plt.xlabel("Time (a.u.)")
 
     min_idx = 3
     config = {"event_id": min_idx}

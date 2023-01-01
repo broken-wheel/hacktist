@@ -16,7 +16,17 @@ def main():
         usage='use "python -m ACT --help" for more information',
         formatter_class=argparse.RawTextHelpFormatter,
     )
-    parser.add_argument("process", help="Name of the top-level process as described in `<process>.hac`")
+    parser.add_argument(
+        "process",
+        help=textwrap.dedent(
+            """\
+            Name of the top-level process as described in `<process>.hac`.
+            If the `<process>.hac` is not in the current working directory,
+            use `</path/to/process>` HAC file without the `.hac` extension.
+            For example, use `python -m ACT /foo/bar` if the process is defined in `/foo/bar.hac`.
+            """
+        ),
+    )
     parser.add_argument(
         "-p", "--plot", action="store_true", default=False, help="Plot and save the event transitions (default: False)"
     )

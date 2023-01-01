@@ -1,0 +1,14 @@
+# use event-specific constant delay
+timing per-event
+#timing random
+#uniform-delay = 100000
+#timing uniform
+# print activity of all events
+watchall-events
+# record trace of all events to file
+trace buffer-hse.bin
+# advance the simulation in time units
+# this corresponds to 10s of sim time since we assume that 1 unit of time is 1us
+advance 100000000
+trace-close
+exit

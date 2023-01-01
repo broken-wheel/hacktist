@@ -1,0 +1,11 @@
+// Assume that 1 unit of time is 1us
+preal l_delay = 100000.0;
+preal r_delay = 200000.0;
+
+bool l, r;
+
+chp {
+    r-, l-;
+    *[[r]; $(after=r_delay) l+; [~r]; $(after=r_delay) l-],
+    *[[~l]; $(after=l_delay) r+; [l]; $(after=l_delay) r-]
+}

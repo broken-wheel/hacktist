@@ -42,19 +42,20 @@ which should create the following files:
 
 ```./hacdump.sh -h``` prints the usage.
 
-## ACT.Inspect
-This Python module visualizes the simulation dumps created by _hacdump.sh_. 
+## Visualizing the results
+The Python package `ACT` visualizes the simulation dumps created by _hacdump.sh_. 
 
-
-To use it, launch a Python shell and:
-```python
-import ACT.Inspect as insp
-
-insp.ShowStateTransition('<process.dot>', '<traces.out.events>', '<traces.out.states>', '<traces.out.map>')
+First build the _docker_ image (from repo root):
+```shell
+docker build -f act-utils/Dockerfile -t act-utils .
 ```
 
-Right now, the module works only with HSE simulations.
-![Sample frame from animation](./images/ACT_Inspect_static_demo.png?raw=true "ACT.Inspect.ShowStateTransition() output")
+Then, run the visualizer with
+```shell
+docker run --rm -it -v /path/to/<process>.hac:/app act-utils [--plot | --step [--window WINDOW]] /app/<process>
+```
+ 
+`--plot` will save plots of the event transitions to `.png`. \
+`--step` will open an interactive browser session to step through events one at a time.
 
-During the visualization, latest event node is highlighted with the darkest green. As events progress (and time as well), nodes that are not visited fade away. The number inside a node tells how many times that event has occured.
-The states of various variables (wires) at the latest event is shown at the bottom.
+Run with `--help` for more details.

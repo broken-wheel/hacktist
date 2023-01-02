@@ -1,0 +1,11 @@
+.idea/
+*.bin
+*.hacc
+*.haco
+*.events
+*.full_map
+*.full_trace
+*.map
+*.states
+.python-version
+__pycache__/

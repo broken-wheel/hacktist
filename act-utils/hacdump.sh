@@ -34,7 +34,7 @@ _dump_trace_(){
     hacobjdump -a -G $1 > $3.full_map
     if [[ $4 == "chp" ]];
     then
-        (awk '/bool state trace:/ {exit} {print}' $3.full_trace | sed -Ene '/^([[:space:]]+[[:digit:]]+){4}$/p') > $3.events
+        (awk '/bool state trace:/ {exit} {print}' $3.full_trace | sed -Ene '/^([[:space:]]+[[:digit:]]+\.?[[:digit:]]*e?\+?[[:digit:]]*){4}$/p') > $3.events
         (awk '/bool state trace:/,/int state trace:/' $3.full_trace | sed -Ene '/^([[:space:]]+[[:digit:]]+){3}$/p') > $3.states
     fi
     if [[ $4 == "prs" ]];

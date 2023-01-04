@@ -34,7 +34,7 @@ def plot_transitions(process: str):
 
         plt.sca(_ax)
         plt.stairs(_t.loc[:, "s_val"], _edges, color=cmap(_idx), fill=True, alpha=0.6, label=_s)
-        plt.ylabel(r"sig: $\bf{" + _s + r"}$")
+        plt.ylabel("sig: [" + _s + "]")
 
         _ax.set_yticks([0.0, 1.0])
         _ax.grid("on")
@@ -81,11 +81,12 @@ def animate_transitions(process: str, window: float | None = None):
     num_r = len(s)
     cmap = mpl.cm.get_cmap("viridis", num_r)
 
-    f1, axes = plt.subplots(num_r, 1, sharex="all", figsize=(4.267, 2.4), dpi=300)
+    f1, axes = plt.subplots(num_r, 1, sharex="all", figsize=(8.5, 8.5))
 
     def animate(event_id):
         events = t.iloc[:event_id]
         e_edge = events.e_t.iloc[-1]
+        LOGGER.info(f"Showing events up to {config['event_id']}. Latest event:\n{events.iloc[-1:]}.")
         for sig_name, sig_idx in smap.items():
             s_events = events[events["s_name"] == sig_name]
             s_val = list(s_events.s_val)
@@ -102,7 +103,7 @@ def animate_transitions(process: str, window: float | None = None):
                 label=sig_name,
             )
             ax.set_yticks([0.0, 1.0])
-            plt.ylabel(r"sig: $\bf{" + sig_name + r"}$")
+            plt.ylabel(sig_name)
 
         if isinstance(window, float):
             x_min = e_edge - window - WINDOW_OFFSET
@@ -128,7 +129,6 @@ def animate_transitions(process: str, window: float | None = None):
             else:
                 LOGGER.warning(f"Reached earliest event ({min_idx})")
 
-        LOGGER.info(f"Showing events up to {config['event_id']}")
         animate(config["event_id"])
         plt.draw()
 

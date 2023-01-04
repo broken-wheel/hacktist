@@ -68,7 +68,7 @@ docker run --rm -it -v $PWD/examples:/app brokenwheel/hackt sh -c "cat run.chpsi
 
 Once the simulation runs without any errors, dump the simulation results using:
 ```sh
-docker run --rm -it -v $PWD/examples:/app -p 8988:8988 brokenwheel/hackt hacdump.sh -d buffer-hse.dot -t buffer-hse.out -b buffer-hse.bin -s chp buffer-hse.hacc
+docker run --rm -it -v $PWD/examples:/app brokenwheel/hackt hacdump.sh -d buffer-hse.dot -t buffer-hse.out -b buffer-hse.bin -s chp buffer-hse.hacc
 ```
 
 Then visualize using:

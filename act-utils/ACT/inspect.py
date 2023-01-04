@@ -26,8 +26,9 @@ def __gen_states__(log_file):
 
 
 def __gen_signal_map__(map_file):
-    map_dt = np.dtype([("s_idx", np.uint), ("s_name", "<U1")])
-    signal_map = np.genfromtxt(map_file, dtype=map_dt, encoding="UTF-8")
+    signal_map = pd.read_csv(
+        map_file, sep="\s+", header=None, names=["s_idx", "s_name"], dtype={"s_idx": np.uint, "s_name": str}
+    )
     return signal_map
 
 
@@ -38,7 +39,7 @@ def parse_state_transition(event_log_file, state_log_file, signal_map_file):
 
     tran_list = pd.DataFrame(__gen_tran__(event_log_file))
     state_list = pd.DataFrame(__gen_states__(state_log_file))
-    signal_map = pd.DataFrame(__gen_signal_map__(signal_map_file))
+    signal_map = __gen_signal_map__(signal_map_file)
 
     df1 = state_list.join(tran_list.set_index("e_idx"), on="e_idx")
     df2 = df1.join(signal_map.set_index("s_idx"), on="s_idx")
